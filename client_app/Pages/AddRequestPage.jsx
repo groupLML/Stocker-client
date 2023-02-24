@@ -1,22 +1,20 @@
 import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import Checkbox from '@react-native-community/checkbox';
+import Checkbox from 'expo-checkbox';
 
 export default function AddRequestPage(props) {
 
-    const handleCB = () => {
-        const [isSelected, setSelection] = useState(false);
-    }
-
+    const [isChecked, setChecked] = useState(false)
     const [depName, setDepName] = useState('');
     const [reqQty, setReqQty] = useState('');
 
-    /* const [isSelected, setSelection] = useState(false);
 
-    const handleSelection = () => {
-        setSelection(!isSelected);
-    };
- */
+    /*  const [isSelected, setSelection] = useState(false);
+    
+        const handleSelection = () => {
+            setSelection(!isSelected);
+        }; */
+
     const handleAddRequest = () => {
         console.log("lin");
     };
@@ -36,10 +34,7 @@ export default function AddRequestPage(props) {
                 value={reqQty}
                 onChangeText={(text) => setReqQty(text)}
             />
-            <View>
-                <CheckBox value={isSelected} onValueChange={setSelection}/>
-                <Text>{isSelected ? 'Checked' : 'Unchecked'}</Text>
-            </View>
+            <Checkbox value={isChecked} onValueChange={setChecked} />
             {/* <CheckBox
                 value={isSelected}
                 onValueChange={handleSelection}
