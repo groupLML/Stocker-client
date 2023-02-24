@@ -44,12 +44,12 @@ export default function LoginPage(props) {
                     if (result.username != null) {
                         try {//Inserting user information into AsyncStorage
                             const userData = JSON.stringify(result)
-                            AsyncStorage.setItem('User', userData, () => { props.navigation.navigate('AddReques'); });
+                            AsyncStorage.setItem('User', userData, () => { props.navigation.navigate('יצירת בקשה'); });
                         } catch (e) {
                             // saving error
                         }
                     }
-                    else { alert("Error, this User doesn't exist") };
+                    else { alert("שגיאה, המשתמש אינו קיים") };
                 },
                 (error) => {
                     console.log("error,", error);

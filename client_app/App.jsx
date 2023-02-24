@@ -14,10 +14,10 @@ export default function App() {
   return (
     <GlobalData>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
-          <Stack.Screen name="Login" component={LoginPage} />
-          <Stack.Screen name="Home" component={HomePage} />
-          <Stack.Screen name="AddReques" component={AddRequestPage} />
+        <Stack.Navigator initialRouteName="התחברות" screenOptions={{ headerTitleAlign: 'center' }}>
+          <Stack.Screen name="התחברות" component={LoginPage} />
+          <Stack.Screen name="בית" component={HomePage} />
+          <Stack.Screen name="יצירת בקשה" component={AddRequestPage} />
         </Stack.Navigator>
       </NavigationContainer>
     </GlobalData>

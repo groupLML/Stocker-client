@@ -4,16 +4,9 @@ import Checkbox from 'expo-checkbox';
 
 export default function AddRequestPage(props) {
 
-    const [isChecked, setChecked] = useState(false)
+    const [isChecked, setChecked] = useState(true)
     const [depName, setDepName] = useState('');
     const [reqQty, setReqQty] = useState('');
-
-
-    /*  const [isSelected, setSelection] = useState(false);
-    
-        const handleSelection = () => {
-            setSelection(!isSelected);
-        }; */
 
     const handleAddRequest = () => {
         console.log("lin");
@@ -34,14 +27,11 @@ export default function AddRequestPage(props) {
                 value={reqQty}
                 onChangeText={(text) => setReqQty(text)}
             />
-            <Checkbox value={isChecked} onValueChange={setChecked} />
-            {/* <CheckBox
-                value={isSelected}
-                onValueChange={handleSelection}
-                style={{ marginRight: 10 }}
-            /> */}
-            <Text style={styles.fields}>שלח לכל המחלקות</Text>
-
+            <View style={styles.row}>
+                <Checkbox style={styles.CB} value={isChecked} onValueChange={setChecked} />
+                <Text style={styles.CB_TXT}>שלח לכל המחלקות</Text>
+            </View >
+            <Text>{isChecked ? 'Checked' : 'Unchecked'}</Text>
             <TouchableOpacity style={styles.button} onPress={handleAddRequest}>
                 <Text style={styles.buttonText}>אישור</Text>
             </TouchableOpacity>
@@ -71,12 +61,14 @@ const styles = StyleSheet.create({
         color: '#003D9A',
     },
     input: {
-        borderWidth: 2,
+        borderWidth: 1,
         borderColor: '#00317D',
-        borderRadius: 5,
+        borderRadius: 10,
         padding: 10,
         width: '80%',
+        height:40,
         marginBottom: 10,
+        backgroundColor: '#f3f3f3',        
     },
     button: {
         backgroundColor: '#00317D',
@@ -87,5 +79,18 @@ const styles = StyleSheet.create({
     buttonText: {
         color: '#fff',
         fontSize: 16,
+    },
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 10,
+    },
+    CB_TXT: {
+        color: '#003D9A',
+        paddingRight: 10,
+    },
+    CB: {
+        borderColor: '#003D9A',
     },
 });
