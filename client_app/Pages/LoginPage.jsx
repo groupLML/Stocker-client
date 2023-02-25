@@ -24,11 +24,11 @@ export default function LoginPage(props) {
         e.preventDefault();//prevent submitting the form
 
         const LoginUser = { //יצירת אובייקט לפי השדות במחלקה
-            Username: username,///////////////////////////
+            Username: username,
             Password: password,
         };
-        if (username && password) {
-            // both fields are filled
+
+
             fetch(apiUrlLogin, {
                 method: 'POST',
                 body: JSON.stringify(LoginUser), //bodyשליחת אובייקט ב 
@@ -56,21 +56,26 @@ export default function LoginPage(props) {
                         console.log("error,", error);
                     });
 
-            /* const getData = () => {
-                try {//Retrieving AsyncStorage data
-                    AsyncStorage.getItem('User', (err, result) => {
-                        console.log(JSON.parse(result));
-                        //return result != null ? JSON.parse(result) : null;
-                    })
-                } catch (e) {
-                    // error reading value
-                }
-            } */
+/*         if (username && password) {
+            // both fields are filled
         } else {
             // one or both fields are empty
             alert("אנא מלא את כל השדות")
-        }
+        } */
+
+        /* const getData = () => {
+    try {//Retrieving AsyncStorage data
+        AsyncStorage.getItem('User', (err, result) => {
+            console.log(JSON.parse(result));
+            //return result != null ? JSON.parse(result) : null;
+        })
+    } catch (e) {
+        // error reading value
     }
+} */
+
+    }
+
     return (
         <View style={styles.container}>
             <FCAnimatedLogo></FCAnimatedLogo>
@@ -114,7 +119,6 @@ const styles = StyleSheet.create({
         color: '#003D9A',
     },
     info: {
-        alignItems: 'bottom',
         fontSize: 12,
         marginTop: 30,
         color: '#003D9A',
