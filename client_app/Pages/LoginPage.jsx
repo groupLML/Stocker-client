@@ -74,13 +74,13 @@ export default function LoginPage(props) {
             <Text style={styles.title}>Stocker</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Username"
+                placeholder="שם משתמש"
                 value={username}
                 onChangeText={(text) => setUsername(text)}
             />
             <TextInput
                 style={styles.input}
-                placeholder="Password"
+                placeholder="סיסמה"
                 secureTextEntry={true}
                 value={password}
                 onChangeText={(text) => setPassword(text)}
@@ -127,6 +127,7 @@ const styles = StyleSheet.create({
         padding: 10,
         width: '80%',
         marginBottom: 10,
+        textAlign: 'right',
     },
     button: {
         backgroundColor: '#00317D',
