@@ -43,7 +43,7 @@ export default function LoginPage(props) {
                 .then(
                     (result) => {//body
                         console.log(result);
-                        if (result.username != null ) {
+                        if (result.username != null) {
                             if (result.jobType == 'N') {
                                 try {//Inserting user information into AsyncStorage
                                     const userData = JSON.stringify(result)
@@ -63,19 +63,21 @@ export default function LoginPage(props) {
         else {
             alert("אנא מלא את כל השדות")// one or both fields are empty
         }
-
-        /* const getData = () => {
-    try {//Retrieving AsyncStorage data
-        AsyncStorage.getItem('User', (err, result) => {
-            console.log(JSON.parse(result));
-            //return result != null ? JSON.parse(result) : null;
-        })
-    } catch (e) {
-        // error reading value
     }
-} */
 
-    }
+/* 
+    const getData = () => {
+        try {//Retrieving AsyncStorage data
+            AsyncStorage.getItem('User', (err, result) => {
+                console.log(JSON.parse(result));
+                //return result != null ? JSON.parse(result) : null;
+            })
+        } catch (e) {
+            // error reading value
+        }
+    } */
+
+
 
     return (
         <View style={styles.container}>

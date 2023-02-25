@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React, { useContext, useState, useEffect } from 'react';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import FCRequests from '../FunctionalComps/FCRequests';
 import { GlobalContext } from '../GlobalData/GlobalData';
@@ -12,23 +12,23 @@ export default function RequestsPage(props) {
 
   const [requests, setRequests] = useState([]);
 
-  const getData = () => {
-    try {//Retrieving AsyncStorage data
-      AsyncStorage.getItem('User', (err, result) => {
-        return result != null ? JSON.parse(result.cDep) : null;
-      })
-    } catch (e) {
-      // error reading value
-    }
-  }
-
   //--------------------------GET Requests details ----------------------------
 
   //פו רצה פעם אחת אחרי הרנדר הראשון
   useEffect(() => {
     console.log('component did mount');
 
-    fetch(apiUrlMedRequest + '3', { //של השרת URL
+    const getData = () => {
+      try {//Retrieving AsyncStorage data
+        AsyncStorage.getItem('User', (err, result) => {
+          return result != null ? JSON.parse(result).depId : null;
+        })
+      } catch (e) {
+        // error reading value
+      }
+    }
+
+    fetch(apiUrlMedRequest + "3", { //של השרת URL
       method: 'GET',//מה המתודה
       headers: new Headers({
         'Content-Type': 'application/json; charset=UTF-8',
@@ -41,7 +41,6 @@ export default function RequestsPage(props) {
       .then(
         (result) => {
           setRequests(result);
-          console.log(result);
         },
         (error) => {
           console.log("err post=", error);
