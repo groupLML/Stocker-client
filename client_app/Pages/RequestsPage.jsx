@@ -1,8 +1,9 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React, { useContext, useState, useEffect } from 'react';
 
+
 import FCRequests from '../FunctionalComps/FCRequests';
-import {GlobalContext} from '../GlobalData/GlobalData';
+import { GlobalContext } from '../GlobalData/GlobalData';
 
 
 export default function RequestsPage(props) {
@@ -11,12 +12,23 @@ export default function RequestsPage(props) {
 
   const [requests, setRequests] = useState([]);
 
-  //--------------------------GET Requests----------------------------
+  const getData = () => {
+    try {//Retrieving AsyncStorage data
+      AsyncStorage.getItem('User', (err, result) => {
+        return result != null ? JSON.parse(result.cDep) : null;
+      })
+    } catch (e) {
+      // error reading value
+    }
+  }
+
+  //--------------------------GET Requests details ----------------------------
 
   //פו רצה פעם אחת אחרי הרנדר הראשון
   useEffect(() => {
     console.log('component did mount');
-    fetch(apiUrlMedRequest, { //של השרת URL
+
+    fetch(apiUrlMedRequest + '3', { //של השרת URL
       method: 'GET',//מה המתודה
       headers: new Headers({
         'Content-Type': 'application/json; charset=UTF-8',
@@ -37,10 +49,12 @@ export default function RequestsPage(props) {
   }, [])
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>צפייה בבקשות המחלקה</Text>
-      <FCRequests RequestsList={requests} />
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.title}>צפייה בבקשות המחלקה</Text>
+        <FCRequests RequestsList={requests} />
+      </View>
+    </ScrollView>
   )
 }
 

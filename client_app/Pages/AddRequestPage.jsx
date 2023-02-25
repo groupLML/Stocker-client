@@ -9,7 +9,7 @@ export default function AddRequestPage(props) {
     const [depName, setDepName] = useState('');
     const [reqQty, setReqQty] = useState('');
 
-    const handleAddRequest = () => {
+  const handleAddRequest = () => {
         console.log("lin");
     };
 
@@ -45,7 +45,6 @@ export default function AddRequestPage(props) {
                 </TouchableOpacity>
             </View>
         </View>
-
     );
 }
 

@@ -47,14 +47,14 @@ export default function LoginPage(props) {
                             if (result.jobType == 'N') {
                                 try {//Inserting user information into AsyncStorage
                                     const userData = JSON.stringify(result)
-                                    AsyncStorage.setItem('User', userData, () => { props.navigation.navigate('יצירת בקשה'); });
+                                    AsyncStorage.setItem('User', userData, () => { props.navigation.navigate('צפייה בבקשות המחלקה'); });
                                 } catch (e) {
                                     // saving error
                                 }
                             }
                             else { alert("שגיאה, משתמש הוא אינו אחות") };
                         }
-                        else { alert("שגיאה, משתמש לא קיים"); props.navigation.navigate('צפייה בבקשות המחלקה'); };
+                        else { alert("שגיאה, משתמש לא קיים"); props.navigation.navigate('יצירת בקשה'); };
                     },
                     (error) => {
                         console.log("error,", error);

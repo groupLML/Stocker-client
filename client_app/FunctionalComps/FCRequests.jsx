@@ -6,16 +6,17 @@ export default function FCRequests(props) {
 
     let requestsStr = props.RequestsList.map((request, key) => {
         return <FCRequest
-            id={request.id}
-            cNurse={request.cUser}
-            aNurse={request.aUser}
-            cDep={request.cDep}
-            aDep={request.aDep}
-            medId={request.medId}
-            reqQty={request.reqQty} 
-            reqStatus={request.reqStatus} 
+            id={request.reqId}
             date={request.reqDate}
-            key={request.id}
+            time={request.reqTime}
+            medId={request.genName}
+            nurseName={request.nurseName}
+           /*  aNurse={request.aUser} */
+            depName={request.depName}
+           /*  aDep={request.aDep} */
+            reqQty={request.reqQty}
+            reqStatus={request.reqStatus}
+            key={request.reqId}
             />;
     })
 
@@ -25,3 +26,14 @@ export default function FCRequests(props) {
         </View>
     )
 }
+
+/* id = { request.reqId }
+cNurse = { request.cUser }
+aNurse = { request.aUser }
+cDep = { request.cDep }
+aDep = { request.aDep }
+medId = { request.medId }
+reqQty = { request.reqQty }
+reqStatus = { request.reqStatus }
+date = { request.reqDate }
+key = { request.reqId } */
