@@ -33,7 +33,7 @@ export default function AddRequestPage(props) {
             </View>
             <View style={styles.row}>
                 <Checkbox style={styles.CB} value={isChecked} onValueChange={setChecked} />
-                <Text style={styles.CB_TXT}>שלח לכל המחלקות</Text>
+                <Text style={styles.CB_txt}>שלח לכל המחלקות</Text>
             </View >
             <Text>{isChecked ? 'Checked' : 'Unchecked'}</Text>
             <TouchableOpacity style={styles.button} onPress={handleAddRequest}>
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 10,
     },
-    CB_TXT: {
+    CB_txt: {
         color: '#003D9A',
         paddingRight: 10,
     },
