@@ -5,12 +5,15 @@ import { Card } from '@rneui/base';
 export default function FCRequest(props) {
 
   return (
-    <Card style={styles.cardContainer}>
+    <Card style={styles.cardContainer} borderColor= "#00317D" >
       <View>
+
         <Text style={styles.cardDate}>{props.date}</Text>
+        <Text style={styles.cardBody}>{props.reqStatus === 'A' ? 'מאושר' : props.reqStatus === 'W' ? 'בהמתנה' : props.reqStatus === 'D' ? 'נדחה' : null}</Text>
         <Text style={styles.cardTitle}>{props.title}</Text>
         <Text style={styles.cardBody}>{props.reqQty}</Text>
-
+        
+      
         <TouchableOpacity onPress={() => handleCardPress(props.id)}>
             <Text style={styles.readMore}>קרא עוד...</Text>
         </TouchableOpacity>
@@ -26,21 +29,13 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     borderRadius: 20,
-    backgroundColor: "#03A9F4",
   },
   cardDate: {
     fontSize: 14,
-    //fontWeight: "bold",
-    color: "#f4511e",
+    fontWeight: "bold",
+    color: "#003D9A",
     marginBottom: 10,
   }, 
-  cardContainer: {
-    width: "60%",
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 20,
-    backgroundColor: "#03A9F4",
-  },
   cardTitle: {
     fontSize: 20,
     fontWeight: "bold",

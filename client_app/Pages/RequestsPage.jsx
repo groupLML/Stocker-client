@@ -5,7 +5,7 @@ import FCRequests from '../FunctionalComps/FCRequests';
 import {GlobalContext} from '../GlobalData/GlobalData';
 
 
-export default function RequestPage(props) {
+export default function RequestsPage(props) {
 
   const { apiUrlMedRequest } = useContext(GlobalContext);
 
@@ -47,17 +47,15 @@ export default function RequestPage(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //justifyContent: 'center',
-    //alignItems: 'center',
     backgroundColor: '#fff',
   },
   title: {
     fontSize: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
+    textAlign: 'center',
+    //justifyContent: 'center',
+    //alignItems: 'center',
     fontWeight: 'bold',
     marginBottom: 30,
-    //fontFamily: 'Imbue',
     color: '#003D9A',
     marginTop: 30,
   },

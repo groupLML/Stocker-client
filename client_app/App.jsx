@@ -7,7 +7,7 @@ import GlobalData from './GlobalData/GlobalData';
 import LoginPage from './Pages/LoginPage';
 import HomePage from './Pages/HomePage';
 import AddRequestPage from './Pages/AddRequestPage';
-import RequestPage from './Pages/RequestPage';
+import RequestsPage from './Pages/RequestsPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,7 +19,7 @@ export default function App() {
           <Stack.Screen  name="התחברות" component={LoginPage} />
           <Stack.Screen name="בית" component={HomePage} />
           <Stack.Screen name="יצירת בקשה" component={AddRequestPage} />
-          <Stack.Screen name="צפייה בבקשות המחלקה" component={RequestPage} />
+          <Stack.Screen name="צפייה בבקשות המחלקה" component={RequestsPage} />
         </Stack.Navigator>
       </NavigationContainer>
     </GlobalData>
