@@ -15,18 +15,22 @@ export default function AddRequestPage(props) {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>בקשה ממחלקה</Text>
+            <View style={styles.row}>
             <Text style={styles.fields}>שם תרופה:</Text>
             <TextInput
                 style={styles.input}
                 value={depName}
                 onChangeText={(text) => setDepName(text)}
             />
+            </View>
+            <View style={styles.row}>
             <Text style={styles.fields}>כמות:</Text>
             <TextInput
                 style={styles.input}
                 value={reqQty}
                 onChangeText={(text) => setReqQty(text)}
             />
+            </View>
             <View style={styles.row}>
                 <Checkbox style={styles.CB} value={isChecked} onValueChange={setChecked} />
                 <Text style={styles.CB_TXT}>שלח לכל המחלקות</Text>
@@ -55,7 +59,6 @@ const styles = StyleSheet.create({
     },
     fields: {
         fontSize: 15,
-        fontWeight: 'bold',
         marginBottom: 10,
         //fontFamily: 'Imbue',
         color: '#003D9A',
@@ -68,7 +71,7 @@ const styles = StyleSheet.create({
         width: '80%',
         height:40,
         marginBottom: 10,
-        backgroundColor: '#f3f3f3',        
+        backgroundColor: '#f3f3f3',     
     },
     button: {
         backgroundColor: '#00317D',
