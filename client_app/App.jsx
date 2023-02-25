@@ -15,7 +15,7 @@ export default function App() {
     <GlobalData>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="התחברות" screenOptions={{ headerTitleAlign: 'center' }}>
-          <Stack.Screen name="התחברות" component={LoginPage} />
+          <Stack.Screen  name="התחברות" component={LoginPage} />
           <Stack.Screen name="בית" component={HomePage} />
           <Stack.Screen name="יצירת בקשה" component={AddRequestPage} />
         </Stack.Navigator>

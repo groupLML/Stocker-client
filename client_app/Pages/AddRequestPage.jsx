@@ -15,24 +15,25 @@ export default function AddRequestPage(props) {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>בקשה ממחלקה</Text>
+            <View></View>
             <View style={styles.row}>
-            <Text style={styles.fields}>שם תרופה:</Text>
-            <TextInput
-                style={styles.input}
-                value={depName}
-                onChangeText={(text) => setDepName(text)}
-            />
+                <Text style={styles.fields}>שם תרופה:</Text>
+                <TextInput
+                    style={styles.input}
+                    value={depName}
+                    onChangeText={(text) => setDepName(text)}
+                />
             </View>
             <View style={styles.row}>
-            <Text style={styles.fields}>כמות:</Text>
-            <TextInput
-                style={styles.input}
-                value={reqQty}
-                onChangeText={(text) => setReqQty(text)}
-            />
+                <Text style={styles.fields}>כמות:</Text>
+                <TextInput
+                    style={styles.input}
+                    value={reqQty}
+                    onChangeText={(text) => setReqQty(text)}
+                />
             </View>
             <View style={styles.row}>
-                <Checkbox style={styles.CB} value={isChecked} onValueChange={setChecked} />
+                <Checkbox style={styles.CB} color={isChecked ? '#003D9A' : undefined} value={isChecked} onValueChange={setChecked} />
                 <Text style={styles.CB_txt}>שלח לכל המחלקות</Text>
             </View >
             <Text>{isChecked ? 'Checked' : 'Unchecked'}</Text>
@@ -48,6 +49,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        height: 50,
         backgroundColor: '#fff',
     },
     title: {
@@ -56,6 +58,8 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         //fontFamily: 'Imbue',
         color: '#003D9A',
+        position: 'absolute',
+        top: 0,
     },
     fields: {
         fontSize: 15,
@@ -65,13 +69,12 @@ const styles = StyleSheet.create({
     },
     input: {
         borderWidth: 1,
-        borderColor: '#00317D',
-        borderRadius: 10,
+        borderColor: '#ccc',
+        borderRadius: 5,
         padding: 10,
         width: '80%',
-        height:40,
         marginBottom: 10,
-        backgroundColor: '#f3f3f3',     
+        textAlign: 'right',
     },
     button: {
         backgroundColor: '#00317D',
@@ -88,6 +91,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: 10,
+
     },
     CB_txt: {
         color: '#003D9A',
