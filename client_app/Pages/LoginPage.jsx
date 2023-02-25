@@ -54,7 +54,7 @@ export default function LoginPage(props) {
                             }
                             else { alert("שגיאה, משתמש הוא אינו אחות") };
                         }
-                        else { alert("שגיאה, משתמש לא קיים") };
+                        else { alert("שגיאה, משתמש לא קיים"); props.navigation.navigate('צפייה בבקשות המחלקה'); };
                     },
                     (error) => {
                         console.log("error,", error);
