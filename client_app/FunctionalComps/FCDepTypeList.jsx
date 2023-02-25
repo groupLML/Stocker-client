@@ -23,16 +23,16 @@ export default function FCDepTypeList() {
         setDepTypes(temp);
     };
 
-    /* let selected = products.filter((product) => product.isChecked); */
+    /*let selected = DepTypes.filter((DepType) => DepType.isChecked); */
 
     const renderDepTypeList = (DepTypeList) => {
         return (
             <FlatList
                 data={DepTypeList}
                 renderItem={({ item }) => (
-                    <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between', margin: 5 }}>
-                        <Checkbox color={item.isChecked ? '#003D9A' : undefined} value={item.isChecked} onValueChange={() => handleChange(item.name)} />
-                        <Text>{item.name}</Text>
+                    <View style={styles.row}>
+                        <Checkbox style={styles.CB} color={item.isChecked ? '#003D9A' : undefined} value={item.isChecked} onValueChange={() => handleChange(item.name)} />
+                        <Text style={styles.CB_txt}>{item.name}</Text>
                     </View>
                 )}
             />
@@ -47,5 +47,16 @@ export default function FCDepTypeList() {
 }
 
 const styles = StyleSheet.create({
-
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 10,
+        margin: 5,
+    },
+    CB: {
+        marginRight: 10,
+      },
+      CB_txt: {
+        fontSize: 16,
+      },
 });
