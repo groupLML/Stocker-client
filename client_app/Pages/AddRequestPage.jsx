@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import FCDepTypeList from '../FunctionalComps/FCDepTypeList';
 
@@ -16,7 +16,7 @@ export default function AddRequestPage(props) {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>בקשה ממחלקה</Text>
-            <ScrollView>
+            <View>
                 <View style={styles.row}>
                     <Text style={styles.fields}>שם תרופה:</Text>
                     <TextInput
@@ -38,12 +38,12 @@ export default function AddRequestPage(props) {
                         <Checkbox style={styles.CB} color={isChecked ? '#003D9A' : undefined} value={isChecked} onValueChange={setChecked} />
                         <Text style={styles.CB_txt}>שלח לכל המחלקות</Text>
                     </View >
-                    <FCDepTypeList></FCDepTypeList>
+                    {!isChecked && <FCDepTypeList/>}
                 </View>
                 <TouchableOpacity style={styles.button} onPress={handleAddRequest}>
                     <Text style={styles.buttonText}>אישור</Text>
                 </TouchableOpacity>
-            </ScrollView>
+            </View>
         </View>
 
     );
