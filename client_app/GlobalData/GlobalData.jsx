@@ -9,11 +9,9 @@ export default function GlobalData(props) {
     const apiUrlUser = "https://proj.ruppin.ac.il/cgroup36/prod/api/User/";
     const apiUrlMedRequest = "https://proj.ruppin.ac.il/cgroup36/prod/api/MedRequest/";
     
-    const DepTypeList = ["כירורגיה", "פנימית", "אורתופדיה"];
-
     return (
         <GlobalContext.Provider
-            value={{ User, apiUrlUser, setUser, DepTypeList, apiUrlMedRequest }}>
+            value={{ User, apiUrlUser, setUser, apiUrlMedRequest }}>
             {props.children}
         </GlobalContext.Provider>
     )
