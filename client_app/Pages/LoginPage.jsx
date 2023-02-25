@@ -24,7 +24,7 @@ export default function LoginPage(props) {
         e.preventDefault();//prevent submitting the form
 
         const LoginUser = { //יצירת אובייקט לפי השדות במחלקה
-            username: username,///////////////////////////
+            Username: username,///////////////////////////
             Password: password,
         };
         if (username && password) {
