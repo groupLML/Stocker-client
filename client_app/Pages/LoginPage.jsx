@@ -21,53 +21,56 @@ export default function LoginPage(props) {
     //-------------------------------Login User-----------------------------
     const handleLogin = (e) => {
 
-        e.preventDefault();
+        e.preventDefault();//prevent submitting the form
 
         const LoginUser = { //יצירת אובייקט לפי השדות במחלקה
-            Username: username,
+            username: username,///////////////////////////
             Password: password,
         };
-
-        fetch(apiUrlLogin, {
-            method: 'POST',
-            body: JSON.stringify(LoginUser), //bodyשליחת אובייקט ב 
-            headers: new Headers({
-                'Content-type': 'application/json; charset=UTF-8',//חשוב - JSON לשלוח
-                'Accept': 'application/json; charset=UTF-8',
-            })
-        })
-            .then(response => {
-                return response.json();
-            })
-            .then(
-                (result) => {//body
-                    if (result.username != null) {
-                        try {//Inserting user information into AsyncStorage
-                            const userData = JSON.stringify(result)
-                            AsyncStorage.setItem('User', userData, () => { props.navigation.navigate('יצירת בקשה'); });
-                        } catch (e) {
-                            // saving error
-                        }
-                    }
-                    else { alert("שגיאה, המשתמש אינו קיים") };
-                },
-                (error) => {
-                    console.log("error,", error);
-                });
-
-        /* const getData = () => {
-            try {//Retrieving AsyncStorage data
-                AsyncStorage.getItem('User', (err, result) => {
-                    console.log(JSON.parse(result));
-                    //return result != null ? JSON.parse(result) : null;
+        if (username && password) {
+            // both fields are filled
+            fetch(apiUrlLogin, {
+                method: 'POST',
+                body: JSON.stringify(LoginUser), //bodyשליחת אובייקט ב 
+                headers: new Headers({
+                    'Content-type': 'application/json; charset=UTF-8',//חשוב - JSON לשלוח
+                    'Accept': 'application/json; charset=UTF-8',
                 })
-            } catch (e) {
-                // error reading value
-            }
-        } */
+            })
+                .then(response => {
+                    return response.json();
+                })
+                .then(
+                    (result) => {//body
+                        if (result.username != null) {
+                            try {//Inserting user information into AsyncStorage
+                                const userData = JSON.stringify(result)
+                                AsyncStorage.setItem('User', userData, () => { props.navigation.navigate('יצירת בקשה'); });
+                            } catch (e) {
+                                // saving error
+                            }
+                        }
+                        else { alert("שגיאה, המשתמש אינו קיים") };
+                    },
+                    (error) => {
+                        console.log("error,", error);
+                    });
 
+            /* const getData = () => {
+                try {//Retrieving AsyncStorage data
+                    AsyncStorage.getItem('User', (err, result) => {
+                        console.log(JSON.parse(result));
+                        //return result != null ? JSON.parse(result) : null;
+                    })
+                } catch (e) {
+                    // error reading value
+                }
+            } */
+        } else {
+            // one or both fields are empty
+            alert("אנא מלא את כל השדות")
+        }
     }
-
     return (
         <View style={styles.container}>
             <FCAnimatedLogo></FCAnimatedLogo>
@@ -111,6 +114,7 @@ const styles = StyleSheet.create({
         color: '#003D9A',
     },
     info: {
+        alignItems: 'bottom',
         fontSize: 12,
         marginTop: 30,
         color: '#003D9A',
