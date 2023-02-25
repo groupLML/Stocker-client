@@ -28,14 +28,12 @@ export default function LoginPage(props) {
             Password: password,
         };
 
-        if (username && password) {
-            // both fields are filled
-
+        if (username && password) { // both fields are filled
             fetch(apiUrlLogin, {
                 method: 'POST',
                 body: JSON.stringify(LoginUser), //bodyשליחת אובייקט ב 
                 headers: new Headers({
-                    'Content-type': 'application/json; charset=UTF-8',//חשוב - JSON לשלוח
+                    'Content-type': 'application/json; charset=UTF-8',
                     'Accept': 'application/json; charset=UTF-8',
                 })
             })
@@ -44,23 +42,26 @@ export default function LoginPage(props) {
                 })
                 .then(
                     (result) => {//body
-                        if (result.username != null) {
-                            try {//Inserting user information into AsyncStorage
-                                const userData = JSON.stringify(result)
-                                AsyncStorage.setItem('User', userData, () => { props.navigation.navigate('יצירת בקשה'); });
-                            } catch (e) {
-                                // saving error
+                        console.log(result);
+                        if (result.username != null ) {
+                            if (result.jobType == 'N') {
+                                try {//Inserting user information into AsyncStorage
+                                    const userData = JSON.stringify(result)
+                                    AsyncStorage.setItem('User', userData, () => { props.navigation.navigate('יצירת בקשה'); });
+                                } catch (e) {
+                                    // saving error
+                                }
                             }
+                            else { alert("שגיאה, משתמש הוא אינו אחות") };
                         }
-                        else { alert("שגיאה, המשתמש אינו קיים") };
+                        else { alert("שגיאה, משתמש לא קיים") };
                     },
                     (error) => {
                         console.log("error,", error);
                     });
         }
         else {
-            // one or both fields are empty
-            alert("אנא מלא את כל השדות")
+            alert("אנא מלא את כל השדות")// one or both fields are empty
         }
 
         /* const getData = () => {
