@@ -28,6 +28,8 @@ export default function LoginPage(props) {
             Password: password,
         };
 
+        if (username && password) {
+            // both fields are filled
 
             fetch(apiUrlLogin, {
                 method: 'POST',
@@ -55,13 +57,11 @@ export default function LoginPage(props) {
                     (error) => {
                         console.log("error,", error);
                     });
-
-/*         if (username && password) {
-            // both fields are filled
-        } else {
+        }
+        else {
             // one or both fields are empty
             alert("אנא מלא את כל השדות")
-        } */
+        }
 
         /* const getData = () => {
     try {//Retrieving AsyncStorage data
