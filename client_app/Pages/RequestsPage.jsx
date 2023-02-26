@@ -14,7 +14,7 @@ export default function RequestsPage(props) {
 
   //--------------------------GET Requests details ----------------------------
 
-  //פו רצה פעם אחת אחרי הרנדר הראשון
+  //פונ' רצה פעם אחת אחרי הרנדר הראשון
   useEffect(() => {
     console.log('component did mount');
 

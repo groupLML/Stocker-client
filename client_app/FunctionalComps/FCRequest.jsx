@@ -11,10 +11,9 @@ export default function FCRequest(props) {
   const handleCardPress = (id) => {
     console.log(props.depName);
     navigation.navigate('צפייה בפרטי בקשה', { requestId: id });
-   
   };
 
-  const formattedDate = props.date.split(' ')[0];
+  const formattedDate = props.date.split(' ')[0];//סידור פורמט התאריך
 
   return (
     <Card style={styles.cardContainer} borderColor="#00317D">
@@ -22,27 +21,27 @@ export default function FCRequest(props) {
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {props.reqStatus === 'A' && (
             <>
-              <Icon type="ionicon" name="checkmark" color="#00914B" size= {20}/>
+              <Icon type="ionicon" name="checkmark" color="#00914B" size={20} />
               <Text style={{ color: '#00914B' }}>מאושר</Text>
             </>
           )}
           {props.reqStatus === 'W' && (
             <>
-              <Icon type="ionicon" name="hourglass" color="red" size={20}  />
-            <Text style={{ color: 'red' }}>בהמתנה</Text>
-             </>
+              <Icon type="ionicon" name="hourglass" color="red" size={20} />
+              <Text style={{ color: 'red' }}>בהמתנה</Text>
+            </>
           )}
           {props.reqStatus === 'D' && <Text>נדחה</Text>}
         </View>
         <Text style={styles.cardDate}>{props.time} {formattedDate}</Text>
       </View>
-      
+
       <Text style={styles.cardTitle}>{props.medId}</Text>
 
       <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >כמות: </Text>{props.reqQty}</Text>
       <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >שם יוצר ההזמנה: </Text>{props.nurseName}</Text>
       {props.depName && <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >שם המחלקה שאישרה: </Text>{props.depName}</Text>}
-      
+
       <TouchableOpacity onPress={() => handleCardPress(props.id)}>
         <Text style={styles.readMore}>קרא עוד...</Text>
       </TouchableOpacity>
@@ -70,10 +69,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 10,
   },
-/*   cardStatus: {
-    marginVertical: 10,
-    fontSize: 16,
-  }, */
+  /*   cardStatus: {
+      marginVertical: 10,
+      fontSize: 16,
+    }, */
   cardBody: {
     marginVertical: 10,
     fontSize: 15,
