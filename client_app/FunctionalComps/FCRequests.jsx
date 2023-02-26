@@ -16,6 +16,8 @@ export default function FCRequests(props) {
            /*  aDep={request.aDep} */
             reqQty={request.reqQty}
             reqStatus={request.reqStatus}
+            requestsList={props.RequestsList}
+            isDetailedRequest={props.isDetailedRequest}
             key={request.reqId}
             />;
     })

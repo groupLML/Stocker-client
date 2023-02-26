@@ -8,8 +8,8 @@ export default function FCRequest(props) {
 
   const navigation = useNavigation();
 
-  const handleCardPress = (id) => {
-    navigation.navigate('צפייה בפרטי בקשה', { requestId: id });
+  const handleCardPress = () => {
+    navigation.navigate('צפייה בפרטי בקשה', { requestId: props.id, requestsList: props.requestsList });
   };
 
   const formattedDate = props.date.split(' ')[0];//סידור פורמט התאריך
@@ -41,9 +41,21 @@ export default function FCRequest(props) {
       <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >שם יוצר ההזמנה: </Text>{props.nurseName}</Text>
       {props.depName && <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >שם המחלקה שאישרה: </Text>{props.depName}</Text>}
 
-      <TouchableOpacity onPress={() => handleCardPress(props.id)}>
-        <Text style={styles.readMore}>קרא עוד...</Text>
-      </TouchableOpacity>
+      {props.isDetailedRequest &&
+        <View style={styles.rowButton}>
+          <TouchableOpacity style={[styles.button, { backgroundColor: '#129C62' }]} onPress={() => handleAddRequest()}>
+            <Text style={styles.buttonText}>אישור העברה</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.button, { backgroundColor: '#E51C1C' }]} onPress={() => handleAddRequest()}>
+            <Text style={styles.buttonText} >ביטול העברה</Text>
+          </TouchableOpacity>
+        </View>
+      }
+
+      {!props.isDetailedRequest &&
+        <TouchableOpacity onPress={() => handleCardPress()}>
+          <Text style={styles.readMore}>קרא עוד...</Text>
+        </TouchableOpacity>}
     </Card>
   )
 }
@@ -68,17 +80,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 10,
   },
-  /*   cardStatus: {
-      marginVertical: 10,
-      fontSize: 16,
-    }, */
   cardBody: {
     marginVertical: 10,
     fontSize: 15,
     color: "#003D9A",
-  },
-  deleteButton: {
-    marginTop: 10,
   },
   readMore: {
     color: "#007bff",
@@ -90,6 +95,22 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 10,
+  },
+  rowButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+    justifyContent: 'center',
+  },
+  button: {
+    backgroundColor: '#00317D',
+    padding: 10,
+    borderRadius: 5,
+    margin: 10,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
   },
 });
 

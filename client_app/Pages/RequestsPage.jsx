@@ -57,7 +57,7 @@ export default function RequestsPage(props) {
     <ScrollView>
       <View style={styles.container}>
         <Text style={styles.title}>צפייה בבקשות המחלקה</Text>
-        <FCRequests RequestsList={requests} />
+        <FCRequests RequestsList={requests} isDetailedRequest={false} />
       </View>
     </ScrollView>
   )
