@@ -12,23 +12,25 @@ export default function RequestsPage(props) {
 
   const [requests, setRequests] = useState([]);
 
+  const [depId, setDepId] = useState('');
+
   //--------------------------GET Requests details ----------------------------
 
   //פונ' רצה פעם אחת אחרי הרנדר הראשון
   useEffect(() => {
     console.log('component did mount');
-
-    const getData = () => {
-      try {//Retrieving AsyncStorage data
-        AsyncStorage.getItem('User', (err, result) => {
-          return result != null ? JSON.parse(result).depId : null;
-        })
-      } catch (e) {
-        // error reading value
-      }
+    
+    try {//Retrieving AsyncStorage data
+      AsyncStorage.getItem('User', (err, result) => {
+        if (result != null) {
+          setDepId(JSON.parse(result).depId);
+        }
+      })
+    } catch (e) {
+      // error reading value
     }
 
-    fetch(apiUrlMedRequest + "3", { //של השרת URL
+    fetch(apiUrlMedRequest + `${depId}`, { //של השרת URL
       method: 'GET',//מה המתודה
       headers: new Headers({
         'Content-Type': 'application/json; charset=UTF-8',
