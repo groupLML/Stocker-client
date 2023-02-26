@@ -9,25 +9,23 @@ export default function AddRequestPage(props) {
   const [isChecked, setChecked] = useState(true);
   const [depName, setDepName] = useState('');
   const [reqQty, setReqQty] = useState('');
-  const { DepTypes, setDepTypes } = useContext(GlobalContext);
-
-/*const [selectedDep, setselectedDep] = useState([]); */
-/* let selected = DepTypes.filter((DepType) => DepType.isChecked); */
+  const { DepTypes, setDepTypes, Meds } = useContext(GlobalContext);
+  
+  /*const [selectedDep, setselectedDep] = useState([]); */
+  /* let selected = DepTypes.filter((DepType) => DepType.isChecked); */
 
   useEffect(() => {//component did Update DepTypes
-    let temp = DepTypes.filter((DepType) => DepType.isChecked);
-    setselectedDep(temp);
     console.log(DepTypes);
   }, [DepTypes]);
 
   useEffect(() => {//component did Update isChecked
     if (isChecked === true) {
-     let temp = DepTypes.map((DepType) => {
+      let temp = DepTypes.map((DepType) => {
         return { ...DepType, isChecked: true };
       });
       setDepTypes(temp);
     }
-    else { 
+    else {
       let temp = DepTypes.map((DepType) => {
         return { ...DepType, isChecked: false };
       });
