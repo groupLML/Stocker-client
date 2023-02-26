@@ -10,7 +10,7 @@ export default function AddRequestPage(props) {
   const [depName, setDepName] = useState('');
   const [reqQty, setReqQty] = useState('');
   const { DepTypes, setDepTypes, Meds } = useContext(GlobalContext);
-  
+
   /*const [selectedDep, setselectedDep] = useState([]); */
   /* let selected = DepTypes.filter((DepType) => DepType.isChecked); */
 

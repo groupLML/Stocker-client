@@ -43,12 +43,27 @@ export default function FCRequest(props) {
 
       {props.isDetailedRequest &&
         <View style={styles.rowButton}>
-          <TouchableOpacity style={[styles.button, { backgroundColor: '#129C62' }]} onPress={() => handleAddRequest()}>
-            <Text style={styles.buttonText}>אישור העברה</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, { backgroundColor: '#E51C1C' }]} onPress={() => handleAddRequest()}>
-            <Text style={styles.buttonText} >ביטול העברה</Text>
-          </TouchableOpacity>
+          {props.reqStatus === 'W' && (
+            <>
+              <TouchableOpacity style={[styles.button, { backgroundColor: '#129C62' }]} onPress={() => handleAddRequest()}>
+                <Text style={styles.buttonText}>עדכון</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.button, { backgroundColor: '#E51C1C' }]} onPress={() => handleAddRequest()}>
+                <Text style={styles.buttonText} >מחיקת העברה</Text>
+              </TouchableOpacity>
+            </>
+          )}
+          {props.reqStatus === 'A' && (
+            <>
+              <TouchableOpacity style={[styles.button, { backgroundColor: '#129C62' }]} onPress={() => handleAddRequest()}>
+                <Text style={styles.buttonText}>אישור העברה</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.button, { backgroundColor: '#E51C1C' }]} onPress={() => handleAddRequest()}>
+                <Text style={styles.buttonText} >ביטול העברה</Text>
+              </TouchableOpacity>
+            </>
+          )}
+          
         </View>
       }
 
