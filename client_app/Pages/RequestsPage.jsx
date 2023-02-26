@@ -19,16 +19,20 @@ export default function RequestsPage(props) {
   //פונ' רצה פעם אחת אחרי הרנדר הראשון
   useEffect(() => {
     console.log('component did mount');
-    
-    try {//Retrieving AsyncStorage data
-      AsyncStorage.getItem('User', (err, result) => {
-        if (result != null) {
-          setDepId(JSON.parse(result).depId);
-        }
-      })
-    } catch (e) {
-      // error reading value
+
+    const getData = () => {
+      try {//Retrieving AsyncStorage data
+        AsyncStorage.getItem('User', (err, result) => {
+          if (result != null) {
+            setDepId(JSON.parse(result).depId);
+          }
+        })
+      } catch (e) {
+        // error reading value
+      }
     }
+    
+    getData();
 
     fetch(apiUrlMedRequest + `${depId}`, { //של השרת URL
       method: 'GET',//מה המתודה
@@ -47,7 +51,7 @@ export default function RequestsPage(props) {
         (error) => {
           console.log("err post=", error);
         });
-  }, [])
+  }, [depId])
 
   return (
     <ScrollView>
