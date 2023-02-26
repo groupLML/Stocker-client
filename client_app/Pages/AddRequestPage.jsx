@@ -1,13 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import FCDepTypeList from '../FunctionalComps/FCDepTypeList';
+import { GlobalContext } from '../GlobalData/GlobalData';
 
 export default function AddRequestPage(props) {
 
-  const [isChecked, setChecked] = useState(true)
+  const [isChecked, setChecked] = useState(true);
   const [depName, setDepName] = useState('');
   const [reqQty, setReqQty] = useState('');
+  const { DepTypes, setDepTypes } = useContext(GlobalContext);
+
+/*const [selectedDep, setselectedDep] = useState([]); */
+/* let selected = DepTypes.filter((DepType) => DepType.isChecked); */
+
+  useEffect(() => {//component did Update DepTypes
+    let temp = DepTypes.filter((DepType) => DepType.isChecked);
+    setselectedDep(temp);
+    console.log(DepTypes);
+  }, [DepTypes]);
+
+  useEffect(() => {//component did Update isChecked
+    if (isChecked === true) {
+     let temp = DepTypes.map((DepType) => {
+        return { ...DepType, isChecked: true };
+      });
+      setDepTypes(temp);
+    }
+    else { 
+      let temp = DepTypes.map((DepType) => {
+        return { ...DepType, isChecked: false };
+      });
+      setDepTypes(temp);
+    }
+  }, [isChecked]);
+
 
   const handleAddRequest = () => {
     isChecked === true ? '#003D9A' : undefined
@@ -38,7 +65,7 @@ export default function AddRequestPage(props) {
             <Checkbox style={styles.CB} color={isChecked ? '#003D9A' : undefined} value={isChecked} onValueChange={setChecked} />
             <Text style={styles.CB_txt}>שלח לכל המחלקות</Text>
           </View >
-          {!isChecked && <FCDepTypeList/>}
+          {!isChecked && <FCDepTypeList />}
         </View>
         <TouchableOpacity style={styles.button} onPress={() => handleAddRequest()}>
           <Text style={styles.buttonText}>אישור</Text>

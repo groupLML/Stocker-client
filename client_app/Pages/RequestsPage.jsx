@@ -16,9 +16,9 @@ export default function RequestsPage(props) {
 
   //--------------------------GET Requests details ----------------------------
 
-  //פונ' רצה פעם אחת אחרי הרנדר הראשון
+  //depId פונ' רצה כל פעם שמתעדכן 
   useEffect(() => {
-    console.log('component did mount');
+    console.log('component did Update');
 
     const getData = () => {
       try {//Retrieving AsyncStorage data
