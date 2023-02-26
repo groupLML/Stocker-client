@@ -9,11 +9,9 @@ export default function FCRequest(props) {
   const navigation = useNavigation();
 
   const handleCardPress = (id) => {
-    console.log(props.depName);
     navigation.navigate('צפייה בפרטי בקשה', { requestId: id });
   };
 
-  console.log(props.date);
   const formattedDate = props.date.split(' ')[0];//סידור פורמט התאריך
 
   return (
