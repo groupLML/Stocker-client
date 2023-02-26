@@ -3,13 +3,24 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 import Checkbox from 'expo-checkbox';
 import FCDepTypeList from '../FunctionalComps/FCDepTypeList';
 import { GlobalContext } from '../GlobalData/GlobalData';
+import { AntDesign } from '@expo/vector-icons';
 
 export default function AddRequestPage(props) {
 
   const [isChecked, setChecked] = useState(true);
   const [depName, setDepName] = useState('');
-  const [reqQty, setReqQty] = useState('');
+  const [reqQty, setReqQty] = useState(0);
   const { DepTypes, setDepTypes, Meds } = useContext(GlobalContext);
+
+  const handleIncreaseQuantity = () => {
+    setReqQty(reqQty + 1);
+  };
+
+  const handleDecreaseQuantity = () => {
+    if (reqQty > 0) {
+      setReqQty(reqQty - 1);
+    }
+  };
 
   /*const [selectedDep, setselectedDep] = useState([]); */
   /* let selected = DepTypes.filter((DepType) => DepType.isChecked); */
@@ -35,7 +46,8 @@ export default function AddRequestPage(props) {
 
 
   const handleAddRequest = () => {
-    isChecked === true ? '#003D9A' : undefined
+    //isChecked === true ? '#003D9A' : undefined
+    console.log(DepTypes);
   };
 
   return (
@@ -52,11 +64,15 @@ export default function AddRequestPage(props) {
         </View>
         <View style={styles.row}>
           <Text style={styles.fields}>כמות:</Text>
-          <TextInput
-            style={styles.input}
-            value={reqQty}
-            onChangeText={(text) => setReqQty(text)}
-          />
+          <TouchableOpacity onPress={handleIncreaseQuantity}>
+            <AntDesign name="plus" size={20} color="black" />
+          </TouchableOpacity>
+       
+          <Text style={{ marginHorizontal: 10, fontSize: 18 }}>{reqQty}</Text>
+
+          <TouchableOpacity onPress={handleDecreaseQuantity}>
+            <AntDesign name="minus" size={20} color="black" />
+          </TouchableOpacity>          
         </View>
         <View>
           <View style={styles.row}>
@@ -96,13 +112,16 @@ const styles = StyleSheet.create({
     width: 100,
     marginRight: 10,
     fontWeight: 'bold',
+    fontSize: 16,
   },
   input: {
     flex: 1,
     borderWidth: 1,
     borderRadius: 10,
     borderColor: '#ccc',
-    padding: 10,
+    paddingVertical: 5, // reduce padding on top and bottom
+    paddingHorizontal: 10,
+    borderColor: "#00317D",
   },
   CB: {
     marginRight: 10,
@@ -113,7 +132,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#003D9A',
     borderRadius: 10,
-    paddingVertical: 15,
+    paddingVertical: 10,
     marginTop: 20,
   },
   buttonText: {
@@ -121,4 +140,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
   },
+/*   quantity: {
+    size: 24,
+    color: "black",
+  }, */
 });

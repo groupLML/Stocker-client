@@ -35,8 +35,6 @@ export default function GlobalData(props) {
                 console.log("err post=", error);
             });
 
-
-
     return (
         <GlobalContext.Provider
             value={{
