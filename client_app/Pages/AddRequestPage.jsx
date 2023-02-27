@@ -6,10 +6,9 @@ import { GlobalContext } from '../GlobalData/GlobalData';
 import Autocomplete from 'react-native-autocomplete-input';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import NumericInput from 'react-native-numeric-input'
-/* import { AntDesign } from '@expo/vector-icons'; */
-
 
 export default function AddRequestPage(props) {
+
   //-----------------------------------Autocomplete med input---------------------------------------------
   const data = [
     { id: 1, name: 'Apple' },
@@ -34,38 +33,29 @@ export default function AddRequestPage(props) {
     </TouchableOpacity>
   );
 
-  const renderSelectedItem = ({ item }) => (//render each selected item's name
+  const addItem = (item) => {// add a selected item to the selectedItems array
+    setSelectedItems([...selectedItems, item]);
+    setQuery('');
+  };
+
+/*   const renderSelectedItem = ({ item }) => (//render each selected item's name
     <View style={styles.selectedItem}>
       <Text>{item.name}</Text>
       <TouchableOpacity onPress={() => removeItem(item)}>
         <Icon name="times" size={20} />
       </TouchableOpacity>
     </View>
-  );
+  ); */
 
-  const addItem = (item) => {// add a selected item to the selectedItems array
-    setSelectedItems([...selectedItems, item]);
-    setQuery('');
-  };
-
-  const removeItem = (itemName) => {// remove a selected item from the selectedItems array
+/* const removeItem = (itemName) => {// remove a selected item from the selectedItems array
     setSelectedItems(selectedItems.filter((item) => item.name !== itemName));
-  };
+  }; */
+
   //-------------------------------------------------------------------------------------------
 
   const [isChecked, setChecked] = useState(true);
-  const [reqQty, setReqQty] = useState(0);
+  const [reqQty, setReqQty] = useState(1);
   const { DepTypes, setDepTypes, Meds } = useContext(GlobalContext);
-
-  /*   const handleIncreaseQuantity = () => {
-      setReqQty(reqQty + 1);
-    };
-  
-    const handleDecreaseQuantity = () => {
-      if (reqQty > 0) {
-        setReqQty(reqQty - 1);
-      }
-    }; */
 
   /*const [selectedDep, setselectedDep] = useState([]); */
   /* let selected = DepTypes.filter((DepType) => DepType.isChecked); */
@@ -107,15 +97,14 @@ export default function AddRequestPage(props) {
             onChangeText={(text) => setQuery(text)}
             renderItem={renderSuggestion}
             keyExtractor={(item) => item.id.toString()}
-            placeholder="Type here..."
+            placeholder="הזן שם תרופה"
             containerStyle={styles.autocompleteContainer}
             listStyle={styles.listStyle} />
-           <FlatList
+{/*            <FlatList
             data={selectedItems}
             renderItem={renderSelectedItem}
             keyExtractor={(item) => item.id.toString()}
-            style={styles.selectedItemsContainer} />
-
+            style={styles.selectedItemsContainer} /> */}
           {/* <TextInput
             style={styles.input}
             value={depName}
@@ -124,16 +113,7 @@ export default function AddRequestPage(props) {
         </View>
         <View style={styles.row}>
           <Text style={styles.fields}>כמות:</Text>
-          <NumericInput type='plus-minus' rounded minValue={1} textColor='#003D9A' iconStyle={{ color: '#003D9A' }} rightButtonBackgroundColor='#E5E4E2' leftButtonBackgroundColor='#E5E4E2' onChange={value => setReqQty(value)} />
-          {/* <TouchableOpacity onPress={handleIncreaseQuantity}>
-            <AntDesign name="plus" size={20} color="black" />
-          </TouchableOpacity>
-
-          <Text style={{ marginHorizontal: 10, fontSize: 18 }}>{reqQty}</Text>
-
-          <TouchableOpacity onPress={handleDecreaseQuantity}>
-            <AntDesign name="minus" size={20} color="black" />
-          </TouchableOpacity> */}
+          <NumericInput type='plus-minus' rounded /*initValue={1}*/ minValue={1} textColor='#003D9A' iconStyle={{ color: '#003D9A' }} rightButtonBackgroundColor='#E5E4E2' leftButtonBackgroundColor='#E5E4E2' onChange={value => setReqQty(value)} />
         </View>
         <View>
           <View style={styles.row}>
