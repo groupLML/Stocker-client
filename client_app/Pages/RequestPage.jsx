@@ -7,7 +7,7 @@ export default function RequestPage(props) {
 
   const { requestId, requestsList } = props.route.params;
 
-  let request = requestsList.filter((item) => item.reqId === requestId);
+  let request = requestsList.filter((item) => item.reqId === requestId);//get the request item to read 
 
   return (
     <View style={styles.container}>

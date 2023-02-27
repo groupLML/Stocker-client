@@ -3,14 +3,13 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'r
 import Checkbox from 'expo-checkbox';
 import FCDepTypeList from '../FunctionalComps/FCDepTypeList';
 import { GlobalContext } from '../GlobalData/GlobalData';
-import { AntDesign } from '@expo/vector-icons';
 import Autocomplete from 'react-native-autocomplete-input';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import NumericInput from 'react-native-numeric-input'
+/* import { AntDesign } from '@expo/vector-icons'; */
 
 
 export default function AddRequestPage(props) {
-
-
   //-----------------------------------Autocomplete med input---------------------------------------------
   const data = [
     { id: 1, name: 'Apple' },
@@ -29,11 +28,11 @@ export default function AddRequestPage(props) {
     return data.filter((item) => item.name.toLowerCase().startsWith(query.toLowerCase()));
   };
 
-  const renderSuggestion = ({ item }) => {//render each auto completion suggestion
+  const renderSuggestion = ({ item }) => (//render each auto completion suggestion
     <TouchableOpacity onPress={() => addItem(item)}>
       <Text>{item.name}</Text>
     </TouchableOpacity>
-  };
+  );
 
   const renderSelectedItem = ({ item }) => (//render each selected item's name
     <View style={styles.selectedItem}>
@@ -58,15 +57,15 @@ export default function AddRequestPage(props) {
   const [reqQty, setReqQty] = useState(0);
   const { DepTypes, setDepTypes, Meds } = useContext(GlobalContext);
 
-  const handleIncreaseQuantity = () => {
-    setReqQty(reqQty + 1);
-  };
-
-  const handleDecreaseQuantity = () => {
-    if (reqQty > 0) {
-      setReqQty(reqQty - 1);
-    }
-  };
+  /*   const handleIncreaseQuantity = () => {
+      setReqQty(reqQty + 1);
+    };
+  
+    const handleDecreaseQuantity = () => {
+      if (reqQty > 0) {
+        setReqQty(reqQty - 1);
+      }
+    }; */
 
   /*const [selectedDep, setselectedDep] = useState([]); */
   /* let selected = DepTypes.filter((DepType) => DepType.isChecked); */
@@ -111,7 +110,7 @@ export default function AddRequestPage(props) {
             placeholder="Type here..."
             containerStyle={styles.autocompleteContainer}
             listStyle={styles.listStyle} />
-          <FlatList
+           <FlatList
             data={selectedItems}
             renderItem={renderSelectedItem}
             keyExtractor={(item) => item.id.toString()}
@@ -125,7 +124,8 @@ export default function AddRequestPage(props) {
         </View>
         <View style={styles.row}>
           <Text style={styles.fields}>כמות:</Text>
-          <TouchableOpacity onPress={handleIncreaseQuantity}>
+          <NumericInput type='plus-minus' rounded minValue={1} textColor='#003D9A' iconStyle={{ color: '#003D9A' }} rightButtonBackgroundColor='#E5E4E2' leftButtonBackgroundColor='#E5E4E2' onChange={value => setReqQty(value)} />
+          {/* <TouchableOpacity onPress={handleIncreaseQuantity}>
             <AntDesign name="plus" size={20} color="black" />
           </TouchableOpacity>
 
@@ -133,7 +133,7 @@ export default function AddRequestPage(props) {
 
           <TouchableOpacity onPress={handleDecreaseQuantity}>
             <AntDesign name="minus" size={20} color="black" />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <View>
           <View style={styles.row}>
