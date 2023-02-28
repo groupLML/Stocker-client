@@ -12,9 +12,10 @@ import { GlobalContext } from '../GlobalData/GlobalData';
 
 export default function AddRequestPage(props) {
 
+//צריך להחליט מאיפה נעשה פעם ראשונה את זה
   //-------------------------------Get Meds-----------------------------
 
-  const { apiUrlMeds } = useContext(GlobalContext);
+  const { apiUrlMeds, setMedications } = useContext(GlobalContext);
   const [meds, setMeds] = useState([]);
 
   useEffect(() => {
@@ -35,13 +36,18 @@ export default function AddRequestPage(props) {
       (error) => {
         console.log("err post=", error);
       });
-  }, [])
+  }, []);//component did mount
+
+  useEffect(() => {
+    setMedications(meds);
+  }, [meds]); //callback function
 
   //מכל אובייקט genName יצירת מערך המכיל רק את מאפייני
   const genNames = [...new Set(meds.map(med => med.genName))];//ייחודי
   //const genNames = meds.map(med => med.genName);
   //console.log(genNames);//בדיקה
 
+  
   //-----------------------Autocomplete med input-------------------------------
 
   const options = genNames;
@@ -116,6 +122,47 @@ export default function AddRequestPage(props) {
     //isChecked === true ? '#003D9A' : undefined
     console.log(DepTypes);
   };
+
+  //צריך להחליט איפה נעשה פעם ראשונה את זה
+  //-------------------------------Get Deps-----------------------------
+
+  const { apiUrlDeps, Departments, setDepartments } = useContext(GlobalContext);
+  const [Deps, setDeps] = useState([]);
+
+  useEffect(() => {
+    fetch(apiUrlDeps, { //של השרת URL
+      method: 'GET',//מה המתודה
+      headers: new Headers({
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json; charset=UTF-8',
+      })
+    })
+      .then(res => {
+        return res.json()
+      })
+      .then(
+        (result) => {
+          setDeps(result);
+        },
+        (error) => {
+          console.log("err post=", error);
+        });
+  }, []);//component did mount
+
+  useEffect(() => {
+    setDepartments(Deps);
+
+/*     const filteredDeps = DepTypes.map(depType => {
+      if (depType.isChecked) {
+        const depIds = Deps.filter(dep => dep.depType === depType.name).map(dep => dep.depId);
+        return { name: depType.name, depIds };
+      }
+      return null;
+    }).filter(depType => depType !== null); */
+
+  }, [Deps]); //callback function
+
+
 
   return (
     <View style={styles.container}>
