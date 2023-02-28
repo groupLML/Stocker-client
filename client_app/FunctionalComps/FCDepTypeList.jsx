@@ -30,7 +30,6 @@ export default function FCDepTypeList() {
             )}
         />
     );
-
 }
 
 const styles = StyleSheet.create({

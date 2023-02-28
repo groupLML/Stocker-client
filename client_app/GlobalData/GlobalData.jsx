@@ -6,7 +6,7 @@ export default function GlobalData(props) {
 
     const apiUrlUser = "https://proj.ruppin.ac.il/cgroup36/prod/api/User/";
     const apiUrlMedRequest = "https://proj.ruppin.ac.il/cgroup36/prod/api/MedRequest/";
-    const apiUrlMeds = "https://proj.ruppin.ac.il/cgroup36/prod/api/Medicine";
+    const apiUrlMeds = "https://proj.ruppin.ac.il/cgroup36/prod/api/Medicine/";
 
     const [User, setUser] = useState([]);
     const [Meds, setMeds] = useState([]);

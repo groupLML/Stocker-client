@@ -113,7 +113,7 @@ export default function AddRequestPage(props) {
         </View>
         <View style={styles.row}>
           <Text style={styles.fields}>כמות:</Text>
-          <NumericInput type='plus-minus' rounded /*initValue={1}*/ minValue={1} textColor='#003D9A' iconStyle={{ color: '#003D9A' }} rightButtonBackgroundColor='#E5E4E2' leftButtonBackgroundColor='#E5E4E2' onChange={value => setReqQty(value)} />
+          <NumericInput type='plus-minus' rounded containerStyle={{ flexDirection: 'row-reverse' }} minValue={1} textColor='#003D9A' iconStyle={{ color: '#003D9A' }} rightButtonBackgroundColor='#E5E4E2' leftButtonBackgroundColor='#E5E4E2' onChange={value => setReqQty(value)} />
         </View>
         <View>
           <View style={styles.row}>

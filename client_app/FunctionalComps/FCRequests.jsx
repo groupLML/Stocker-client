@@ -9,7 +9,7 @@ export default function FCRequests(props) {
             id={request.reqId}
             date={request.reqDate}
             time={request.reqTime}
-            medId={request.genName}
+            genName={request.genName}
             nurseName={request.nurseName}
            /*  aNurse={request.aUser} */
             depName={request.depName}

@@ -1,31 +1,37 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from '@rneui/base';
 import { Icon } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
-import NumericInput from 'react-native-numeric-input'
+import NumericInput from 'react-native-numeric-input';
+import { format } from 'date-fns';
 
 export default function FCRequest(props) {
-
   const navigation = useNavigation();
+
+  const [reqQtyTep, setReqQtyTep] = useState(props.reqQty);
+
+  //Date
+  const date = props.date.split(' ')[0];//סידור פורמט התאריך
+  const formattedDate = format(new Date(date), 'dd/MM/yyyy');
 
   const handleCardPress = () => {
     navigation.navigate('צפייה בפרטי בקשה', { requestId: props.id, requestsList: props.requestsList });
   };
 
   const handleUpdateRequest = () => {
-    
+
+
   };
   const handleApproveRequest = () => {
-    
+
   };
   const handleCancelRequest = () => {
-    
+
   };
   const handleDeleteRequest = (item) => {
   };
 
-  const formattedDate = props.date.split(' ')[0];//סידור פורמט התאריך
 
   return (
     <Card style={styles.cardContainer} borderColor="#00317D">
@@ -48,42 +54,50 @@ export default function FCRequest(props) {
         <Text style={styles.cardDate}>{props.time} {formattedDate}</Text>
       </View>
 
-      <Text style={styles.cardTitle}>{props.medId}</Text>
 
-      {!props.isDetailedRequest && (
+      {(!props.isDetailedRequest || props.reqStatus === 'A') && (<Text style={styles.cardTitle}>{props.genName}</Text>)}
+
+
+      {(!props.isDetailedRequest || props.reqStatus === 'A') && (
         <>
-          {props.reqStatus === 'A' && (
-            <>
-              <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >כמות: </Text>{props.reqQty}</Text>
-              <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >שם יוצר ההזמנה: </Text>{props.nurseName}</Text>
-            </>
-          )}
-          {props.reqStatus === 'W' && (
-            <>
-              <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >כמות: </Text>{props.reqQty}</Text>
-              <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >שם יוצר ההזמנה: </Text>{props.nurseName}</Text>
-            </>
-          )}
-          {props.reqStatus === 'D' && (
-            <>
-              <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >כמות: </Text>{props.reqQty}</Text>
-              <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >שם יוצר ההזמנה: </Text>{props.nurseName}</Text>
-            </>
-          )}
+          <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >כמות: </Text>{props.reqQty}</Text>
+          <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >שם יוצר ההזמנה: </Text>{props.nurseName}</Text>
         </>
       )}
-
       {props.depName && <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >שם המחלקה שאישרה: </Text>{props.depName}</Text>}
+
 
       {props.isDetailedRequest &&
         <View>
           {props.reqStatus === 'W' && (
             <>
               <View style={styles.row}>
-                <Text style={{ fontWeight: "bold" }} >כמות: </Text>
-                <NumericInput type='plus-minus' onChange={value => console.log(value)} rounded minValue={1} textColor='#003D9A' iconStyle={{ color: '#003D9A' }} rightButtonBackgroundColor='#E5E4E2' leftButtonBackgroundColor='#E5E4E2' />
+                <View style={styles.row}><Text style={[styles.cardBody, { fontWeight: "bold" }]} >שם תרופה: </Text><TextInput placeholder={props.genName} style={styles.input}></TextInput></View>
               </View>
-              <View style={styles.row}><Text style={{ fontWeight: "bold" }} >שם יוצר ההזמנה: </Text><TextInput placeholder={props.nurseName} style={styles.input}></TextInput></View>
+
+              <View style={styles.row}>
+                <Text style={[styles.cardBody, { fontWeight: "bold" }]}>כמות: </Text>
+                <NumericInput
+                  type='plus-minus'
+                  /* onChange={value => console.log(value)} */
+                  onChange={value => setReqQtyTep({ value })}
+                  rounded
+                  minValue={1}
+                  textColor='#003D9A'
+                  iconStyle={{ color: '#003D9A' }}
+                  containerStyle={{ flexDirection: 'row-reverse' }}
+                  rightButtonBackgroundColor='#E5E4E2'
+                  leftButtonBackgroundColor='#E5E4E2'
+                  value={reqQtyTep}
+                />
+              </View>
+
+             {/*  -----------------------בדיקה------------------------ */}
+              <Text style={{ fontWeight: "bold" }} >{reqQtyTep.value}</Text>
+
+
+              <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >שם יוצר ההזמנה: </Text>{props.nurseName}</Text>
+
               <View style={styles.row}>
                 <TouchableOpacity style={[styles.button, { backgroundColor: '#129C62' }]} onPress={() => handleUpdateRequest()}>
                   <Text style={styles.buttonText}>עדכון</Text>
@@ -180,24 +194,3 @@ const styles = StyleSheet.create({
     borderColor: "#00317D",
   },
 });
-
-
-/*     <Card style={styles.cardContainer} borderColor="#00317D" >
-      <View style={styles.row}>
-        <Text style={styles.cardStatus}>
-          {props.reqStatus === 'A' ? <Text style={{ color: '#00914B' }}>מאושר</Text> :
-            props.reqStatus === 'W' ? <Text style={{ color: 'red' }}>בהמתנה</Text> :
-              props.reqStatus === 'D' ? 'נדחה' : null}
-        </Text>
-        <Text style={styles.cardDate}>{props.date}</Text>
-      </View>
-
-      <Text style={styles.cardTitle}>{props.title}</Text>
-      <Text style={styles.cardBody}>{props.reqQty}</Text>
-
-      <Icon  reverse name='checkmark' type='ionicon' color='#00914B' style={styles.icon} />
-
-      <TouchableOpacity onPress={() => handleCardPress(props.id)}>
-        <Text style={styles.readMore}>קרא עוד...</Text>
-      </TouchableOpacity>
-    </Card> */

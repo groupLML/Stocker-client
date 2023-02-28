@@ -11,21 +11,17 @@ export default function RequestsPage(props) {
   const { apiUrlMedRequest } = useContext(GlobalContext);
 
   const [requests, setRequests] = useState([]);
-
   const [depId, setDepId] = useState('');
 
-  //--------------------------GET Requests details ----------------------------
+  //----------------------GET Requests details ---------------------
 
-  //depId פונ' רצה כל פעם שמתעדכן 
-  useEffect(() => {
-    console.log('component did Update');
+  useEffect(() => {//depId פונ' רצה כל פעם שמתעדכן 
 
     const getData = () => {
       try {//Retrieving AsyncStorage data
         AsyncStorage.getItem('User', (err, result) => {
           if (result != null) {
-            setDepId(JSON.parse(result).depId);
-          }
+            setDepId(JSON.parse(result).depId);}
         })
       } catch (e) {
         // error reading value
