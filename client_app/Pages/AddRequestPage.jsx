@@ -1,58 +1,51 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import Checkbox from 'expo-checkbox';
-import FCDepTypeList from '../FunctionalComps/FCDepTypeList';
-import { GlobalContext } from '../GlobalData/GlobalData';
-import Autocomplete from 'react-native-autocomplete-input';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import NumericInput from 'react-native-numeric-input'
+
+import { GlobalContext } from '../GlobalData/GlobalData';
+import FCDepTypeList from '../FunctionalComps/FCDepTypeList';
+
+//import Autocomplete from 'react-native-autocomplete-input';
+//import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 export default function AddRequestPage(props) {
 
-  //-----------------------------------Autocomplete med input---------------------------------------------
-  const data = [
-    { id: 1, name: 'Apple' },
-    { id: 2, name: 'Banana' },
-    { id: 3, name: 'Cherry' },
-    { id: 4, name: 'Date' },
-  ];
 
-  const [query, setQuery] = useState('');//tracks the user's input
-  const [selectedItems, setSelectedItems] = useState([]);//stores the selected items
+  //-----------------------Autocomplete med input-------------------------------
 
-  const filterData = (query) => {//filter the data source based on the user's input
-    if (query === '') {
-      return [];
-    }
-    return data.filter((item) => item.name.toLowerCase().startsWith(query.toLowerCase()));
+  const options = ["Apple", "Apnana", "Cherry", "Durian", "Elderberry", "Fig", "Grape", "Honeydew", "Iguana fruit", "Jackfruit", "Kiwi", "Lemon", "Mango", "Nectarine"];
+
+  const [inputValue, setInputValue] = useState('');
+  const [filteredOptions, setFilteredOptions] = useState([]);
+
+  const handleInputChange = (text) => {
+    setInputValue(text);
+    setFilteredOptions(options.filter((option) => option.toLowerCase().startsWith(text.toLowerCase())));
   };
 
-  const renderSuggestion = ({ item }) => (//render each auto completion suggestion
-    <TouchableOpacity onPress={() => addItem(item)}>
-      <Text>{item.name}</Text>
-    </TouchableOpacity>
-  );
-
-  const addItem = (item) => {// add a selected item to the selectedItems array
-    setSelectedItems([...selectedItems, item]);
-    setQuery('');
+  const handleSelectOption = (option) => {
+    setInputValue(option);
+    setFilteredOptions([]);
   };
 
-/*   const renderSelectedItem = ({ item }) => (//render each selected item's name
-    <View style={styles.selectedItem}>
-      <Text>{item.name}</Text>
-      <TouchableOpacity onPress={() => removeItem(item)}>
-        <Icon name="times" size={20} />
-      </TouchableOpacity>
-    </View>
+  /* const renderItem = ({ item }) => (
+    <Text style={{ marginVertical: 5 }} onPress={() => handleSelectOption(item)}>{item}</Text>
   ); */
 
-/* const removeItem = (itemName) => {// remove a selected item from the selectedItems array
-    setSelectedItems(selectedItems.filter((item) => item.name !== itemName));
-  }; */
+  const renderItem = ({ item, index }) => {
+    if (index < 5) {
+      return (
+          <TouchableOpacity onPress={() => handleSelectOption(item)}>
+            <Text style={styles.option}>{item}</Text>
+          </TouchableOpacity>
+      );
+    }
+    return null;
+  };
 
-  //-------------------------------------------------------------------------------------------
-
+  //------------------------------------------------------------------------------
   const [isChecked, setChecked] = useState(true);
   const [reqQty, setReqQty] = useState(1);
   const { DepTypes, setDepTypes, Meds } = useContext(GlobalContext);
@@ -91,30 +84,21 @@ export default function AddRequestPage(props) {
       <View>
         <View style={styles.row}>
           <Text style={styles.fields}>שם תרופה:</Text>
-          <Autocomplete
-            data={filterData(query)}
-            value={query}
-            onChangeText={(text) => setQuery(text)}
-            renderItem={renderSuggestion}
-            keyExtractor={(item) => item.id.toString()}
-            placeholder="הזן שם תרופה"
-            containerStyle={styles.autocompleteContainer}
-            listStyle={styles.listStyle} />
-{/*            <FlatList
-            data={selectedItems}
-            renderItem={renderSelectedItem}
-            keyExtractor={(item) => item.id.toString()}
-            style={styles.selectedItemsContainer} /> */}
-          {/* <TextInput
-            style={styles.input}
-            value={depName}
-            onChangeText={(text) => setDepName(text)}
-          /> */}
+          <View>
+            <TextInput style={styles.input} value={inputValue} placeholder="Type something..." onChangeText={handleInputChange} />
+            <FlatList
+              data={filteredOptions}
+              renderItem={renderItem}
+              keyExtractor={(item) => item}
+            />
+          </View>
         </View>
+
         <View style={styles.row}>
           <Text style={styles.fields}>כמות:</Text>
           <NumericInput type='plus-minus' rounded containerStyle={{ flexDirection: 'row-reverse' }} minValue={1} textColor='#003D9A' iconStyle={{ color: '#003D9A' }} rightButtonBackgroundColor='#E5E4E2' leftButtonBackgroundColor='#E5E4E2' onChange={value => setReqQty(value)} />
         </View>
+
         <View>
           <View style={styles.row}>
             <Checkbox style={styles.CB} color={isChecked ? '#003D9A' : undefined} value={isChecked} onValueChange={setChecked} />
@@ -122,14 +106,14 @@ export default function AddRequestPage(props) {
           </View >
           {!isChecked && <FCDepTypeList />}
         </View>
+
         <TouchableOpacity style={styles.button} onPress={() => handleAddRequest()}>
           <Text style={styles.buttonText}>אישור</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
-}
-
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -150,19 +134,21 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   fields: {
+    fontSize: 17,
+    color: "#003D9A",
     width: 100,
     marginRight: 10,
     fontWeight: 'bold',
-    fontSize: 16,
   },
   input: {
-    flex: 1,
+    // flex: 1,
     borderWidth: 1,
     borderRadius: 10,
     borderColor: '#ccc',
     paddingVertical: 5, // reduce padding on top and bottom
-    paddingHorizontal: 10,
+    paddingHorizontal: 45,
     borderColor: "#00317D",
+    paddingRight: 10,
   },
   CB: {
     marginRight: 10,
@@ -181,8 +167,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
   },
-  /*   quantity: {
-      size: 24,
-      color: "black",
-    }, */
 });

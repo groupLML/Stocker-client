@@ -1,14 +1,60 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import FCDepTypeList from '../FunctionalComps/FCDepTypeList';
 import { GlobalContext } from '../GlobalData/GlobalData';
+import Autocomplete from 'react-native-autocomplete-input';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import NumericInput from 'react-native-numeric-input'
 
 export default function AddRequestPage(props) {
 
+    //-----------------------Autocomplete med input-------------------------------
+    const data = [
+        { id: 1, name: 'Apple' },
+        { id: 2, name: 'Banana' },
+        { id: 3, name: 'Cherry' },
+        { id: 4, name: 'Date' },
+    ];
+
+    const [query, setQuery] = useState('');//tracks the user's input
+    const [selectedItems, setSelectedItems] = useState([]);//stores the selected items
+
+    const filterData = (query) => {//filter the data source based on the user's input
+        if (query === '') {
+            return [];
+        }
+        return data.filter((item) => item.name.toLowerCase().startsWith(query.toLowerCase()));
+    };
+
+    const renderSuggestion = ({ item }) => (//render each auto completion suggestion
+        <TouchableOpacity onPress={() => addItem(item)}>
+            <Text>{item.name}</Text>
+        </TouchableOpacity>
+    );
+
+    const addItem = (item) => {// add a selected item to the selectedItems array
+        setSelectedItems([...selectedItems, item]);
+        setQuery('');
+    };
+
+    /*   const renderSelectedItem = ({ item }) => (//render each selected item's name
+        <View style={styles.selectedItem}>
+          <Text>{item.name}</Text>
+          <TouchableOpacity onPress={() => removeItem(item)}>
+            <Icon name="times" size={20} />
+          </TouchableOpacity>
+        </View>
+      ); */
+
+    /* const removeItem = (itemName) => {// remove a selected item from the selectedItems array
+        setSelectedItems(selectedItems.filter((item) => item.name !== itemName));
+      }; */
+
+    //-------------------------------------------------------------------------------------------
+
     const [isChecked, setChecked] = useState(true);
-    const [depName, setDepName] = useState('');
-    const [reqQty, setReqQty] = useState('');
+    const [reqQty, setReqQty] = useState(1);
     const { DepTypes, setDepTypes, Meds } = useContext(GlobalContext);
 
     /*const [selectedDep, setselectedDep] = useState([]); */
@@ -35,7 +81,8 @@ export default function AddRequestPage(props) {
 
 
     const handleAddRequest = () => {
-        isChecked === true ? '#003D9A' : undefined
+        //isChecked === true ? '#003D9A' : undefined
+        console.log(DepTypes);
     };
 
     return (
@@ -44,19 +91,30 @@ export default function AddRequestPage(props) {
             <View>
                 <View style={styles.row}>
                     <Text style={styles.fields}>שם תרופה:</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={depName}
-                        onChangeText={(text) => setDepName(text)}
-                    />
+                    <Autocomplete
+                        data={filterData(query)}
+                        value={query}
+                        onChangeText={(text) => setQuery(text)}
+                        renderItem={renderSuggestion}
+                        keyExtractor={(item) => item.id.toString()}
+                        placeholder="הזן שם תרופה"
+                        containerStyle={styles.autocompleteContainer}
+                        listStyle={styles.listStyle} />
+                    {/*            <FlatList
+            data={selectedItems}
+            renderItem={renderSelectedItem}
+            keyExtractor={(item) => item.id.toString()}
+            style={styles.selectedItemsContainer} /> */}
+                    {/* <TextInput
+            style={styles.input}
+            value={depName}
+            onChangeText={(text) => setDepName(text)}
+          /> */}
                 </View>
+
                 <View style={styles.row}>
                     <Text style={styles.fields}>כמות:</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={reqQty}
-                        onChangeText={(text) => setReqQty(text)}
-                    />
+                    <NumericInput type='plus-minus' rounded containerStyle={{ flexDirection: 'row-reverse' }} minValue={1} textColor='#003D9A' iconStyle={{ color: '#003D9A' }} rightButtonBackgroundColor='#E5E4E2' leftButtonBackgroundColor='#E5E4E2' onChange={value => setReqQty(value)} />
                 </View>
                 <View>
                     <View style={styles.row}>
@@ -96,13 +154,16 @@ const styles = StyleSheet.create({
         width: 100,
         marginRight: 10,
         fontWeight: 'bold',
+        fontSize: 16,
     },
     input: {
         flex: 1,
         borderWidth: 1,
         borderRadius: 10,
         borderColor: '#ccc',
-        padding: 10,
+        paddingVertical: 5, // reduce padding on top and bottom
+        paddingHorizontal: 10,
+        borderColor: "#00317D",
     },
     CB: {
         marginRight: 10,
@@ -113,7 +174,7 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: '#003D9A',
         borderRadius: 10,
-        paddingVertical: 15,
+        paddingVertical: 10,
         marginTop: 20,
     },
     buttonText: {
@@ -121,4 +182,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 18,
     },
+    /*   quantity: {
+        size: 24,
+        color: "black",
+      }, */
 });
