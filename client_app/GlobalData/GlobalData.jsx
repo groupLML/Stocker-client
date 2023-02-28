@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
 export const GlobalContext = createContext()
 
@@ -17,29 +17,30 @@ export default function GlobalData(props) {
     ]);
 
     //-------------------------------Get Meds-----------------------------
-    fetch(apiUrlMeds, { //של השרת URL
-        method: 'GET',//מה המתודה
-        headers: new Headers({
-            'Content-Type': 'application/json; charset=UTF-8',
-            'Accept': 'application/json; charset=UTF-8',
+    useEffect(() => {
+        fetch(apiUrlMeds, { //של השרת URL
+            method: 'GET',//מה המתודה
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Accept': 'application/json; charset=UTF-8',
+            })
         })
-    })
-        .then(res => {
-            return res.json()
-        })
-        .then(
-            (result) => {
-                setMeds(result);
-            },
-            (error) => {
-                console.log("err post=", error);
-            });
+            .then(res => {
+                return res.json()
+            })
+            .then(
+                (result) => {
+                    setMeds(result);
+                },
+                (error) => {
+                    console.log("err post=", error);
+                });
+    }, [])
 
     return (
         <GlobalContext.Provider
-            value={{
-                User, apiUrlUser, setUser,
-                apiUrlMedRequest, DepTypes, setDepTypes, Meds}}>
+            value={{ apiUrlUser, apiUrlMedRequest, apiUrlMeds,
+                     User, setUser, DepTypes, setDepTypes }}>
             {props.children}
         </GlobalContext.Provider>
     )

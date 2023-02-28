@@ -86,8 +86,8 @@ export default function FCRequest(props) {
                   textColor='#003D9A'
                   iconStyle={{ color: '#003D9A' }}
                   containerStyle={{ flexDirection: 'row-reverse' }}
-                  rightButtonBackgroundColor='#E5E4E2'
-                  leftButtonBackgroundColor='#E5E4E2'
+                  rightButtonBackgroundColor='#E1EAF9'
+                  leftButtonBackgroundColor='#E1EAF9'
                   value={reqQtyTep}
                 />
               </View>
