@@ -12,7 +12,7 @@ import { GlobalContext } from '../GlobalData/GlobalData';
 
 export default function AddRequestPage(props) {
 
-//צריך להחליט מאיפה נעשה פעם ראשונה את זה
+  //צריך להחליט מאיפה נעשה פעם ראשונה את זה
   //-------------------------------Get Meds-----------------------------
 
   const { apiUrlMeds, setMedications } = useContext(GlobalContext);
@@ -26,16 +26,16 @@ export default function AddRequestPage(props) {
         'Accept': 'application/json; charset=UTF-8',
       })
     })
-    .then(res => {
-      return res.json()
-    })
-    .then(
-      (result) => {
-        setMeds(result);
-      },
-      (error) => {
-        console.log("err post=", error);
-      });
+      .then(res => {
+        return res.json()
+      })
+      .then(
+        (result) => {
+          setMeds(result);
+        },
+        (error) => {
+          console.log("err post=", error);
+        });
   }, []);//component did mount
 
   useEffect(() => {
@@ -43,11 +43,11 @@ export default function AddRequestPage(props) {
   }, [meds]); //callback function
 
   //מכל אובייקט genName יצירת מערך המכיל רק את מאפייני
-  const genNames = [...new Set(meds.map(med => med.genName))];//ייחודי
+  const genNames = [...new Set(meds.map(med => med.genName))];//(דיסטינק) ללא כפיליות
   //const genNames = meds.map(med => med.genName);
   //console.log(genNames);//בדיקה
 
-  
+
   //-----------------------Autocomplete med input-------------------------------
 
   const options = genNames;
@@ -57,28 +57,23 @@ export default function AddRequestPage(props) {
   const [isSelectFromList, setIsSelectFromList] = useState(false);//אני הוספתי
 
   const handleInputChange = (text) => {
-    //setInputValue(text);
-    //setFilteredOptions(options.filter((option) => option.toLowerCase().startsWith(text.toLowerCase())));
     setIsSelectFromList(false);
     setInputValue(text);
     const filtered = options.filter((option) => option.toLowerCase().startsWith(text.toLowerCase()));
     setFilteredOptions(filtered);
     if (filtered.length === 0) {
-      setFilteredOptions(["The medicine doesn't exist"]);
+      setFilteredOptions(["אין ערכים תואמים, יש לבחור ערך מהרשימה"]);
     }
   };
 
   const handleSelectOption = (option) => {
-    if (option !== "The medicine doesn't exist"){
-    setInputValue(option);
-    setIsSelectFromList(true);
-    setFilteredOptions([]);
+    if (option !== "אין ערכים תואמים, יש לבחור ערך מהרשימה") {
+      setInputValue(option);
+      setIsSelectFromList(true);
+      setFilteredOptions([]);
     }
   };
-
-  /* const renderItem = ({ item }) => (
-    <Text style={{ marginVertical: 5 }} onPress={() => handleSelectOption(item)}>{item}</Text>
-  ); */
+  
   const renderItem = ({ item, index }) => {
     if (index < 5) {
       return (
@@ -93,7 +88,7 @@ export default function AddRequestPage(props) {
   //-----------------------------Dep Type List------------------------------------
   const [isChecked, setChecked] = useState(true);
   const [reqQty, setReqQty] = useState(1);
-  const { DepTypes, setDepTypes} = useContext(GlobalContext);
+  const { DepTypes, setDepTypes } = useContext(GlobalContext);
 
   /*const [selectedDep, setselectedDep] = useState([]); */
   /* let selected = DepTypes.filter((DepType) => DepType.isChecked); */
@@ -152,13 +147,13 @@ export default function AddRequestPage(props) {
   useEffect(() => {
     setDepartments(Deps);
 
-/*     const filteredDeps = DepTypes.map(depType => {
-      if (depType.isChecked) {
-        const depIds = Deps.filter(dep => dep.depType === depType.name).map(dep => dep.depId);
-        return { name: depType.name, depIds };
-      }
-      return null;
-    }).filter(depType => depType !== null); */
+    /*     const filteredDeps = DepTypes.map(depType => {
+          if (depType.isChecked) {
+            const depIds = Deps.filter(dep => dep.depType === depType.name).map(dep => dep.depId);
+            return { name: depType.name, depIds };
+          }
+          return null;
+        }).filter(depType => depType !== null); */
 
   }, [Deps]); //callback function
 
@@ -244,7 +239,7 @@ const styles = StyleSheet.create({
     padding: 7,
     zIndex: 1,
   },
-  option:{
+  option: {
     paddingTop: 5,
     paddingBottom: 5,
     paddingLeft: 7,
