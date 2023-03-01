@@ -17,28 +17,7 @@ export default function GlobalData(props) {
         { name: 'כירורגיה', isChecked: true },
         { name: 'פנימית', isChecked: true },
     ]);
-
-    //-------------------------------Get Meds-----------------------------
-    useEffect(() => {
-        fetch(apiUrlMeds, { //של השרת URL
-            method: 'GET',//מה המתודה
-            headers: new Headers({
-                'Content-Type': 'application/json; charset=UTF-8',
-                'Accept': 'application/json; charset=UTF-8',
-            })
-        })
-            .then(res => {
-                return res.json()
-            })
-            .then(
-                (result) => {
-                    setMeds(result);
-                },
-                (error) => {
-                    console.log("err post=", error);
-                });
-    }, [])
-
+    
     return (
         <GlobalContext.Provider
             value={{
