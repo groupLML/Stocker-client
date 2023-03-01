@@ -59,7 +59,7 @@ export default function AddRequestPage(props) {
           <Text style={styles.fields}>שם תרופה:</Text>
           <FCMedInput />
         </View>
-        <FCQuantitInput/>
+        <FCQuantitInput Qty={1} />
         <FCDepTypeList />
         <TouchableOpacity style={styles.button} onPress={() => handleAddRequest()}>
           <Text style={styles.buttonText}>אישור</Text>
