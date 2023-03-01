@@ -4,36 +4,8 @@ import { GlobalContext } from '../GlobalData/GlobalData';
 
 export default function FCMedInput() {
 
-    //צריך להחליט מאיפה נעשה פעם ראשונה את זה
-    //-------------------------------Get Meds-----------------------------
-
-    const { apiUrlMeds, setMedications } = useContext(GlobalContext);
-    const [meds, setMeds] = useState([]);
-
-    useEffect(() => {
-        fetch(apiUrlMeds, { //של השרת URL
-            method: 'GET',//מה המתודה
-            headers: new Headers({
-                'Content-Type': 'application/json; charset=UTF-8',
-                'Accept': 'application/json; charset=UTF-8',
-            })
-        })
-            .then(res => {
-                return res.json()
-            })
-            .then(
-                (result) => {
-                    setMeds(result);
-                },
-                (error) => {
-                    console.log("err post=", error);
-                });
-    }, []);//component did mount
-
-    useEffect(() => {
-        setMedications(meds);
-    }, [meds]); //callback function
-
+    const { meds } = useContext(GlobalContext);
+   
     //מכל אובייקט genName יצירת מערך המכיל רק את מאפייני
     const genNames = [...new Set(meds.map(med => med.genName))];//(דיסטינק) ללא כפיליות
     //const genNames = meds.map(med => med.genName);

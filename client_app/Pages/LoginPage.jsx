@@ -1,8 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Linking } from 'react-native';
-
-import FCAnimatedLogo from '../FunctionalComps/FCAnimatedLogo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { GlobalContext } from '../GlobalData/GlobalData';
+import FCAnimatedLogo from '../FunctionalComps/FCAnimatedLogo';
 
 const phoneNumber = '04-3252532';
 
@@ -65,19 +66,47 @@ export default function LoginPage(props) {
         }
     }
 
-/* 
-    const getData = () => {
-        try {//Retrieving AsyncStorage data
-            AsyncStorage.getItem('User', (err, result) => {
-                console.log(JSON.parse(result));
-                //return result != null ? JSON.parse(result) : null;
+    /* 
+        const getData = () => {
+            try {//Retrieving AsyncStorage data
+                AsyncStorage.getItem('User', (err, result) => {
+                    console.log(JSON.parse(result));
+                    //return result != null ? JSON.parse(result) : null;
+                })
+            } catch (e) {
+                // error reading value
+            }
+        } */
+
+    //להעביר לדף הבית
+    //-------------------------------Get Meds-----------------------------
+
+    const { apiUrlMeds, setMeds, meds } = useContext(GlobalContext);
+
+    useEffect(() => {
+        fetch(apiUrlMeds, { //של השרת URL
+            method: 'GET',//מה המתודה
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Accept': 'application/json; charset=UTF-8',
             })
-        } catch (e) {
-            // error reading value
-        }
-    } */
+        })
+            .then(res => {
+                return res.json()
+            })
+            .then(
+                (result) => {
+                    setMeds(result);
+                },
+                (error) => {
+                    console.log("err post=", error);
+                });
+    }, [meds]);//component did mount
 
-
+    /* useEffect(() => {
+        console.log(Medications);
+    }, [Medications]); //callback function
+ */
 
     return (
         <View style={styles.container}>
