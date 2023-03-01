@@ -16,10 +16,8 @@ export default function AddRequestPage(props) {
   //צריך להחליט איפה נעשה פעם ראשונה את זה
   //-------------------------------Get Deps-----------------------------
 
-  const { apiUrlDeps, Departments, setDepartments } = useContext(GlobalContext);
+  const { apiUrlDeps, Deps, setDeps } = useContext(GlobalContext);
   
-  const [Deps, setDeps] = useState([]);
-
   useEffect(() => {
     fetch(apiUrlDeps, { //של השרת URL
       method: 'GET',//מה המתודה
@@ -38,21 +36,21 @@ export default function AddRequestPage(props) {
         (error) => {
           console.log("err post=", error);
         });
-  }, []);//component did mount
+  }, [Deps]);//component did mount
 
-  useEffect(() => {
+  /* useEffect(() => {
     setDepartments(Deps);
 
-    /*     const filteredDeps = DepTypes.map(depType => {
+         const filteredDeps = DepTypes.map(depType => {
           if (depType.isChecked) {
             const depIds = Deps.filter(dep => dep.depType === depType.name).map(dep => dep.depId);
             return { name: depType.name, depIds };
           }
           return null;
-        }).filter(depType => depType !== null); */
+        }).filter(depType => depType !== null); 
 
   }, [Deps]); //callback function
-
+ */
   return (
     <View style={styles.container}>
       <Text style={styles.title}>בקשה ממחלקה</Text>
