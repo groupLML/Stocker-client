@@ -28,7 +28,7 @@ export default function LoginPage(props) {
             Password: password,
         };
 
-        if (username && password) { // both fields are filled
+        if (username && password) { //both fields are filled
             fetch(apiUrlLogin, {
                 method: 'POST',
                 body: JSON.stringify(LoginUser), //bodyשליחת אובייקט ב 

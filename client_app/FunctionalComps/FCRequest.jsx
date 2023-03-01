@@ -7,6 +7,7 @@ import NumericInput from 'react-native-numeric-input';
 import { format } from 'date-fns';
 
 export default function FCRequest(props) {
+  
   const navigation = useNavigation();
 
   const [reqQtyTep, setReqQtyTep] = useState(props.reqQty);
@@ -79,7 +80,6 @@ export default function FCRequest(props) {
                 <Text style={[styles.cardBody, { fontWeight: "bold" }]}>כמות: </Text>
                 <NumericInput
                   type='plus-minus'
-                  /* onChange={value => console.log(value)} */
                   onChange={value => setReqQtyTep({ value })}
                   rounded
                   minValue={1}
@@ -88,13 +88,9 @@ export default function FCRequest(props) {
                   containerStyle={{ flexDirection: 'row-reverse' }}
                   rightButtonBackgroundColor='#E1EAF9'
                   leftButtonBackgroundColor='#E1EAF9'
-                  value={reqQtyTep}
+                  value={reqQtyTep.value}
                 />
               </View>
-
-             {/*  -----------------------בדיקה------------------------ */}
-              <Text style={{ fontWeight: "bold" }} >{reqQtyTep.value}</Text>
-
 
               <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >שם יוצר ההזמנה: </Text>{props.nurseName}</Text>
 
