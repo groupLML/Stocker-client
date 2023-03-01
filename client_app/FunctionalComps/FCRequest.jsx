@@ -12,27 +12,14 @@ export default function FCRequest(props) {
 
   const [reqQtyTep, setReqQtyTep] = useState(props.reqQty);
 
-  
- /*  const date = props.date.split(' ')[0];//סידור פורמט התאריך
-  const formattedDate = format(new Date(date), 'dd/MM/yyyy'); */
-
   const handleCardPress = () => {
     navigation.navigate('צפייה בפרטי בקשה', { requestId: props.id, requestsList: props.requestsList });
   };
 
-  const handleUpdateRequest = () => {
-
-
-  };
-  const handleApproveRequest = () => {
-
-  };
-  const handleCancelRequest = () => {
-
-  };
-  const handleDeleteRequest = (item) => {
-  };
-
+  const handleUpdateRequest = () => {};
+  const handleApproveRequest = () => {};
+  const handleCancelRequest = () => {};
+  const handleDeleteRequest = (item) => {};
 
   return (
     <Card style={styles.cardContainer} borderColor="#00317D">
@@ -135,13 +122,6 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     borderRadius: 20,
-  },
-  Date: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#003D9A",
-    marginRight: 10,
-    alignItems: 'center',
   },
   cardTitle: {
     fontSize: 20,
