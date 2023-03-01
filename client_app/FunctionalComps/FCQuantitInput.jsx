@@ -36,3 +36,21 @@ row: {
     fontWeight: 'bold',
   },
 });
+
+/* const [reqQtyTemp, setReqQtyTemp] = useState(props.reqQty); */
+
+{/* <View style={styles.row}>
+  <Text style={[styles.cardBody, { fontWeight: "bold" }]}>כמות: </Text>
+  <NumericInput
+    type='plus-minus'
+    onChange={value => setReqQtyTemp({ value })}
+    rounded
+    minValue={1}
+    textColor='#003D9A'
+    iconStyle={{ color: '#003D9A' }}
+    containerStyle={{ flexDirection: 'row-reverse' }}
+    rightButtonBackgroundColor='#E1EAF9'
+    leftButtonBackgroundColor='#E1EAF9'
+    value={reqQtyTemp.value}
+  />
+</View> */}

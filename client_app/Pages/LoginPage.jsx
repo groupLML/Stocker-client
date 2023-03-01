@@ -162,12 +162,14 @@ const styles = StyleSheet.create({
     },
     input: {
         borderWidth: 1,
-        borderColor: '#ccc',
+        borderColor: '#00317D',
         borderRadius: 5,
         padding: 10,
         width: '80%',
         marginBottom: 10,
         textAlign: 'right',
+        //paddingVertical: 5, // reduce padding on top and bottom
+        paddingHorizontal: 10,
     },
     button: {
         backgroundColor: '#00317D',

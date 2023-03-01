@@ -8,6 +8,12 @@ import FCMedInput from '../FunctionalComps/FCMedInput';
 import FCDateTime from './FCDateTime';
 
 export default function FCDetailedRequest(props) {
+
+  const handleUpdateRequest = () => { };
+  const handleApproveRequest = () => { };
+  const handleCancelRequest = () => { };
+  const handleDeleteRequest = (item) => { };
+
   return (
     <Card style={styles.Container} borderColor="#00317D">
       <View style={styles.row}>
@@ -64,7 +70,6 @@ export default function FCDetailedRequest(props) {
     </Card>
   )
 }
-
 
 const styles = StyleSheet.create({
   Container: {
