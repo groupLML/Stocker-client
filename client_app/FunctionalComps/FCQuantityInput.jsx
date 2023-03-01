@@ -2,7 +2,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
 import NumericInput from 'react-native-numeric-input';
 
-export default function FCQuantitInput(props) {
+export default function FCQuantityInput(props) {
 
   const [reqQty, setReqQty] = useState(props.Qty);
 
@@ -17,8 +17,8 @@ export default function FCQuantitInput(props) {
         iconStyle={{ color: '#003D9A' }}
         rightButtonBackgroundColor='#E1EAF9'
         leftButtonBackgroundColor='#E1EAF9'
-        onChange={value => setReqQty({ value })}
-        value={reqQty.value}
+        onChange={value => setReqQty(value)}
+        value={reqQty}
       />
     </View>
   )

@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import FCDepTypeList from '../FunctionalComps/FCDepTypeList';
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCMedInput from '../FunctionalComps/FCMedInput';
-import FCQuantitInput from '../FunctionalComps/FCQuantitInput';
+import FCQuantityInput from '../FunctionalComps/FCQuantityInput';
 
 export default function AddRequestPage(props) {
 
@@ -59,7 +59,7 @@ export default function AddRequestPage(props) {
           <Text style={styles.fields}>שם תרופה:</Text>
           <FCMedInput />
         </View>
-        <FCQuantitInput Qty={1} />
+        <FCQuantityInput Qty={1} />
         <FCDepTypeList />
         <TouchableOpacity style={styles.button} onPress={() => handleAddRequest()}>
           <Text style={styles.buttonText}>אישור</Text>

@@ -3,7 +3,7 @@ import React from 'react';
 import { Icon } from '@rneui/themed';
 import { Card } from '@rneui/base';
 
-import FCQuantitInput from './FCQuantitInput';
+import FCQuantityInput from './FCQuantityInput';
 import FCMedInput from '../FunctionalComps/FCMedInput';
 import FCDateTime from './FCDateTime';
 
@@ -54,7 +54,7 @@ export default function FCDetailedRequest(props) {
       {props.reqStatus === 'W' && (
         <>
           <View style={styles.row}><Text style={styles.fields}>שם תרופה:</Text><FCMedInput /></View>
-          <FCQuantitInput Qty={props.reqQty} />
+          <FCQuantityInput Qty={props.reqQty} />
           <Text style={styles.Body}><Text style={{ fontWeight: "bold" }} >שם יוצר ההזמנה: </Text>{props.nurseName}</Text>
           <View style={styles.row}>
             <TouchableOpacity style={[styles.button, { backgroundColor: '#129C62' }]} onPress={() => handleUpdateRequest()}>
