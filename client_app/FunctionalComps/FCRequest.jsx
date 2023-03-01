@@ -4,7 +4,7 @@ import { Card } from '@rneui/base';
 import { Icon } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import NumericInput from 'react-native-numeric-input';
-import { format } from 'date-fns';
+import FCDateTime from './FCDateTime';
 
 export default function FCRequest(props) {
   
@@ -12,9 +12,9 @@ export default function FCRequest(props) {
 
   const [reqQtyTep, setReqQtyTep] = useState(props.reqQty);
 
-  //Date
-  const date = props.date.split(' ')[0];//סידור פורמט התאריך
-  const formattedDate = format(new Date(date), 'dd/MM/yyyy');
+  
+ /*  const date = props.date.split(' ')[0];//סידור פורמט התאריך
+  const formattedDate = format(new Date(date), 'dd/MM/yyyy'); */
 
   const handleCardPress = () => {
     navigation.navigate('צפייה בפרטי בקשה', { requestId: props.id, requestsList: props.requestsList });
@@ -52,9 +52,10 @@ export default function FCRequest(props) {
           )}
           {props.reqStatus === 'D' && <Text>נדחה</Text>}
         </View>
-        <Text style={styles.cardDate}>{props.time} {formattedDate}</Text>
+        <FCDateTime time={props.time} date={props.date} />
       </View>
-
+      
+      {/* ------------------------------------------------------------- */}
 
       {(!props.isDetailedRequest || props.reqStatus === 'A') && (<Text style={styles.cardTitle}>{props.genName}</Text>)}
 
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 20,
   },
-  cardDate: {
+  Date: {
     fontSize: 14,
     fontWeight: "bold",
     color: "#003D9A",

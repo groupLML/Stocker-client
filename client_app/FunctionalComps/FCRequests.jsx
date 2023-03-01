@@ -1,5 +1,7 @@
-import React from 'react'
-import { View } from 'react-native'
+import React from 'react';
+import { View } from 'react-native';
+
+import FCDetailedRequest from './FCDetailedRequest';
 import FCRequest from './FCRequest'
 
 export default function FCRequests(props) {
@@ -44,8 +46,7 @@ export default function FCRequests(props) {
 
     return (
         <View>
-            {props.isDetailedRequest && (<FCDetailedRequest />)}
-            {!props.isDetailedRequest && (<FCRequest />)}
+            {requestsStr}
         </View>
     )
 }

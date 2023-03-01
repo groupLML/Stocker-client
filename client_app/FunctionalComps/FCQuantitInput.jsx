@@ -16,7 +16,8 @@ export default function FCQuantitInput() {
             iconStyle={{ color: '#003D9A' }} 
             rightButtonBackgroundColor='#E1EAF9' 
             leftButtonBackgroundColor='#E1EAF9' 
-            onChange={value => setReqQty(value)} />
+            onChange={value => setReqQty(value)} 
+            />
         </View>
     )
 }
