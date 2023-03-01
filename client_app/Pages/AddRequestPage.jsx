@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+
 import FCDepTypeList from '../FunctionalComps/FCDepTypeList';
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCMedInput from '../FunctionalComps/FCMedInput';
@@ -16,6 +17,7 @@ export default function AddRequestPage(props) {
   //-------------------------------Get Deps-----------------------------
 
   const { apiUrlDeps, Departments, setDepartments } = useContext(GlobalContext);
+  
   const [Deps, setDeps] = useState([]);
 
   useEffect(() => {

@@ -10,7 +10,7 @@ export default function GlobalData(props) {
     const apiUrlDeps = "https://proj.ruppin.ac.il/cgroup36/prod/api/Department/"; 
 
     const [User, setUser] = useState([]);
-    const [Medications, setMedications] = useState([]);
+    const [meds, setMeds] = useState([]);
     const [Departments, setDepartments] = useState([]);
     const [DepTypes, setDepTypes] = useState([
         { name: 'אורתופדיה', isChecked: true },
@@ -22,7 +22,7 @@ export default function GlobalData(props) {
         <GlobalContext.Provider
             value={{
                 apiUrlUser, apiUrlMedRequest, apiUrlMeds, apiUrlDeps,
-                User, setUser, Departments, setDepartments, DepTypes, setDepTypes, Medications, setMedications }}>
+                User, setUser, Departments, setDepartments, DepTypes, setDepTypes, meds, setMeds }}>
             {props.children}
         </GlobalContext.Provider>
     )
