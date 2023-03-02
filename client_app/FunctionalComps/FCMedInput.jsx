@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity } from 'react-native'
 import { GlobalContext } from '../GlobalData/GlobalData';
 
-export default function FCMedInput() {
+export default function FCMedInput(props) {
 
     const { meds } = useContext(GlobalContext);
 
@@ -55,7 +55,7 @@ export default function FCMedInput() {
                 <TextInput
                     style={styles.input}
                     value={inputValue}
-                    placeholder="בחר תרופה"
+                    placeholder={props.genName ? props.genName : 'בחר תרופה'}
                     onChangeText={handleInputChange}
                 />
             </View>
@@ -66,6 +66,7 @@ export default function FCMedInput() {
                     keyExtractor={(item) => item}
                 />
             </View>}
+
         </View>
     )
 }
