@@ -15,8 +15,9 @@ export default function FCDetailedRequest(props) {
   const handleDeleteRequest = (item) => { };
 
   return (
-    <Card style={styles.Container} borderColor="#00317D">
-      <View style={styles.row}>
+    <View style={styles.Container}>
+      {/* ----------------------------------שורת סטטוס ותאריך-------------------------- */}
+      <View style={{...styles.row,marginBottom:40}}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {props.reqStatus === 'A' && (
             <>
@@ -32,14 +33,16 @@ export default function FCDetailedRequest(props) {
           )}
           {props.reqStatus === 'D' && <Text>נדחה</Text>}
         </View>
-        <FCDateTime time={props.time} date={props.date} />
+        <View >
+          <FCDateTime time={props.time} date={props.date} />
+        </View>
       </View>
-
+ {/* --------------------------------------תוכן וכפתורים------------------------------ */}
       {props.reqStatus === 'A' && (
         <>
           <Text style={styles.Title}>{props.genName}</Text>
           <Text style={styles.Body}><Text style={{ fontWeight: "bold" }} >כמות: </Text>{props.reqQty}</Text>
-          <Text style={styles.Body}><Text style={{ fontWeight: "bold" }} >שם יוצר ההזמנה: </Text>{props.nurseName}</Text>
+          <Text style={styles.Body}><Text style={{ fontWeight: "bold"}} >שם יוצר ההזמנה: </Text>{props.nurseName}</Text>
           <Text style={styles.Body}><Text style={{ fontWeight: "bold" }} >שם המחלקה שאישרה: </Text>{props.depName}</Text>
           <View style={styles.row}>
             <TouchableOpacity style={[styles.button, { backgroundColor: '#129C62' }]} onPress={() => handleApproveRequest()}>
@@ -53,10 +56,10 @@ export default function FCDetailedRequest(props) {
       )}
       {props.reqStatus === 'W' && (
         <>
-          <View style={styles.row}><Text style={styles.fields}>שם תרופה:</Text><FCMedInput /></View>
-          <FCQuantityInput Qty={props.reqQty} />
-          <Text style={styles.Body}><Text style={{ fontWeight: "bold" }} >שם יוצר ההזמנה: </Text>{props.nurseName}</Text>
-          <View style={styles.row}>
+          <View style={styles.Body}><FCMedInput/></View>
+          <View style={styles.Body}><FCQuantityInput Qty={props.reqQty} /></View>
+          <Text style={{...styles.Body,fontSize:17}}><Text style={{ fontWeight: "bold",fontSize:17}} >שם יוצר ההזמנה: </Text>{props.nurseName}</Text>
+          <View style={{  flexDirection: 'row', alignItems: 'center'}}>
             <TouchableOpacity style={[styles.button, { backgroundColor: '#129C62' }]} onPress={() => handleUpdateRequest()}>
               <Text style={styles.buttonText}>עדכון</Text>
             </TouchableOpacity>
@@ -67,16 +70,14 @@ export default function FCDetailedRequest(props) {
         </>
       )}
 
-    </Card>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
   Container: {
-    width: "60%",
     padding: 10,
     marginBottom: 10,
-    borderRadius: 20,
   },
   Title: {
     fontSize: 20,
@@ -86,14 +87,15 @@ const styles = StyleSheet.create({
   },
   Body: {
     marginVertical: 10,
-    fontSize: 15,
     color: "#003D9A",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 30,
   },
   rowButton: {
     flexDirection: 'row',
@@ -102,6 +104,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
+    flex:1,
     backgroundColor: '#00317D',
     padding: 10,
     borderRadius: 5,
@@ -110,5 +113,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 16,
+    textAlign:'center',
   },
 });

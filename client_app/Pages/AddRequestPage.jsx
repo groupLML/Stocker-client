@@ -56,7 +56,6 @@ export default function AddRequestPage(props) {
       <Text style={styles.title}>בקשה ממחלקה</Text>
       <View>
         <View style={styles.row}>
-          <Text style={styles.fields}>שם תרופה:</Text>
           <FCMedInput />
         </View>
         <FCQuantityInput Qty={1} />

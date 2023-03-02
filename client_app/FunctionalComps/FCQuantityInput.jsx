@@ -14,6 +14,7 @@ export default function FCQuantityInput(props) {
         rounded
         minValue={1}
         textColor='#003D9A'
+        totalWidth={100}
         iconStyle={{ color: '#003D9A' }}
         rightButtonBackgroundColor='#E1EAF9'
         leftButtonBackgroundColor='#E1EAF9'
@@ -26,14 +27,15 @@ export default function FCQuantityInput(props) {
 
 const styles = StyleSheet.create({
   row: {
+    marginVertical: 10,
+    fontSize: 15,
+    color: "#003D9A",
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
   },
   fields: {
     fontSize: 17,
     color: "#003D9A",
-    width: 100,
     marginRight: 10,
     fontWeight: 'bold',
   },
