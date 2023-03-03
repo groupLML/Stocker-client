@@ -2,10 +2,10 @@ import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity } from 'react-native'
 import { GlobalContext } from '../GlobalData/GlobalData';
 
-export default function FCMedInput() {
+export default function FCMedInput(props) {
 
     const { meds } = useContext(GlobalContext);
-   
+
     //מכל אובייקט genName יצירת מערך המכיל רק את מאפייני
     const genNames = [...new Set(meds.map(med => med.genName))];//(דיסטינק) ללא כפיליות
     //const genNames = meds.map(med => med.genName);
@@ -49,8 +49,16 @@ export default function FCMedInput() {
     };
 
     return (
-        <View style={styles.inputContainer}>
-            <TextInput style={styles.input} value={inputValue} placeholder="Type something..." onChangeText={handleInputChange} />
+        <View >
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text style={styles.fields}>שם תרופה:</Text>
+                <TextInput
+                    style={styles.input}
+                    value={inputValue}
+                    placeholder={props.genName ? props.genName : 'בחר תרופה'}
+                    onChangeText={handleInputChange}
+                />
+            </View>
             {inputValue && !isSelectFromList && <View style={styles.flatListContainer}>
                 <FlatList
                     data={filteredOptions}
@@ -58,14 +66,12 @@ export default function FCMedInput() {
                     keyExtractor={(item) => item}
                 />
             </View>}
+
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    inputContainer: {
-        position: 'relative',
-    },
     flatListContainer: {
         position: 'absolute',
         top: 40,
@@ -85,14 +91,20 @@ const styles = StyleSheet.create({
         paddingLeft: 7,
         fontSize: 16,
     },
+    fields: {
+        fontSize: 17,
+        color: "#003D9A",
+        marginRight: 10,
+        fontWeight: 'bold',
+    },
     input: {
-        // flex: 1,
         borderWidth: 1,
-        borderRadius: 10,
-        borderColor: '#ccc',
-        paddingVertical: 5, // reduce padding on top and bottom
-        paddingHorizontal: 65,
-        borderColor: "#00317D",
-        paddingRight: 10,
+        borderColor: '#00317D',
+        borderRadius: 5,
+        padding: 10,
+        textAlign: 'right',
+        paddingHorizontal: 10,
+        textAlign: 'left',
+        writingDirection: 'rtl',
     },
 });

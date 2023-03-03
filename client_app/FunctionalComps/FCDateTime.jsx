@@ -8,8 +8,9 @@ export default function FCDateTime(props) {
     const formattedDate = format(new Date(date), 'dd/MM/yyyy');
 
     return (
-        <View>
-            <Text style={styles.DateTime}>{props.time} {formattedDate}</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center'}}>
+            <Text style={styles.DateTime}>{props.time}</Text>
+            <Text style={styles.DateTime}> {formattedDate}</Text>
         </View>
     )
 }
