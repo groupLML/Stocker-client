@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React from 'react';
 import { Icon } from '@rneui/themed';
-import { Card } from '@rneui/base';
+//import { Card } from '@rneui/base';
 
 import FCQuantityInput from './FCQuantityInput';
 import FCMedInput from '../FunctionalComps/FCMedInput';
@@ -113,7 +113,6 @@ export default function FCDetailedRequest(props) {
           </View>
         </>
       )}
-
     </View>
   )
 }
