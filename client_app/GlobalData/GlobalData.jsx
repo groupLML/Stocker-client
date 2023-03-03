@@ -12,6 +12,8 @@ export default function GlobalData(props) {
     const [User, setUser] = useState([]);
     const [meds, setMeds] = useState([]);
     const [Deps, setDeps] = useState([]);
+    const [medReqs, setMedReqs] = useState([]);
+
     const [DepTypes, setDepTypes] = useState([
         { name: 'אורתופדיה', isChecked: true },
         { name: 'כירורגיה', isChecked: true },
@@ -22,7 +24,7 @@ export default function GlobalData(props) {
         <GlobalContext.Provider
             value={{
                 apiUrlUser, apiUrlMedRequest, apiUrlMeds, apiUrlDeps,
-                User, setUser, Deps, setDeps, DepTypes, setDepTypes, meds, setMeds }}>
+                User, setUser, Deps, setDeps, DepTypes, setDepTypes, meds, setMeds, medReqs, setMedReqs }}>
             {props.children}
         </GlobalContext.Provider>
     )

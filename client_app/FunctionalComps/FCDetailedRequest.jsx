@@ -6,10 +6,54 @@ import { Card } from '@rneui/base';
 import FCQuantityInput from './FCQuantityInput';
 import FCMedInput from '../FunctionalComps/FCMedInput';
 import FCDateTime from './FCDateTime';
+import { GlobalContext } from '../GlobalData/GlobalData';
 
 export default function FCDetailedRequest(props) {
 
-  const handleUpdateRequest = () => { };
+  const handleUpdateRequest = () => {
+
+    const { meds,medReqs, setMedReqs, apiUrlMedRequest } = useContext(GlobalContext);
+
+    let MedId = meds.filter((item) => item.medId === X);//לפי מה שהאחות תגיד
+    let Req = medReqs.filter((item) => item.reqId === props.requestsList.id);//צריך להיות שווה לבקשה שנכנסנו אליה
+
+    e.preventDefault();
+
+    const MedRequest = { //יצירת אובייקט לפי השדות במחלקה
+      cUser: Req.cUser,
+      aUser: Req.aUser,
+      cDep: Req.cDep,
+      aDep: Req.aDep,
+      medId: MedId,//לטפל בזה
+      reqQty:/* FCQuantityInput כדי לתת את הכמות יש להעביר כפרופס את הכמות מקופפננטה */1,
+      reqStatus: Req.reqStatus,
+      reqDate: Req.reqDate,
+    };
+
+    //-------------------------------PUT medReqs------------------------------------
+    fetch(apiUrlMedRequest + `${Req.reqId}`, {
+      method: 'PUT',
+      body: JSON.stringify(MedRequest), //bodyשליחת אובייקט ב 
+      headers: new Headers({
+        'Content-type': 'application/json; charset=UTF-8',//חשוב - JSON לשלוח
+        'Accept': 'application/json; charset=UTF-8',
+      })
+    })
+      .then(response => {
+        return response.json()
+      })
+      .then(
+        (result) => {//body
+          if (result) {
+            alert("Success, The Ingredient added");
+          }
+          else { alert("error, The Ingredient already exists") };
+        },
+        (error) => {
+          console.log("err post=", error);
+        });
+  };
+
   const handleApproveRequest = () => { };
   const handleCancelRequest = () => { };
   const handleDeleteRequest = (item) => { };
