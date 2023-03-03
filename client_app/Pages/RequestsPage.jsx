@@ -8,7 +8,7 @@ import { GlobalContext } from '../GlobalData/GlobalData';
 
 export default function RequestsPage(props) {
 
-  const { apiUrlMedRequest } = useContext(GlobalContext);
+  const { apiUrlMedRequest, medReqs, setMedReqs } = useContext(GlobalContext);
 
   const [requests, setRequests] = useState([]);
   const [depId, setDepId] = useState('');
@@ -48,6 +48,29 @@ export default function RequestsPage(props) {
           console.log("err post=", error);
         });
   }, [depId])
+
+  //להחליט לאן להעביר את זה
+  //----------------------GET MedRequests ---------------------
+  
+  useEffect(() => {
+    fetch(apiUrlMedRequest, { //של השרת URL
+      method: 'GET',//מה המתודה
+      headers: new Headers({
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json; charset=UTF-8',
+      })
+    })
+      .then(res => {
+        return res.json()
+      })
+      .then(
+        (result) => {
+          setMedReqs(result);
+        },
+        (error) => {
+          console.log("err post=", error);
+        });
+  }, [medReqs])
 
   return (
     <ScrollView>
