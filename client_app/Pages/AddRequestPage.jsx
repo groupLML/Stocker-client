@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import moment from 'moment';
 
 import FCDepTypeList from '../FunctionalComps/FCDepTypeList';
 import { GlobalContext } from '../GlobalData/GlobalData';
@@ -7,6 +8,16 @@ import FCMedInput from '../FunctionalComps/FCMedInput';
 import FCQuantityInput from '../FunctionalComps/FCQuantityInput';
 
 export default function AddRequestPage(props) {
+
+  const [Qty, setQty] = useState(1);
+
+  const GetQtyFromInput = (Qty) => {
+    setQty(Qty);
+  }
+
+  useEffect(() => {
+    console.log(Qty);
+  })
 
   const handleAddRequest = () => {
 
@@ -20,9 +31,9 @@ export default function AddRequestPage(props) {
       cDep: user.depId,
       aDep: null,
       medId: MedId,
-      reqQty:/* FCQuantityInput כדי לתת את הכמות יש להעביר כפרופס את הכמות מקופפננטה */1,
-      reqStatus: Req.reqStatus,
-      reqDate: Req.reqDate,
+      reqQty: Qty,
+      reqStatus: 'W',
+      reqDate: moment().format('YYYY-MM-DD HH:mm:ss'),
     };
 
     //---------------------------------------Post request----------------------------------------
@@ -48,9 +59,9 @@ export default function AddRequestPage(props) {
     //----------------------------------Post Departments For Request------------------------------
 
     const PostRequestDeps = (reqId) => {
-      
+
       let apiUrlPostDepRequest = `https://proj.ruppin.ac.il/cgroup36/prod/api/DepRequest/${reqId}?cDep=${user.depId}`
-      
+
       fetch(apiUrlPostDepRequest, {
         method: 'POST',
         body: JSON.stringify(SelectedDepTypes),
@@ -72,30 +83,30 @@ export default function AddRequestPage(props) {
     }
   }
 
-/*   //צריך להחליט איפה נעשה פעם ראשונה את זה
-  //-------------------------------Get Deps-----------------------------
-
-  const { apiUrlDeps, Deps, setDeps } = useContext(GlobalContext);
-
-  useEffect(() => {
-    fetch(apiUrlDeps, { //של השרת URL
-      method: 'GET',//מה המתודה
-      headers: new Headers({
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json; charset=UTF-8',
+  /*   //צריך להחליט איפה נעשה פעם ראשונה את זה
+    //-------------------------------Get Deps-----------------------------
+  
+    const { apiUrlDeps, Deps, setDeps } = useContext(GlobalContext);
+  
+    useEffect(() => {
+      fetch(apiUrlDeps, { //של השרת URL
+        method: 'GET',//מה המתודה
+        headers: new Headers({
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json; charset=UTF-8',
+        })
       })
-    })
-      .then(res => {
-        return res.json()
-      })
-      .then(
-        (result) => {
-          setDeps(result);
-        },
-        (error) => {
-          console.log("err post=", error);
-        });
-  }, [Deps]);//component did mount */
+        .then(res => {
+          return res.json()
+        })
+        .then(
+          (result) => {
+            setDeps(result);
+          },
+          (error) => {
+            console.log("err post=", error);
+          });
+    }, [Deps]);//component did mount */
 
   /* useEffect(() => {
     setDepartments(Deps);
@@ -117,7 +128,7 @@ export default function AddRequestPage(props) {
         <View style={styles.row}>
           <FCMedInput />
         </View>
-        <FCQuantityInput Qty={1} />
+        <FCQuantityInput reqQty={1} sendQty={GetQtyFromInput} />
         <FCDepTypeList />
         <TouchableOpacity style={styles.button} onPress={() => handleAddRequest()}>
           <Text style={styles.buttonText}>אישור</Text>

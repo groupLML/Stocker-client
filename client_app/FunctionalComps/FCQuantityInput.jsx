@@ -4,7 +4,12 @@ import NumericInput from 'react-native-numeric-input';
 
 export default function FCQuantityInput(props) {
 
-  const [reqQty, setReqQty] = useState(props.Qty);
+  const [reqQty, setReqQty] = useState(props.reqQty);
+
+  const handleChange = (value) => {
+    setReqQty(value);
+    props.sendQty(value);  
+  }
 
   return (
     <View style={styles.row}>
@@ -18,7 +23,7 @@ export default function FCQuantityInput(props) {
         iconStyle={{ color: '#003D9A' }}
         rightButtonBackgroundColor='#E1EAF9'
         leftButtonBackgroundColor='#E1EAF9'
-        onChange={value => setReqQty(value)}
+        onChange={handleChange}
         value={reqQty}
       />
     </View>
