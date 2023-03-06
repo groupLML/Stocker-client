@@ -9,6 +9,9 @@ import HomePage from './Pages/HomePage';
 import AddRequestPage from './Pages/AddRequestPage';
 import RequestsPage from './Pages/RequestsPage';
 import RequestPage from './Pages/RequestPage';
+import AddPullOrderPage from './Pages/AddPullOrderPage';
+import PullOrdersPage from './Pages/PullOrdersPage';
+import PullOrderPage from './Pages/PullOrderPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +25,9 @@ export default function App() {
           <Stack.Screen name="יצירת בקשה" component={AddRequestPage} />
           <Stack.Screen name="צפייה בבקשות המחלקה" component={RequestsPage} />
           <Stack.Screen name="צפייה בפרטי בקשה" component={RequestPage} />
+          <Stack.Screen name="יצירת הזמנת משיכה" component={AddPullOrderPage} />
+          <Stack.Screen name="צפייה בהזמנות משיכה" component={PullOrdersPage} />
+          <Stack.Screen name="צפייה בפרטי הזמנת משיכה" component={PullOrderPage} />
         </Stack.Navigator>
       </NavigationContainer>
     </GlobalData>

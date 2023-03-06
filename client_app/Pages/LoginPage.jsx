@@ -55,7 +55,7 @@ export default function LoginPage(props) {
                             }
                             else { alert("שגיאה, משתמש הוא אינו אחות") };
                         }
-                        else { alert("שגיאה, משתמש לא קיים"); props.navigation.navigate('יצירת בקשה'); };
+                        else { alert("שגיאה, משתמש לא קיים"); props.navigation.navigate('יצירת הזמנת משיכה'); };
                     },
                     (error) => {
                         console.log("error,", error);
