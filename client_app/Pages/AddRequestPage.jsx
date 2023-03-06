@@ -9,15 +9,74 @@ import FCQuantityInput from '../FunctionalComps/FCQuantityInput';
 export default function AddRequestPage(props) {
 
   const handleAddRequest = () => {
-    //isChecked === true ? '#003D9A' : undefined
-    console.log(DepTypes);
-  };
 
-  //צריך להחליט איפה נעשה פעם ראשונה את זה
+    const { getUserData, DepTypes } = useContext(GlobalContext);
+    const SelectedDepTypes = DepTypes.filter((item) => item.isChecked === true);
+
+    const user = getUserData();
+    const request = { //create a request object 
+      cUser: user.userId,
+      aUser: null,
+      cDep: user.depId,
+      aDep: null,
+      medId: MedId,
+      reqQty:/* FCQuantityInput כדי לתת את הכמות יש להעביר כפרופס את הכמות מקופפננטה */1,
+      reqStatus: Req.reqStatus,
+      reqDate: Req.reqDate,
+    };
+
+    //---------------------------------------Post request----------------------------------------
+    fetch(apiUrlMedRequest, {
+      method: 'POST',
+      body: JSON.stringify(request),
+      headers: new Headers({
+        'Content-type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json; charset=UTF-8',
+      })
+    })
+      .then(res => {
+        return res.json()
+      })
+      .then(
+        (result) => {
+          PostRequestDeps(result);//result is the added request id
+        },
+        (error) => {
+          console.log("err post=", error);
+        });
+
+    //----------------------------------Post Departments For Request------------------------------
+
+    const PostRequestDeps = (reqId) => {
+      
+      let apiUrlPostDepRequest = `https://proj.ruppin.ac.il/cgroup36/prod/api/DepRequest/${reqId}?cDep=${user.depId}`
+      
+      fetch(apiUrlPostDepRequest, {
+        method: 'POST',
+        body: JSON.stringify(SelectedDepTypes),
+        headers: new Headers({
+          'Content-type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json; charset=UTF-8',
+        })
+      })
+        .then(res => {
+          return res.json()
+        })
+        .then(
+          (result) => {
+            alert("sucssusfuly added")
+          },
+          (error) => {
+            console.log("err post=", error);
+          });
+    }
+  }
+
+/*   //צריך להחליט איפה נעשה פעם ראשונה את זה
   //-------------------------------Get Deps-----------------------------
 
   const { apiUrlDeps, Deps, setDeps } = useContext(GlobalContext);
-  
+
   useEffect(() => {
     fetch(apiUrlDeps, { //של השרת URL
       method: 'GET',//מה המתודה
@@ -36,7 +95,7 @@ export default function AddRequestPage(props) {
         (error) => {
           console.log("err post=", error);
         });
-  }, [Deps]);//component did mount
+  }, [Deps]);//component did mount */
 
   /* useEffect(() => {
     setDepartments(Deps);

@@ -17,7 +17,7 @@ export default function RequestsPage(props) {
 
   useEffect(() => {//depId פונ' רצה כל פעם שמתעדכן 
 
-    const getData = () => {
+    const getDepID = () => {
       try {//Retrieving AsyncStorage data
         AsyncStorage.getItem('User', (err, result) => {
           if (result != null) {
@@ -27,8 +27,7 @@ export default function RequestsPage(props) {
         // error reading value
       }
     }
-    
-    getData();
+    getDepID();
 
     fetch(apiUrlMedRequest + `${depId}`, { //של השרת URL
       method: 'GET',//מה המתודה
