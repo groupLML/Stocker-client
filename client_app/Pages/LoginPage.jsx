@@ -19,6 +19,21 @@ export default function LoginPage(props) {
         Linking.openURL(`tel:${phoneNumber}`);
     };
 
+    //------------------------------הפעלת הפו אחרי הצלחה של התחברות-----------------------------------
+    const { setDepId } = useContext(GlobalContext);
+
+    const getDepID = () => {
+        try {
+            AsyncStorage.getItem('User', (err, result) => {
+                if (result != null) {
+                    setDepId(JSON.parse(result).depId);
+                }
+            });
+        } catch (e) {
+            // error reading value
+        }
+    };
+
     //-------------------------------Login User-----------------------------
     const handleLogin = (e) => {
 
@@ -48,7 +63,10 @@ export default function LoginPage(props) {
                             if (result.jobType == 'N') {
                                 try {//Inserting user information into AsyncStorage
                                     const userData = JSON.stringify(result)
-                                    AsyncStorage.setItem('User', userData, () => { props.navigation.navigate('צפייה בבקשות המחלקה'); });
+                                    AsyncStorage.setItem('User', userData, () => {
+                                        getDepID();
+                                        props.navigation.navigate('צפייה בבקשות המחלקה');
+                                    });
                                 } catch (e) {
                                     // saving error
                                 }

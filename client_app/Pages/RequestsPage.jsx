@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React, { useContext, useState, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import FCRequests from '../FunctionalComps/FCRequests';
 import { GlobalContext } from '../GlobalData/GlobalData';
@@ -8,26 +7,13 @@ import { GlobalContext } from '../GlobalData/GlobalData';
 
 export default function RequestsPage(props) {
 
-  const { apiUrlMedRequest, medReqs, setMedReqs } = useContext(GlobalContext);
+  const { apiUrlMedRequest, medReqs, setMedReqs, depId } = useContext(GlobalContext);
 
   const [requests, setRequests] = useState([]);
-  const [depId, setDepId] = useState('');
 
   //----------------------GET Requests details ---------------------
 
   useEffect(() => {//depId פונ' רצה כל פעם שמתעדכן 
-
-    const getDepID = () => {
-      try {//Retrieving AsyncStorage data
-        AsyncStorage.getItem('User', (err, result) => {
-          if (result != null) {
-            setDepId(JSON.parse(result).depId);}
-        })
-      } catch (e) {
-        // error reading value
-      }
-    }
-    getDepID();
 
     fetch(apiUrlMedRequest + `${depId}`, { //של השרת URL
       method: 'GET',//מה המתודה

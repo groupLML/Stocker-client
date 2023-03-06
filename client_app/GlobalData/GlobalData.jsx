@@ -8,10 +8,13 @@ export default function GlobalData(props) {
     const apiUrlMedRequest = "https://proj.ruppin.ac.il/cgroup36/prod/api/MedRequest/";
     const apiUrlMeds = "https://proj.ruppin.ac.il/cgroup36/prod/api/Medicine/";
     const apiUrlDeps = "https://proj.ruppin.ac.il/cgroup36/prod/api/Department/";
+    const apiUrlPullOrder = "https://proj.ruppin.ac.il/cgroup36/prod/api/PullOrder/";
 
     const [User, setUser] = useState([]);
+    const [depId, setDepId] = useState('');
+
     const [meds, setMeds] = useState([]);
-    const [Deps, setDeps] = useState([]);
+    const [deps, setDeps] = useState([]);
     const [medReqs, setMedReqs] = useState([]);
 
     const [DepTypes, setDepTypes] = useState([
@@ -33,8 +36,10 @@ export default function GlobalData(props) {
     return (
         <GlobalContext.Provider
             value={{
-                apiUrlUser, apiUrlMedRequest, apiUrlMeds, apiUrlDeps,
-                User, setUser, Deps, setDeps, DepTypes, setDepTypes, meds, setMeds, medReqs, setMedReqs, getUserData
+                apiUrlUser, apiUrlMedRequest, apiUrlMeds, apiUrlDeps, apiUrlPullOrder,
+                User, setUser, depId, setDepId, deps, setDeps, meds, setMeds,
+                DepTypes, setDepTypes, medReqs, setMedReqs,
+                getUserData
             }}>
             {props.children}
         </GlobalContext.Provider>

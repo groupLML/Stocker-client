@@ -86,7 +86,7 @@ export default function AddRequestPage(props) {
   /*   //צריך להחליט איפה נעשה פעם ראשונה את זה
     //-------------------------------Get Deps-----------------------------
   
-    const { apiUrlDeps, Deps, setDeps } = useContext(GlobalContext);
+    const { apiUrlDeps, deps, setDeps } = useContext(GlobalContext);
   
     useEffect(() => {
       fetch(apiUrlDeps, { //של השרת URL
