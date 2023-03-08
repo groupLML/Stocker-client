@@ -25,12 +25,13 @@ export default function AddRequestPage(props) {
     const SelectedDepTypes = DepTypes.filter((item) => item.isChecked === true);
 
     const user = getUserData();
+
     const request = { //create a request object 
       cUser: user.userId,
       aUser: null,
       cDep: user.depId,
       aDep: null,
-      medId: MedId,
+      medId: 1,
       reqQty: Qty,
       reqStatus: 'W',
       reqDate: moment().format('YYYY-MM-DD HH:mm:ss'),

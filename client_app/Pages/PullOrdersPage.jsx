@@ -10,7 +10,7 @@ export default function PullOrdersPage() {
 
   const [pullOrders, setPullOrders] = useState([]);
 
-  //----------------------GET Requests details ---------------------
+  //----------------------GET PullOrder details ---------------------
 
   useEffect(() => {//depId פונ' רצה כל פעם שמתעדכן 
 
