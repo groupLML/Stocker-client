@@ -35,12 +35,7 @@ export default function AddRequestPage(props) {
     const request = { //create a request object 
       cUser: user.userId,
       cDep: user.depId,
-<<<<<<< Updated upstream
-      aDep: null,
       medId: selectedMedId,
-=======
-      medId: 1,
->>>>>>> Stashed changes
       reqQty: Qty,
       reqDate: moment().format('YYYY-MM-DD HH:mm:ss'),
       DepTypes: SelectedDepTypes,
