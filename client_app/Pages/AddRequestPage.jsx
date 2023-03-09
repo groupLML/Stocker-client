@@ -2,13 +2,15 @@ import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import moment from 'moment';
 
-import FCDepTypeList from '../FunctionalComps/FCDepTypeList';
 import { GlobalContext } from '../GlobalData/GlobalData';
+import FCDepTypeList from '../FunctionalComps/FCDepTypeList';
 import FCMedInput from '../FunctionalComps/FCMedInput';
 import FCQuantityInput from '../FunctionalComps/FCQuantityInput';
 
 export default function AddRequestPage(props) {
-  
+
+  const { getUserData, DepTypes } = useContext(GlobalContext);
+
   const [selectedMedId, setSelectedMedId] = useState(null);
   const [Qty, setQty] = useState(1);
 
@@ -20,15 +22,9 @@ export default function AddRequestPage(props) {
     setQty(Qty);
   }
 
- /*  useEffect(() => {
-    console.log(Qty);
-  }) */
-
   const handleAddRequest = () => {
-
-    const { getUserData, DepTypes } = useContext(GlobalContext);
+  
     const SelectedDepTypes = DepTypes.filter(depType => depType.isChecked).map(depType => depType.name);
-
 
     const user = getUserData();
 
@@ -55,50 +51,13 @@ export default function AddRequestPage(props) {
       })
       .then(
         (result) => {
-          PostRequestDeps(result);//result is the added request id
+          console.log(result);//result is the added request id
         },
         (error) => {
           console.log("err post=", error);
         });
+  };
 
-  /*   //צריך להחליט איפה נעשה פעם ראשונה את זה
-    //-------------------------------Get Deps-----------------------------
-  
-    const { apiUrlDeps, deps, setDeps } = useContext(GlobalContext);
-  
-    useEffect(() => {
-      fetch(apiUrlDeps, { //של השרת URL
-        method: 'GET',//מה המתודה
-        headers: new Headers({
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Accept': 'application/json; charset=UTF-8',
-        })
-      })
-        .then(res => {
-          return res.json()
-        })
-        .then(
-          (result) => {
-            setDeps(result);
-          },
-          (error) => {
-            console.log("err post=", error);
-          });
-    }, [Deps]);//component did mount */
-
-  /* useEffect(() => {
-    setDepartments(Deps);
-
-         const filteredDeps = DepTypes.map(depType => {
-          if (depType.isChecked) {
-            const depIds = Deps.filter(dep => dep.depType === depType.name).map(dep => dep.depId);
-            return { name: depType.name, depIds };
-          }
-          return null;
-        }).filter(depType => depType !== null); 
-
-  }, [Deps]); //callback function
- */
   return (
     <View style={styles.container}>
       <Text style={styles.title}>בקשה ממחלקה</Text>
@@ -112,9 +71,9 @@ export default function AddRequestPage(props) {
           <Text style={styles.buttonText}>אישור</Text>
         </TouchableOpacity>
       </View>
-    </View >
+    </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -152,4 +111,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
   },
-});}
+});
