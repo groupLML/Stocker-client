@@ -27,19 +27,23 @@ export default function AddRequestPage(props) {
   const handleAddRequest = () => {
 
     const { getUserData, DepTypes } = useContext(GlobalContext);
-    const SelectedDepTypes = DepTypes.filter((item) => item.isChecked === true);
+    const SelectedDepTypes = DepTypes.filter(depType => depType.isChecked).map(depType => depType.name);
+
 
     const user = getUserData();
 
     const request = { //create a request object 
       cUser: user.userId,
-      aUser: null,
       cDep: user.depId,
+<<<<<<< Updated upstream
       aDep: null,
       medId: selectedMedId,
+=======
+      medId: 1,
+>>>>>>> Stashed changes
       reqQty: Qty,
-      reqStatus: 'W',
       reqDate: moment().format('YYYY-MM-DD HH:mm:ss'),
+      DepTypes: SelectedDepTypes,
     };
 
     //---------------------------------------Post request----------------------------------------
@@ -61,33 +65,6 @@ export default function AddRequestPage(props) {
         (error) => {
           console.log("err post=", error);
         });
-
-    //----------------------------------Post Departments For Request------------------------------
-
-    const PostRequestDeps = (reqId) => {
-
-      let apiUrlPostDepRequest = `https://proj.ruppin.ac.il/cgroup36/prod/api/DepRequest/${reqId}?cDep=${user.depId}`
-
-      fetch(apiUrlPostDepRequest, {
-        method: 'POST',
-        body: JSON.stringify(SelectedDepTypes),
-        headers: new Headers({
-          'Content-type': 'application/json; charset=UTF-8',
-          'Accept': 'application/json; charset=UTF-8',
-        })
-      })
-        .then(res => {
-          return res.json()
-        })
-        .then(
-          (result) => {
-            alert("sucssusfuly added")
-          },
-          (error) => {
-            console.log("err post=", error);
-          });
-    }
-  }
 
   /*   //צריך להחליט איפה נעשה פעם ראשונה את זה
     //-------------------------------Get Deps-----------------------------
@@ -180,4 +157,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
   },
-});
+});}
