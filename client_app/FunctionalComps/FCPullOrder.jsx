@@ -18,19 +18,25 @@ export default function FCPullOrder() {
     <Card style={styles.cardContainer} borderColor="#00317D">
       <View style={styles.row}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          {props.reqStatus === 'A' && (
+          {props.reqStatus === 'I' && (
             <>
               <Icon type="ionicon" name="checkmark" color="#00914B" size={20} />
-              <Text style={{ color: '#00914B' }}>מאושר</Text>
+              <Text style={{ color: '#00914B' }}>הונפק</Text>
             </>
           )}
+          {props.reqStatus === 'T' && (
+            <>
+              <Icon type="ionicon" name="hourglass" color="#FFC300" size={20} />
+              <Text style={{ color: '#FFC300' }}>בתהליך</Text>
+            </>
+          ) }
           {props.reqStatus === 'W' && (
             <>
               <Icon type="ionicon" name="hourglass" color="red" size={20} />
               <Text style={{ color: 'red' }}>בהמתנה</Text>
             </>
           )}
-          {props.reqStatus === 'D' && <Text>נדחה</Text>}
+          
         </View>
         <FCDateTime time={props.time} date={props.date} />
       </View>

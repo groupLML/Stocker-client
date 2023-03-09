@@ -7,9 +7,9 @@ import FCDepTypeList from '../FunctionalComps/FCDepTypeList';
 import FCMedInput from '../FunctionalComps/FCMedInput';
 import FCQuantityInput from '../FunctionalComps/FCQuantityInput';
 
-export default function AddRequestPage(props) {
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-  const { getUserData, DepTypes } = useContext(GlobalContext);
+export default function AddRequestPage(props) {
 
   const [selectedMedId, setSelectedMedId] = useState(null);
   const [Qty, setQty] = useState(1);
@@ -22,11 +22,34 @@ export default function AddRequestPage(props) {
     setQty(Qty);
   }
 
-  const handleAddRequest = () => {
-  
+/*   const getUserData = () => {
+    try {//Retrieving AsyncStorage data
+      AsyncStorage.getItem('User', (err, result) => {
+        console.log(JSON.parse(result).userId);
+        return result != null ? JSON.parse(result) : null;
+      })
+    } catch (e) {
+      // error reading value
+    }
+  } */
+
+  const getUserData = async () => {
+  try {
+    const result = await AsyncStorage.getItem('User');
+    return result != null ? JSON.parse(result) : null;
+  } catch (e) {
+    // handle errors here
+    console.log(e);
+    return null;
+  }
+}
+
+  const handleAddRequest = async () => {
+    const { DepTypes } = useContext(GlobalContext);
     const SelectedDepTypes = DepTypes.filter(depType => depType.isChecked).map(depType => depType.name);
 
-    const user = getUserData();
+    const user = await getUserData();
+    console.log(user.userId);
 
     const request = { //create a request object 
       cUser: user.userId,
@@ -51,7 +74,7 @@ export default function AddRequestPage(props) {
       })
       .then(
         (result) => {
-          console.log(result);//result is the added request id
+          console.log("result");//result is the added request id
         },
         (error) => {
           console.log("err post=", error);
