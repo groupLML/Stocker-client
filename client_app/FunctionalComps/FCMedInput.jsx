@@ -6,14 +6,12 @@ export default function FCMedInput(props) {
 
     const { meds } = useContext(GlobalContext);
 
-    //מכל אובייקט genName יצירת מערך המכיל רק את מאפייני
-    const genNames = [...new Set(meds.map(med => med.genName))];//(דיסטינק) ללא כפיליות
-    //const genNames = meds.map(med => med.genName);
-    //console.log(genNames);//בדיקה
+    const genNamesWithId = meds.map((med) => ({ id: med.medId, genName: med.genName }));
+      //מכל אובייקט genName יצירת מערך המכיל רק את מאפייני
+    const uniqueGenNames = [...new Set(genNamesWithId.map(med => med.genName))];//(דיסטינק) ללא כפיליות
 
     //-----------------------Autocomplete med input-------------------------------
-
-    const options = genNames;
+    const options = uniqueGenNames;
 
     const [inputValue, setInputValue] = useState('');
     const [filteredOptions, setFilteredOptions] = useState([]);
@@ -31,11 +29,13 @@ export default function FCMedInput(props) {
 
     const handleSelectOption = (option) => {
         if (option !== "אין ערכים תואמים, יש לבחור ערך מהרשימה") {
+            const selectedMed = genNamesWithId.find((med) => med.genName === option);
             setInputValue(option);
             setIsSelectFromList(true);
             setFilteredOptions([]);
+            props.sendMedSelect(selectedMed.id);
         }
-    };
+    };;
 
     const renderItem = ({ item, index }) => {
         if (index < 5) {

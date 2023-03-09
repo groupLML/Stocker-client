@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import moment from 'moment';
 
@@ -8,16 +8,21 @@ import FCMedInput from '../FunctionalComps/FCMedInput';
 import FCQuantityInput from '../FunctionalComps/FCQuantityInput';
 
 export default function AddRequestPage(props) {
-
+  
+  const [selectedMedId, setSelectedMedId] = useState(null);
   const [Qty, setQty] = useState(1);
+
+  const handleSelectMed = (medId) => {
+    setSelectedMedId(medId);
+  };
 
   const GetQtyFromInput = (Qty) => {
     setQty(Qty);
   }
 
-  useEffect(() => {
+ /*  useEffect(() => {
     console.log(Qty);
-  })
+  }) */
 
   const handleAddRequest = () => {
 
@@ -31,7 +36,7 @@ export default function AddRequestPage(props) {
       aUser: null,
       cDep: user.depId,
       aDep: null,
-      medId: 1,
+      medId: selectedMedId,
       reqQty: Qty,
       reqStatus: 'W',
       reqDate: moment().format('YYYY-MM-DD HH:mm:ss'),
@@ -127,7 +132,7 @@ export default function AddRequestPage(props) {
       <Text style={styles.title}>בקשה ממחלקה</Text>
       <View>
         <View style={styles.row}>
-          <FCMedInput />
+          <FCMedInput sendMedSelect={handleSelectMed} />
         </View>
         <FCQuantityInput reqQty={1} sendQty={GetQtyFromInput} />
         <FCDepTypeList />

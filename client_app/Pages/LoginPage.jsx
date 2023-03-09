@@ -73,7 +73,7 @@ export default function LoginPage(props) {
                             }
                             else { alert("שגיאה, משתמש הוא אינו אחות") };
                         }
-                        else { alert("שגיאה, משתמש לא קיים"); props.navigation.navigate('יצירת הזמנת משיכה'); };
+                        else { alert("שגיאה, משתמש לא קיים"); props.navigation.navigate('יצירת בקשה'); };
                     },
                     (error) => {
                         console.log("error,", error);
