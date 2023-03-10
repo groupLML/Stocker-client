@@ -20,7 +20,8 @@ export default function FCMedInput(props) {
     const handleInputChange = (text) => {
         setIsSelectFromList(false);
         setInputValue(text);
-        const filtered = options.filter((option) => option.toLowerCase().startsWith(text.toLowerCase()));
+        const filtered = options.filter((option) => option.toLowerCase().includes(text.toLowerCase()));
+        //const filtered = options.filter((option) => option.toLowerCase().startsWith(text.toLowerCase()));
         setFilteredOptions(filtered);
         if (filtered.length === 0) {
             setFilteredOptions(["אין ערכים תואמים, יש לבחור ערך מהרשימה"]);

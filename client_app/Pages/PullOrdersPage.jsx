@@ -36,7 +36,7 @@ export default function PullOrdersPage() {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.title}>צפייה בהזמנות במשיכה</Text>
+        <Text style={styles.title}>הזמנות במשיכה</Text>
         <FCPullOrders PullOrdersList={pullOrders} isDetailedPullOrder={false} />
       </View>
     </ScrollView>

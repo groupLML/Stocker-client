@@ -6,12 +6,12 @@ import { Icon } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import FCDateTime from './FCDateTime';
 
-export default function FCPullOrder() {
+export default function FCPullOrder(props) {
 
   const navigation = useNavigation();
 
   const handleCardPress = () => {
-    navigation.navigate('צפייה בפרטי בקשה', { requestId: props.id, requestsList: props.requestsList });
+    navigation.navigate('צפייה בפרטי הזמנת משיכה', { pullOrderId: props.id, pullOrdersList: props.pullOrdersList });
   };
 
   return (
@@ -41,11 +41,10 @@ export default function FCPullOrder() {
         <FCDateTime time={props.time} date={props.date} />
       </View>
 
-      <Text style={styles.cardTitle}>{props.genName}</Text>
-      <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >כמות: </Text>{props.reqQty}</Text>
+      {/* <Text style={styles.cardTitle}>{props.genName}</Text> */}
       <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >שם יוצר ההזמנה: </Text>{props.nurseName}</Text>
-
-      {props.depName && <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >שם המחלקה שאישרה: </Text>{props.depName}</Text>}
+      
+      {props.pUser && <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }}>רוקח אחראי : </Text>{props.pUser}</Text>}
 
       {!props.isDetailedRequest &&
         <TouchableOpacity onPress={() => handleCardPress()}>
@@ -62,12 +61,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 20,
   },
-  cardTitle: {
+/*   cardTitle: {
     fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 10,
-  },
+  }, */
   cardBody: {
     marginVertical: 10,
     fontSize: 15,

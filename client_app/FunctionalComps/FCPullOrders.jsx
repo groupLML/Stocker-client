@@ -3,42 +3,42 @@ import { View } from 'react-native';
 
 import FCPullOrder from './FCPullOrder';
 
-export default function FCPullOrders() {
+export default function FCPullOrders(props) {
   let pullOrdersStr;
-/*   if (props.isDetailedRequest === true) { */
+  if (props.isDetailedPullOrder === true) {
     pullOrdersStr = props.PullOrdersList.map((pullOrder, key) => {
       return <FCPullOrder
- /*        id={request.reqId}
-        date={request.reqDate}
-        time={request.reqTime}
-        genName={request.genName}
-        nurseName={request.nurseName}
-        aNurse={request.aUser}
-        depName={request.depName}
-        aDep={request.aDep} 
-        reqQty={request.reqQty}
-        reqStatus={request.reqStatus} */
+        id={pullOrder.pullId}
+        date={pullOrder.pullDate}
+        time={pullOrder.PullTime}
+        pullMedList={pullOrder.pullMedOrder}//לבדוק
+        nurseName={pullOrder.nurseName}
+        aNurse={pullOrder.nUser}
+        depName={pullOrder.depName}
+        dep={pullOrder.depId}
+        reqStatus={pullOrder.pullStatus}
         pullOrdersList={props.PullOrdersList}
-       /*  key={request.reqId} */
+        key={pullOrder.pullId}
       />;
     })
-/*   }
+  }
   else {
-    requestsStr = props.RequestsList.map((request, key) => {
+    pullOrdersStr = props.PullOrdersList.map((pullOrder, key) => {
       return <FCRequest
-        id={request.reqId}
-        date={request.reqDate}
-        time={request.reqTime}
-        genName={request.genName}
-        nurseName={request.nurseName}
-        depName={request.depName}
-        reqQty={request.reqQty}
-        reqStatus={request.reqStatus}
-        requestsList={props.RequestsList}
-        key={request.reqId}
+        id={pullOrder.pullId}
+        date={pullOrder.pullDate}
+        time={pullOrder.PullTime}
+        pullMedList={pullOrder.pullMedOrder}//לבדוק
+        nurseName={pullOrder.nurseName}
+        aNurse={pullOrder.nUser}
+        depName={pullOrder.depName}
+        dep={pullOrder.depId}
+        reqStatus={pullOrder.pullStatus}
+        pullOrdersList={props.PullOrdersList}
+        key={pullOrder.pullId}
       />;
     })
-  } */
+  }
 
 
   return (
