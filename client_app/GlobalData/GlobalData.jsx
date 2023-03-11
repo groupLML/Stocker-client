@@ -8,21 +8,21 @@ export default function GlobalData(props) {
     const apiUrlUser = "https://proj.ruppin.ac.il/cgroup36/prod/api/User/";
     const apiUrlMedRequest = "https://proj.ruppin.ac.il/cgroup36/prod/api/MedRequest/";
     const apiUrlMeds = "https://proj.ruppin.ac.il/cgroup36/prod/api/Medicine/";
-    const apiUrlDeps = "https://proj.ruppin.ac.il/cgroup36/prod/api/Department/";
+    // const apiUrlDeps = "https://proj.ruppin.ac.il/cgroup36/prod/api/Department/";
     const apiUrlPullOrder = "https://proj.ruppin.ac.il/cgroup36/prod/api/PullOrder/";
 
 
-/*     const apiUrlUser = "https://localhost:7102/api/User/";
-    const apiUrlMedRequest = "https://localhost:7102/api/MedRequest/";
-    const apiUrlMeds = "https://localhost:7102/api/Medicine/";
-    const apiUrlDeps = "https://localhost:7102/api/Department/";
-    const apiUrlPullOrder = "https://proj.ruppin.ac.il/cgroup36/prod/api/PullOrder/"; */
+    /*     const apiUrlUser = "https://localhost:7102/api/User/";
+        const apiUrlMedRequest = "https://localhost:7102/api/MedRequest/";
+        const apiUrlMeds = "https://localhost:7102/api/Medicine/";
+        const apiUrlDeps = "https://localhost:7102/api/Department/";
+        const apiUrlPullOrder = "https://proj.ruppin.ac.il/cgroup36/prod/api/PullOrder/"; */
 
-    const [User, setUser] = useState([]);
+    // const [User, setUser] = useState([]);
     const [depId, setDepId] = useState('');
 
     const [meds, setMeds] = useState([]);
-    const [deps, setDeps] = useState([]);
+    //const [deps, setDeps] = useState([]);
     const [medReqs, setMedReqs] = useState([]);
 
     const [DepTypes, setDepTypes] = useState([
@@ -45,8 +45,8 @@ export default function GlobalData(props) {
     return (
         <GlobalContext.Provider
             value={{
-                apiUrlUser, apiUrlMedRequest, apiUrlMeds, apiUrlDeps, apiUrlPullOrder,
-                User, setUser, depId, setDepId, deps, setDeps, meds, setMeds,
+                apiUrlUser, apiUrlMedRequest, apiUrlMeds, apiUrlPullOrder,
+                depId, setDepId, meds, setMeds,
                 DepTypes, setDepTypes, medReqs, setMedReqs,
                 getUserData
             }}>

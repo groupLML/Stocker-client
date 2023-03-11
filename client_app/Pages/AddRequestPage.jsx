@@ -6,7 +6,6 @@ import FCDepTypeList from '../FunctionalComps/FCDepTypeList';
 import FCMedInput from '../FunctionalComps/FCMedInput';
 import FCQuantityInput from '../FunctionalComps/FCQuantityInput';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 //import { color } from '@rneui/base';
 
 export default function AddRequestPage(props) {

@@ -11,12 +11,13 @@ export default function FCRequests(props) {
             return <FCDetailedRequest
                 id={request.reqId}
                 date={request.reqDate}
-                time={request.reqTime}
+                medId={request.medId}
                 genName={request.genName}
-                nurseName={request.nurseName}
-                /*  aNurse={request.aUser} */
-                depName={request.depName}
-                /*  aDep={request.aDep} */
+                cNurseId={request.cUserId}
+                cNurseName={request.cNurseName}
+                aDepId={request.aDepId}
+                aDepName={request.aDepName}
+                aNurseId={request.aUserId}
                 reqQty={request.reqQty}
                 reqStatus={request.reqStatus}
                 requestsList={props.RequestsList}
@@ -29,12 +30,13 @@ export default function FCRequests(props) {
             return <FCRequest
                 id={request.reqId}
                 date={request.reqDate}
-                time={request.reqTime}
+                medId={request.medId}
                 genName={request.genName}
-                nurseName={request.nurseName}
-                /*  aNurse={request.aUser} */
-                depName={request.depName}
-                /*  aDep={request.aDep} */
+                cNurseId={request.cUserId}
+                cNurseName={request.cNurseName}
+                aDepId={request.aDepId}
+                aDepName={request.aDepName}
+                aNurseId={request.aUserId}
                 reqQty={request.reqQty}
                 reqStatus={request.reqStatus}
                 requestsList={props.RequestsList}

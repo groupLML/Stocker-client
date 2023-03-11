@@ -1,39 +1,63 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { Icon } from '@rneui/themed';
 //import { Card } from '@rneui/base';
 
-import FCQuantityInput from './FCQuantityInput';
-import FCMedInput from '../FunctionalComps/FCMedInput';
-import FCDateTime from './FCDateTime';
 import { GlobalContext } from '../GlobalData/GlobalData';
+
+import FCQuantityInput from '../FunctionalComps/FCQuantityInput';
+import FCMedInput from '../FunctionalComps/FCMedInput';
+import FCDateTime from '../FunctionalComps/FCDateTime';
+import FCDepTypeList from '../FunctionalComps/FCDepTypeList';
 
 export default function FCDetailedRequest(props) {
 
+  const { depId, apiUrlMedRequest, DepTypes } = useContext(GlobalContext);
+
+  const [Qty, setQty] = useState(props.reqQty);
+  const [selectedMedId, setSelectedMedId] = useState(null);
+
+  const GetQtyFromInput = (Qty) => {
+    setQty(Qty);
+  }
+
+  const handleSelectMed = (medId) => {
+    setSelectedMedId(medId);
+  };
+
   const handleUpdateRequest = () => {
+    //e.preventDefault();-------------------------------------------------
 
-    const { meds, medReqs, apiUrlMedRequest } = useContext(GlobalContext);
-
-    let MedId = meds.filter((item) => item.medId === X);//לפי מה שהאחות תגיד
-    let Req = medReqs.filter((item) => item.reqId === props.requestsList.id);//צריך להיות שווה לבקשה שנכנסנו אליה
-
-    e.preventDefault();
+    const SelectedDepTypes = DepTypes.filter(depType => depType.isChecked).map(depType => depType.name);
 
     const MedRequest = { //יצירת אובייקט לפי השדות במחלקה
-      cUser: Req.cUser,
-      aUser: Req.aUser,
-      cDep: Req.cDep,
-      aDep: Req.aDep,
-      medId: MedId,//לטפל בזה
-      reqQty:/* FCQuantityInput כדי לתת את הכמות יש להעביר כפרופס את הכמות מקופפננטה */1,
-      reqStatus: Req.reqStatus,
-      reqDate: Req.reqDate,
+      "reqId": props.id,
+      "cUser": props.cNurseId,
+      "aUser": props.aNurseId,
+      "cDep": depId,
+      "aDep": props.aDepId,
+      "medId": selectedMedId,
+      "reqQty": Qty,
+      "reqStatus": props.reqStatus,
+      "reqDate": props.date
+ /*       cUser: props.cNurseId,
+      cDep: depId,
+      medId: selectedMedId,
+      reqQty: Qty,
+      depTypes: SelectedDepTypes, */
     };
 
+    const dataToSend = {
+      medRequest: MedRequest,
+      depTypes: SelectedDepTypes
+    };
+
+    //const apiUrlMedRequest2 = "https://localhost:7102/api/MedRequest/WaittingReq/"
+
     //-------------------------------PUT medReqs------------------------------------
-    fetch(apiUrlMedRequest + `${Req.reqId}`, {
+    fetch(apiUrlMedRequest + "WaittingReq/" + `${props.id}`, {
       method: 'PUT',
-      body: JSON.stringify(MedRequest), //bodyשליחת אובייקט ב 
+      body: JSON.stringify(dataToSend), //bodyשליחת אובייקט ב 
       headers: new Headers({
         'Content-type': 'application/json; charset=UTF-8',//חשוב - JSON לשלוח
         'Accept': 'application/json; charset=UTF-8',
@@ -53,15 +77,18 @@ export default function FCDetailedRequest(props) {
           console.log("err post=", error);
         });
   };
+  const handleCancelRequest = () => { 
+  };
 
   const handleApproveRequest = () => { };
-  const handleCancelRequest = () => { };
+
+
   const handleDeleteRequest = (item) => { };
 
   return (
     <View style={styles.Container}>
       {/* ----------------------------------שורת סטטוס ותאריך-------------------------- */}
-      <View style={{...styles.row,marginBottom:40}}>
+      <View style={{ ...styles.row, marginBottom: 40 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {props.reqStatus === 'A' && (
             <>
@@ -81,13 +108,13 @@ export default function FCDetailedRequest(props) {
           <FCDateTime time={props.time} date={props.date} />
         </View>
       </View>
- {/* --------------------------------------תוכן וכפתורים------------------------------ */}
+      {/* --------------------------------------תוכן וכפתורים------------------------------ */}
       {props.reqStatus === 'A' && (
         <>
           <Text style={styles.Title}>{props.genName}</Text>
           <Text style={styles.Body}><Text style={{ fontWeight: "bold" }} >כמות: </Text>{props.reqQty}</Text>
-          <Text style={styles.Body}><Text style={{ fontWeight: "bold"}} >שם יוצר ההזמנה: </Text>{props.nurseName}</Text>
-          <Text style={styles.Body}><Text style={{ fontWeight: "bold" }} >שם המחלקה שאישרה: </Text>{props.depName}</Text>
+          <Text style={styles.Body}><Text style={{ fontWeight: "bold" }} >שם יוצר ההזמנה: </Text>{props.cNurseName}</Text>
+          <Text style={styles.Body}><Text style={{ fontWeight: "bold" }} >שם המחלקה שאישרה: </Text>{props.aDepName}</Text>
           <View style={styles.row}>
             <TouchableOpacity style={[styles.button, { backgroundColor: '#129C62' }]} onPress={() => handleApproveRequest()}>
               <Text style={styles.buttonText}>אישור העברה</Text>
@@ -100,10 +127,11 @@ export default function FCDetailedRequest(props) {
       )}
       {props.reqStatus === 'W' && (
         <>
-          <View style={styles.Body}><FCMedInput genName={props.genName}/></View>
-          <View style={styles.Body}><FCQuantityInput reqQty={props.reqQty} /></View>
-          <Text style={{...styles.Body,fontSize:17}}><Text style={{ fontWeight: "bold",fontSize:17}} >שם יוצר ההזמנה: </Text>{props.nurseName}</Text>
-          <View style={{  flexDirection: 'row', alignItems: 'center'}}>
+          <Text style={{ ...styles.Body, fontSize: 17 }}><Text style={{ fontWeight: "bold", fontSize: 17 }} >שם יוצר ההזמנה: </Text>{props.aNurseName}</Text>
+          <View style={styles.Body}><FCMedInput genName={props.genName} sendMedSelect={handleSelectMed} /></View>
+          <View style={styles.Body}><FCQuantityInput reqQty={props.reqQty} sendQty={GetQtyFromInput} /></View>
+          <View style={styles.Body}><FCDepTypeList /></View>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <TouchableOpacity style={[styles.button, { backgroundColor: '#129C62' }]} onPress={() => handleUpdateRequest()}>
               <Text style={styles.buttonText}>עדכון</Text>
             </TouchableOpacity>
@@ -147,7 +175,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    flex:1,
+    flex: 1,
     backgroundColor: '#00317D',
     padding: 10,
     borderRadius: 5,
@@ -156,6 +184,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 16,
-    textAlign:'center',
+    textAlign: 'center',
   },
 });
