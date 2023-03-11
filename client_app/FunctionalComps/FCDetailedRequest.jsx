@@ -12,7 +12,7 @@ export default function FCDetailedRequest(props) {
 
   const handleUpdateRequest = () => {
 
-    const { meds,medReqs, setMedReqs, apiUrlMedRequest } = useContext(GlobalContext);
+    const { meds, medReqs, apiUrlMedRequest } = useContext(GlobalContext);
 
     let MedId = meds.filter((item) => item.medId === X);//לפי מה שהאחות תגיד
     let Req = medReqs.filter((item) => item.reqId === props.requestsList.id);//צריך להיות שווה לבקשה שנכנסנו אליה

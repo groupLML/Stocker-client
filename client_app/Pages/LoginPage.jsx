@@ -66,7 +66,7 @@ export default function LoginPage(props) {
                                     AsyncStorage.setItem('User', userData, () => {
                                         getDepID();
                                         props.navigation.navigate('צפייה בבקשות המחלקה');
-                                        //props.navigation.navigate('יצירת בקשה');
+                                       // props.navigation.navigate('יצירת בקשה');
                                     }); 
                                 } catch (e) {
                                     // saving error
