@@ -28,15 +28,34 @@ export default function FCMedInput(props) {
     }
   };
 
-  const handleSelectOption = (option) => {
+/*   const handleSelectOption = (option) => {
     if (option !== "אין ערכים תואמים, יש לבחור ערך מהרשימה") {
       const selectedMed = genNamesWithId.find((med) => med.genName === option);
       setInputValue(option);
       setIsSelectFromList(true);
       setFilteredOptions([]);
       props.sendMedSelect(selectedMed.id);
+      console.log(option);
     }
-  };;
+  }; */
+
+  const handleSelectOption = (option) => {
+    if (option !== "אין ערכים תואמים, יש לבחור ערך מהרשימה") {
+      const selectedMed = genNamesWithId.find((med) => med.genName === option);
+      if (selectedMed) {
+        setInputValue(option);
+        setIsSelectFromList(true);
+        setFilteredOptions([]);
+        props.sendMedSelect(selectedMed.id);
+      } /* else {
+        setInputValue('');
+        setIsSelectFromList(false);
+        setFilteredOptions([]);
+        props.sendMedSelect(null);
+      }
+      console.log(selectedMed); */
+    }
+  };
 
   const renderItem = ({ item, index }) => {
     if (index < 5) {

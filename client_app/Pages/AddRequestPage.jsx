@@ -51,7 +51,7 @@ export default function AddRequestPage(props) {
 
     console.log('Request:', request);
 
-    //---------------------------------------Post request----------------------------------------
+    //-------------------------------Post request----------------------------------
     fetch(apiUrlMedRequest, {
       method: 'POST',
       body: JSON.stringify(request),

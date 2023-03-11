@@ -36,24 +36,19 @@ export default function FCDetailedRequest(props) {
       "aUser": props.aNurseId,
       "cDep": depId,
       "aDep": props.aDepId,
-      "medId": selectedMedId,
+      "medId": selectedMedId ? selectedMedId : props.medId ,
       "reqQty": Qty,
       "reqStatus": props.reqStatus,
       "reqDate": props.date
- /*       cUser: props.cNurseId,
-      cDep: depId,
-      medId: selectedMedId,
-      reqQty: Qty,
-      depTypes: SelectedDepTypes, */
     };
+
+    console.log(props.medId);
 
     const dataToSend = {
       medRequest: MedRequest,
       depTypes: SelectedDepTypes
     };
-
-    //const apiUrlMedRequest2 = "https://localhost:7102/api/MedRequest/WaittingReq/"
-
+    
     //-------------------------------PUT medReqs------------------------------------
     fetch(apiUrlMedRequest + "WaittingReq/" + `${props.id}`, {
       method: 'PUT',
@@ -69,19 +64,18 @@ export default function FCDetailedRequest(props) {
       .then(
         (result) => {//body
           if (result) {
-            alert("Success, The Ingredient added");
+            alert("Success");
           }
-          else { alert("error, The Ingredient already exists") };
+          else { alert("error") };
         },
         (error) => {
-          console.log("err post=", error);
+          console.log("err put=", error);
         });
   };
-  const handleCancelRequest = () => { 
-  };
+
+  const handleCancelRequest = () => { };
 
   const handleApproveRequest = () => { };
-
 
   const handleDeleteRequest = (item) => { };
 
