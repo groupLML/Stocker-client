@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import moment from 'moment';
+import { Modal, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCDepTypeList from '../FunctionalComps/FCDepTypeList';
@@ -8,51 +7,50 @@ import FCMedInput from '../FunctionalComps/FCMedInput';
 import FCQuantityInput from '../FunctionalComps/FCQuantityInput';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+//import { color } from '@rneui/base';
 
 export default function AddRequestPage(props) {
 
   const { DepTypes, apiUrlMedRequest } = useContext(GlobalContext);
 
+  //const [SelectedDepTypes, setSelectedDepTypes] = useState([]);
   const [selectedMedId, setSelectedMedId] = useState(null);
   const [Qty, setQty] = useState(1);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const handleSelectMed = (medId) => {
     setSelectedMedId(medId);
+  };
+
+  const clearForm = () => {
+    setSelectedMedId(null);
+    setQty(1);
+    //setSelectedDepTypes([]);
   };
 
   const GetQtyFromInput = (Qty) => {
     setQty(Qty);
   }
 
-/*   const getUserData = () => {
-    try {//Retrieving AsyncStorage data
-      AsyncStorage.getItem('User', (err, result) => {
-        console.log(JSON.parse(result).userId);
-        return result != null ? JSON.parse(result) : null;
-      })
-    } catch (e) {
-      // error reading value
-    }
-  } */
-
-
-
   const getUserData = async () => {
-  try {
-    const result = await AsyncStorage.getItem('User');
-    return result != null ? JSON.parse(result) : null;
-  } catch (e) {
-    // handle errors here
-    console.log(e);
-    return null;
+    try {
+      const result = await AsyncStorage.getItem('User');
+      return result != null ? JSON.parse(result) : null;
+    } catch (e) {
+      // handle errors here
+      console.log(e);
+      return null;
+    }
   }
-}
 
-  const handleAddRequest = async () => { 
-
+  const handleAddRequest = async () => {
     const SelectedDepTypes = DepTypes.filter(depType => depType.isChecked).map(depType => depType.name);
 
-    const user = await getUserData(); 
+    //const depTypeNames = DepTypes.filter(depType => depType.isChecked).map(depType => depType.name);
+    //setSelectedDepTypes(depTypeNames);//get the selected deptypes and put in SelectedDepTypes array
+    //console.log(depTypeNames);
+
+    const user = await getUserData();
     console.log(user.userId);
 
     const request = {
@@ -64,7 +62,7 @@ export default function AddRequestPage(props) {
     };
 
     console.log('Request:', request);
-    
+
     //---------------------------------------Post request----------------------------------------
     fetch(apiUrlMedRequest, {
       method: 'POST',
@@ -80,6 +78,7 @@ export default function AddRequestPage(props) {
       .then(
         (result) => {
           console.log(result);//returns true
+          setModalVisible(true);
         },
         (error) => {
           console.log("err post=", error);
@@ -89,6 +88,7 @@ export default function AddRequestPage(props) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>בקשה ממחלקה</Text>
+
       <View>
         <View style={styles.row}>
           <FCMedInput sendMedSelect={handleSelectMed} />
@@ -98,6 +98,26 @@ export default function AddRequestPage(props) {
         <TouchableOpacity style={styles.button} onPress={() => handleAddRequest()}>
           <Text style={styles.buttonText}>אישור</Text>
         </TouchableOpacity>
+      </View>
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            this.setState({ modalVisible: !modalVisible });
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>בקשה התווספה בהצלחה</Text>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => setModalVisible(false)}>
+                <Text style={styles.buttonText}>סגור</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
       </View>
     </View>
   );
@@ -138,5 +158,27 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
     fontSize: 18,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2, },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
 });
