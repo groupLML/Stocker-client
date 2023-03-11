@@ -11,7 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function AddRequestPage(props) {
 
-  const { DepTypes, apiUrlMedRequest } = useContext(GlobalContext);
+  const { getUserData, DepTypes, apiUrlMedRequest } = useContext(GlobalContext);
 
   //const [SelectedDepTypes, setSelectedDepTypes] = useState([]);
   const [selectedMedId, setSelectedMedId] = useState(null);
@@ -32,18 +32,8 @@ export default function AddRequestPage(props) {
     setQty(Qty);
   }
 
-  const getUserData = async () => {
-    try {
-      const result = await AsyncStorage.getItem('User');
-      return result != null ? JSON.parse(result) : null;
-    } catch (e) {
-      // handle errors here
-      console.log(e);
-      return null;
-    }
-  }
-
   const handleAddRequest = async () => {
+
     const SelectedDepTypes = DepTypes.filter(depType => depType.isChecked).map(depType => depType.name);
 
     //const depTypeNames = DepTypes.filter(depType => depType.isChecked).map(depType => depType.name);
@@ -51,7 +41,6 @@ export default function AddRequestPage(props) {
     //console.log(depTypeNames);
 
     const user = await getUserData();
-    console.log(user.userId);
 
     const request = {
       cUser: user.userId,

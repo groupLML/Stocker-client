@@ -31,13 +31,14 @@ export default function GlobalData(props) {
         { name: 'פנימית', isChecked: true },
     ]);
 
-    const getUserData = () => {
-        try {//Retrieving AsyncStorage data
-            AsyncStorage.getItem('User', (err, result) => {
-                return result != null ? JSON.parse(result) : null;
-            })
+    const getUserData = async () => {
+        try {
+            const result = await AsyncStorage.getItem('User');
+            return result != null ? JSON.parse(result) : null;
         } catch (e) {
-            // error reading value
+            // handle errors here
+            console.log(e);
+            return null;
         }
     }
 
