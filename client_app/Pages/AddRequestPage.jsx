@@ -45,6 +45,7 @@ export default function AddRequestPage(props) {
 }
 
   const handleAddRequest = async () => {
+    
     const { DepTypes } = useContext(GlobalContext);
     const SelectedDepTypes = DepTypes.filter(depType => depType.isChecked).map(depType => depType.name);
 
