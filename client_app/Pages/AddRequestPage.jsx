@@ -60,10 +60,11 @@ export default function AddRequestPage(props) {
       cDep: user.depId,
       medId: selectedMedId,
       reqQty: Qty,
-      reqDate: moment().format('YYYY-MM-DD HH:mm:ss'),
-      DepTypes: SelectedDepTypes,
+      depTypes: SelectedDepTypes,
     };
 
+    console.log('Request:', request);
+    
     //---------------------------------------Post request----------------------------------------
     fetch(apiUrlMedRequest, {
       method: 'POST',
@@ -74,11 +75,11 @@ export default function AddRequestPage(props) {
       })
     })
       .then(res => {
-        return res.json()
+        return res.json();
       })
       .then(
         (result) => {
-          console.log(result);//result is the added request id
+          console.log(result);//returns true
         },
         (error) => {
           console.log("err post=", error);
