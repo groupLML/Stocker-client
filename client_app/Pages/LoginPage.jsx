@@ -150,7 +150,6 @@ export default function LoginPage(props) {
             <TouchableOpacity onPress={handlePhonePress}>
                 <Text style={styles.phoneNumber}>{phoneNumber}</Text>
             </TouchableOpacity>
-            <FontAwesomeIcon icon="fa-thin fa-hourglass-half" />
         </View>
     );
 }

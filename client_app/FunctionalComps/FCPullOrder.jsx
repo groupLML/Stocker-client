@@ -33,7 +33,6 @@ export default function FCPullOrder(props) {
           ) }
           {props.reqStatus === 'W' && (
             <>
-            <FontAwesomeIcon icon="fa-thin fa-hourglass-half" />
               <Icon type="ionicon" name="hourglass" color="red" size={20} />
               <Text style={{ color: 'red' }}>בהמתנה</Text>
             </>
