@@ -70,7 +70,7 @@ export default function FCMedInput(props) {
 
   return (
     <View >
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', position: 'relative' }}>
         <Text style={styles.fields}>שם תרופה:</Text>
         <TextInput
           style={styles.input}
@@ -84,7 +84,6 @@ export default function FCMedInput(props) {
           data={filteredOptions}
           renderItem={renderItem}
           keyExtractor={(item) => item}
-          style={{ zIndex: 2 }}
         />
       </View>}
     </View>
@@ -93,16 +92,13 @@ export default function FCMedInput(props) {
 
 const styles = StyleSheet.create({
   flatListContainer: {
-    position: 'absolute',
-    top: 40,
-    left: 0,
-    right: 0,
+    paddingHorizontal:5,
     maxHeight: 200, // maximum height of the FlatList
     backgroundColor: '#E1EAF9',
     borderWidth: 1,
     borderColor: '#ccc',
-    borderRadius: 10,
-    padding: 7,
+    borderRadius: 5,
+    zIndex: 1,
   },
   option: {
     paddingTop: 5,
