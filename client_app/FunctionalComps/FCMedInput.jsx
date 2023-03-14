@@ -6,12 +6,15 @@ export default function FCMedInput(props) {
 
   const { meds } = useContext(GlobalContext);
 
-  const genNamesWithId = meds.map((med) => ({ id: med.medId, genName: med.genName }));
+  //const genNamesWithId = meds.map((med) => ({ id: med.medId, genName: med.genName }));
   //מכל אובייקט genName יצירת מערך המכיל רק את מאפייני
-  const uniqueGenNames = [...new Set(genNamesWithId.map(med => med.genName))];//(דיסטינק) ללא כפיליות
+  //const uniqueGenNames = [...new Set(genNamesWithId.map(med => med.genName))];//(דיסטינק) ללא כפיליות
+  
+  //chaining med strings properties to create unique med names  
+const medNamesWithId = meds.map(med => `${med.genName}${med.eaQty}${med.unit}${med.given}`);
 
   //-----------------------Autocomplete med input-------------------------------
-  const options = uniqueGenNames;
+  const options = medNamesWithId;
 
   const [inputValue, setInputValue] = useState('');
   const [filteredOptions, setFilteredOptions] = useState([]);
