@@ -9,12 +9,14 @@ export default function FCMedInput(props) {
   //const genNamesWithId = meds.map((med) => ({ id: med.medId, genName: med.genName }));
   //מכל אובייקט genName יצירת מערך המכיל רק את מאפייני
   //const uniqueGenNames = [...new Set(genNamesWithId.map(med => med.genName))];//(דיסטינק) ללא כפיליות
-  
+
   //chaining med strings properties to create unique med names  
-const medNamesWithId = meds.map(med => `${med.genName}${med.eaQty}${med.unit}${med.given}`);
+  const uniqueMedNames = meds.map(med => `${med.genName}${med.eaQty}${med.unit}${med.given}`);
+  const uniqueMedNamesWithId = meds.map((med) => ({id:med.medId, uniqueName:`${med.genName}${med.eaQty}${med.unit}${med.given}`}));
 
   //-----------------------Autocomplete med input-------------------------------
-  const options = medNamesWithId;
+  //const options = medNames;
+  const options = uniqueMedNames;
 
   const [inputValue, setInputValue] = useState('');
   const [filteredOptions, setFilteredOptions] = useState([]);
@@ -31,32 +33,23 @@ const medNamesWithId = meds.map(med => `${med.genName}${med.eaQty}${med.unit}${m
     }
   };
 
-/*   const handleSelectOption = (option) => {
-    if (option !== "אין ערכים תואמים, יש לבחור ערך מהרשימה") {
-      const selectedMed = genNamesWithId.find((med) => med.genName === option);
-      setInputValue(option);
-      setIsSelectFromList(true);
-      setFilteredOptions([]);
-      props.sendMedSelect(selectedMed.id);
-      console.log(option);
-    }
-  }; */
-
   const handleSelectOption = (option) => {
     if (option !== "אין ערכים תואמים, יש לבחור ערך מהרשימה") {
-      const selectedMed = genNamesWithId.find((med) => med.genName === option);
+    //const selectedMed = medNames.find((medName) => medName === option);
+    const selectedMed = uniqueMedNamesWithId.find((med) => med.uniqueName === option);  
       if (selectedMed) {
         setInputValue(option);
         setIsSelectFromList(true);
         setFilteredOptions([]);
         props.sendMedSelect(selectedMed.id);
-      } /* else {
+      } 
+      else {
         setInputValue('');
         setIsSelectFromList(false);
         setFilteredOptions([]);
         props.sendMedSelect(null);
       }
-      console.log(selectedMed); */
+      console.log(selectedMed);
     }
   };
 
@@ -95,7 +88,7 @@ const medNamesWithId = meds.map(med => `${med.genName}${med.eaQty}${med.unit}${m
 
 const styles = StyleSheet.create({
   flatListContainer: {
-    paddingHorizontal:5,
+    paddingHorizontal: 5,
     maxHeight: 200, // maximum height of the FlatList
     backgroundColor: '#E1EAF9',
     borderWidth: 1,
