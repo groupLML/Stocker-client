@@ -84,6 +84,7 @@ export default function FCMedInput(props) {
           data={filteredOptions}
           renderItem={renderItem}
           keyExtractor={(item) => item}
+          style={{ zIndex: 2 }}
         />
       </View>}
     </View>
@@ -102,7 +103,6 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 10,
     padding: 7,
-    zIndex: 1,
   },
   option: {
     paddingTop: 5,

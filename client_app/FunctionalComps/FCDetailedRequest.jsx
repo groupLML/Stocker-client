@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Icon } from '@rneui/themed';
 //import { Card } from '@rneui/base';
 
@@ -12,7 +12,7 @@ import FCDepTypeList from '../FunctionalComps/FCDepTypeList';
 
 export default function FCDetailedRequest(props) {
 
-  const { depId, apiUrlMedRequest, DepTypes } = useContext(GlobalContext);
+  const { depId, apiUrlMedRequest, DepTypes, setIsRequestUpdated} = useContext(GlobalContext);
 
   const [Qty, setQty] = useState(props.reqQty);
   const [selectedMedId, setSelectedMedId] = useState(null);
@@ -26,7 +26,6 @@ export default function FCDetailedRequest(props) {
   };
 
   const handleUpdateRequest = () => {
-    //e.preventDefault();-------------------------------------------------
 
     const SelectedDepTypes = DepTypes.filter(depType => depType.isChecked).map(depType => depType.name);
 
@@ -41,8 +40,6 @@ export default function FCDetailedRequest(props) {
       "reqStatus": props.reqStatus,
       "reqDate": props.date
     };
-
-    console.log(props.medId);
 
     const dataToSend = {
       medRequest: MedRequest,
@@ -65,8 +62,10 @@ export default function FCDetailedRequest(props) {
         (result) => {//body
           if (result) {
             alert("Success");
+            setIsRequestUpdated(true);
           }
           else { alert("error") };
+
         },
         (error) => {
           console.log("err put=", error);

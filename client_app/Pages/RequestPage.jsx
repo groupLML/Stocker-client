@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet, TextInput } from 'react-native';
-import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import React, { useEffect , useContext} from 'react';
 import FCRequests from '../FunctionalComps/FCRequests';
+import { GlobalContext } from '../GlobalData/GlobalData';
 
 export default function RequestPage(props) {
 

@@ -14,6 +14,7 @@ export default function FCQuantityInput(props) {
   return (
     <View style={styles.row}>
       <Text style={styles.fields}>כמות:</Text>
+      <View style={styles.inputContainer}></View>
       <NumericInput
         type='plus-minus'
         rounded
@@ -25,6 +26,7 @@ export default function FCQuantityInput(props) {
         leftButtonBackgroundColor='#E1EAF9'
         onChange={handleChange}
         value={reqQty}
+        style={{ zIndex: 3 }}
       />
     </View>
   )

@@ -7,7 +7,7 @@ import { GlobalContext } from '../GlobalData/GlobalData';
 
 export default function RequestsPage(props) {
 
-  const { apiUrlMedRequest, medReqs, setMedReqs, depId } = useContext(GlobalContext);
+  const { apiUrlMedRequest, medReqs, setMedReqs, depId,isRequestUpdated, setIsRequestUpdated} = useContext(GlobalContext);
 
   const [requests, setRequests] = useState([]);
 
@@ -27,12 +27,12 @@ export default function RequestsPage(props) {
       })
       .then(
         (result) => {
-          setRequests(result);
+          setRequests(result); //set the requests of choosen dep to display
         },
         (error) => {
           console.log("err post=", error);
         });
-  }, [depId])
+  }, [medReqs,depId])
 
   //להחליט לאן להעביר את זה
   //----------------------GET MedRequests ---------------------
@@ -50,12 +50,20 @@ export default function RequestsPage(props) {
       })
       .then(
         (result) => {
-          setMedReqs(result);
+          setMedReqs(result); // set the requests list 
+          if(isRequestUpdated){
+            setIsRequestUpdated(false);
+          }
         },
         (error) => {
           console.log("err post=", error);
         });
-  }, [medReqs])
+  }, [isRequestUpdated])
+
+/*    // update requests state whenever medReqs state is updated
+   useEffect(() => {
+    setRequests(medReqs.filter(req => req.departmentId === depId));
+  }, [medReqs]) */
 
   return (
     <ScrollView>

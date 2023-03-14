@@ -18,6 +18,9 @@ export default function GlobalData(props) {
     const apiUrlDeps = "https://localhost:7102/api/Department/";
     const apiUrlPullOrder = "https://proj.ruppin.ac.il/cgroup36/prod/api/PullOrder/"; */
 
+
+    const [isRequestUpdated, setIsRequestUpdated] = useState(false);
+
     // const [User, setUser] = useState([]);
     const [depId, setDepId] = useState('');
 
@@ -48,7 +51,8 @@ export default function GlobalData(props) {
                 apiUrlUser, apiUrlMedRequest, apiUrlMeds, apiUrlPullOrder,
                 depId, setDepId, meds, setMeds,
                 DepTypes, setDepTypes, medReqs, setMedReqs,
-                getUserData
+                getUserData,
+                isRequestUpdated, setIsRequestUpdated
             }}>
             {props.children}
         </GlobalContext.Provider>
