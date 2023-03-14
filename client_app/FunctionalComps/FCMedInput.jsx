@@ -4,23 +4,25 @@ import { GlobalContext } from '../GlobalData/GlobalData';
 
 export default function FCMedInput(props) {
 
-  const { meds } = useContext(GlobalContext);
+  const { meds, uniqueMedNames, setUniqueMedNames, uniqueMedNamesWithId, setUniqueMedNamesWithId, } = useContext(GlobalContext);
 
   //const genNamesWithId = meds.map((med) => ({ id: med.medId, genName: med.genName }));
   //מכל אובייקט genName יצירת מערך המכיל רק את מאפייני
   //const uniqueGenNames = [...new Set(genNamesWithId.map(med => med.genName))];//(דיסטינק) ללא כפיליות
 
-  //chaining med strings properties to create unique med names  
-  const uniqueMedNames = meds.map(med => `${med.genName}${med.eaQty}${med.unit}${med.given}`);
-  const uniqueMedNamesWithId = meds.map((med) => ({id:med.medId, uniqueName:`${med.genName}${med.eaQty}${med.unit}${med.given}`}));
+  useEffect(() => {//component did mount
+    //chaining med strings properties to create unique med names  
+    setUniqueMedNames(meds.map(med => `${med.genName}${med.eaQty}${med.unit}${med.given}`));
+    setUniqueMedNamesWithId(meds.map((med) => ({ id: med.medId, uniqueName: `${med.genName}${med.eaQty}${med.unit}${med.given}` })));
+  }, []); 
+
 
   //-----------------------Autocomplete med input-------------------------------
-  //const options = medNames;
   const options = uniqueMedNames;
 
   const [inputValue, setInputValue] = useState('');
   const [filteredOptions, setFilteredOptions] = useState([]);
-  const [isSelectFromList, setIsSelectFromList] = useState(false);//אני הוספתי
+  const [isSelectFromList, setIsSelectFromList] = useState(false);
 
   const handleInputChange = (text) => {
     setIsSelectFromList(false);
@@ -35,14 +37,13 @@ export default function FCMedInput(props) {
 
   const handleSelectOption = (option) => {
     if (option !== "אין ערכים תואמים, יש לבחור ערך מהרשימה") {
-    //const selectedMed = medNames.find((medName) => medName === option);
-    const selectedMed = uniqueMedNamesWithId.find((med) => med.uniqueName === option);  
+      const selectedMed = uniqueMedNamesWithId.find((med) => med.uniqueName === option);
       if (selectedMed) {
         setInputValue(option);
         setIsSelectFromList(true);
         setFilteredOptions([]);
         props.sendMedSelect(selectedMed.id);
-      } 
+      }
       else {
         setInputValue('');
         setIsSelectFromList(false);
@@ -66,10 +67,10 @@ export default function FCMedInput(props) {
 
   return (
     <View >
-      <View style={{ flexDirection: 'row', alignItems: 'center', position: 'relative' }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', position: 'relative', maxWidth: '80%' }}>
         <Text style={styles.fields}>שם תרופה:</Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { width: '100%' }]}
           value={inputValue}
           placeholder={props.genName ? props.genName : 'בחר תרופה'}
           onChangeText={handleInputChange}
@@ -88,7 +89,7 @@ export default function FCMedInput(props) {
 
 const styles = StyleSheet.create({
   flatListContainer: {
-    paddingHorizontal: 5,
+    paddingHorizontal: 10,
     maxHeight: 200, // maximum height of the FlatList
     backgroundColor: '#E1EAF9',
     borderWidth: 1,

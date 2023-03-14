@@ -1,13 +1,19 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Card } from '@rneui/base';
 import { Icon } from '@rneui/themed';
 
+import { GlobalContext } from '../GlobalData/GlobalData';
 import { useNavigation } from '@react-navigation/native';
 import FCDateTime from './FCDateTime';
 
 export default function FCRequest(props) {
 
+  const {meds} = useContext(GlobalContext);
+
+  //get the unique name of the requiered med
+  const medName = meds.filter(med => med.medId === props.medId).map(med => `${med.genName}${med.eaQty}${med.unit}${med.given}`);
+  
   const navigation = useNavigation();
 
   const handleCardPress = () => {
@@ -35,7 +41,7 @@ export default function FCRequest(props) {
         <FCDateTime time={props.time} date={props.date} />
       </View>
 
-      <Text style={styles.cardTitle}>{props.genName}</Text>
+      <Text style={styles.cardTitle}>{medName}</Text>
       <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >כמות: </Text>{props.reqQty}</Text>
       <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >שם יוצר ההזמנה: </Text>{props.cNurseName}</Text>
 

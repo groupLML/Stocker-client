@@ -60,11 +60,6 @@ export default function RequestsPage(props) {
         });
   }, [isRequestUpdated])
 
-/*    // update requests state whenever medReqs state is updated
-   useEffect(() => {
-    setRequests(medReqs.filter(req => req.departmentId === depId));
-  }, [medReqs]) */
-
   return (
     <ScrollView>
       <View style={styles.container}>
