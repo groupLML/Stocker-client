@@ -100,7 +100,7 @@ export default function LoginPage(props) {
     //להעביר לדף הבית
     //-------------------------------Get Meds-----------------------------
 
-    const { apiUrlMeds, setMeds, meds } = useContext(GlobalContext);
+    const { apiUrlMeds, setMeds, meds,setMedsNames, uniqueMedNames} = useContext(GlobalContext);
 
     useEffect(() => {
         fetch(apiUrlMeds, { //של השרת URL
@@ -116,11 +116,12 @@ export default function LoginPage(props) {
             .then(
                 (result) => {
                     setMeds(result);
+                    setMedsNames(result);
                 },
                 (error) => {
                     console.log("err post=", error);
                 });
-    }, [meds]);//component did mount
+    }, [meds]);//component did update
 
     /* useEffect(() => {
         console.log(Medications);

@@ -9,10 +9,12 @@ import FCDateTime from './FCDateTime';
 
 export default function FCRequest(props) {
 
-  const {meds} = useContext(GlobalContext);
+  const {meds, uniqueMedNamesWithId} = useContext(GlobalContext);
 
   //get the unique name of the requiered med
-  const medName = meds.filter(med => med.medId === props.medId).map(med => `${med.genName}${med.eaQty}${med.unit}${med.given}`);
+  const medName = uniqueMedNamesWithId
+  .filter(med => med.id === props.medId)
+  .map(med => med.uniqueName)[0];
   
   const navigation = useNavigation();
 
