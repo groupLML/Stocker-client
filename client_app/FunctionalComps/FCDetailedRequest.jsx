@@ -35,7 +35,7 @@ export default function FCDetailedRequest(props) {
       "aUser": props.aNurseId,
       "cDep": depId,
       "aDep": props.aDepId,
-      "medId": selectedMedId ? selectedMedId : props.medId ,
+      "medId": selectedMedId ? selectedMedId : props.medId,
       "reqQty": Qty,
       "reqStatus": props.reqStatus,
       "reqDate": props.date
