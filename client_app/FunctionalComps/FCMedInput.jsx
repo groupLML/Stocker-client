@@ -4,19 +4,10 @@ import { GlobalContext } from '../GlobalData/GlobalData';
 
 export default function FCMedInput(props) {
 
-  const { meds, uniqueMedNames, uniqueMedNamesWithId } = useContext(GlobalContext);
-
-  //const genNamesWithId = meds.map((med) => ({ id: med.medId, genName: med.genName }));
-  //מכל אובייקט genName יצירת מערך המכיל רק את מאפייני
-  //const uniqueGenNames = [...new Set(genNamesWithId.map(med => med.genName))];//(דיסטינק) ללא כפיליות
-
-  //get the unique name of the requiered med
-  const medName = uniqueMedNamesWithId
-    .filter(med => med.id === props.medId)
-    .map(med => med.uniqueName)[0];
+  const { uniqueMedNamesWithId } = useContext(GlobalContext);
 
   //-----------------------Autocomplete med input-------------------------------
-  const options = uniqueMedNames;
+  const options = uniqueMedNamesWithId.map(med => med.uniqueName);
 
   const [inputValue, setInputValue] = useState('');
   const [filteredOptions, setFilteredOptions] = useState([]);
@@ -25,6 +16,10 @@ export default function FCMedInput(props) {
   const handleInputChange = (text) => {
     setIsSelectFromList(false);
     setInputValue(text);
+    if (text === '') {
+      // set selected option to null when input is cleared
+      props.sendMedSelect(null);
+    }
     const filtered = options.filter((option) => option.toLowerCase().includes(text.toLowerCase()));
     //const filtered = options.filter((option) => option.toLowerCase().startsWith(text.toLowerCase()));
     setFilteredOptions(filtered);
@@ -36,19 +31,10 @@ export default function FCMedInput(props) {
   const handleSelectOption = (option) => {
     if (option !== "אין ערכים תואמים, יש לבחור ערך מהרשימה") {
       const selectedMed = uniqueMedNamesWithId.find((med) => med.uniqueName === option);
-      if (selectedMed) {
-        setInputValue(option);
-        setIsSelectFromList(true);
-        setFilteredOptions([]);
-        props.sendMedSelect(selectedMed.id);
-      }
-      else {
-        setInputValue('');
-        setIsSelectFromList(false);
-        setFilteredOptions([]);
-        props.sendMedSelect(null);
-      }
-      console.log(selectedMed);
+      setInputValue(option);
+      setIsSelectFromList(true);
+      setFilteredOptions([]);
+      props.sendMedSelect(selectedMed.id);
     }
   };
 

@@ -14,7 +14,6 @@ export default function RequestsPage(props) {
   //----------------------GET Requests details ---------------------
 
   useEffect(() => {//depId פונ' רצה כל פעם שמתעדכן 
-
     fetch(apiUrlMedRequest + `${depId}`, { //של השרת URL
       method: 'GET',//מה המתודה
       headers: new Headers({
@@ -58,7 +57,7 @@ export default function RequestsPage(props) {
         (error) => {
           console.log("err post=", error);
         });
-  }, [isRequestUpdated])
+  }, [isRequestUpdated]) // did update
 
   return (
     <ScrollView>
@@ -78,8 +77,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     textAlign: 'center',
-    //justifyContent: 'center',
-    //alignItems: 'center',
     fontWeight: 'bold',
     marginBottom: 30,
     color: '#003D9A',

@@ -100,7 +100,7 @@ export default function LoginPage(props) {
     //להעביר לדף הבית
     //-------------------------------Get Meds-----------------------------
 
-    const { apiUrlMeds, setMeds, meds,setMedsNames, uniqueMedNames} = useContext(GlobalContext);
+    const { apiUrlMeds, setMeds, meds,setMedsNames} = useContext(GlobalContext);
 
     useEffect(() => {
         fetch(apiUrlMeds, { //של השרת URL
