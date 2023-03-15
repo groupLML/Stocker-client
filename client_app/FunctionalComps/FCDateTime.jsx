@@ -6,7 +6,7 @@ export default function FCDateTime(props) {
 
     const date = props.date.split(' ')[0];//סידור פורמט התאריך
     const formattedDate = format(new Date(date), 'dd/MM/yyyy');
-    const time = props.date.substring(11, 16);
+    const time = props.date.substring(11, 16);//שליפת השעה
 
     return (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
