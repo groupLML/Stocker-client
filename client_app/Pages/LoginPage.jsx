@@ -65,8 +65,8 @@ export default function LoginPage(props) {
                                     const userData = JSON.stringify(result)
                                     AsyncStorage.setItem('User', userData, () => {
                                         getDepID();
-                                        props.navigation.navigate('צפייה בבקשות המחלקה');
-                                       // props.navigation.navigate('יצירת בקשה');
+                                        props.navigation.navigate('ראשי');
+                                        //props.navigation.navigate('בקשות');
                                     }); 
                                 } catch (e) {
                                     // saving error
@@ -74,7 +74,7 @@ export default function LoginPage(props) {
                             }
                             else { alert("שגיאה, משתמש הוא אינו אחות") };
                         }
-                        else { alert("שגיאה, משתמש לא קיים"); props.navigation.navigate('צפייה בבקשות המחלקה'); };
+                        else { alert("שגיאה, משתמש לא קיים");};
                     },
                     (error) => {
                         console.log("error,", error);
