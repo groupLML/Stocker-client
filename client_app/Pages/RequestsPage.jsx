@@ -14,7 +14,7 @@ export default function RequestsPage(props) {
   //----------------------GET Requests details ---------------------
 
   useEffect(() => {//depId פונ' רצה כל פעם שמתעדכן 
-    fetch(apiUrlMedRequest + `${depId}`, { //של השרת URL
+    fetch(apiUrlMedRequest + 'RequestsMine/' + `${depId}`, { //של השרת URL
       method: 'GET',//מה המתודה
       headers: new Headers({
         'Content-Type': 'application/json; charset=UTF-8',

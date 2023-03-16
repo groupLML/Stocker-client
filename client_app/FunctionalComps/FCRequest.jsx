@@ -45,7 +45,7 @@ export default function FCRequest(props) {
       <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >כמות: </Text>{props.reqQty}</Text>
       <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >שם יוצר ההזמנה: </Text>{props.cNurseName}</Text>
 
-      {props.aDepName !== 'מערכות מידע' && <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >שם המחלקה שאישרה: </Text>{props.aDepName}</Text>}
+      {props.aDepName !== '' && <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >שם המחלקה שאישרה: </Text>{props.aDepName}</Text>}
 
       {!props.isDetailedRequest &&
         <TouchableOpacity onPress={() => handleCardPress()}>
