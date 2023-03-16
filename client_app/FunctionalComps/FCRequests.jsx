@@ -12,7 +12,7 @@ export default function FCRequests(props) {
                 id={request.reqId}
                 date={request.reqDate}
                 medId={request.medId}
-                genName={request.genName}
+                medName={request.medName}
                 cNurseId={request.cUserId}
                 cNurseName={request.cNurseName}
                 aDepId={request.aDepId}
@@ -31,7 +31,7 @@ export default function FCRequests(props) {
                 id={request.reqId}
                 date={request.reqDate}
                 medId={request.medId}
-                genName={request.genName}
+                medName={request.medName}
                 cNurseId={request.cUserId}
                 cNurseName={request.cNurseName}
                 aDepId={request.aDepId}
@@ -52,14 +52,3 @@ export default function FCRequests(props) {
         </View>
     )
 }
-
-/* id = { request.reqId }
-cNurse = { request.cUser }
-aNurse = { request.aUser }
-cDep = { request.cDep }
-aDep = { request.aDep }
-medId = { request.medId }
-reqQty = { request.reqQty }
-reqStatus = { request.reqStatus }
-date = { request.reqDate }
-key = { request.reqId } */

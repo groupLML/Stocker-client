@@ -1,4 +1,4 @@
-import { View, Text, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 
@@ -7,7 +7,7 @@ export default function HomePage(props) {
 
   return (
     <View>
-      <Text>Home</Text>
+      <Text style={styles.title}>דף הבית</Text>
       <TouchableOpacity onPress={() => navigation.navigate('יצירת בקשה')}>
         <Text>יצירת בקשה</Text>
       </TouchableOpacity>
@@ -17,3 +17,14 @@ export default function HomePage(props) {
     </View>
   )
 }
+
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 24,
+    color: '#003D9A',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+});

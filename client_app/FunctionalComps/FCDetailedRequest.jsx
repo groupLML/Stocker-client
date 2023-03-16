@@ -120,8 +120,8 @@ export default function FCDetailedRequest(props) {
       )}
       {props.reqStatus === 'W' && (
         <>
-          <Text style={{ ...styles.Body, fontSize: 17 }}><Text style={{ fontWeight: "bold", fontSize: 17 }} >שם יוצר ההזמנה: </Text>{props.aNurseName}</Text>
-          <View style={styles.Body}><FCMedInput genName={props.genName} sendMedSelect={handleSelectMed} /></View>
+          <Text style={{ ...styles.Body, fontSize: 17 }}><Text style={{ fontWeight: "bold", fontSize: 17 }} >שם יוצר ההזמנה: </Text>{props.cNurseName}</Text>
+          <View style={styles.Body}><FCMedInput medName={props.medName} sendMedSelect={handleSelectMed} /></View>
           <View style={styles.Body}><FCQuantityInput reqQty={props.reqQty} sendQty={GetQtyFromInput} /></View>
           <View style={styles.Body}><FCDepTypeList /></View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>

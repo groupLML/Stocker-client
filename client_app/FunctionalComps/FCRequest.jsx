@@ -9,10 +9,10 @@ import FCDateTime from './FCDateTime';
 
 export default function FCRequest(props) {
 
-  const {uniqueMedNamesWithId} = useContext(GlobalContext);
+  //const {uniqueMedNamesWithId} = useContext(GlobalContext);
 
   //get the unique name of the requiered med
-  const medName = uniqueMedNamesWithId.filter(med => med.id === props.medId).map(med => med.uniqueName)[0];
+  //const medName = uniqueMedNamesWithId.filter(med => med.id === props.medId).map(med => med.uniqueName)[0];
   
   const navigation = useNavigation();
 
@@ -41,7 +41,7 @@ export default function FCRequest(props) {
         <FCDateTime time={props.time} date={props.date} />
       </View>
 
-      <Text style={styles.cardTitle}>{medName}</Text>
+      <Text style={styles.cardTitle}>{props.medName}</Text>
       <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >כמות: </Text>{props.reqQty}</Text>
       <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >שם יוצר ההזמנה: </Text>{props.cNurseName}</Text>
 

@@ -4,10 +4,16 @@ import { GlobalContext } from '../GlobalData/GlobalData';
 
 export default function FCMedInput(props) {
 
+  //*******************************************להחליף שורות אחרי שליטל תוסיף את שם התרופה***********************************************
+
   const { uniqueMedNamesWithId } = useContext(GlobalContext);
+  //const { meds } = useContext(GlobalContext);
 
   //-----------------------Autocomplete med input-------------------------------
   const options = uniqueMedNamesWithId.map(med => med.uniqueName);
+  //const options = meds.map(med => med.medName);
+
+  //*******************************************להחליף שורות אחרי שליטל תוסיף את שם התרופה***********************************************
 
   const [inputValue, setInputValue] = useState('');
   const [filteredOptions, setFilteredOptions] = useState([]);
@@ -56,7 +62,7 @@ export default function FCMedInput(props) {
         <TextInput
           style={[styles.input, { width: '100%' }]}
           value={inputValue}
-          placeholder={props.genName ? props.genName : 'בחר תרופה'}
+          placeholder={props.medName ? props.medName : 'בחר תרופה'}
           onChangeText={handleInputChange}
         />
       </View>
