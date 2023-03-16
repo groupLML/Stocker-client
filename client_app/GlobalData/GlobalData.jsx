@@ -8,7 +8,6 @@ export default function GlobalData(props) {
     const apiUrlUser = "https://proj.ruppin.ac.il/cgroup36/prod/api/User/";
     const apiUrlMedRequest = "https://proj.ruppin.ac.il/cgroup36/prod/api/MedRequest/";
     const apiUrlMeds = "https://proj.ruppin.ac.il/cgroup36/prod/api/Medicine/";
-    //const apiUrlDeps = "https://proj.ruppin.ac.il/cgroup36/prod/api/Department/";
     const apiUrlPullOrder = "https://proj.ruppin.ac.il/cgroup36/prod/api/PullOrder/";
     
     //create unique med names by chaining med string properties
@@ -20,13 +19,9 @@ export default function GlobalData(props) {
 
     const [isRequestUpdated, setIsRequestUpdated] = useState(false);
 
-    // const [User, setUser] = useState([]);
     const [depId, setDepId] = useState('');
-
     const [meds, setMeds] = useState([]);
-    //const [deps, setDeps] = useState([]);
     const [myMedReqs, setMyMedReqs] = useState([]);
-    
     //const [othersMedReqs, setOthersMedReqs] = useState([]);
 
     const [DepTypes, setDepTypes] = useState([
@@ -55,7 +50,6 @@ export default function GlobalData(props) {
                 getUserData,
                 isRequestUpdated, setIsRequestUpdated,
                 setMedsNames, uniqueMedNamesWithId,
-
             }}>
             {props.children}
         </GlobalContext.Provider>

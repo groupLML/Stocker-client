@@ -34,7 +34,7 @@ export default function OthersRequestsPage() {
     return (
         <ScrollView>
             <View style={styles.container}>
-                <Text style={styles.title}>צפייה בבקשות המחלקה</Text>
+                <Text style={styles.title}>בקשות של מחלקות אחרות</Text>
                 <FCRequests RequestsList={requests} isDetailedRequest={false} />
             </View>
         </ScrollView>
@@ -47,11 +47,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     title: {
-        fontSize: 30,
+        fontSize: 25,
         textAlign: 'center',
         fontWeight: 'bold',
-        marginBottom: 30,
+        marginBottom: 15,
         color: '#003D9A',
-        marginTop: 30,
+        marginTop: 60,
     },
 });

@@ -3,7 +3,6 @@ import React, { useContext, useEffect } from 'react';
 import { Card } from '@rneui/base';
 import { Icon } from '@rneui/themed';
 
-import { GlobalContext } from '../GlobalData/GlobalData';
 import { useNavigation } from '@react-navigation/native';
 import FCDateTime from './FCDateTime';
 

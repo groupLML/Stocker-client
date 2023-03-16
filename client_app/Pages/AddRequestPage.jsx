@@ -10,7 +10,7 @@ import FCQuantityInput from '../FunctionalComps/FCQuantityInput';
 
 export default function AddRequestPage(props) {
 
-  const { getUserData, DepTypes, apiUrlMedRequest } = useContext(GlobalContext);
+  const { apiUrlMedRequest, getUserData, DepTypes } = useContext(GlobalContext);
 
   //const [SelectedDepTypes, setSelectedDepTypes] = useState([]);
   const [selectedMedId, setSelectedMedId] = useState(null);
@@ -21,18 +21,18 @@ export default function AddRequestPage(props) {
     setSelectedMedId(medId);
   };
 
+  const GetQtyFromInput = (Qty) => {
+    setQty(Qty);
+  }
+
   const clearForm = () => {
+    setModalVisible(false)
     setSelectedMedId(null);
     setQty(1);
     //setSelectedDepTypes([]);
   };
 
-  const GetQtyFromInput = (Qty) => {
-    setQty(Qty);
-  }
-
   const handleAddRequest = async () => {
-
     const SelectedDepTypes = DepTypes.filter(depType => depType.isChecked).map(depType => depType.name);
 
     //const depTypeNames = DepTypes.filter(depType => depType.isChecked).map(depType => depType.name);
@@ -49,7 +49,7 @@ export default function AddRequestPage(props) {
       depTypes: SelectedDepTypes,
     };
 
-    console.log('Request:', request);
+    //console.log('Request:', request);
 
     //-------------------------------Post request----------------------------------
     fetch(apiUrlMedRequest, {
@@ -76,7 +76,6 @@ export default function AddRequestPage(props) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>בקשה ממחלקה</Text>
-
       <View>
         <View style={styles.row}>
           <FCMedInput sendMedSelect={handleSelectMed} />
@@ -100,7 +99,7 @@ export default function AddRequestPage(props) {
               <Text style={styles.modalText}>בקשה התווספה בהצלחה</Text>
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => setModalVisible(false)}>
+                onPress={() => clearForm()}>
                 <Text style={styles.buttonText}>סגור</Text>
               </TouchableOpacity>
             </View>
@@ -118,11 +117,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   title: {
-    fontSize: 24,
-    color: '#003D9A',
-    fontWeight: 'bold',
+    fontSize: 25,
     textAlign: 'center',
-    marginBottom: 20,
+    fontWeight: 'bold',
+    marginBottom: 30,
+    color: '#003D9A',
+    marginTop: 60,
   },
   row: {
     flexDirection: 'row',

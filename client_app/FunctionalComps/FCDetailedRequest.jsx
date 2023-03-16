@@ -1,10 +1,8 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState, useContext, useEffect } from 'react';
 import { Icon } from '@rneui/themed';
-//import { Card } from '@rneui/base';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
-
 import FCQuantityInput from './FCQuantityInput';
 import FCMedInput from './FCMedInput';
 import FCDateTime from './FCDateTime';
@@ -49,9 +47,9 @@ export default function FCDetailedRequest(props) {
     //-------------------------------PUT medReqs------------------------------------
     fetch(apiUrlMedRequest + "WaittingReq/" + `${props.id}`, {
       method: 'PUT',
-      body: JSON.stringify(dataToSend), //bodyשליחת אובייקט ב 
+      body: JSON.stringify(dataToSend),
       headers: new Headers({
-        'Content-type': 'application/json; charset=UTF-8',//חשוב - JSON לשלוח
+        'Content-type': 'application/json; charset=UTF-8',
         'Accept': 'application/json; charset=UTF-8',
       })
     })
@@ -59,13 +57,12 @@ export default function FCDetailedRequest(props) {
         return response.json()
       })
       .then(
-        (result) => {//body
+        (result) => {
           if (result) {
             alert("Success");
             setIsRequestUpdated(true);
           }
           else { alert("error") };
-
         },
         (error) => {
           console.log("err put=", error);
@@ -104,10 +101,11 @@ export default function FCDetailedRequest(props) {
       {/* --------------------------------------תוכן וכפתורים------------------------------ */}
       {props.reqStatus === 'A' && (
         <>
-          <Text style={styles.Title}>{props.genName}</Text>
+          <Text style={styles.Title}>{props.medName}</Text>
           <Text style={styles.Body}><Text style={{ fontWeight: "bold" }} >כמות: </Text>{props.reqQty}</Text>
           <Text style={styles.Body}><Text style={{ fontWeight: "bold" }} >שם יוצר ההזמנה: </Text>{props.cNurseName}</Text>
           <Text style={styles.Body}><Text style={{ fontWeight: "bold" }} >שם המחלקה שאישרה: </Text>{props.aDepName}</Text>
+          <Text style={styles.Body}><Text style={{ fontWeight: "bold" }} >שם האחות שאישרה: </Text>{props.aNurseName}</Text>
           <View style={styles.row}>
             <TouchableOpacity style={[styles.button, { backgroundColor: '#129C62' }]} onPress={() => handleApproveRequest()}>
               <Text style={styles.buttonText}>אישור העברה</Text>

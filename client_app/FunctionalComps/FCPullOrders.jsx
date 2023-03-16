@@ -40,7 +40,6 @@ export default function FCPullOrders(props) {
     })
   }
 
-
   return (
     <View>
       {pullOrdersStr}

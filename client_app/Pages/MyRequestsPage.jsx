@@ -1,21 +1,20 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React, { useContext, useState, useEffect } from 'react';
 
-import FCRequests from '../FunctionalComps/FCRequests';
 import { GlobalContext } from '../GlobalData/GlobalData';
-
+import FCRequests from '../FunctionalComps/FCRequests';
 
 export default function MyRequestsPage(props) {
 
-  const { apiUrlMedRequest, myMedReqs, setMyMedReqs, depId,isRequestUpdated, setIsRequestUpdated} = useContext(GlobalContext);
+  const { apiUrlMedRequest, depId, myMedReqs, setMyMedReqs, isRequestUpdated, setIsRequestUpdated} = useContext(GlobalContext);
 
-  const [requests, setRequests] = useState([]);
+  //const [requests, setRequests] = useState([]);
 
   //----------------------GET Requests details ---------------------
 
-  useEffect(() => {//depId פונ' רצה כל פעם שמתעדכן 
-    fetch(apiUrlMedRequest + 'RequestsMine/' + `${depId}`, { //של השרת URL
-      method: 'GET',//מה המתודה
+  useEffect(() => {
+    fetch(apiUrlMedRequest + 'RequestsMine/' + `${depId}`, {
+      method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json; charset=UTF-8',
@@ -26,17 +25,20 @@ export default function MyRequestsPage(props) {
       })
       .then(
         (result) => {
-          setRequests(result); //set the requests of choosen dep to display
+          setMyMedReqs(result); //set the requests of choosen dep to display
+          if (isRequestUpdated) {
+            setIsRequestUpdated(false);
+          }
         },
         (error) => {
           console.log("err post=", error);
         });
-  }, [myMedReqs,depId])
+  }, [myMedReqs], [depId], [isRequestUpdated])
 
   //להחליט לאן להעביר את זה
   //----------------------GET MedRequests ---------------------
   
-  useEffect(() => {
+/*   useEffect(() => {
     fetch(apiUrlMedRequest, { //של השרת URL
       method: 'GET',//מה המתודה
       headers: new Headers({
@@ -57,13 +59,13 @@ export default function MyRequestsPage(props) {
         (error) => {
           console.log("err post=", error);
         });
-  }, [isRequestUpdated]) // did update
+  }, [isRequestUpdated]) // did update */
 
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.title}>צפייה בבקשות המחלקה</Text>
-        <FCRequests RequestsList={requests} isDetailedRequest={false} />
+        <Text style={styles.title}>בקשות המחלקה</Text>
+        <FCRequests RequestsList={myMedReqs} isDetailedRequest={false} />
       </View>
     </ScrollView>
   )
@@ -75,11 +77,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   title: {
-    fontSize: 30,
+    fontSize: 25,
     textAlign: 'center',
     fontWeight: 'bold',
-    marginBottom: 30,
+    marginBottom: 15,
     color: '#003D9A',
-    marginTop: 30,
+    marginTop: 60,
   },
 });

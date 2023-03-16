@@ -18,6 +18,7 @@ export default function FCRequests(props) {
                 aDepId={request.aDepId}
                 aDepName={request.aDepName}
                 aNurseId={request.aUserId}
+                aNurseName={request.aNurseName}
                 reqQty={request.reqQty}
                 reqStatus={request.reqStatus}
                 requestsList={props.RequestsList}
@@ -37,6 +38,7 @@ export default function FCRequests(props) {
                 aDepId={request.aDepId}
                 aDepName={request.aDepName}
                 aNurseId={request.aUserId}
+                //aNurseName={request.aNurseName}
                 reqQty={request.reqQty}
                 reqStatus={request.reqStatus}
                 requestsList={props.RequestsList}

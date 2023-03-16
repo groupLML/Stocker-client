@@ -21,13 +21,13 @@ export default function HomePage(props) {
   )
 }
 
-
 const styles = StyleSheet.create({
   title: {
-    fontSize: 24,
-    color: '#003D9A',
-    fontWeight: 'bold',
+    fontSize: 25,
     textAlign: 'center',
-    marginBottom: 20,
+    fontWeight: 'bold',
+    marginBottom: 15,
+    color: '#003D9A',
+    marginTop: 60,
   },
 });

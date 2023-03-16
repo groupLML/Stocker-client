@@ -1,11 +1,11 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity } from 'react-native'
 import { GlobalContext } from '../GlobalData/GlobalData';
 
 export default function FCMedInput(props) {
 
   //*******************************************להחליף שורות אחרי שליטל תוסיף את שם התרופה***********************************************
-
+  const apiUrlMedsFullNames = 'https://proj.ruppin.ac.il/cgroup36/prod/GetMedsFullNames';
   const { uniqueMedNamesWithId } = useContext(GlobalContext);
   //const { meds } = useContext(GlobalContext);
 
@@ -22,8 +22,7 @@ export default function FCMedInput(props) {
   const handleInputChange = (text) => {
     setIsSelectFromList(false);
     setInputValue(text);
-    if (text === '') {
-      // set selected option to null when input is cleared
+    if (text === '') {// set selected option to null when input is cleared
       props.sendMedSelect(null);
     }
     const filtered = options.filter((option) => option.toLowerCase().includes(text.toLowerCase()));
