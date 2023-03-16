@@ -5,7 +5,7 @@ import { Icon } from '@rneui/themed';
 
 import { useNavigation } from '@react-navigation/native';
 import FCDateTime from './FCDateTime';
-import FCMedOrders from './FCMedOrders';
+import FCMedsInOrder from './FCMedsInOrder.jsx';
 
 export default function FCPullOrder(props) {
 
@@ -47,7 +47,7 @@ export default function FCPullOrder(props) {
       
       {props.pUser && <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }}>רוקח אחראי : </Text>{props.pUser}</Text>}
 
-      {props.isDetailedRequest && <FCMedOrders MedOrdersList = {props.pullMedList}/>}
+      {props.isDetailedRequest && <FCMedsInOrder MedsOrderList = {props.pullMedList}/>}
 
       {!props.isDetailedRequest &&
         <TouchableOpacity onPress={() => handleCardPress()}>

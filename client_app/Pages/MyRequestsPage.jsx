@@ -5,9 +5,9 @@ import FCRequests from '../FunctionalComps/FCRequests';
 import { GlobalContext } from '../GlobalData/GlobalData';
 
 
-export default function RequestsPage(props) {
+export default function MyRequestsPage(props) {
 
-  const { apiUrlMedRequest, medReqs, setMedReqs, depId,isRequestUpdated, setIsRequestUpdated} = useContext(GlobalContext);
+  const { apiUrlMedRequest, myMedReqs, setMyMedReqs, depId,isRequestUpdated, setIsRequestUpdated} = useContext(GlobalContext);
 
   const [requests, setRequests] = useState([]);
 
@@ -31,7 +31,7 @@ export default function RequestsPage(props) {
         (error) => {
           console.log("err post=", error);
         });
-  }, [medReqs,depId])
+  }, [myMedReqs,depId])
 
   //להחליט לאן להעביר את זה
   //----------------------GET MedRequests ---------------------
@@ -49,7 +49,7 @@ export default function RequestsPage(props) {
       })
       .then(
         (result) => {
-          setMedReqs(result); // set the requests list 
+          setMyMedReqs(result); // set the requests list 
           if(isRequestUpdated){
             setIsRequestUpdated(false);
           }

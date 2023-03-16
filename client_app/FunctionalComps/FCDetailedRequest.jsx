@@ -5,10 +5,10 @@ import { Icon } from '@rneui/themed';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 
-import FCQuantityInput from '../FunctionalComps/FCQuantityInput';
-import FCMedInput from '../FunctionalComps/FCMedInput';
-import FCDateTime from '../FunctionalComps/FCDateTime';
-import FCDepTypeList from '../FunctionalComps/FCDepTypeList';
+import FCQuantityInput from './FCQuantityInput';
+import FCMedInput from './FCMedInput';
+import FCDateTime from './FCDateTime';
+import FCDepTypeList from './FCDepTypeList';
 
 export default function FCDetailedRequest(props) {
 

@@ -14,6 +14,9 @@ export default function HomePage(props) {
       <TouchableOpacity onPress={() => navigation.navigate('יצירת הזמנת משיכה')}>
         <Text>יצירת הזמנה חדשה</Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('צפייה בבקשות אחרים')}>
+        <Text>בקשות של מחלקות אחרות</Text>
+      </TouchableOpacity>
     </View>
   )
 }

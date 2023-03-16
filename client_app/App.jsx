@@ -9,11 +9,12 @@ import GlobalData from './GlobalData/GlobalData';
 import LoginPage from './Pages/LoginPage';
 import HomePage from './Pages/HomePage';
 import AddRequestPage from './Pages/AddRequestPage';
-import RequestsPage from './Pages/RequestsPage';
+import MyRequestsPage from './Pages/MyRequestsPage';
 import RequestPage from './Pages/RequestPage';
 import AddPullOrderPage from './Pages/AddPullOrderPage';
 import PullOrdersPage from './Pages/PullOrdersPage';
 import PullOrderPage from './Pages/PullOrderPage';
+import OthersRequestsPage from './Pages/OthersRequestsPage';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -45,7 +46,7 @@ function MainTabNavigator() {
       >
         <Tab.Screen name="בית" component={HomePage} />
         <Tab.Screen name="הזמנות" component={PullOrdersPage} />
-        <Tab.Screen name="בקשות" component={RequestsPage} />
+        <Tab.Screen name="בקשות" component={MyRequestsPage} />
       </Tab.Navigator>
       </SafeAreaView>
   );
@@ -61,6 +62,7 @@ export default function App() {
             <Stack.Screen name="ראשי" component={MainTabNavigator} options={{ headerShown: false }} />
             <Stack.Screen name="יצירת בקשה" component={AddRequestPage} />
             <Stack.Screen name="צפייה בפרטי בקשה" component={RequestPage} />
+            <Stack.Screen name="צפייה בבקשות אחרים" component={OthersRequestsPage} />
             <Stack.Screen name="יצירת הזמנת משיכה" component={AddPullOrderPage} />
             <Stack.Screen name="צפייה בפרטי הזמנת משיכה" component={PullOrderPage} />
           </Stack.Navigator>

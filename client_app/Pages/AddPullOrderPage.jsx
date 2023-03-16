@@ -15,7 +15,7 @@ export default function AddPullOrderPage() {
                 <Icon name='add' color='white' />
             </TouchableOpacity>
             <ScrollView>
-                <FCMedInOrder />
+                <FCMedInOrder/>
             </ScrollView>
             <TouchableOpacity style={styles.button}>
                 <Text style={styles.buttonText}>שליחה</Text>
@@ -37,10 +37,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#00317D',
         padding: 10,
         borderRadius: 5,
-        alignItems: 'center',
     },
     buttonText: {
         color: '#fff',
         fontSize: 16,
+        textAlign:'center',
     },
 });

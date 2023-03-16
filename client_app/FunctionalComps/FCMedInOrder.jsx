@@ -1,13 +1,10 @@
-import React from 'react'
-import { Card } from '@rneui/base';
-import FCMedInput from './FCMedInput';
-import FCQuantityInput from './FCQuantityInput';
+import { View, Text } from 'react-native';
+import React from 'react';
 
-export default function FCMedInOrder() {
-    return (
-        <Card>
-            <FCMedInput/>
-            <FCQuantityInput/>
-        </Card>
-    )
+export default function FCMedOrder() {
+  return (
+    <View>
+      <Text>FCMedOrder</Text>
+    </View>
+  )
 }

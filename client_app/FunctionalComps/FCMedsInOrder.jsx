@@ -1,11 +1,11 @@
 import { View } from 'react-native';
 import React from 'react';
 
-import FCMedOrder from './FCMedOrder';
+import FCMedInOrder from './FCMedInOrder';
 
-export default function FCMedOrders(props) {
-  let MedOrdersStr = props.MedOrdersList.map((medOrder, ind) => {
-    return <FCMedOrder
+export default function FCMedsInOrder(props) {
+  let MedsInOrderStr = props.MedOrderList.map((medOrder, ind) => {
+    return <FCMedInOrder
       id={medOrder.id}
       image={medOrder.image}
       name={medOrder.name}
@@ -18,7 +18,7 @@ export default function FCMedOrders(props) {
 
   return (
     <View>
-      {MedOrdersStr}
+      {MedsInOrderStr}
     </View>
   );
 
