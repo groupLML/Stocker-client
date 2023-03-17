@@ -6,13 +6,10 @@ import FCDepTypeList from '../FunctionalComps/FCDepTypeList';
 import FCMedInput from '../FunctionalComps/FCMedInput';
 import FCQuantityInput from '../FunctionalComps/FCQuantityInput';
 
-//import { color } from '@rneui/base';
-
 export default function AddRequestPage(props) {
 
   const { apiUrlMedRequest, getUserData, DepTypes } = useContext(GlobalContext);
 
-  //const [SelectedDepTypes, setSelectedDepTypes] = useState([]);
   const [selectedMedId, setSelectedMedId] = useState(null);
   const [Qty, setQty] = useState(1);
   const [modalVisible, setModalVisible] = useState(false);
@@ -29,16 +26,14 @@ export default function AddRequestPage(props) {
     setModalVisible(false)
     setSelectedMedId(null);
     setQty(1);
-    //setSelectedDepTypes([]);
+    let temp = DepTypes.map((DepType) => {
+      return { ...DepType, isChecked: true };
+    });
+    setDepTypes(temp);
   };
 
   const handleAddRequest = async () => {
     const SelectedDepTypes = DepTypes.filter(depType => depType.isChecked).map(depType => depType.name);
-
-    //const depTypeNames = DepTypes.filter(depType => depType.isChecked).map(depType => depType.name);
-    //setSelectedDepTypes(depTypeNames);//get the selected deptypes and put in SelectedDepTypes array
-    //console.log(depTypeNames);
-
     const user = await getUserData();
 
     const request = {
@@ -48,8 +43,6 @@ export default function AddRequestPage(props) {
       reqQty: Qty,
       depTypes: SelectedDepTypes,
     };
-
-    //console.log('Request:', request);
 
     //-------------------------------Post request----------------------------------
     fetch(apiUrlMedRequest, {
@@ -65,8 +58,11 @@ export default function AddRequestPage(props) {
       })
       .then(
         (result) => {
-          console.log(result);//returns true
-          setModalVisible(true);
+          if (result)
+            setModalVisible(true)
+          else {
+            alert("קיימת בקשה ממתינה עבור תרופה זו")
+          }
         },
         (error) => {
           console.log("err post=", error);

@@ -8,10 +8,7 @@ export default function MyRequestsPage(props) {
 
   const { apiUrlMedRequest, depId, myMedReqs, setMyMedReqs, isRequestUpdated, setIsRequestUpdated} = useContext(GlobalContext);
 
-  //const [requests, setRequests] = useState([]);
-
   //----------------------GET Requests details ---------------------
-
   useEffect(() => {
     fetch(apiUrlMedRequest + 'RequestsMine/' + `${depId}`, {
       method: 'GET',
@@ -33,34 +30,9 @@ export default function MyRequestsPage(props) {
         (error) => {
           console.log("err post=", error);
         });
-  }, [myMedReqs], [depId], [isRequestUpdated])
+  }, [myMedReqs], [depId], [isRequestUpdated]) // did update
 
-  //להחליט לאן להעביר את זה
-  //----------------------GET MedRequests ---------------------
-  
-/*   useEffect(() => {
-    fetch(apiUrlMedRequest, { //של השרת URL
-      method: 'GET',//מה המתודה
-      headers: new Headers({
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json; charset=UTF-8',
-      })
-    })
-      .then(res => {
-        return res.json()
-      })
-      .then(
-        (result) => {
-          setMyMedReqs(result); // set the requests list 
-          if(isRequestUpdated){
-            setIsRequestUpdated(false);
-          }
-        },
-        (error) => {
-          console.log("err post=", error);
-        });
-  }, [isRequestUpdated]) // did update */
-
+ 
   return (
     <ScrollView>
       <View style={styles.container}>

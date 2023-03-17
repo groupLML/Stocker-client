@@ -9,12 +9,9 @@ export default function FCDepTypeList() {
     const [isChecked, setChecked] = useState(true);
     const { DepTypes, setDepTypes } = useContext(GlobalContext);
 
-    /*const [selectedDep, setselectedDep] = useState([]); */
-    /* let selected = DepTypes.filter((DepType) => DepType.isChecked); */
-
-    useEffect(() => {//component did Update DepTypes
-        console.log(DepTypes);
-    }, [DepTypes]);
+    /*     useEffect(() => {//component did Update DepTypes
+            console.log(DepTypes);
+        }, [DepTypes]); */
 
     useEffect(() => {//component did Update isChecked
         if (isChecked === true) {
@@ -41,15 +38,13 @@ export default function FCDepTypeList() {
         setDepTypes(temp);
     };
 
-    /*let selected = DepTypes.filter((DepType) => DepType.isChecked); */
-
     return (
         <View>
             <View style={styles.row}>
                 <Checkbox style={styles.CB} color={isChecked ? '#003D9A' : undefined} value={isChecked} onValueChange={setChecked} />
                 <Text style={styles.CB_txt}>שלח לכל המחלקות</Text>
             </View >
-            {!isChecked && <FlatList 
+            {!isChecked && <FlatList
                 data={DepTypes}
                 renderItem={({ item }) => (
                     <View style={styles.row}>
