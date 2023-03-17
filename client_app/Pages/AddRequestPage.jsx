@@ -23,13 +23,17 @@ export default function AddRequestPage(props) {
   }
 
   const clearForm = () => {
-    setModalVisible(false)
     setSelectedMedId(null);
     setQty(1);
     let temp = DepTypes.map((DepType) => {
       return { ...DepType, isChecked: true };
     });
     setDepTypes(temp);
+  };
+
+  const handleModalClose = () => {
+    setModalVisible(false);
+    clearForm();
   };
 
   const handleAddRequest = async () => {
@@ -95,7 +99,7 @@ export default function AddRequestPage(props) {
               <Text style={styles.modalText}>בקשה התווספה בהצלחה</Text>
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => clearForm()}>
+                onPress={handleModalClose}>
                 <Text style={styles.buttonText}>סגור</Text>
               </TouchableOpacity>
             </View>
