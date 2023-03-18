@@ -7,6 +7,10 @@ export default function FCOthersRequest(props) {
 
     const isStockQtyLower = props.stcQty < props.reqQty;
 
+    const handleApproveRequest = () => {
+        //handle approve request
+    };
+
     return (
         <View>
             <Card style={styles.cardContainer} borderColor="#00317D">
@@ -15,7 +19,7 @@ export default function FCOthersRequest(props) {
                 </View>
                 <Text style={styles.cardTitle}>{props.medName}</Text>
                 <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >כמות מבוקשת: </Text>{props.reqQty}</Text>
-                <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >כמות במלאי: </Text><Text  style={{color: isStockQtyLower ? 'red' : '#003D9A'}}>{props.stcQty}</Text></Text>
+                <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >כמות במלאי: </Text><Text style={{ color: isStockQtyLower ? 'red' : '#003D9A' }}>{props.stcQty}</Text></Text>
                 <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >מחלקה מבקשת: </Text>{props.depName}</Text>
                 <View style={styles.row}>
                     <TouchableOpacity style={[styles.button, { backgroundColor: '#129C62' }]} onPress={() => handleApproveRequest()}>

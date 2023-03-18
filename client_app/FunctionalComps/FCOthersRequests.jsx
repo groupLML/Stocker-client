@@ -6,7 +6,7 @@ export default function FCOthersRequests(props) {
 
   const requestsStr = props.RequestsList.map((request, key) => {
     return <FCOthersRequest
-      //id={request.reqId} *****************************כשליטל תוסיף את המספר בקשה********************************
+      id={request.reqId}
       depName={request.depName}
       cNurseName={request.cNurseName}
       date={request.reqDate}

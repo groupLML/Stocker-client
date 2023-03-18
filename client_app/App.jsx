@@ -48,26 +48,26 @@ function MainTabNavigator() {
         <Tab.Screen name="הזמנות" component={PullOrdersPage} />
         <Tab.Screen name="בקשות" component={MyRequestsPage} />
       </Tab.Navigator>
-      </SafeAreaView>
+    </SafeAreaView>
   );
 }
 
 export default function App() {
   return (
     <GlobalData>
-      <SafeAreaProvider>
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName="התחברות" screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="התחברות" component={LoginPage} />
-            <Stack.Screen name="ראשי" component={MainTabNavigator} options={{ headerShown: false }} />
-            <Stack.Screen name="יצירת בקשה" component={AddRequestPage} />
-            <Stack.Screen name="צפייה בפרטי בקשה" component={RequestPage} />
-            <Stack.Screen name="צפייה בבקשות אחרים" component={OthersRequestsPage} />
-            <Stack.Screen name="יצירת הזמנת משיכה" component={AddPullOrderPage} />
-            <Stack.Screen name="צפייה בפרטי הזמנת משיכה" component={PullOrderPage} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </SafeAreaProvider>
+        <SafeAreaView style={styles.container}>
+          <NavigationContainer>
+            <Stack.Navigator initialRouteName="התחברות" screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="התחברות" component={LoginPage} />
+              <Stack.Screen name="ראשי" component={MainTabNavigator} options={{ headerShown: false }} />
+              <Stack.Screen name="יצירת בקשה" component={AddRequestPage} />
+              <Stack.Screen name="צפייה בפרטי בקשה" component={RequestPage} />
+              <Stack.Screen name="צפייה בבקשות אחרים" component={OthersRequestsPage} />
+              <Stack.Screen name="יצירת הזמנת משיכה" component={AddPullOrderPage} />
+              <Stack.Screen name="צפייה בפרטי הזמנת משיכה" component={PullOrderPage} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </SafeAreaView>
     </GlobalData>
 
   );
@@ -76,6 +76,5 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop:5,
   },
 });
