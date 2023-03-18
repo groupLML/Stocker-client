@@ -38,6 +38,9 @@ function MainTabNavigator() {
             else if (route.name === 'בקשות') {
               iconName = 'mail-outline';
             }
+            else if (route.name === 'הודעות') {
+              iconName = 'notifications-outline';
+            }
 
             // Return the icon component
             return <Ionicons name={iconName} size={size} color={color} />;
@@ -47,6 +50,7 @@ function MainTabNavigator() {
         <Tab.Screen name="בית" component={HomePage} />
         <Tab.Screen name="הזמנות" component={PullOrdersPage} />
         <Tab.Screen name="בקשות" component={MyRequestsPage} />
+        <Tab.Screen name="הודעות" component={HomePage} />
       </Tab.Navigator>
     </SafeAreaView>
   );

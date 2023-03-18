@@ -152,8 +152,6 @@ const styles = StyleSheet.create({
   Body: {
     marginVertical: 10,
     color: "#003D9A",
-    flexDirection: 'row',
-    alignItems: 'center',
   },
   row: {
     flexDirection: 'row',

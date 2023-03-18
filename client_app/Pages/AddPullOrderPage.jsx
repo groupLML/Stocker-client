@@ -27,18 +27,22 @@ export default function AddPullOrderPage() {
     }
 
     const AddOrder = () => {
-        const medInOrder = {
-            medId: selectedMedId,
-            Qty: Qty,
+        if (selectedMedId != null) {
+            const medInOrder = {
+                medId: selectedMedId,
+                Qty: Qty,
+            }
+            setMedsOrderList([...medsOrderList, medInOrder]);
         }
-
-        setMedsOrderList([...medsOrderList, medInOrder]);
+        else{
+            alert('יש לבחור תרופה להוספה')
+        }
     };
 
     return (
         <View style={styles.container}>
             <Text style={styles.title}>יצירת הזמנה:</Text>
-            <Card style={styles.cardContainer}>
+            <Card>
                 <FCMedInput sendMedSelect={handleSelectMed} />
                 <FCQuantityInput reqQty={1} sendQty={GetQtyFromInput} />
                 <TouchableOpacity style={styles.AddBTN} onPress={() => AddOrder()}>
@@ -67,12 +71,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-    },
-    cardContainer: {
-        width: "60%",
-        padding: 10,
-        marginBottom: 10,
-        borderRadius: 20,
     },
     title: {
         fontSize: 25,

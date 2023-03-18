@@ -19,7 +19,7 @@ export default function FCMedInput(props) {
   const [isSelectFromList, setIsSelectFromList] = useState(false);
 
   useEffect(() => {
-    if(props.clearInputs){
+    if (props.clearInputs) {
       setInputValue('');
     }
   }, [props.clearInputs]);
@@ -61,29 +61,30 @@ export default function FCMedInput(props) {
 
   return (
     <View >
-      <View style={{ flexDirection: 'row', alignItems: 'center', position: 'relative', maxWidth: '80%' }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', position: 'relative', width: '90%' }}>
         <Text style={styles.fields}>שם תרופה:</Text>
-        <TextInput
-          style={[styles.input, { width: '100%' }]}
-          value={inputValue}
-          placeholder={props.medName ? props.medName : 'בחר תרופה'}
-          onChangeText={handleInputChange}
-        />
+        <View style={{ flex: 1 }}>
+          <TextInput
+            style={styles.input}
+            value={inputValue}
+            placeholder={props.medName ? props.medName : 'בחר תרופה'}
+            onChangeText={handleInputChange}
+          />
+          {inputValue && !isSelectFromList && <View style={styles.flatListContainer}>
+            <FlatList
+              data={filteredOptions}
+              renderItem={renderItem}
+              keyExtractor={(item) => item}
+            />
+          </View>}
+        </View>
       </View>
-      {inputValue && !isSelectFromList && <View style={styles.flatListContainer}>
-        <FlatList
-          data={filteredOptions}
-          renderItem={renderItem}
-          keyExtractor={(item) => item}
-        />
-      </View>}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   flatListContainer: {
-    paddingHorizontal: 10,
     maxHeight: 200, // maximum height of the FlatList
     backgroundColor: '#E1EAF9',
     borderWidth: 1,
@@ -98,17 +99,19 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   fields: {
+    alignSelf:'flex-start',
+    marginTop:10,
     fontSize: 17,
     color: "#003D9A",
-    marginRight: 10,
+    marginRight: 15,
     fontWeight: 'bold',
   },
   input: {
+    maxWidth: 250,
     borderWidth: 1,
     borderColor: '#00317D',
     borderRadius: 5,
     padding: 10,
-    textAlign: 'right',
     paddingHorizontal: 10,
     textAlign: 'left',
     writingDirection: 'rtl',

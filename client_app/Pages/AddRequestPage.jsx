@@ -18,7 +18,7 @@ export default function AddRequestPage(props) {
   useEffect(() => {
     handleSelectMed(null);
     GetQtyFromInput(1);
-  },[clearInputs]);
+  }, [clearInputs]);
 
   const handleSelectMed = (medId) => {
     setSelectedMedId(medId);
@@ -85,16 +85,12 @@ export default function AddRequestPage(props) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>בקשה ממחלקה</Text>
-      <View>
-        <View style={styles.row}>
-          <FCMedInput sendMedSelect={handleSelectMed} clearInputs={clearInputs} />
-        </View>
-        <FCQuantityInput reqQty={1} sendQty={GetQtyFromInput} clearInputs={clearInputs} />
-        <FCDepTypeList />
-        <TouchableOpacity style={styles.button} onPress={() => handleAddRequest()}>
-          <Text style={styles.buttonText}>אישור</Text>
-        </TouchableOpacity>
-      </View>
+      <FCMedInput sendMedSelect={handleSelectMed} clearInputs={clearInputs} />
+      <FCQuantityInput reqQty={1} sendQty={GetQtyFromInput} clearInputs={clearInputs} />
+      <FCDepTypeList />
+      <TouchableOpacity style={styles.button} onPress={() => handleAddRequest()}>
+        <Text style={styles.buttonText}>אישור</Text>
+      </TouchableOpacity>
       <View style={styles.centeredView}>
         <Modal
           animationType="slide"
@@ -132,11 +128,6 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     color: '#003D9A',
     marginTop: 60,
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
   },
   fields: {
     fontSize: 17,
