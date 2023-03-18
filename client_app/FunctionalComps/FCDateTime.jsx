@@ -19,7 +19,6 @@ export default function FCDateTime(props) {
 const styles = StyleSheet.create({
     DateTime: {
         fontSize: 14,
-        fontWeight: "bold",
         color: "#003D9A",
         marginRight: 10,
         alignItems: 'center',

@@ -17,6 +17,7 @@ export default function FCMyRequest(props) {
   return (
     <Card style={styles.cardContainer} borderColor="#00317D">
       <View style={styles.row}>
+        <FCDateTime time={props.time} date={props.date} />
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {props.reqStatus === 'A' && (
             <>
@@ -32,7 +33,7 @@ export default function FCMyRequest(props) {
           )}
           {props.reqStatus === 'D' && <Text>נדחה</Text>}
         </View>
-        <FCDateTime time={props.time} date={props.date} />
+        
       </View>
 
       <Text style={styles.cardTitle}>{props.medName}</Text>

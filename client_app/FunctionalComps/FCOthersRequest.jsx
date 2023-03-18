@@ -14,7 +14,7 @@ export default function FCOthersRequest(props) {
     return (
         <View>
             <Card style={styles.cardContainer} borderColor="#00317D">
-                <View style={styles.row}>
+                <View style={[styles.row, {justifyContent:'flex-end'}]}>
                     <FCDateTime time={props.time} date={props.date} />
                 </View>
                 <Text style={styles.cardTitle}>{props.medName}</Text>
