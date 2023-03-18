@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Modal, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
@@ -13,6 +13,13 @@ export default function AddRequestPage(props) {
   const [selectedMedId, setSelectedMedId] = useState(null);
   const [Qty, setQty] = useState(1);
   const [modalVisible, setModalVisible] = useState(false);
+  const [clearInputs, setClearInputs] = useState(false);
+
+
+  useEffect(() => {
+    handleSelectMed(null);
+    GetQtyFromInput(1);
+  },[clearInputs]);
 
   const handleSelectMed = (medId) => {
     setSelectedMedId(medId);
@@ -22,18 +29,18 @@ export default function AddRequestPage(props) {
     setQty(Qty);
   }
 
-  const clearForm = () => {
-    setSelectedMedId(null);
-    setQty(1);
-    let temp = DepTypes.map((DepType) => {
-      return { ...DepType, isChecked: true };
-    });
-    setDepTypes(temp);
-  };
+  /*  const clearForm = () => {
+     handleSelectMed(null);
+     GetQtyFromInput(1);
+   }; */
+
+  /*   useEffect(() => {
+      console.log(selectedMedId);
+      console.log(Qty);
+    }, [selectedMedId, Qty]); */
 
   const handleModalClose = () => {
     setModalVisible(false);
-    clearForm();
   };
 
   const handleAddRequest = async () => {
@@ -62,8 +69,11 @@ export default function AddRequestPage(props) {
       })
       .then(
         (result) => {
-          if (result)
-            setModalVisible(true)
+          if (result) {
+            setModalVisible(true);
+            setClearInputs(!clearInputs)
+          }
+
           else {
             alert("קיימת בקשה ממתינה עבור תרופה זו")
           }
@@ -78,9 +88,9 @@ export default function AddRequestPage(props) {
       <Text style={styles.title}>בקשה ממחלקה</Text>
       <View>
         <View style={styles.row}>
-          <FCMedInput sendMedSelect={handleSelectMed} />
+          <FCMedInput sendMedSelect={handleSelectMed} clearInputs={clearInputs} />
         </View>
-        <FCQuantityInput reqQty={1} sendQty={GetQtyFromInput} />
+        <FCQuantityInput reqQty={1} sendQty={GetQtyFromInput} clearInputs={clearInputs} />
         <FCDepTypeList />
         <TouchableOpacity style={styles.button} onPress={() => handleAddRequest()}>
           <Text style={styles.buttonText}>אישור</Text>

@@ -12,7 +12,7 @@ import FCDepTypeList from './FCDepTypeList';
 
 export default function FCDetailedRequest(props) {
 
-  const { depId, apiUrlMedRequest, DepTypes, setIsRequestUpdated} = useContext(GlobalContext);
+  const { depId, apiUrlMedRequest, DepTypes} = useContext(GlobalContext);
 
   const [Qty, setQty] = useState(props.reqQty);
   const [selectedMedId, setSelectedMedId] = useState(null);
@@ -49,9 +49,9 @@ export default function FCDetailedRequest(props) {
     //-------------------------------PUT medReqs------------------------------------
     fetch(apiUrlMedRequest + "WaittingReq/" + `${props.id}`, {
       method: 'PUT',
-      body: JSON.stringify(dataToSend), //bodyשליחת אובייקט ב 
+      body: JSON.stringify(dataToSend), 
       headers: new Headers({
-        'Content-type': 'application/json; charset=UTF-8',//חשוב - JSON לשלוח
+        'Content-type': 'application/json; charset=UTF-8',
         'Accept': 'application/json; charset=UTF-8',
       })
     })
@@ -59,10 +59,10 @@ export default function FCDetailedRequest(props) {
         return response.json()
       })
       .then(
-        (result) => {//body
+        (result) => {
           if (result) {
             alert("Success");
-            setIsRequestUpdated(true);
+            props.handleUpdateRequest(true);
           }
           else { alert("error") };
 

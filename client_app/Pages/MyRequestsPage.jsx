@@ -6,7 +6,13 @@ import FCRequests from '../FunctionalComps/FCRequests';
 
 export default function MyRequestsPage(props) {
 
-  const { apiUrlMedRequest, depId, myMedReqs, setMyMedReqs, isRequestUpdated, setIsRequestUpdated} = useContext(GlobalContext);
+  const { apiUrlMedRequest, depId, myMedReqs, setMyMedReqs} = useContext(GlobalContext);
+
+  const [isRequestUpdated, setIsRequestUpdated] = useState(false);
+
+  const handleRequestUpdate = (prop) => {
+    setIsRequestUpdated(prop);
+  };
 
   //----------------------GET Requests details ---------------------
   useEffect(() => {
@@ -37,7 +43,7 @@ export default function MyRequestsPage(props) {
     <ScrollView>
       <View style={styles.container}>
         <Text style={styles.title}>בקשות המחלקה</Text>
-        <FCRequests RequestsList={myMedReqs} isDetailedRequest={false} />
+        <FCRequests RequestsList={myMedReqs} isDetailedRequest={false} handleRequestUpdate={handleRequestUpdate} />
       </View>
     </ScrollView>
   )

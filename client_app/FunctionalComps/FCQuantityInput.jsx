@@ -1,10 +1,16 @@
 import { View, Text, StyleSheet } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NumericInput from 'react-native-numeric-input';
 
 export default function FCQuantityInput(props) {
 
   const [reqQty, setReqQty] = useState(props.reqQty);
+
+  useEffect(() => {
+    if(props.clearInputs){
+      handleChange(1);
+    }
+  },[props.clearInputs]);
 
   const handleChange = (value) => {
     setReqQty(value);

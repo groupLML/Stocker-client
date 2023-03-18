@@ -1,11 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity } from 'react-native'
 import { GlobalContext } from '../GlobalData/GlobalData';
 
 export default function FCMedInput(props) {
 
   //*******************************************להחליף שורות אחרי שליטל תוסיף את שם התרופה***********************************************
-  const apiUrlMedsFullNames = 'https://proj.ruppin.ac.il/cgroup36/prod/GetMedsFullNames';
   const { uniqueMedNamesWithId } = useContext(GlobalContext);
   //const { meds } = useContext(GlobalContext);
 
@@ -18,6 +17,12 @@ export default function FCMedInput(props) {
   const [inputValue, setInputValue] = useState('');
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [isSelectFromList, setIsSelectFromList] = useState(false);
+
+  useEffect(() => {
+    if(props.clearInputs){
+      setInputValue('');
+    }
+  }, [props.clearInputs]);
 
   const handleInputChange = (text) => {
     setIsSelectFromList(false);
@@ -44,7 +49,7 @@ export default function FCMedInput(props) {
   };
 
   const renderItem = ({ item, index }) => {
-    if (index < 5) {
+    if (index < 5) {//5 options only??
       return (
         <TouchableOpacity onPress={() => handleSelectOption(item)}>
           <Text style={styles.option}>{item}</Text>

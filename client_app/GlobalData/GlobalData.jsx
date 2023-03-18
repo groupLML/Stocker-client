@@ -17,8 +17,6 @@ export default function GlobalData(props) {
         setUniqueMedNamesWithId(medsArry.map((med) => ({ id: med.medId, uniqueName: `${med.genName}${med.eaQty}${med.unit}${med.given}` })));
     }
 
-    const [isRequestUpdated, setIsRequestUpdated] = useState(false);
-
     const [depId, setDepId] = useState('');
     const [meds, setMeds] = useState([]);
     const [myMedReqs, setMyMedReqs] = useState([]);
@@ -48,7 +46,6 @@ export default function GlobalData(props) {
                 depId, setDepId, meds, setMeds,
                 DepTypes, setDepTypes, myMedReqs, setMyMedReqs, //othersMedReqs, setOthersMedReqs,
                 getUserData,
-                isRequestUpdated, setIsRequestUpdated,
                 setMedsNames, uniqueMedNamesWithId,
             }}>
             {props.children}

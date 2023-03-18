@@ -22,6 +22,7 @@ export default function FCRequests(props) {
                 reqQty={request.reqQty}
                 reqStatus={request.reqStatus}
                 requestsList={props.RequestsList}
+                handleRequestUpdate={props.handleRequestUpdate}
                 key={request.reqId}
             />;
         })
