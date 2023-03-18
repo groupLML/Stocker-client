@@ -1,14 +1,12 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React, { useContext, useState, useEffect } from 'react';
 
-import FCRequests from '../FunctionalComps/FCRequests';
 import { GlobalContext } from '../GlobalData/GlobalData';
+import FCOthersRequests from '../FunctionalComps/FCOthersRequests';
 
 export default function OthersRequestsPage() {
 
     const { apiUrlMedRequest, depId, othersMedReqs, setOthersMedReqs } = useContext(GlobalContext);
-
-    const [requests, setRequests] = useState([]);
 
     //----------------------GET Requests details ---------------------
     useEffect(() => {
@@ -24,7 +22,7 @@ export default function OthersRequestsPage() {
             })
             .then(
                 (result) => {
-                    setRequests(result); //set the requests from the choosen dep to display
+                    setOthersMedReqs(result); //set the requests from the choosen dep to display
                 },
                 (error) => {
                     console.log("err post=", error);
@@ -35,7 +33,7 @@ export default function OthersRequestsPage() {
         <ScrollView>
             <View style={styles.container}>
                 <Text style={styles.title}>בקשות של מחלקות אחרות</Text>
-                <FCRequests RequestsList={requests} isDetailedRequest={false} />
+                <FCOthersRequests RequestsList={othersMedReqs}/>
             </View>
         </ScrollView>
     )

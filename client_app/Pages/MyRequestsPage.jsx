@@ -2,9 +2,9 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React, { useContext, useState, useEffect } from 'react';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
-import FCRequests from '../FunctionalComps/FCRequests';
+import FCMyRequests from '../FunctionalComps/FCMyRequests';
 
-export default function MyRequestsPage(props) {
+export default function MyRequestsPage() {
 
   const { apiUrlMedRequest, depId, myMedReqs, setMyMedReqs} = useContext(GlobalContext);
 
@@ -43,7 +43,7 @@ export default function MyRequestsPage(props) {
     <ScrollView>
       <View style={styles.container}>
         <Text style={styles.title}>בקשות המחלקה</Text>
-        <FCRequests RequestsList={myMedReqs} isDetailedRequest={false} handleRequestUpdate={handleRequestUpdate} />
+        <FCMyRequests RequestsList={myMedReqs} isDetailedRequest={false} handleRequestUpdate={handleRequestUpdate} />
       </View>
     </ScrollView>
   )

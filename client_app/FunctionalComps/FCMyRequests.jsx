@@ -2,9 +2,9 @@ import React from 'react';
 import { View } from 'react-native';
 
 import FCDetailedRequest from './FCDetailedRequest';
-import FCRequest from './FCRequest'
+import FCMyRequest from './FCMyRequest';
 
-export default function FCRequests(props) {
+export default function FCMyRequests(props) {
     let requestsStr;
     if (props.isDetailedRequest === true) {
         requestsStr = props.RequestsList.map((request, key) => {
@@ -29,7 +29,7 @@ export default function FCRequests(props) {
     }
     else {
         requestsStr = props.RequestsList.map((request, key) => {
-            return <FCRequest
+            return <FCMyRequest
                 id={request.reqId}
                 date={request.reqDate}
                 medId={request.medId}

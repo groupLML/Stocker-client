@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 
-import FCRequests from '../FunctionalComps/FCRequests';
+import FCMyRequests from '../FunctionalComps/FCMyRequests';
 
 export default function MyRequestPage(props) {
 
@@ -12,7 +12,7 @@ export default function MyRequestPage(props) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>בקשה ממחלקה</Text>
-      <FCRequests RequestsList={request} isDetailedRequest={true}/>      
+      <FCMyRequests RequestsList={request} isDetailedRequest={true}/>      
     </View>
   );
 }
