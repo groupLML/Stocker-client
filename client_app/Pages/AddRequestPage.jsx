@@ -15,7 +15,6 @@ export default function AddRequestPage(props) {
   const [modalVisible, setModalVisible] = useState(false);
   const [clearInputs, setClearInputs] = useState(false);
 
-
   useEffect(() => {
     handleSelectMed(null);
     GetQtyFromInput(1);
