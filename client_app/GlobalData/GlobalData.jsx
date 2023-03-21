@@ -7,16 +7,9 @@ export default function GlobalData(props) {
 
     const apiUrlUser = "https://proj.ruppin.ac.il/cgroup36/prod/api/User/";
     const apiUrlMedRequest = "https://proj.ruppin.ac.il/cgroup36/prod/api/MedRequest/";
-    const apiUrlMeds = "https://proj.ruppin.ac.il/cgroup36/prod/api/Medicine/";
+    const apiUrlMeds = "https://proj.ruppin.ac.il/cgroup36/prod/GetActiveMeds/";
     const apiUrlPullOrder = "https://proj.ruppin.ac.il/cgroup36/prod/api/PullOrder/";
     
-    //create unique med names by chaining med string properties
-    const [uniqueMedNamesWithId, setUniqueMedNamesWithId] = useState([]);        
-    
-    const setMedsNames =  (medsArry) => {
-        setUniqueMedNamesWithId(medsArry.map((med) => ({ id: med.medId, uniqueName: `${med.genName}${med.eaQty}${med.unit}${med.given}` })));
-    }
-
     const [depId, setDepId] = useState('');
     const [meds, setMeds] = useState([]);
     const [myMedReqs, setMyMedReqs] = useState([]);
@@ -46,7 +39,6 @@ export default function GlobalData(props) {
                 depId, setDepId, meds, setMeds,
                 DepTypes, setDepTypes, myMedReqs, setMyMedReqs, othersMedReqs, setOthersMedReqs,
                 getUserData,
-                setMedsNames, uniqueMedNamesWithId,
             }}>
             {props.children}
         </GlobalContext.Provider>

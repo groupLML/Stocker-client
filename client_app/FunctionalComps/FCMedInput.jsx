@@ -4,15 +4,10 @@ import { GlobalContext } from '../GlobalData/GlobalData';
 
 export default function FCMedInput(props) {
 
-  //*******************************************להחליף שורות אחרי שליטל תוסיף את שם התרופה***********************************************
-  const { uniqueMedNamesWithId } = useContext(GlobalContext);
-  //const { meds } = useContext(GlobalContext);
+  const { meds } = useContext(GlobalContext);
 
   //-----------------------Autocomplete med input-------------------------------
-  const options = uniqueMedNamesWithId.map(med => med.uniqueName);
-  //const options = meds.map(med => med.medName);
-
-  //*******************************************להחליף שורות אחרי שליטל תוסיף את שם התרופה***********************************************
+  const options = meds.map(med => med.medName);
 
   const [inputValue, setInputValue] = useState('');
   const [filteredOptions, setFilteredOptions] = useState([]);
@@ -40,11 +35,11 @@ export default function FCMedInput(props) {
 
   const handleSelectOption = (option) => {
     if (option !== "אין ערכים תואמים, יש לבחור ערך מהרשימה") {
-      const selectedMed = uniqueMedNamesWithId.find((med) => med.uniqueName === option);
+      const selectedMed = meds.find((med) => med.medName === option);
       setInputValue(option);
       setIsSelectFromList(true);
       setFilteredOptions([]);
-      props.sendMedSelect(selectedMed.id);
+      props.sendMedSelect(selectedMed.medId);
     }
   };
 
@@ -99,8 +94,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   fields: {
-    alignSelf:'flex-start',
-    marginTop:10,
+    alignSelf: 'flex-start',
+    marginTop: 10,
     fontSize: 17,
     color: "#003D9A",
     marginRight: 15,
