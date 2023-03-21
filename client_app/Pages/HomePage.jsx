@@ -6,7 +6,7 @@ export default function HomePage(props) {
   const navigation = useNavigation();
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.title}>דף הבית</Text>
       <TouchableOpacity onPress={() => navigation.navigate('יצירת בקשה')}>
         <Text>יצירת בקשה</Text>
@@ -22,6 +22,10 @@ export default function HomePage(props) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   title: {
     fontSize: 25,
     textAlign: 'center',

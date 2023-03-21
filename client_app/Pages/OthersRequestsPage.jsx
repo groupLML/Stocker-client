@@ -30,12 +30,12 @@ export default function OthersRequestsPage() {
     }, [depId])//component did update
 
     return (
-        <ScrollView>
-            <View style={styles.container}>
-                <Text style={styles.title}>בקשות של מחלקות אחרות</Text>
-                <FCOthersRequests RequestsList={othersMedReqs}/>
-            </View>
-        </ScrollView>
+        <View style={styles.container}>
+            <Text style={styles.title}>בקשות של מחלקות אחרות</Text>
+            <ScrollView>
+                <FCOthersRequests RequestsList={othersMedReqs} />
+            </ScrollView>
+        </View>
     )
 }
 

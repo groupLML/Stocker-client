@@ -6,7 +6,7 @@ import FCMyRequests from '../FunctionalComps/FCMyRequests';
 
 export default function MyRequestsPage() {
 
-  const { apiUrlMedRequest, depId, myMedReqs, setMyMedReqs} = useContext(GlobalContext);
+  const { apiUrlMedRequest, depId, myMedReqs, setMyMedReqs } = useContext(GlobalContext);
 
   const [isRequestUpdated, setIsRequestUpdated] = useState(false);
 
@@ -38,14 +38,14 @@ export default function MyRequestsPage() {
         });
   }, [myMedReqs], [depId], [isRequestUpdated]) // did update
 
- 
+
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <Text style={styles.title}>בקשות המחלקה</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>בקשות המחלקה</Text>
+      <ScrollView>
         <FCMyRequests RequestsList={myMedReqs} isDetailedRequest={false} handleRequestUpdate={handleRequestUpdate} />
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   )
 }
 

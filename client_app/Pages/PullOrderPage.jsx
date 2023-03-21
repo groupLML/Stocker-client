@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React from 'react';
 
 import FCPullOrders from '../FunctionalComps/FCPullOrders';
@@ -12,7 +12,9 @@ export default function PullOrderPage(props) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>הזמנת משיכה</Text>
-      <FCPullOrders PullOrdersList={pullOrder} isDetailedPullOrder={true} />
+      <ScrollView>
+        <FCPullOrders PullOrdersList={pullOrder} isDetailedPullOrder={true} />
+      </ScrollView>
     </View>
   );
 }

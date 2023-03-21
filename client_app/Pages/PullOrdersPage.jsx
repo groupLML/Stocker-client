@@ -34,12 +34,12 @@ export default function PullOrdersPage() {
   }, [depId])
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <Text style={styles.title}>הזמנות במשיכה</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>הזמנות במשיכה</Text>
+      <ScrollView>
         <FCPullOrders PullOrdersList={pullOrders} isDetailedPullOrder={false} />
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   )
 }
 
