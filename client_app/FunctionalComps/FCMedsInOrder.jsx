@@ -6,9 +6,9 @@ import FCMedInOrder from './FCMedInOrder';
 export default function FCMedsInOrder(props) {
   let MedsInOrderStr = props.medsOrderList.map((med, ind) => {
     return <FCMedInOrder
-      medId={props.medId}
-      Qty={props.Qty}
-      medsOrderList={props.medsOrderList}
+      medId={med.medId}
+      Qty={med.Qty}
+      medsOrderList={med.medsOrderList}
       key={med.medId}
     />;
   })
