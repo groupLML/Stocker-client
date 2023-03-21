@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import GlobalData from './GlobalData/GlobalData';
 import LoginPage from './Pages/LoginPage';
@@ -15,6 +15,7 @@ import AddPullOrderPage from './Pages/AddPullOrderPage';
 import PullOrdersPage from './Pages/PullOrdersPage';
 import PullOrderPage from './Pages/PullOrderPage';
 import OthersRequestsPage from './Pages/OthersRequestsPage';
+import NotificationPage from './Pages/NotificationPage';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -50,7 +51,7 @@ function MainTabNavigator() {
         <Tab.Screen name="בית" component={HomePage} />
         <Tab.Screen name="הזמנות" component={PullOrdersPage} />
         <Tab.Screen name="בקשות" component={MyRequestsPage} />
-        <Tab.Screen name="הודעות" component={HomePage} />
+        <Tab.Screen name="הודעות" component={NotificationPage} />
       </Tab.Navigator>
     </SafeAreaView>
   );

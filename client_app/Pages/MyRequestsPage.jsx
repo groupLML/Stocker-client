@@ -10,8 +10,8 @@ export default function MyRequestsPage() {
 
   const [isRequestUpdated, setIsRequestUpdated] = useState(false);
 
-  const handleRequestUpdate = (prop) => {
-    setIsRequestUpdated(prop);
+  const handleRequestUpdate = (didUpdate) => {
+    setIsRequestUpdated(didUpdate);
   };
 
   //----------------------GET Requests details ---------------------
