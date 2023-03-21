@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useContext } from 'react';
 import { Card } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
@@ -13,7 +13,9 @@ export default function FCMedOrder(props) {
   return (
     <View>
       <Card>
-       <Ionicons name='close-outline'/>
+      <TouchableOpacity onPress={() => props.getId2Delete(props.medId)}>
+        <Ionicons name='close-outline'/>
+      </TouchableOpacity>
         <View style={styles.row}>
           <Text>מספר תרופה: </Text>
           <Text>{props.medId}</Text>

@@ -17,7 +17,7 @@ export default function FCMedInput(props) {
     if (props.clearInputs) {
       setInputValue('');
     }
-  }, [props.clearInputs]);
+  }, [props.clearForm]);
 
   const handleInputChange = (text) => {
     setIsSelectFromList(false);
@@ -56,7 +56,7 @@ export default function FCMedInput(props) {
 
   return (
     <View >
-      <View style={{ flexDirection: 'row', alignItems: 'center', position: 'relative', width: '90%' }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', position: 'relative', width: '100%' }}>
         <Text style={styles.fields}>שם תרופה:</Text>
         <View style={{ flex: 1 }}>
           <TextInput

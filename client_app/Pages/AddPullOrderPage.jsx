@@ -12,11 +12,7 @@ export default function AddPullOrderPage() {
 
     const [selectedMedId, setSelectedMedId] = useState(null);
     const [Qty, setQty] = useState(1);
-    const [medsOrderList, setMedsOrderList] = useState([]);
-
-    useEffect(() => {
-        console.log(medsOrderList);
-    }, [medsOrderList]);
+    const [medsOrderList, setMedsOrderList] = useState([]);      
 
     const handleSelectMed = (medId) => {
         setSelectedMedId(medId);
@@ -26,15 +22,25 @@ export default function AddPullOrderPage() {
         setQty(Qty);
     }
 
-    const AddOrder = () => {
+    const DeleteMedFromOrder = (medId2Delete) => {
+        setMedsOrderList(medsOrderList.filter((med) => med.medId !== medId2Delete));
+    }
+
+    const AddMed2Order = () => {
         if (selectedMedId != null) {
-            const medInOrder = {
-                medId: selectedMedId,
-                Qty: Qty,
+            let existingMed = medsOrderList.find(med => med.medId === selectedMedId);
+            if (!existingMed) {// If the selected medication wasn't added to order already, add med to order list     
+                const medInOrder = {
+                    medId: selectedMedId,
+                    Qty: Qty,
+                }
+                setMedsOrderList([...medsOrderList, medInOrder]);
             }
-            setMedsOrderList([...medsOrderList, medInOrder]);
+            else {
+                alert('תרופה זו כבר קיימת בהזמנה')
+            }
         }
-        else{
+        else {
             alert('יש לבחור תרופה להוספה')
         }
     };
@@ -45,7 +51,7 @@ export default function AddPullOrderPage() {
             <Card>
                 <FCMedInput sendMedSelect={handleSelectMed} />
                 <FCQuantityInput reqQty={1} sendQty={GetQtyFromInput} />
-                <TouchableOpacity style={styles.AddBTN} onPress={() => AddOrder()}>
+                <TouchableOpacity style={styles.AddBTN} onPress={() => AddMed2Order()}>
                     <Icon name='add' color='white' />
                 </TouchableOpacity>
             </Card>
@@ -54,12 +60,14 @@ export default function AddPullOrderPage() {
                     <View>
                         <Text style={styles.subTitle}>פירוט הזמנה:</Text>
                         <ScrollView>
-                            <FCMedsInOrder medsOrderList={medsOrderList} />
+                            <FCMedsInOrder medsOrderList={medsOrderList} SendId2Delete={DeleteMedFromOrder} />
                         </ScrollView>
                     </View>
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText}>שליחה</Text>
-                    </TouchableOpacity>
+                    <View>
+                        <TouchableOpacity style={styles.button}>
+                            <Text style={styles.buttonText}>שליחה</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             )}
         </View>
@@ -90,7 +98,6 @@ const styles = StyleSheet.create({
     AddBTN: {
         borderRadius: 100,
         backgroundColor: '#003D9A',
-        /* position: 'absolute', */
         bottom: 0,
         marginBottom: 10,
         marginTop: 10,

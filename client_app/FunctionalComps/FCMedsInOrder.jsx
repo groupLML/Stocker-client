@@ -10,6 +10,7 @@ export default function FCMedsInOrder(props) {
       Qty={med.Qty}
       medsOrderList={med.medsOrderList}
       key={med.medId}
+      getId2Delete={() => props.SendId2Delete(med.medId)}
     />;
   })
 
