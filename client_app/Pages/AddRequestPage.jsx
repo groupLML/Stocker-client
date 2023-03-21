@@ -13,13 +13,8 @@ export default function AddRequestPage(props) {
   const [selectedMedId, setSelectedMedId] = useState(null);
   const [Qty, setQty] = useState(1);
   const [modalVisible, setModalVisible] = useState(false);
-  const [clearInputs, setClearInputs] = useState(false);
+  const [clearForm, setClearForm] = useState(false);
 
-/*   useEffect(() => {
-    handleSelectMed(null);
-    GetQtyFromInput(1);
-  }, [clearInputs]);
- */
   const handleSelectMed = (medId) => {
     setSelectedMedId(medId);
   };
@@ -28,16 +23,11 @@ export default function AddRequestPage(props) {
     setQty(Qty);
   }
 
-  const clearForm = () => {
-    handleSelectMed(null);
-    GetQtyFromInput(1);
-  };
-
-  useEffect(() => {
+/*   useEffect(() => {
     console.log(selectedMedId);
     console.log(Qty);
   }, [selectedMedId, Qty]);
-
+ */
   const handleModalClose = () => {
     setModalVisible(false);
     props.navigation.navigate('צפייה בבקשות שלי');
@@ -71,7 +61,7 @@ export default function AddRequestPage(props) {
         (result) => {
           if (result) {
             setModalVisible(true);
-            //setClearInputs(!clearInputs)
+            setClearForm(true);
           }
           else {
             alert("קיימת בקשה ממתינה עבור תרופה זו")
@@ -85,8 +75,8 @@ export default function AddRequestPage(props) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>בקשה ממחלקה</Text>
-      <FCMedInput sendMedSelect={handleSelectMed} clearForm={clearForm} />
-      <FCQuantityInput reqQty={1} sendQty={GetQtyFromInput} clearForm={clearForm} />
+      <FCMedInput sendMedSelect={handleSelectMed} clearForm={clearForm}/>
+      <FCQuantityInput /* reqQty={1}  */sendQty={GetQtyFromInput} clearForm={clearForm}/>
       <FCDepTypeList />
       <TouchableOpacity style={styles.button} onPress={() => handleAddRequest()}>
         <Text style={styles.buttonText}>אישור</Text>

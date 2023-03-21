@@ -6,18 +6,18 @@ export default function FCMedInput(props) {
 
   const { meds } = useContext(GlobalContext);
 
+  useEffect(() => {
+    if (props.clearForm) {
+      setInputValue('')
+    }
+  }, [props.clearForm]);
+
   //-----------------------Autocomplete med input-------------------------------
   const options = meds.map(med => med.medName);
 
   const [inputValue, setInputValue] = useState('');
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [isSelectFromList, setIsSelectFromList] = useState(false);
-
-  useEffect(() => {
-    if (props.clearInputs) {
-      setInputValue('');
-    }
-  }, [props.clearForm]);
 
   const handleInputChange = (text) => {
     setIsSelectFromList(false);

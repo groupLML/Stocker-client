@@ -12,7 +12,8 @@ export default function AddPullOrderPage() {
 
     const [selectedMedId, setSelectedMedId] = useState(null);
     const [Qty, setQty] = useState(1);
-    const [medsOrderList, setMedsOrderList] = useState([]);      
+    const [medsOrderList, setMedsOrderList] = useState([]);
+    const [clearForm, setClearForm] = useState(false);      
 
     const handleSelectMed = (medId) => {
         setSelectedMedId(medId);
