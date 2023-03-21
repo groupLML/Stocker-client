@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState, useContext, useEffect } from 'react';
 import { Icon } from '@rneui/themed';
 //import { Card } from '@rneui/base';
+import { useNavigation } from '@react-navigation/native';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 
@@ -11,6 +12,7 @@ import FCDateTime from './FCDateTime';
 import FCDepTypeList from './FCDepTypeList';
 
 export default function FCDetailedRequest(props) {
+  const navigation = useNavigation();
 
   const { depId, apiUrlMedRequest, DepTypes } = useContext(GlobalContext);
 
@@ -62,10 +64,10 @@ export default function FCDetailedRequest(props) {
         (result) => {
           if (result) {
             alert("Success");
-            props.handleUpdateRequest == true;
+            //props.handleUpdateRequest(true);
+            navigation.navigate('צפייה בבקשות שלי');
           }
           else { alert("error") };
-
         },
         (error) => {
           console.log("err put=", error);

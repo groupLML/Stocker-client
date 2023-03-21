@@ -8,12 +8,6 @@ export default function MyRequestsPage() {
 
   const { apiUrlMedRequest, depId, myMedReqs, setMyMedReqs } = useContext(GlobalContext);
 
-  const [isRequestUpdated, setIsRequestUpdated] = useState(false);
-
-  const handleRequestUpdate = (didUpdate) => {
-    setIsRequestUpdated(didUpdate);
-  };
-
   //----------------------GET Requests details ---------------------
   useEffect(() => {
     fetch(apiUrlMedRequest + 'RequestsMine/' + `${depId}`, {
@@ -29,21 +23,17 @@ export default function MyRequestsPage() {
       .then(
         (result) => {
           setMyMedReqs(result); //set the requests of choosen dep to display
-          if (isRequestUpdated) {
-            setIsRequestUpdated(false);
-          }
         },
         (error) => {
           console.log("err post=", error);
         });
-  }, [myMedReqs], [depId], [isRequestUpdated]) // did update
-
+  }, []) // did update
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>בקשות המחלקה</Text>
       <ScrollView>
-        <FCMyRequests RequestsList={myMedReqs} isDetailedRequest={false} handleRequestUpdate={handleRequestUpdate} />
+        <FCMyRequests RequestsList={myMedReqs} isDetailedRequest={false} />
       </ScrollView>
     </View>
   )

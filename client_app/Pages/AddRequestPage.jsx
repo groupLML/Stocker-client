@@ -40,6 +40,7 @@ export default function AddRequestPage(props) {
 
   const handleModalClose = () => {
     setModalVisible(false);
+    props.navigation.navigate('צפייה בבקשות שלי');
   };
 
   const handleAddRequest = async () => {
@@ -70,9 +71,8 @@ export default function AddRequestPage(props) {
         (result) => {
           if (result) {
             setModalVisible(true);
-            setClearInputs(!clearInputs)
+            //setClearInputs(!clearInputs)
           }
-
           else {
             alert("קיימת בקשה ממתינה עבור תרופה זו")
           }

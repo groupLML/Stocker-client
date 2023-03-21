@@ -87,7 +87,7 @@ export default function LoginPage(props) {
   //להעביר לדף הבית
   //-------------------------------Get Meds-----------------------------
 
-  const { apiUrlMeds, setMeds, meds/* , setMedsNames  */} = useContext(GlobalContext);
+  const { apiUrlMeds, setMeds, meds} = useContext(GlobalContext);
 
   useEffect(() => {
     fetch(apiUrlMeds, { 
