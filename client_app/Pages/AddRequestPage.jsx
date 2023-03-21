@@ -22,12 +22,7 @@ export default function AddRequestPage(props) {
   const GetQtyFromInput = (Qty) => {
     setQty(Qty);
   }
-
-/*   useEffect(() => {
-    console.log(selectedMedId);
-    console.log(Qty);
-  }, [selectedMedId, Qty]);
- */
+  
   const handleModalClose = () => {
     setModalVisible(false);
     props.navigation.navigate('צפייה בבקשות שלי');

@@ -40,6 +40,7 @@ export default function AddPullOrderPage() {
             else {
                 alert('תרופה זו כבר קיימת בהזמנה')
             }
+            setClearForm(true);
         }
         else {
             alert('יש לבחור תרופה להוספה')
@@ -50,8 +51,8 @@ export default function AddPullOrderPage() {
         <View style={styles.container}>
             <Text style={styles.title}>יצירת הזמנה:</Text>
             <Card>
-                <FCMedInput sendMedSelect={handleSelectMed} />
-                <FCQuantityInput reqQty={1} sendQty={GetQtyFromInput} />
+                <FCMedInput sendMedSelect={handleSelectMed} clearForm={clearForm}/>
+                <FCQuantityInput reqQty={1} sendQty={GetQtyFromInput} clearForm={clearForm}/>
                 <TouchableOpacity style={styles.AddBTN} onPress={() => AddMed2Order()}>
                     <Icon name='add' color='white' />
                 </TouchableOpacity>
