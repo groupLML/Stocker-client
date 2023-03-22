@@ -1,7 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState, useContext, useEffect } from 'react';
 import { Icon } from '@rneui/themed';
-//import { Card } from '@rneui/base';
 import { useNavigation } from '@react-navigation/native';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
@@ -64,7 +63,6 @@ export default function FCDetailedRequest(props) {
         (result) => {
           if (result) {
             alert("Success");
-            //props.handleUpdateRequest(true);
             navigation.navigate('צפייה בבקשות שלי');
           }
           else { alert("error") };
