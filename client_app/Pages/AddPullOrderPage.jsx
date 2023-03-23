@@ -90,26 +90,25 @@ const styles = StyleSheet.create({
         fontSize: 25,
         textAlign: 'center',
         fontWeight: 'bold',
-        marginBottom: 15,
+        marginBottom: 5,
         color: '#003D9A',
         marginTop: 30,
     },
     ScrollView: {
-        height: 300, 
+        height: 350, 
     },
     subTitle: {
         fontSize: 18,
         textAlign: 'center',
-        marginBottom: 15,
         color: '#003D9A',
-        marginTop: 20,
+        marginTop: 30,
     },
     AddBTN: {
         borderRadius: 100,
         backgroundColor: '#003D9A',
         bottom: 0,
-        marginBottom: 10,
-        marginTop: 10,
+        marginBottom: 5,
+        marginTop: 5,
         alignSelf: 'center'
     },
     sendBTN: {
@@ -117,6 +116,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#00317D',
         padding: 10,
         borderRadius: 5,
+        width:'30%',
+        alignSelf:'center',
     },
     BTNtext: {
         color: '#fff',
