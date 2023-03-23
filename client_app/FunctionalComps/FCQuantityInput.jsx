@@ -8,14 +8,14 @@ export default function FCQuantityInput(props) {
 
   useEffect(() => {
     if (props.clearForm) {
-      console.log("clear form");
-      setReqQty(props.reqQty)
+      setReqQty(props.reqQty);
+      props.handleSetClearForm(false);
     }
   }, [props.clearForm]);
 
   const handleChange = (value) => {
     setReqQty(value);
-    props.sendQty(value);  
+    props.sendQty(value);
   }
 
   return (
@@ -23,6 +23,7 @@ export default function FCQuantityInput(props) {
       <Text style={styles.fields}>כמות:</Text>
       <View style={styles.inputContainer}></View>
       <NumericInput
+        key={props.clearForm}
         type='plus-minus'
         rounded
         minValue={1}

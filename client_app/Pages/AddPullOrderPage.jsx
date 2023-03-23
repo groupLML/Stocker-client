@@ -13,7 +13,11 @@ export default function AddPullOrderPage() {
     const [selectedMedId, setSelectedMedId] = useState(null);
     const [Qty, setQty] = useState(1);
     const [medsOrderList, setMedsOrderList] = useState([]);
-    const [clearForm, setClearForm] = useState(false);      
+    const [clearForm, setClearForm] = useState(false);
+
+    const handleSetClearForm = (state) => {
+        setClearForm(state);
+    };
 
     const handleSelectMed = (medId) => {
         setSelectedMedId(medId);
@@ -51,8 +55,8 @@ export default function AddPullOrderPage() {
         <View style={styles.container}>
             <Text style={styles.title}>יצירת הזמנה:</Text>
             <Card>
-                <FCMedInput sendMedSelect={handleSelectMed} clearForm={clearForm}/>
-                <FCQuantityInput reqQty={1} sendQty={GetQtyFromInput} clearForm={clearForm}/>
+                <FCMedInput sendMedSelect={handleSelectMed} clearForm={clearForm} handleSetClearForm={handleSetClearForm} />
+                <FCQuantityInput reqQty={1} sendQty={GetQtyFromInput} clearForm={clearForm} handleSetClearForm={handleSetClearForm} />
                 <TouchableOpacity style={styles.AddBTN} onPress={() => AddMed2Order()}>
                     <Icon name='add' color='white' />
                 </TouchableOpacity>
@@ -61,13 +65,13 @@ export default function AddPullOrderPage() {
                 <View>
                     <View>
                         <Text style={styles.subTitle}>פירוט הזמנה:</Text>
-                        <ScrollView>
+                        <ScrollView style={styles.ScrollView}>
                             <FCMedsInOrder medsOrderList={medsOrderList} SendId2Delete={DeleteMedFromOrder} />
                         </ScrollView>
                     </View>
                     <View>
-                        <TouchableOpacity style={styles.button}>
-                            <Text style={styles.buttonText}>שליחה</Text>
+                        <TouchableOpacity style={styles.sendBTN}>
+                            <Text style={styles.BTNtext}>שליחה</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -90,6 +94,9 @@ const styles = StyleSheet.create({
         color: '#003D9A',
         marginTop: 30,
     },
+    ScrollView: {
+        height: 300, 
+    },
     subTitle: {
         fontSize: 18,
         textAlign: 'center',
@@ -105,13 +112,13 @@ const styles = StyleSheet.create({
         marginTop: 10,
         alignSelf: 'center'
     },
-    button: {
-        marginTop: 10,
+    sendBTN: {
+        marginTop: 20,
         backgroundColor: '#00317D',
         padding: 10,
         borderRadius: 5,
     },
-    buttonText: {
+    BTNtext: {
         color: '#fff',
         fontSize: 16,
         textAlign: 'center',

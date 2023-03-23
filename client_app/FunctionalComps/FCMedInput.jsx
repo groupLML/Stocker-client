@@ -8,7 +8,8 @@ export default function FCMedInput(props) {
 
   useEffect(() => {
     if (props.clearForm) {
-      setInputValue('')
+      setInputValue('');
+      props.handleSetClearForm(false);
     }
   }, [props.clearForm]);
 

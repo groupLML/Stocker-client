@@ -29,7 +29,7 @@ export default function PullOrdersPage() {
           setPullOrders(result);
         },
         (error) => {
-          console.log("err post=", error);
+          console.log("err get=", error);
         });
   }, [depId])
 
