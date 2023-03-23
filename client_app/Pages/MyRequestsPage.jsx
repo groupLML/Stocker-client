@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import React, { useContext, useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated } from 'react-native';
+import React, { useContext, useRef, useEffect } from 'react';
 import { Icon } from '@rneui/themed';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
@@ -30,29 +30,43 @@ export default function MyRequestsPage(props) {
         });
   }, []) // did update
 
+  //animation for add BTN to stick to screen while scroll
+  const scrollY = useRef(new Animated.Value(0)).current;//set the current state of y axe value
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>בקשות המחלקה</Text>
-      <ScrollView>
-        <Icon
-          reverse
-          name='add'
-          type='ionicon'
-          color='#00317D'
-          onPress={() => props.navigation.navigate('יצירת בקשה')}
-          style={styles.icon}
-        />
-        <FCMyRequests RequestsList={myMedReqs} isDetailedRequest={false} />
-      </ScrollView>
+      <View style={styles.scrollViewContainer}>
+        <ScrollView scrollEventThrottle={16}>
+          <FCMyRequests RequestsList={myMedReqs} isDetailedRequest={false} />
+        </ScrollView>
+        <Animated.View
+          style={[styles.AddBTN, {
+            transform: [{
+              translateY: scrollY.interpolate({
+                inputRange: [0, 100],
+                outputRange: [0, 100],
+                extrapolate: 'clamp'
+              })
+            }]
+          }]}>
+          <TouchableOpacity onPress={() => props.navigation.navigate('יצירת בקשה')}>
+            <Icon name='add' color='white' />
+          </TouchableOpacity>
+        </Animated.View>
+      </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    position: 'relative', // make it the relative parent of the icon
+  },
+  scrollViewContainer: {
+    flex: 1,
+    position: 'relative',
   },
   title: {
     fontSize: 25,
@@ -62,17 +76,15 @@ const styles = StyleSheet.create({
     color: '#003D9A',
     marginTop: 20,
   },
-  icon: {
+  AddBTN: {
     position: 'absolute',
-    bottom: 0,
-    right: 0,
-    //borderRadius: 10,
-    zIndex: 1,
+    bottom: 20,
+    right: 20,
+    backgroundColor: '#003D9A',
+    borderRadius: 100,
+    width: 60,
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
-
-
-
-
-
-

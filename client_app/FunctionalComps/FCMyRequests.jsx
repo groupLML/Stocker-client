@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 import FCDetailedRequest from './FCDetailedRequest';
 import FCMyRequest from './FCMyRequest';
@@ -48,8 +48,14 @@ export default function FCMyRequests(props) {
 
 
     return (
-        <View>
+        <View style={styles.container}>
             {requestsStr}
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+      marginBottom: 15,
+    },
+  });

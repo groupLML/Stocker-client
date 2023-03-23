@@ -40,6 +40,7 @@ export default function AddPullOrderPage() {
                     Qty: Qty,
                 }
                 setMedsOrderList([...medsOrderList, medInOrder]);
+                setSelectedMedId(null);
             }
             else {
                 alert('תרופה זו כבר קיימת בהזמנה')
