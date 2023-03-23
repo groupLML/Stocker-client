@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 30,
     color: '#003D9A',
-    marginTop: 60,
+    marginTop: 20,
   },
   fields: {
     fontSize: 17,
