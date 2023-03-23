@@ -60,12 +60,11 @@ export default function FCDepTypeList() {
 const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 10,
+
         margin: 5,
     },
     CB: {
-        marginRight: 10,
+        marginRight: 20,
     },
     CB_txt: {
         fontSize: 16,

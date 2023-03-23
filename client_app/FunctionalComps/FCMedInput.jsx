@@ -58,7 +58,7 @@ export default function FCMedInput(props) {
   return (
     <View >
       <View style={{ flexDirection: 'row', alignItems: 'center', position: 'relative', width: '100%' }}>
-        <Text style={styles.fields}>שם תרופה:</Text>
+        <Text style={styles.fields}>תרופה:</Text>
         <View style={{ flex: 1 }}>
           <TextInput
             style={styles.input}

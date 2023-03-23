@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Modal, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
@@ -122,6 +122,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   button: {
+    width:'30%',
+    alignSelf:'center',
     backgroundColor: '#003D9A',
     borderRadius: 10,
     paddingVertical: 10,
