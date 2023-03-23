@@ -26,6 +26,7 @@ export default function FCQuantityInput(props) {
         key={props.clearForm}
         type='plus-minus'
         rounded
+        borderColor='#E1EAF9'
         minValue={1}
         textColor='#003D9A'
         totalWidth={100}

@@ -29,7 +29,6 @@ function MainTabNavigator() {
           headerShown: false,
           tabBarIcon: ({ color, size }) => {
             let iconName;
-
             if (route.name === 'בית') {
               iconName = 'home';
             }

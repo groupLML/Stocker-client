@@ -60,7 +60,6 @@ export default function FCDepTypeList() {
 const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
-
         margin: 5,
     },
     CB: {

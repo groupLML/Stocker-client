@@ -83,8 +83,6 @@ const styles = StyleSheet.create({
   flatListContainer: {
     maxHeight: 200, // maximum height of the FlatList
     backgroundColor: '#E1EAF9',
-    borderWidth: 1,
-    borderColor: '#ccc',
     borderRadius: 5,
     zIndex: 1,
   },
