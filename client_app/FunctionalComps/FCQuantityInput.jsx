@@ -54,4 +54,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     fontWeight: 'bold',
   },
+  inputContainer: {
+    marginHorizontal: 8,
+  },
 });
