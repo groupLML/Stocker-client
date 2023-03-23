@@ -24,7 +24,7 @@ const Tab = createBottomTabNavigator();
 function MainTabNavigator() {
   return (
     <SafeAreaView style={styles.container}>
-      <Tab.Navigator
+      <Tab.Navigator 
         screenOptions={({ route }) => ({
           headerShown: false,
           tabBarIcon: ({ color, size }) => {
@@ -47,6 +47,10 @@ function MainTabNavigator() {
             return <Ionicons name={iconName} size={size} color={color} />;
           },
         })}
+        tabBarOptions={{
+          activeTintColor: '#004DC1',
+          inactiveTintColor: 'black',
+        }}
       >
         <Tab.Screen name="בית" component={HomePage} />
         <Tab.Screen name="הזמנות" component={PullOrdersPage} />
