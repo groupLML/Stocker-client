@@ -1,10 +1,11 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import React, { useContext, useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated } from 'react-native';
+import React, { useContext, useState, useEffect, useRef } from 'react';
+import { Icon } from '@rneui/themed';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCPullOrders from '../FunctionalComps/FCPullOrders';
 
-export default function PullOrdersPage() {
+export default function PullOrdersPage(props) {
 
   const { apiUrlPullOrder, depId } = useContext(GlobalContext);
 
@@ -33,12 +34,31 @@ export default function PullOrdersPage() {
         });
   }, [depId])
 
+  //animation for add BTN to stick to screen while scroll
+  const scrollY = useRef(new Animated.Value(0)).current;//set the current state of y axe value
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>הזמנות במשיכה</Text>
-      <ScrollView>
-        <FCPullOrders PullOrdersList={pullOrders} isDetailedPullOrder={false} />
-      </ScrollView>
+      <View style={styles.scrollViewContainer}>
+        <ScrollView scrollEventThrottle={16}>
+          <FCPullOrders PullOrdersList={pullOrders} isDetailedPullOrder={false} />
+        </ScrollView>
+        <Animated.View
+          style={[styles.AddBTN, {
+            transform: [{
+              translateY: scrollY.interpolate({
+                inputRange: [0, 100],
+                outputRange: [0, 100],
+                extrapolate: 'clamp'
+              })
+            }]
+          }]}>
+          <TouchableOpacity onPress={() => props.navigation.navigate('יצירת הזמנת משיכה')}>
+            <Icon name='add' color='white' />
+          </TouchableOpacity>
+        </Animated.View>
+      </View>
     </View>
   )
 }
@@ -48,12 +68,27 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  scrollViewContainer: {
+    flex: 1,
+    position: 'relative',
+  },
   title: {
     fontSize: 25,
     textAlign: 'center',
     fontWeight: 'bold',
     marginBottom: 15,
     color: '#003D9A',
-    marginTop: 60,
+    marginTop: 20,
+  },
+  AddBTN: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: '#003D9A',
+    borderRadius: 100,
+    width: 50,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
