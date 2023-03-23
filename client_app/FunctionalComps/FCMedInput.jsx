@@ -44,7 +44,7 @@ export default function FCMedInput(props) {
   };
 
   const renderItem = ({ item, index }) => {
-    if (index < 5) {//5 options only??
+    if (index < 5) {
       return (
         <TouchableOpacity onPress={() => handleSelectOption(item)}>
           <Text style={styles.option}>{item}</Text>

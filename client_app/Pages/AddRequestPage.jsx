@@ -71,7 +71,7 @@ export default function AddRequestPage(props) {
     <View style={styles.container}>
       <Text style={styles.title}>בקשה ממחלקה</Text>
       <FCMedInput sendMedSelect={handleSelectMed} clearForm={clearForm}/>
-      <FCQuantityInput /* reqQty={1}  */sendQty={GetQtyFromInput} clearForm={clearForm}/>
+      <FCQuantityInput reqQty={1} sendQty={GetQtyFromInput} clearForm={clearForm}/>
       <FCDepTypeList />
       <TouchableOpacity style={styles.button} onPress={() => handleAddRequest()}>
         <Text style={styles.buttonText}>אישור</Text>

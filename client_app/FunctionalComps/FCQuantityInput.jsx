@@ -4,7 +4,7 @@ import NumericInput from 'react-native-numeric-input';
 
 export default function FCQuantityInput(props) {
 
-  const [reqQty, setReqQty] = useState(1);
+  const [reqQty, setReqQty] = useState(props.reqQty);
 
   useEffect(() => {
     if (props.clearForm) {
