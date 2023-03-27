@@ -88,7 +88,6 @@ export default function App() {
             <Stack.Screen name="צפייה בבקשות אחרים" component={OthersRequestsPage} />
             <Stack.Screen name="יצירת הזמנת משיכה" component={AddPullOrderPage} />
             <Stack.Screen name="צפייה בפרטי הזמנת משיכה" component={PullOrderPage} />
-
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>

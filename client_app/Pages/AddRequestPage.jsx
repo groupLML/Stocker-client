@@ -69,7 +69,7 @@ export default function AddRequestPage(props) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>בקשה ממחלקה</Text>
+      <Text style={styles.title}>יצירת בקשה</Text>
       <FCMedInput sendMedSelect={handleSelectMed} clearForm={clearForm}/>
       <FCQuantityInput reqQty={1} sendQty={GetQtyFromInput} clearForm={clearForm}/>
       <FCDepTypeList />

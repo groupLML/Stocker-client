@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated } from 'react-native';
 import React, { useContext, useRef, useEffect } from 'react';
 import { Icon } from '@rneui/themed';
+import { useNavigation } from '@react-navigation/native';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCMyRequests from '../FunctionalComps/FCMyRequests';
@@ -8,6 +9,7 @@ import FCMyRequests from '../FunctionalComps/FCMyRequests';
 export default function MyRequestsPage(props) {
 
   const { apiUrlMedRequest, depId, myMedReqs, setMyMedReqs } = useContext(GlobalContext);
+  const navigation = useNavigation();
 
   //----------------------GET Requests details ---------------------
   useEffect(() => {
@@ -49,7 +51,7 @@ export default function MyRequestsPage(props) {
               })
             }]
           }]}>
-          <TouchableOpacity onPress={() => props.navigation.navigate('יצירת בקשה')}>
+          <TouchableOpacity onPress={() => navigation.navigate('יצירת בקשה')}>
             <Icon name='add' color='white' />
           </TouchableOpacity>
         </Animated.View>
