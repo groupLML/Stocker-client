@@ -16,6 +16,7 @@ import PullOrdersPage from './Pages/PullOrdersPage';
 import PullOrderPage from './Pages/PullOrderPage';
 import OthersRequestsPage from './Pages/OthersRequestsPage';
 import NotificationPage from './Pages/NotificationPage';
+import RequestsPage from './Pages/RequestsPage';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -54,6 +55,10 @@ function MainTabNavigator() {
           inactiveTintColor: 'white',
           activeBackgroundColor: '#00317D',
           inactiveBackgroundColor: '#00317D',
+       /*    activeTintColor: '#54A9FF',
+          inactiveTintColor: '#00317D',
+          activeBackgroundColor: 'white',
+          inactiveBackgroundColor: 'white', */
           labelStyle: {
             fontSize: 12,
             fontWeight: 'bold'
@@ -62,7 +67,7 @@ function MainTabNavigator() {
       >
         <Tab.Screen name="בית" component={HomePage} />
         <Tab.Screen name="הזמנות" component={PullOrdersPage} />
-        <Tab.Screen name="בקשות" component={MyRequestsPage} />
+        <Tab.Screen name="בקשות" component={RequestsPage} />
         <Tab.Screen name="הודעות" component={NotificationPage} />
       </Tab.Navigator>
     </SafeAreaView>
@@ -83,6 +88,7 @@ export default function App() {
             <Stack.Screen name="צפייה בבקשות אחרים" component={OthersRequestsPage} />
             <Stack.Screen name="יצירת הזמנת משיכה" component={AddPullOrderPage} />
             <Stack.Screen name="צפייה בפרטי הזמנת משיכה" component={PullOrderPage} />
+
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>

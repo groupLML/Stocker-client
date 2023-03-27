@@ -158,12 +158,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 30,
   },
-  rowButton: {
+/*   rowButton: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
     justifyContent: 'center',
-  },
+  }, */
   button: {
     flex: 1,
     backgroundColor: '#00317D',

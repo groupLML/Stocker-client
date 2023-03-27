@@ -48,6 +48,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: 15,
         color: '#003D9A',
-        marginTop: 60,
+        marginTop: 0,
     },
 });

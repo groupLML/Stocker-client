@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 15,
     color: '#003D9A',
-    marginTop: 20,
+    marginTop: 0,
   },
   AddBTN: {
     position: 'absolute',
