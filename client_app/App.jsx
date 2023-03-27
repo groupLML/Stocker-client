@@ -48,13 +48,20 @@ function MainTabNavigator() {
           },
         })}
         tabBarOptions={{
+          activeTintColor: '#00317D',
+          inactiveTintColor: '#00317D',
+          activeBackgroundColor: '#E1EAF9',
+          inactiveBackgroundColor: '#E1EAF9',
+          
           //activeTintColor: '#004DC1',
           //activeTintColor: '#0064FF',
           //activeTintColor: '#2E6CCB',
-          activeTintColor: '#54A9FF',
+
+          /* activeTintColor: '#54A9FF',
           inactiveTintColor: 'white',
           activeBackgroundColor: '#00317D',
-          inactiveBackgroundColor: '#00317D',
+          inactiveBackgroundColor: '#00317D', */
+
        /*    activeTintColor: '#54A9FF',
           inactiveTintColor: '#00317D',
           activeBackgroundColor: 'white',
