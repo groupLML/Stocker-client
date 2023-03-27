@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { useState } from 'react';
+import { getFocusedRouteNameFromRoute, NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
@@ -23,24 +24,25 @@ const Tab = createBottomTabNavigator();
 
 
 function MainTabNavigator() {
+
   return (
     <SafeAreaView style={styles.container}>
       <Tab.Navigator
         screenOptions={({ route }) => ({
           headerShown: false,
-          tabBarIcon: ({ color, size }) => {
+          tabBarIcon: ({ focused, color, size }) => {
             let iconName;
             if (route.name === 'בית') {
-              iconName = 'home';
+              iconName = focused ? 'home' : 'home-outline';
             }
             else if (route.name === 'הזמנות') {
-              iconName = 'reader-outline';
+              iconName = focused ? 'reader' : 'reader-outline';
             }
             else if (route.name === 'בקשות') {
-              iconName = 'mail-outline';
+              iconName = focused ? 'mail' : 'mail-outline';
             }
             else if (route.name === 'הודעות') {
-              iconName = 'notifications-outline';
+              iconName = focused ? 'notifications' : 'notifications-outline';
             }
 
             // Return the icon component
@@ -52,7 +54,7 @@ function MainTabNavigator() {
           inactiveTintColor: '#00317D',
           activeBackgroundColor: '#E1EAF9',
           inactiveBackgroundColor: '#E1EAF9',
-          
+
           //activeTintColor: '#004DC1',
           //activeTintColor: '#0064FF',
           //activeTintColor: '#2E6CCB',
@@ -62,15 +64,15 @@ function MainTabNavigator() {
           activeBackgroundColor: '#00317D',
           inactiveBackgroundColor: '#00317D', */
 
-       /*    activeTintColor: '#54A9FF',
-          inactiveTintColor: '#00317D',
-          activeBackgroundColor: 'white',
-          inactiveBackgroundColor: 'white', */
+          /*    activeTintColor: '#54A9FF',
+             inactiveTintColor: '#00317D',
+             activeBackgroundColor: 'white',
+             inactiveBackgroundColor: 'white', */
           labelStyle: {
             fontSize: 12,
-            fontWeight: 'bold'
-          }, 
-        }}   
+            //fontWeight: 'bold'
+          },
+        }}
       >
         <Tab.Screen name="בית" component={HomePage} />
         <Tab.Screen name="הזמנות" component={PullOrdersPage} />
