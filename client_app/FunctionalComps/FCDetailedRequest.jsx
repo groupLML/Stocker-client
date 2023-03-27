@@ -110,7 +110,7 @@ export default function FCDetailedRequest(props) {
             <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59' }]} onPress={() => handleApproveRequest()}>
               <Text style={styles.buttonText}>אישור העברה</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.button, { backgroundColor: '#DF2E38' }]} onPress={() => handleCancelRequest()}>
+            <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933' }]} onPress={() => handleCancelRequest()}>
               <Text style={styles.buttonText} >ביטול העברה</Text>
             </TouchableOpacity>
           </View>
@@ -123,10 +123,10 @@ export default function FCDetailedRequest(props) {
           <View style={styles.Body}><FCQuantityInput reqQty={props.reqQty} sendQty={GetQtyFromInput} /></View>
           <View style={styles.Body}><FCDepTypeList /></View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <TouchableOpacity style={[styles.button, { backgroundColor: '#129C62' }]} onPress={() => handleUpdateRequest()}>
+            <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59' }]} onPress={() => handleUpdateRequest()}>
               <Text style={styles.buttonText}>עדכון</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.button, { backgroundColor: '#E51C1C' }]} onPress={() => handleDeleteRequest()}>
+            <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933' }]} onPress={() => handleDeleteRequest()}>
               <Text style={styles.buttonText} >מחיקת העברה</Text>
             </TouchableOpacity>
           </View>
@@ -136,6 +136,7 @@ export default function FCDetailedRequest(props) {
   )
 }
 
+/* E51C1C */
 const styles = StyleSheet.create({
   Container: {
     padding: 10,

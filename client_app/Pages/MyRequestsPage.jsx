@@ -6,10 +6,10 @@ import { useNavigation } from '@react-navigation/native';
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCMyRequests from '../FunctionalComps/FCMyRequests';
 
-export default function MyRequestsPage(props) {
+export default function MyRequestsPage() {
+  const navigation = useNavigation();
 
   const { apiUrlMedRequest, depId, myMedReqs, setMyMedReqs } = useContext(GlobalContext);
-  const navigation = useNavigation();
 
   //----------------------GET Requests details ---------------------
   useEffect(() => {
