@@ -1,12 +1,13 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated } from 'react-native';
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { Icon } from '@rneui/themed';
+import { useNavigation } from '@react-navigation/native';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCPullOrders from '../FunctionalComps/FCPullOrders';
 
-export default function PullOrdersPage(props) {
-
+export default function PullOrdersPage() {
+  const navigation = useNavigation();
   const { apiUrlPullOrder, depId } = useContext(GlobalContext);
 
   const [pullOrders, setPullOrders] = useState([]);
@@ -53,7 +54,7 @@ export default function PullOrdersPage(props) {
               })
             }]
           }]}>
-          <TouchableOpacity onPress={() => props.navigation.navigate('יצירת הזמנת משיכה')}>
+          <TouchableOpacity onPress={() => navigation.navigate('יצירת הזמנת משיכה')}>
             <Icon name='add' color='white' />
           </TouchableOpacity>
         </Animated.View>

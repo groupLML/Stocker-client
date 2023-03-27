@@ -17,6 +17,7 @@ import PullOrderPage from './Pages/PullOrderPage';
 import OthersRequestsPage from './Pages/OthersRequestsPage';
 import NotificationPage from './Pages/NotificationPage';
 import RequestsPage from './Pages/RequestsPage';
+import OrdersPage from './Pages/OrdersPage';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -73,7 +74,7 @@ function MainTabNavigator() {
         }}   
       >
         <Tab.Screen name="בית" component={HomePage} />
-        <Tab.Screen name="הזמנות" component={PullOrdersPage} />
+        <Tab.Screen name="הזמנות" component={OrdersPage} />
         <Tab.Screen name="בקשות" component={RequestsPage} />
         <Tab.Screen name="הודעות" component={NotificationPage} />
       </Tab.Navigator>
@@ -93,8 +94,11 @@ export default function App() {
             <Stack.Screen name="צפייה בפרטי בקשה" component={MyRequestPage} />
             <Stack.Screen name="צפייה בבקשות שלי" component={MyRequestsPage} />
             <Stack.Screen name="צפייה בבקשות אחרים" component={OthersRequestsPage} />
+            <Stack.Screen name="צפייה בבקשות" component={RequestsPage} />
             <Stack.Screen name="יצירת הזמנת משיכה" component={AddPullOrderPage} />
+            <Stack.Screen name="צפייה בהזמנת משיכה" component={PullOrdersPage} />
             <Stack.Screen name="צפייה בפרטי הזמנת משיכה" component={PullOrderPage} />
+            <Stack.Screen name="צפייה הזמנות" component={OrdersPage} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>

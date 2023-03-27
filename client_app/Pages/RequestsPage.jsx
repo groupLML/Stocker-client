@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import MyRequestsPage from './MyRequestsPage';
 import OthersRequestsPage from './OthersRequestsPage';
@@ -9,7 +9,11 @@ export default function RequestsPage() {
   const [showMy, setShowMy] = useState(true);
   const [selectedButton, setSelectedButton] = useState(0);
 
-  const handleButtonPress = (buttonNumber, buttonType) => {
+  useEffect(() => {
+    setSelectedButton(0); // set the default selected button to 0 when the component mounts
+  }, []);
+  
+  const handleButtonPress = (buttonNumber,buttonType) => {
     setSelectedButton(buttonNumber);
     if (buttonType === 'MyReq') {
       setShowMy(true);
