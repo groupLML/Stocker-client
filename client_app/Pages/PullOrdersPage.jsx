@@ -39,7 +39,6 @@ export default function PullOrdersPage(props) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>הזמנות במשיכה</Text>
       <View style={styles.scrollViewContainer}>
         <ScrollView scrollEventThrottle={16}>
           <FCPullOrders PullOrdersList={pullOrders} isDetailedPullOrder={false} />

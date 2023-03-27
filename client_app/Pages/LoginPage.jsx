@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   },
   phoneNumber: {
     fontSize: 12,
-    color: '#001AFF',
+    color: '#00317D',
     textDecorationLine: 'underline',
   },
   input: {
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     width: '80%',
     marginBottom: 10,
     textAlign: 'right',
-    //paddingVertical: 5, // reduce padding on top and bottom
+    color: '#00317D',
     paddingHorizontal: 10,
   },
   button: {

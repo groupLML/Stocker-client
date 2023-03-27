@@ -31,7 +31,6 @@ export default function OthersRequestsPage() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>בקשות של מחלקות אחרות</Text>
             <ScrollView>
                 <FCOthersRequests RequestsList={othersMedReqs} />
             </ScrollView>

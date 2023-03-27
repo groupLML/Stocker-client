@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     paddingLeft: 7,
     fontSize: 16,
+    color: "#003D9A",
   },
   fields: {
     alignSelf: 'flex-start',
@@ -108,5 +109,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     textAlign: 'left',
     writingDirection: 'rtl',
+    color:'#00317D'
   },
 });

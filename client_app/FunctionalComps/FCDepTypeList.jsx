@@ -9,10 +9,6 @@ export default function FCDepTypeList() {
     const [isChecked, setChecked] = useState(true); //Send to all deps checkBox status (init value is checked)
     const { DepTypes, setDepTypes } = useContext(GlobalContext);
 
-    /*     useEffect(() => {//component did Update DepTypes
-            console.log(DepTypes);
-        }, [DepTypes]); */
-
     useEffect(() => {//Send to all deps checkBox (isChecked) did Update
         if (isChecked === true) {
             let temp = DepTypes.map((DepType) => {

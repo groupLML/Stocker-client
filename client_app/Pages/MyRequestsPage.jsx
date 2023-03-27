@@ -35,7 +35,6 @@ export default function MyRequestsPage(props) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>בקשות המחלקה</Text>
       <View style={styles.scrollViewContainer}>
         <ScrollView scrollEventThrottle={16}>
           <FCMyRequests RequestsList={myMedReqs} isDetailedRequest={false} />
