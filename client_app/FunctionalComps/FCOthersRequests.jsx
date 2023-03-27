@@ -23,12 +23,3 @@ export default function FCOthersRequests(props) {
     </View>
   )
 }
-
-/*
-"depName": "כירורגיה פלסטית",
-"cNurseName": "Fred Bruggeman",
-"reqDate": "2023-02-22T23:30:29",
-"medName": "Paracetamol Acamol 20 MG TAB",
-"reqQty": 2,
-"stcQty": 40 
-*/

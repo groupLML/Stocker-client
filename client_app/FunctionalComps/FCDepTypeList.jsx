@@ -67,5 +67,6 @@ const styles = StyleSheet.create({
     },
     CB_txt: {
         fontSize: 16,
+    color:'#003D9A'
     },
 });

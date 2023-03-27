@@ -1,8 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useContext, useEffect } from 'react';
 import { Card } from '@rneui/base';
-import { Icon } from '@rneui/themed';
-
 import { useNavigation } from '@react-navigation/native';
 import FCDateTime from './FCDateTime';
 
@@ -15,32 +13,29 @@ export default function FCMyRequest(props) {
   };
 
   return (
-    <Card style={styles.cardContainer} borderColor="#00317D">
+    <Card style={styles.cardContainer} borderColor="#E1EAF9">
       <View style={styles.row}>
         <FCDateTime time={props.time} date={props.date} />
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {props.reqStatus === 'A' && (
             <>
-              <Icon type="ionicon" name="checkmark" color="#00914B" size={20} />
-              <Text style={{ color: '#00914B' }}>מאושר</Text>
+              <Text style={{ color: '#5D9C59' }}>מאושר</Text>
             </>
           )}
           {props.reqStatus === 'W' && (
             <>
-              <Icon type="ionicon" name="hourglass" color="red" size={20} />
-              <Text style={{ color: 'red' }}>בהמתנה</Text>
+              <Text style={{ color: '#DF2E38'}}>בהמתנה</Text>
             </>
           )}
           {props.reqStatus === 'D' && <Text>נדחה</Text>}
         </View>
-        
       </View>
 
       <Text style={styles.cardTitle}>{props.medName}</Text>
-      <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >כמות: </Text>{props.reqQty}</Text>
-      <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >שם יוצר ההזמנה: </Text>{props.cNurseName}</Text>
+      <Text style={styles.cardBody}><Text>כמות: </Text>{props.reqQty}</Text>
+      <Text style={styles.cardBody}><Text>יוצר ההזמנה: </Text>{props.cNurseName}</Text>
 
-      {props.aDepName !== '' && <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >שם המחלקה שאישרה: </Text>{props.aDepName}</Text>}
+      {props.aDepName !== '' && <Text style={styles.cardBody}><Text>שם המחלקה שאישרה: </Text>{props.aDepName}</Text>}
 
       {!props.isDetailedRequest &&
         <TouchableOpacity onPress={() => handleCardPress()}>
@@ -62,6 +57,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 10,
+    color: "#003D9A",
   },
   cardBody: {
     marginVertical: 10,
@@ -69,7 +65,7 @@ const styles = StyleSheet.create({
     color: "#003D9A",
   },
   readMore: {
-    color: "#007bff",
+    color: '#54A9FF',
     textAlign: "right",
     marginTop: 10,
   },

@@ -98,7 +98,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: "#003D9A",
     marginRight: 15,
-    fontWeight: 'bold',
   },
   input: {
     maxWidth: 250,

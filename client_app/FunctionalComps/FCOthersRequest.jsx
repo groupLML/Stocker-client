@@ -13,14 +13,14 @@ export default function FCOthersRequest(props) {
 
     return (
         <View>
-            <Card style={styles.cardContainer} borderColor="#00317D">
+            <Card style={styles.cardContainer} borderColor="#E1EAF9">
                 <View style={[styles.row, {justifyContent:'flex-end'}]}>
                     <FCDateTime time={props.time} date={props.date} />
                 </View>
                 <Text style={styles.cardTitle}>{props.medName}</Text>
-                <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >כמות מבוקשת: </Text>{props.reqQty}</Text>
-                <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >כמות במלאי: </Text><Text style={{ color: isStockQtyLower ? 'red' : '#003D9A' }}>{props.stcQty}</Text></Text>
-                <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }} >מחלקה מבקשת: </Text>{props.depName}</Text>
+                <Text style={styles.cardBody}><Text>כמות מבוקשת: </Text>{props.reqQty}</Text>
+                <Text style={styles.cardBody}><Text>כמות במלאי: </Text><Text style={{ color: isStockQtyLower ? 'red' : '#003D9A' }}>{props.stcQty}</Text></Text>
+                <Text style={styles.cardBody}><Text>מחלקה מבקשת: </Text>{props.depName}</Text>
                 <View style={styles.row}>
                     <TouchableOpacity style={[styles.button, { backgroundColor: '#129C62' }]} onPress={() => handleApproveRequest()}>
                         <Text style={styles.buttonText}>אישור העברה</Text>
@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center",
         marginBottom: 10,
+        color: "#003D9A",
     },
     cardBody: {
         marginVertical: 10,

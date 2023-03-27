@@ -29,7 +29,7 @@ export default function FCQuantityInput(props) {
         borderColor='#E1EAF9'
         minValue={1}
         textColor='#003D9A'
-        totalWidth={100}
+        totalWidth={90}
         iconStyle={{ color: '#003D9A' }}
         rightButtonBackgroundColor='#E1EAF9'
         leftButtonBackgroundColor='#E1EAF9'
@@ -53,8 +53,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: "#003D9A",
     marginRight: 10,
-    fontWeight: 'bold',
-  },
+    },
   inputContainer: {
     marginHorizontal: 8,
   },

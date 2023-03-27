@@ -85,14 +85,12 @@ export default function FCDetailedRequest(props) {
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {props.reqStatus === 'A' && (
             <>
-              <Icon type="ionicon" name="checkmark" color="#00914B" size={20} />
-              <Text style={{ color: '#00914B' }}>מאושר</Text>
+              <Text style={{ color: '#5D9C59'}}>מאושר</Text>
             </>
           )}
           {props.reqStatus === 'W' && (
             <>
-              <Icon type="ionicon" name="hourglass" color="red" size={20} />
-              <Text style={{ color: 'red' }}>בהמתנה</Text>
+              <Text style={{ color: '#DF2E38'}}>בהמתנה</Text>
             </>
           )}
           {props.reqStatus === 'D' && <Text>נדחה</Text>}
@@ -105,14 +103,14 @@ export default function FCDetailedRequest(props) {
       {props.reqStatus === 'A' && (
         <>
           <Text style={styles.Title}>{props.medName}</Text>
-          <Text style={styles.Body}><Text style={{ fontWeight: "bold" }} >כמות: </Text>{props.reqQty}</Text>
-          <Text style={styles.Body}><Text style={{ fontWeight: "bold" }} >שם יוצר ההזמנה: </Text>{props.cNurseName}</Text>
-          <Text style={styles.Body}><Text style={{ fontWeight: "bold" }} >שם המחלקה שאישרה: </Text>{props.aDepName}</Text>
+          <Text style={styles.Body}><Text>כמות: </Text>{props.reqQty}</Text>
+          <Text style={styles.Body}><Text>שם יוצר ההזמנה: </Text>{props.cNurseName}</Text>
+          <Text style={styles.Body}><Text>שם המחלקה שאישרה: </Text>{props.aDepName}</Text>
           <View style={styles.row}>
-            <TouchableOpacity style={[styles.button, { backgroundColor: '#129C62' }]} onPress={() => handleApproveRequest()}>
+            <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59' }]} onPress={() => handleApproveRequest()}>
               <Text style={styles.buttonText}>אישור העברה</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.button, { backgroundColor: '#E51C1C' }]} onPress={() => handleCancelRequest()}>
+            <TouchableOpacity style={[styles.button, { backgroundColor: '#DF2E38' }]} onPress={() => handleCancelRequest()}>
               <Text style={styles.buttonText} >ביטול העברה</Text>
             </TouchableOpacity>
           </View>
@@ -120,7 +118,7 @@ export default function FCDetailedRequest(props) {
       )}
       {props.reqStatus === 'W' && (
         <>
-          <Text style={{ ...styles.Body, fontSize: 17 }}><Text style={{ fontWeight: "bold", fontSize: 17 }} >שם יוצר ההזמנה: </Text>{props.cNurseName}</Text>
+          <Text style={{ ...styles.Body, fontSize: 17 }}><Text style={{fontSize: 17 }} >יוצר ההזמנה: </Text>{props.cNurseName}</Text>
           <View style={styles.Body}><FCMedInput medName={props.medName} sendMedSelect={handleSelectMed} /></View>
           <View style={styles.Body}><FCQuantityInput reqQty={props.reqQty} sendQty={GetQtyFromInput} /></View>
           <View style={styles.Body}><FCDepTypeList /></View>
@@ -148,6 +146,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 10,
+    color: "#003D9A",
   },
   Body: {
     marginVertical: 10,

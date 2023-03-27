@@ -55,7 +55,7 @@ export default function AddPullOrderPage() {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>יצירת הזמנה:</Text>
-            <Card >
+            <Card borderColor='#E1EAF9'>
                 <FCMedInput sendMedSelect={handleSelectMed} clearForm={clearForm} handleSetClearForm={handleSetClearForm} />
                 <FCQuantityInput reqQty={1} sendQty={GetQtyFromInput} clearForm={clearForm} handleSetClearForm={handleSetClearForm} />
                 <TouchableOpacity style={styles.AddBTN} onPress={() => AddMed2Order()}>
@@ -90,39 +90,37 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 25,
         textAlign: 'center',
-        fontWeight: 'bold',
         marginBottom: 5,
         color: '#003D9A',
         marginTop: 30,
     },
     ScrollView: {
-        height: 350, 
+        height: 350,
     },
     subTitle: {
         fontSize: 18,
         textAlign: 'center',
         color: '#003D9A',
-        fontWeight: 'bold',
         marginTop: 30,
     },
     AddBTN: {
         borderRadius: 100,
         backgroundColor: '#003D9A',
-        height:30,
-        width:30,
+        height: 30,
+        width: 30,
         bottom: 0,
         marginBottom: 5,
         marginTop: 5,
         alignSelf: 'center',
-        justifyContent:'center',
+        justifyContent: 'center',
     },
     sendBTN: {
         marginTop: 20,
         backgroundColor: '#00317D',
         padding: 10,
         borderRadius: 5,
-        width:'30%',
-        alignSelf:'center',
+        width: '30%',
+        alignSelf: 'center',
     },
     BTNtext: {
         color: '#fff',
