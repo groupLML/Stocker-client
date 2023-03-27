@@ -56,6 +56,6 @@ export default function FCMyRequests(props) {
 
 const styles = StyleSheet.create({
     container: {
-      marginBottom: 15,
+      marginBottom: 90,
     },
   });

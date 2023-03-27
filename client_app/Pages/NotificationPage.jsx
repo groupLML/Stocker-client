@@ -5,7 +5,7 @@ import FCNotifications from '../FunctionalComps/FCNotifications'
 export default function NotificationPage() {
     return (
         <View style={styles.container}>
-            <Text>NotificationPage:</Text>
+            <Text style={styles.title}>הודעות מבית מרחקת</Text>
             <ScrollView>
             <FCNotifications />
             </ScrollView>
@@ -16,5 +16,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+    },
+    title: {
+        fontSize: 25,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        marginBottom: 15,
+        color: '#003D9A',
+        marginTop: 20,
     },
 });

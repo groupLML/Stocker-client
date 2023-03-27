@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 import FCPullOrder from './FCPullOrder';
 
@@ -41,9 +41,14 @@ export default function FCPullOrders(props) {
   }
 
   return (
-    <View>
+    <View style={styles.container}>
       {pullOrdersStr}
     </View>
   )
 }
 
+const styles = StyleSheet.create({
+  container: {
+    marginBottom: 90,
+  },
+});

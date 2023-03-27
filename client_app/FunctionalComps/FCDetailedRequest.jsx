@@ -104,7 +104,7 @@ export default function FCDetailedRequest(props) {
       {/* --------------------------------------תוכן וכפתורים------------------------------ */}
       {props.reqStatus === 'A' && (
         <>
-          <Text style={styles.Title}>{props.genName}</Text>
+          <Text style={styles.Title}>{props.medName}</Text>
           <Text style={styles.Body}><Text style={{ fontWeight: "bold" }} >כמות: </Text>{props.reqQty}</Text>
           <Text style={styles.Body}><Text style={{ fontWeight: "bold" }} >שם יוצר ההזמנה: </Text>{props.cNurseName}</Text>
           <Text style={styles.Body}><Text style={{ fontWeight: "bold" }} >שם המחלקה שאישרה: </Text>{props.aDepName}</Text>

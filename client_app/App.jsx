@@ -24,7 +24,7 @@ const Tab = createBottomTabNavigator();
 function MainTabNavigator() {
   return (
     <SafeAreaView style={styles.container}>
-      <Tab.Navigator 
+      <Tab.Navigator
         screenOptions={({ route }) => ({
           headerShown: false,
           tabBarIcon: ({ color, size }) => {
@@ -47,9 +47,18 @@ function MainTabNavigator() {
           },
         })}
         tabBarOptions={{
-          activeTintColor: '#004DC1',
-          inactiveTintColor: 'black',
-        }}
+          //activeTintColor: '#004DC1',
+          //activeTintColor: '#0064FF',
+          //activeTintColor: '#2E6CCB',
+          activeTintColor: '#54A9FF',
+          inactiveTintColor: 'white',
+          activeBackgroundColor: '#00317D',
+          inactiveBackgroundColor: '#00317D',
+          labelStyle: {
+            fontSize: 12,
+            fontWeight: 'bold'
+          }, 
+        }}   
       >
         <Tab.Screen name="בית" component={HomePage} />
         <Tab.Screen name="הזמנות" component={PullOrdersPage} />
