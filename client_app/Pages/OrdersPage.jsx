@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
 
-//import PushOrdersPage from './PushOrdersPage';
+import PushOrdersPage from './PushOrdersPage';
 import PullOrdersPage from './PullOrdersPage';
 
 export default function OrdersPage() {
@@ -28,57 +28,42 @@ export default function OrdersPage() {
                     <Text style={[styles.buttonText, selectedButton === 1 && styles.selectedButtonText]} >דחיפה</Text>
                 </TouchableOpacity>
             </View>
-            {showPull ? <PullOrdersPage /> : <PullOrdersPage />}
+            {showPull ? <PullOrdersPage /> : <PushOrdersPage />}
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
+      flex: 1,
+      backgroundColor: '#fff',
     },
     row: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 30,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: 30,
     },
-    /*   button: {
-        flex: 1,
-        backgroundColor: 'white',
-        borderWidth: 1,
-        borderColor: '#E1EAF9',
-        padding: 10,
-        margin: 0,
-        marginTop: 20,
-      }, */
     button: {
-        flex: 1,
-        backgroundColor: 'white',
-        borderWidth: 1,
-        borderColor: '#E1EAF9',
-        padding: 10,
-        margin: 0,
-        marginTop: 20,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
+      flex: 1,
+      backgroundColor: 'white',
+      padding: 10,
+      margin: 0,
+      marginTop: 20,
+      backgroundColor: '#E1EAF9',
+      borderBottomWidth: 2, // Add a transparent border to the both buttons
+      borderBottomColor: 'transparent', // Set the border color to transparent
     },
     selectedButton: {
-        backgroundColor: '#E1EAF9',
+      borderBottomWidth:1,
+      borderBottomColor:'#00317D'
     },
     buttonText: {
-        color: '#00317D',
-        fontSize: 16,
-        textAlign: 'center',
+      color: '#00317D',
+      fontSize: 16,
+      textAlign: 'center',
     },
     selectedButtonText: {
-        fontWeight: "bold",
+      fontWeight: "bold",
     },
-});
+  });

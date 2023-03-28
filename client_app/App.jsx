@@ -56,22 +56,8 @@ function MainTabNavigator() {
           activeBackgroundColor: '#E1EAF9',
           inactiveBackgroundColor: '#E1EAF9',
 
-          //activeTintColor: '#004DC1',
-          //activeTintColor: '#0064FF',
-          //activeTintColor: '#2E6CCB',
-
-          /* activeTintColor: '#54A9FF',
-          inactiveTintColor: 'white',
-          activeBackgroundColor: '#00317D',
-          inactiveBackgroundColor: '#00317D', */
-
-          /*    activeTintColor: '#54A9FF',
-             inactiveTintColor: '#00317D',
-             activeBackgroundColor: 'white',
-             inactiveBackgroundColor: 'white', */
           labelStyle: {
             fontSize: 12,
-            //fontWeight: 'bold'
           },
         }}
       >

@@ -12,8 +12,8 @@ export default function RequestsPage() {
   useEffect(() => {
     setSelectedButton(0); // set the default selected button to 0 when the component mounts
   }, []);
-  
-  const handleButtonPress = (buttonNumber,buttonType) => {
+
+  const handleButtonPress = (buttonNumber, buttonType) => {
     setSelectedButton(buttonNumber);
     if (buttonType === 'MyReq') {
       setShowMy(true);
@@ -49,34 +49,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 30,
   },
-/*   button: {
+  button: {
     flex: 1,
     backgroundColor: 'white',
-    borderWidth: 1,
-    borderColor: '#E1EAF9',
     padding: 10,
     margin: 0,
     marginTop: 20,
-  }, */
-  button: {
-  flex: 1,
-  backgroundColor: 'white',
-  borderWidth: 1,
-  borderColor: '#E1EAF9',
-  padding: 10,
-  margin: 0,
-  marginTop: 20,
-  shadowColor: '#000',
-  shadowOffset: {
-    width: 0,
-    height: 2,
-  },
-  shadowOpacity: 0.25,
-  shadowRadius: 3.84,
-  elevation: 5,
-},
-  selectedButton: {
     backgroundColor: '#E1EAF9',
+    borderBottomWidth: 2, // Add a transparent border to the both buttons
+    borderBottomColor: 'transparent', // Set the border color to transparent
+  },
+  selectedButton: {
+    borderBottomWidth:1,
+    borderBottomColor:'#00317D'
   },
   buttonText: {
     color: '#00317D',

@@ -1,20 +1,58 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { Card } from '@rneui/base';
-import React from 'react'
+import React, { useContext } from 'react';
 import FCDateTime from './FCDateTime';
+
+import { GlobalContext } from '../GlobalData/GlobalData';
 
 export default function FCOthersRequest(props) {
 
     const isStockQtyLower = props.stcQty < props.reqQty;
+    const {apiUrlMedRequest} = useContext(GlobalContext);
 
-    const handleApproveRequest = () => {
-        //handle approve request
+    const handleApproveRequest = () => {//handle approve request
+        const MedRequest = { //יצירת אובייקט לפי השדות במחלקה
+            "reqId": props.id,
+            "cUser": props.cNurseId,//************************************************************************* */
+            "aUser": props.aNurseId,//************************************************************************* */
+            "cDep": depId, //************************************************************************* */
+            "aDep": props.aDepId,//************************************************************************* */
+            "medId": selectedMedId ? selectedMedId : props.medId,
+            "reqQty": Qty,
+            "reqStatus": props.reqStatus,
+            "reqDate": props.date
+          };
+
+        //-------------------------------PUT ApproveRequest------------------------------------
+        fetch(apiUrlMedRequest + "ApprovedReq/" + `${props.id}`, {
+            method: 'PUT',
+            body: JSON.stringify(MedRequest),
+            headers: new Headers({
+                'Content-type': 'application/json; charset=UTF-8',
+                'Accept': 'application/json; charset=UTF-8',
+            })
+        })
+            .then(response => {
+                return response;//the server returns an iActionResult therefore there is no need in parsing the response to Json
+            })
+            .then(
+                (result) => {
+                    if (result) {
+                        alert("Success");
+                        navigation.navigate('צפייה בבקשות שלי');
+                    }
+                    else { alert("error") };
+                },
+                (error) => {
+                    console.log("err put=", error);
+                });
+
     };
 
     return (
         <View>
             <Card style={styles.cardContainer} borderColor="#E1EAF9">
-                <View style={[styles.row, {justifyContent:'flex-end'}]}>
+                <View style={[styles.row, { justifyContent: 'flex-end' }]}>
                     <FCDateTime time={props.time} date={props.date} />
                 </View>
                 <Text style={styles.cardTitle}>{props.medName}</Text>

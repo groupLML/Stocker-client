@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Icon } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 
@@ -48,7 +48,7 @@ export default function FCDetailedRequest(props) {
     };
 
     //-------------------------------PUT medReqs------------------------------------
-    fetch(apiUrlMedRequest + "WaittingReq/" + `${props.id}`, {
+    fetch(apiUrlMedRequest + "WaitingReq/" + `${props.id}`, {
       method: 'PUT',
       body: JSON.stringify(dataToSend),
       headers: new Headers({
@@ -57,7 +57,7 @@ export default function FCDetailedRequest(props) {
       })
     })
       .then(response => {
-        return response.json()
+        return response;//the server returns an iActionResult therefore there is no need in parsing the response to Json
       })
       .then(
         (result) => {
@@ -74,7 +74,8 @@ export default function FCDetailedRequest(props) {
 
   const handleCancelRequest = () => { };
 
-  const handleApproveRequest = () => { };
+  const handleApproveRequest = () => {
+  };
 
   const handleDeleteRequest = (item) => { };
 
@@ -85,12 +86,12 @@ export default function FCDetailedRequest(props) {
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {props.reqStatus === 'A' && (
             <>
-              <Text style={{ color: '#5D9C59'}}>מאושר</Text>
+              <Text style={{ color: '#5D9C59' }}>מאושר</Text>
             </>
           )}
           {props.reqStatus === 'W' && (
             <>
-              <Text style={{ color: '#DF2E38'}}>בהמתנה</Text>
+              <Text style={{ color: '#DF2E38' }}>בהמתנה</Text>
             </>
           )}
           {props.reqStatus === 'D' && <Text>נדחה</Text>}
@@ -118,7 +119,7 @@ export default function FCDetailedRequest(props) {
       )}
       {props.reqStatus === 'W' && (
         <>
-          <Text style={{ ...styles.Body, fontSize: 17 }}><Text style={{fontSize: 17 }} >יוצר ההזמנה: </Text>{props.cNurseName}</Text>
+          <Text style={{ ...styles.Body, fontSize: 17 }}><Text style={{ fontSize: 17 }} >יוצר ההזמנה: </Text>{props.cNurseName}</Text>
           <View style={styles.Body}><FCMedInput medName={props.medName} sendMedSelect={handleSelectMed} /></View>
           <View style={styles.Body}><FCQuantityInput reqQty={props.reqQty} sendQty={GetQtyFromInput} /></View>
           <View style={styles.Body}><FCDepTypeList /></View>
@@ -134,9 +135,8 @@ export default function FCDetailedRequest(props) {
       )}
     </View>
   )
-}
+};
 
-/* E51C1C */
 const styles = StyleSheet.create({
   Container: {
     padding: 10,
@@ -159,12 +159,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 30,
   },
-/*   rowButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-    justifyContent: 'center',
-  }, */
   button: {
     flex: 1,
     backgroundColor: '#00317D',
