@@ -1,6 +1,5 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Modal ,View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState, useContext } from 'react';
-import { Icon } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
@@ -17,6 +16,18 @@ export default function FCDetailedRequest(props) {
 
   const [Qty, setQty] = useState(props.reqQty);
   const [selectedMedId, setSelectedMedId] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [clearForm, setClearForm] = useState(false);
+
+  const handleSetClearForm = (state) => {
+    setClearForm(state);
+  };
+
+  const handleModalClose = () => {
+    setModalVisible(false);
+    setClearForm(true);
+    navigation.navigate('צפייה בבקשות שלי');
+  };
 
   const GetQtyFromInput = (Qty) => {
     setQty(Qty);
@@ -62,8 +73,7 @@ export default function FCDetailedRequest(props) {
       .then(
         (result) => {
           if (result) {
-            alert("Success");
-            navigation.navigate('צפייה בבקשות שלי');
+            setModalVisible(true);
           }
           else { alert("error") };
         },
@@ -120,7 +130,7 @@ export default function FCDetailedRequest(props) {
       {props.reqStatus === 'W' && (
         <>
           <Text style={{ ...styles.Body, fontSize: 17 }}><Text style={{ fontSize: 17 }} >יוצר ההזמנה: </Text>{props.cNurseName}</Text>
-          <View style={styles.Body}><FCMedInput medName={props.medName} sendMedSelect={handleSelectMed} /></View>
+          <View style={styles.Body}><FCMedInput medName={props.medName} sendMedSelect={handleSelectMed} clearForm={clearForm} handleSetClearForm={handleSetClearForm} /></View>
           <View style={styles.Body}><FCQuantityInput reqQty={props.reqQty} sendQty={GetQtyFromInput} /></View>
           <View style={styles.Body}><FCDepTypeList /></View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -133,6 +143,26 @@ export default function FCDetailedRequest(props) {
           </View>
         </>
       )}
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            this.setState({ modalVisible: !modalVisible });
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>בקשה התווספה בהצלחה</Text>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={handleModalClose}>
+                <Text style={styles.buttonText}>סגור</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+      </View>
     </View>
   )
 };
@@ -170,5 +200,21 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2, },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
 });

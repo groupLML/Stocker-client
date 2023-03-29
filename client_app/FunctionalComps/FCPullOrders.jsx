@@ -6,36 +6,38 @@ import FCPullOrder from './FCPullOrder';
 export default function FCPullOrders(props) {
   let pullOrdersStr;
   if (props.isDetailedPullOrder === true) {
-    pullOrdersStr = props.PullOrdersList.map((pullOrder, key) => {
-      return <FCPullOrder
-        id={pullOrder.pullId}
+    /* pullOrdersStr = props.PullOrdersList.map((pullOrder, key) => {
+      return <FCRequest
+        id={pullOrder.orderId}
         date={pullOrder.pullDate}
-        time={pullOrder.PullTime}
-        pullMedList={pullOrder.pullMedOrder}//לבדוק
+        //pullMedList={pullOrder.orderDate}//לבדוק
+        nurseId={pullOrder.nurseId}
         nurseName={pullOrder.nurseName}
-        aNurse={pullOrder.nUser}
+        pharmacistId={pullOrder.pharmacistId}
+        pharmacistName={pullOrder.pharmacistName}
+        depId={pullOrder.depId}
         depName={pullOrder.depName}
-        dep={pullOrder.depId}
-        reqStatus={pullOrder.pullStatus}
+        reqStatus={pullOrder.orderStatus}
         pullOrdersList={props.PullOrdersList}
-        key={pullOrder.pullId}
+        key={pullOrder.orderId}
       />;
-    })
+    }) */
   }
   else {
     pullOrdersStr = props.PullOrdersList.map((pullOrder, key) => {
-      return <FCRequest
-        id={pullOrder.pullId}
-        date={pullOrder.pullDate}
-        time={pullOrder.PullTime}
-        pullMedList={pullOrder.pullMedOrder}//לבדוק
+      return <FCPullOrder
+        id={pullOrder.orderId}
+        date={pullOrder.orderDate}
+        //pullMedList={pullOrder.orderDate}//לבדוק
+        nurseId={pullOrder.nurseId}
         nurseName={pullOrder.nurseName}
-        aNurse={pullOrder.nUser}
+        pharmacistId={pullOrder.pharmacistId}
+        pharmacistName={pullOrder.pharmacistName}
+        depId={pullOrder.depId}
         depName={pullOrder.depName}
-        dep={pullOrder.depId}
-        reqStatus={pullOrder.pullStatus}
+        reqStatus={pullOrder.orderStatus}
         pullOrdersList={props.PullOrdersList}
-        key={pullOrder.pullId}
+        key={pullOrder.id}
       />;
     })
   }

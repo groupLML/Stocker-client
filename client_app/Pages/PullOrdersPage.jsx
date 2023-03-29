@@ -8,6 +8,7 @@ import FCPullOrders from '../FunctionalComps/FCPullOrders';
 
 export default function PullOrdersPage() {
   const navigation = useNavigation();
+
   const { apiUrlPullOrder, depId } = useContext(GlobalContext);
 
   const [pullOrders, setPullOrders] = useState([]);
@@ -15,8 +16,7 @@ export default function PullOrdersPage() {
   //----------------------GET PullOrder details ---------------------
 
   useEffect(() => {//depId פונ' רצה כל פעם שמתעדכן 
-
-    fetch(apiUrlPullOrder + `${depId}`, { //של השרת URL
+    fetch(apiUrlPullOrder +'GetPullOrders/'+ `${depId}`, { //של השרת URL
       method: 'GET',//מה המתודה
       headers: new Headers({
         'Content-Type': 'application/json; charset=UTF-8',
@@ -29,6 +29,7 @@ export default function PullOrdersPage() {
       .then(
         (result) => {
           setPullOrders(result);
+          console.log(result);
         },
         (error) => {
           console.log("err get=", error);
@@ -91,3 +92,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+

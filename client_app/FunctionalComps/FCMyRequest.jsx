@@ -15,7 +15,7 @@ export default function FCMyRequest(props) {
   return (
     <Card style={styles.cardContainer} borderColor="#E1EAF9">
       <View style={styles.row}>
-        <FCDateTime time={props.time} date={props.date} />
+        <FCDateTime date={props.date} />
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {props.reqStatus === 'A' && (
             <>
