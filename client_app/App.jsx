@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { useState } from 'react';
-import { getFocusedRouteNameFromRoute, NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
@@ -23,7 +22,6 @@ import OrdersPage from './Pages/OrdersPage';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-
 function MainTabNavigator() {
 
   return (
@@ -35,31 +33,24 @@ function MainTabNavigator() {
             let iconName;
             if (route.name === 'בית') {
               iconName = focused ? 'home' : 'home-outline';
-            }
-            else if (route.name === 'הזמנות') {
+            } else if (route.name === 'הזמנות') {
               iconName = focused ? 'reader' : 'reader-outline';
-            }
-            else if (route.name === 'בקשות') {
+            } else if (route.name === 'בקשות') {
               iconName = focused ? 'mail' : 'mail-outline';
-            }
-            else if (route.name === 'הודעות') {
+            } else if (route.name === 'הודעות') {
               iconName = focused ? 'notifications' : 'notifications-outline';
             }
-
             // Return the icon component
             return <Ionicons name={iconName} size={size} color={color} />;
           },
-        })}
-        tabBarOptions={{
-          activeTintColor: '#00317D',
-          inactiveTintColor: '#00317D',
-          activeBackgroundColor: '#E1EAF9',
-          inactiveBackgroundColor: '#E1EAF9',
-
-          labelStyle: {
+          tabBarActiveTintColor: '#00317D',
+          tabBarInactiveTintColor: '#00317D',
+          tabBarActiveBackgroundColor: '#E1EAF9',
+          tabBarInactiveBackgroundColor: '#E1EAF9',
+          tabBarLabelStyle: {
             fontSize: 12,
           },
-        }}
+        })}
       >
         <Tab.Screen name="בית" component={HomePage} />
         <Tab.Screen name="הזמנות" component={OrdersPage} />
@@ -78,7 +69,7 @@ export default function App() {
           <Stack.Navigator initialRouteName="התחברות" screenOptions={{ headerShown: false }}>
             <Stack.Screen name="התחברות" component={LoginPage} />
             <Stack.Screen name="ראשי" component={MainTabNavigator} options={{ headerShown: false }} />
-            <Stack.Screen name="יצירת בקשה" component={AddRequestPage} />
+            <Stack.Screen name="יצירת בקשה" component={AddRequestPage}  />
             <Stack.Screen name="צפייה בפרטי בקשה" component={MyRequestPage} />
             <Stack.Screen name="צפייה בבקשות שלי" component={MyRequestsPage} />
             <Stack.Screen name="צפייה בבקשות אחרים" component={OthersRequestsPage} />
