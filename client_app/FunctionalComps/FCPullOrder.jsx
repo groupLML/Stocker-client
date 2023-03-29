@@ -15,7 +15,7 @@ export default function FCPullOrder(props) {
   };
 
   return (
-    <Card style={styles.cardContainer} borderColor="#00317D">
+    <Card style={styles.cardContainer} borderColor="#E1EAF9">
       <View style={styles.row}>
         <FCDateTime date={props.date} />
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -33,15 +33,13 @@ export default function FCPullOrder(props) {
             <>
               <Text style={{ color: '#FFC300' }}>בתהליך</Text>
             </>
-          ) }
+          )}
         </View>
       </View>
 
       <Text style={styles.cardBody}>שם יוצר ההזמנה: {props.nurseName}</Text>
       
-      <Text style={styles.cardBody}>שם המחלקה שיצרה: {props.depName}</Text>
-
-      {props.pharmacistName != 'user user' && <Text style={styles.cardBody}><Text style={{ fontWeight: "bold" }}>רוקח אחראי : </Text>{props.pharmacistName}</Text>}
+      {props.pharmacistName != 'user user' && <Text style={styles.cardBody}><Text>רוקח אחראי : </Text>{props.pharmacistName}</Text>}
 
       {props.isDetailedRequest && <FCMedsInOrder MedsOrderList = {props.pullMedList}/>}
 
@@ -53,50 +51,12 @@ export default function FCPullOrder(props) {
   )
 }
 
-/* const styles = StyleSheet.create({
-  cardContainer: {
-    width: "60%",
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 20,
-  },
-  cardTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 10,
-  }, 
-  cardBody: {
-    marginVertical: 10,
-    fontSize: 15,
-    color: "#003D9A",
-  },
-  readMore: {
-    color: "#007bff",
-    textAlign: "right",
-    marginTop: 10,
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-}); */
-
 const styles = StyleSheet.create({
   cardContainer: {
     width: "60%",
     padding: 10,
     marginBottom: 10,
     borderRadius: 20,
-  },
-  cardTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 10,
-    color: "#003D9A",
   },
   cardBody: {
     marginVertical: 10,

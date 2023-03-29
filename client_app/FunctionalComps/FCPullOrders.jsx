@@ -2,10 +2,12 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
 import FCPullOrder from './FCPullOrder';
+import FCDetailedPullOrder from './FCDetailedPullOrder';
 
 export default function FCPullOrders(props) {
   let pullOrdersStr;
   if (props.isDetailedPullOrder === true) {
+    return <FCDetailedPullOrder/>
     /* pullOrdersStr = props.PullOrdersList.map((pullOrder, key) => {
       return <FCRequest
         id={pullOrder.orderId}

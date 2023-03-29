@@ -5,7 +5,7 @@ import FCNotifications from '../FunctionalComps/FCNotifications'
 export default function NotificationPage() {
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>הודעות מבית מרחקת</Text>
+            <Text style={styles.title}>הודעות מבית מרקחת</Text>
             <ScrollView>
             <FCNotifications />
             </ScrollView>

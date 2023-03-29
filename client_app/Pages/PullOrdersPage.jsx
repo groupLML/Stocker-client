@@ -12,12 +12,26 @@ export default function PullOrdersPage() {
   const { apiUrlPullOrder, depId } = useContext(GlobalContext);
 
   const [pullOrders, setPullOrders] = useState([]);
+/*   const [medsPerPullOrder, setMedsPerPullOrder] = useState();
+  
+  useEffect(() => {
+    pullOrders.map((pullOrder) => {
+      console.log(pullOrder);
+      const acc = {}; //init the acc object
+      if (!acc[pullOrder.orderId]) { //check if the orderId of already exists in the accumulator object 
+        //if it doesn't exist, we create a new array for that orderId key in the acc object
+        acc[pullOrder.orderId] = [];
+      }
+      acc[pullOrder.orderId].push(pullOrder.medId);//push the current medication data into the meds for order array.
+      setMedsPerPullOrder(acc);//save the new object
+    }, {});
+    console.log(medsPerPullOrder);
+  }, [pullOrders]) */
 
-  //----------------------GET PullOrder details ---------------------
-
-  useEffect(() => {//depId פונ' רצה כל פעם שמתעדכן 
-    fetch(apiUrlPullOrder +'GetPullOrders/'+ `${depId}`, { //של השרת URL
-      method: 'GET',//מה המתודה
+  //----------------------GET PullOrder---------------------
+  useEffect(() => {
+    fetch(apiUrlPullOrder + 'GetPullOrders/' + `${depId}`, {
+      method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json; charset=UTF-8',
@@ -34,7 +48,7 @@ export default function PullOrdersPage() {
         (error) => {
           console.log("err get=", error);
         });
-  }, [depId])
+  }, [])
 
   //animation for add BTN to stick to screen while scroll
   const scrollY = useRef(new Animated.Value(0)).current;//set the current state of y axe value
