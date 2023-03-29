@@ -28,18 +28,6 @@ export default function RequestsPage(props) {
     }, [])
   );
 
-
-
-
-  // useEffect(() => {
-
-  //   setSelectedButton(0)
-  //   return () => {
-  //     second
-  //   }
-  // }, [])
-
-
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>

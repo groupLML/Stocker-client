@@ -1,5 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 
 import PushOrdersPage from './PushOrdersPage';
 import PullOrdersPage from './PullOrdersPage';
@@ -17,6 +18,16 @@ export default function OrdersPage() {
             setShowPull(false);
         }
     };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setSelectedButton(0)
+      setShowPull(true)
+      return () => {
+        // Clean up the effect when the screen goes out of focus
+      };
+    }, [])
+  );
 
     return (
         <View style={styles.container}>

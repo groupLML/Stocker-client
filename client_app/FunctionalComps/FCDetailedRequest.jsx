@@ -71,15 +71,15 @@ export default function FCDetailedRequest(props) {
         return res;
       })
       .then((result) => {
-        if (result) {//-----------------------
+        if (result) {
           setModalVisible(true);
-        } else if (result.status === 400) {
+        } else if (result.status >= 400 && result.status < 500) {
           result.text().then(text => {
             alert(text);
           });
         }
       }, (error) => {
-        console.log("err put=", error);
+        console.log("err post=", error);
       });
   };
 

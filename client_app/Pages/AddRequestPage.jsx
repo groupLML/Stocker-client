@@ -58,9 +58,10 @@ export default function AddRequestPage(props) {
         return res;
       })
       .then((result) => {
-        if (result.ok) {
+        console.log(result.status);
+        if (result) {
           setModalVisible(true);
-        } else if (result.status === 400) {
+        } else if (result.status >= 400 && result.status < 500) {
           result.text().then(text => {
             alert(text);
           });
