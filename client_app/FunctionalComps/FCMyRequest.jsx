@@ -33,7 +33,7 @@ export default function FCMyRequest(props) {
 
       <Text style={styles.cardTitle}>{props.medName}</Text>
       <Text style={styles.cardBody}><Text>כמות: </Text>{props.reqQty}</Text>
-      <Text style={styles.cardBody}><Text>יוצר ההזמנה: </Text>{props.cNurseName}</Text>
+      <Text style={styles.cardBody}><Text>שם יוצר ההזמנה: </Text>{props.cNurseName}</Text>
 
       {props.aDepName !== '' && <Text style={styles.cardBody}><Text>שם המחלקה שאישרה: </Text>{props.aDepName}</Text>}
 

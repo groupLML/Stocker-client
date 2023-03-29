@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import React from 'react';
 import { Card } from '@rneui/base';
 
 import { useNavigation } from '@react-navigation/native';
@@ -19,17 +19,17 @@ export default function FCPullOrder(props) {
       <View style={styles.row}>
         <FCDateTime date={props.date} />
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          {props.reqStatus === 'I' && (
+          {props.orderStatus === 'I' && (
             <>
               <Text style={{ color: '#5D9C59' }}>הונפק</Text>
             </>
           )}
-          {props.reqStatus === 'W' && (
+          {props.orderStatus === 'W' && (
             <>
               <Text style={{ color: '#DF2E38' }}>בהמתנה</Text>
             </>
           )}
-          {props.reqStatus === 'T' && (
+          {props.orderStatus === 'T' && (
             <>
               <Text style={{ color: '#FFC300' }}>מועבר</Text>
             </>
@@ -41,9 +41,9 @@ export default function FCPullOrder(props) {
       
       {props.pharmacistName != 'user user' && <Text style={styles.cardBody}><Text>רוקח אחראי : </Text>{props.pharmacistName}</Text>}
 
-      {props.isDetailedRequest && <FCMedsInOrder MedsOrderList = {props.pullMedList}/>}
+      {props.isDetailedPullOrder && <FCMedsInOrder MedsOrderList = {props.pullMedList}/>}
 
-      {!props.isDetailedRequest &&
+      {!props.isDetailedPullOrder &&
         <TouchableOpacity onPress={() => handleCardPress()}>
           <Text style={styles.readMore}>קרא עוד...</Text>
         </TouchableOpacity>}

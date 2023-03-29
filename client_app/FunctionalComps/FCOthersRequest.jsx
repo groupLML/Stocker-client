@@ -92,10 +92,11 @@ const styles = StyleSheet.create({
     },
     button: {
         flex: 1,
-        backgroundColor: '#00317D',
         padding: 10,
         borderRadius: 5,
         margin: 10,
+        marginRight: 80,
+        marginLeft: 80,
     },
     buttonText: {
         color: '#fff',

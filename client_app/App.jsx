@@ -14,6 +14,8 @@ import MyRequestPage from './Pages/MyRequestPage';
 import AddPullOrderPage from './Pages/AddPullOrderPage';
 import PullOrdersPage from './Pages/PullOrdersPage';
 import PullOrderPage from './Pages/PullOrderPage';
+import PushOrdersPage from './Pages/PushOrdersPage';
+import PushOrderPage from './Pages/PushOrderPage';
 import OthersRequestsPage from './Pages/OthersRequestsPage';
 import NotificationPage from './Pages/NotificationPage';
 import RequestsPage from './Pages/RequestsPage';
@@ -77,6 +79,8 @@ export default function App() {
             <Stack.Screen name="יצירת הזמנת משיכה" component={AddPullOrderPage} />
             <Stack.Screen name="צפייה בהזמנת משיכה" component={PullOrdersPage} />
             <Stack.Screen name="צפייה בפרטי הזמנת משיכה" component={PullOrderPage} />
+            <Stack.Screen name="צפייה בהזמנת דחיפה" component={PushOrdersPage} />
+            <Stack.Screen name="צפייה בפרטי הזמנת דחיפה" component={PushOrderPage} />
             <Stack.Screen name="צפייה הזמנות" component={OrdersPage} />
           </Stack.Navigator>
         </NavigationContainer>

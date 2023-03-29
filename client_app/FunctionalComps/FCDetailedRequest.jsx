@@ -119,6 +119,7 @@ export default function FCDetailedRequest(props) {
     <View style={styles.container}>
       {/* ----------------------------------שורת סטטוס ותאריך-------------------------- */}
       <View style={{ ...styles.row, marginBottom: 40 }}>
+        <View ><FCDateTime date={props.date} /></View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {props.reqStatus === 'A' && (
             <>
@@ -131,9 +132,6 @@ export default function FCDetailedRequest(props) {
             </>
           )}
           {props.reqStatus === 'D' && <Text>נדחה</Text>}
-        </View>
-        <View >
-          <FCDateTime time={props.time} date={props.date} />
         </View>
       </View>
 
@@ -156,7 +154,7 @@ export default function FCDetailedRequest(props) {
       )}
       {props.reqStatus === 'W' && (
         <>
-          <Text style={{ ...styles.body, fontSize: 17 }}><Text style={{ fontSize: 17 }} >יוצר ההזמנה: </Text>{props.cNurseName}</Text>
+          <Text style={{ ...styles.body, fontSize: 17 }}><Text style={{ fontSize: 17 }} >שם יוצר ההזמנה: </Text>{props.cNurseName}</Text>
           <View style={styles.body}><FCMedInput medName={props.medName} sendMedSelect={handleSelectMed} clearForm={clearForm} handleSetClearForm={handleSetClearForm} /></View>
           <View style={styles.body}><FCQuantityInput reqQty={props.reqQty} sendQty={GetQtyFromInput} /></View>
           <View style={styles.body}><FCDepTypeList /></View>

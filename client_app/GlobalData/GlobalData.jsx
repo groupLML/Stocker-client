@@ -9,6 +9,7 @@ export default function GlobalData(props) {
     const apiUrlMedRequest = "https://proj.ruppin.ac.il/cgroup36/prod/api/MedRequest/";
     const apiUrlMeds = "https://proj.ruppin.ac.il/cgroup36/prod/GetActiveMeds/";
     const apiUrlPullOrder = "https://proj.ruppin.ac.il/cgroup36/prod/api/PullOrder/";
+    const apiUrlPushOrder = "https://proj.ruppin.ac.il/cgroup36/prod/api/PushOrder/";
     
     const [depId, setDepId] = useState('');
     const [meds, setMeds] = useState([]);
@@ -35,7 +36,7 @@ export default function GlobalData(props) {
     return (
         <GlobalContext.Provider
             value={{
-                apiUrlUser, apiUrlMedRequest, apiUrlMeds, apiUrlPullOrder,
+                apiUrlUser, apiUrlMedRequest, apiUrlMeds, apiUrlPullOrder, apiUrlPushOrder,
                 depId, setDepId, meds, setMeds,
                 DepTypes, setDepTypes, myMedReqs, setMyMedReqs, othersMedReqs, setOthersMedReqs,
                 getUserData,

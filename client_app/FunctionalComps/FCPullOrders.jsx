@@ -7,11 +7,10 @@ import FCDetailedPullOrder from './FCDetailedPullOrder';
 export default function FCPullOrders(props) {
   let pullOrdersStr;
   if (props.isDetailedPullOrder === true) {
-    return <FCDetailedPullOrder/>
-    /* pullOrdersStr = props.PullOrdersList.map((pullOrder, key) => {
-      return <FCRequest
+    pullOrdersStr = props.PullOrdersList.map((pullOrder, key) => {
+      return <FCDetailedPullOrder
         id={pullOrder.orderId}
-        date={pullOrder.pullDate}
+        date={pullOrder.orderDate}
         //pullMedList={pullOrder.orderDate}//לבדוק
         nurseId={pullOrder.nurseId}
         nurseName={pullOrder.nurseName}
@@ -19,11 +18,11 @@ export default function FCPullOrders(props) {
         pharmacistName={pullOrder.pharmacistName}
         depId={pullOrder.depId}
         depName={pullOrder.depName}
-        reqStatus={pullOrder.orderStatus}
+        orderStatus={pullOrder.orderStatus}
         pullOrdersList={props.PullOrdersList}
-        key={pullOrder.orderId}
+        key={pullOrder.id}
       />;
-    }) */
+    })
   }
   else {
     pullOrdersStr = props.PullOrdersList.map((pullOrder, key) => {
@@ -37,7 +36,7 @@ export default function FCPullOrders(props) {
         pharmacistName={pullOrder.pharmacistName}
         depId={pullOrder.depId}
         depName={pullOrder.depName}
-        reqStatus={pullOrder.orderStatus}
+        orderStatus={pullOrder.orderStatus}
         pullOrdersList={props.PullOrdersList}
         key={pullOrder.id}
       />;

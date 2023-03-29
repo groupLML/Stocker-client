@@ -3,17 +3,17 @@ import React from 'react';
 
 import FCPullOrders from '../FunctionalComps/FCPullOrders';
 
-export default function PullOrderPage(props) {
+export default function PushOrderPage(props) {
 
-  const { pullOrderId, pullOrdersList } = props.route.params;
+  const { pushOrderId, pushOrdersList } = props.route.params;
 
-  let pullOrder = pullOrdersList.filter((item) => item.orderId === pullOrderId);//get the request item to read 
+  let pushOrder = pushOrdersList.filter((item) => item.orderId === pushOrderId);//get the request item to read 
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>הזמנת משיכה</Text>
+      <Text style={styles.title}>הזמנת דחיפה</Text>
       <ScrollView>
-        <FCPullOrders PullOrdersList={pullOrder} isDetailedPullOrder={true} />
+        <FCPullOrders PushOrdersList={pushOrder} isDetailedPushOrder={true} />
       </ScrollView>
     </View>
   );
