@@ -4,14 +4,10 @@ import React, { useState, useEffect } from 'react';
 import MyRequestsPage from './MyRequestsPage';
 import OthersRequestsPage from './OthersRequestsPage';
 
-export default function RequestsPage() {
+export default function RequestsPage(props) {
 
   const [showMy, setShowMy] = useState(true);
   const [selectedButton, setSelectedButton] = useState(0);
-
-  useEffect(() => {
-    setSelectedButton(0); // set the default selected button to 0 when the component mounts
-  }, []);
 
   const handleButtonPress = (buttonNumber, buttonType) => {
     setSelectedButton(buttonNumber);

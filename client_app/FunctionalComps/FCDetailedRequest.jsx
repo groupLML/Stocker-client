@@ -1,4 +1,4 @@
-import { Modal ,View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
@@ -26,7 +26,7 @@ export default function FCDetailedRequest(props) {
   const handleModalClose = () => {
     setModalVisible(false);
     setClearForm(true);
-    navigation.navigate('צפייה בבקשות שלי');
+    navigation.navigate('צפייה בבקשות');
   };
 
   const GetQtyFromInput = (Qty) => {
@@ -67,19 +67,20 @@ export default function FCDetailedRequest(props) {
         'Accept': 'application/json; charset=UTF-8',
       })
     })
-      .then(response => {
-        return response;//the server returns an iActionResult therefore there is no need in parsing the response to Json
+      .then(res => {
+        return res;
       })
-      .then(
-        (result) => {
-          if (result) {
-            setModalVisible(true);
-          }
-          else { alert("error") };
-        },
-        (error) => {
-          console.log("err put=", error);
-        });
+      .then((result) => {
+        if (result) {//-----------------------
+          setModalVisible(true);
+        } else if (result.status === 400) {
+          result.text().then(text => {
+            alert(text);
+          });
+        }
+      }, (error) => {
+        console.log("err put=", error);
+      });
   };
 
   const handleCancelRequest = () => { };
@@ -87,10 +88,35 @@ export default function FCDetailedRequest(props) {
   const handleApproveRequest = () => {
   };
 
-  const handleDeleteRequest = (item) => { };
+  const handleDeleteRequest = (idToDelete) => {
+    //-------------------------------Delete medReqs------------------------------------
+    fetch(apiUrlMedRequest + `${idToDelete}`, {
+      method: 'DELETE',
+      headers: new Headers({
+        'Content-type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json; charset=UTF-8',
+      })
+    })
+      .then(res => {
+        return res.json()
+      })
+      .then(
+        (result) => {
+          if (result) {
+            alert("הבקשה נמחקה");
+            navigation.navigate('צפייה בבקשות');
+          }
+          else {
+            alert("יש בעיה בשרת")
+          };
+        },
+        (error) => {
+          console.log("err delete=", error);
+        });
+  };
 
   return (
-    <View style={styles.Container}>
+    <View style={styles.container}>
       {/* ----------------------------------שורת סטטוס ותאריך-------------------------- */}
       <View style={{ ...styles.row, marginBottom: 40 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -110,13 +136,14 @@ export default function FCDetailedRequest(props) {
           <FCDateTime time={props.time} date={props.date} />
         </View>
       </View>
+
       {/* --------------------------------------תוכן וכפתורים------------------------------ */}
       {props.reqStatus === 'A' && (
         <>
-          <Text style={styles.Title}>{props.medName}</Text>
-          <Text style={styles.Body}><Text>כמות: </Text>{props.reqQty}</Text>
-          <Text style={styles.Body}><Text>שם יוצר ההזמנה: </Text>{props.cNurseName}</Text>
-          <Text style={styles.Body}><Text>שם המחלקה שאישרה: </Text>{props.aDepName}</Text>
+          <Text style={styles.title}>{props.medName}</Text>
+          <Text style={styles.body}><Text>כמות: </Text>{props.reqQty}</Text>
+          <Text style={styles.body}><Text>שם יוצר ההזמנה: </Text>{props.cNurseName}</Text>
+          <Text style={styles.body}><Text>שם המחלקה שאישרה: </Text>{props.aDepName}</Text>
           <View style={styles.row}>
             <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59' }]} onPress={() => handleApproveRequest()}>
               <Text style={styles.buttonText}>אישור העברה</Text>
@@ -129,15 +156,15 @@ export default function FCDetailedRequest(props) {
       )}
       {props.reqStatus === 'W' && (
         <>
-          <Text style={{ ...styles.Body, fontSize: 17 }}><Text style={{ fontSize: 17 }} >יוצר ההזמנה: </Text>{props.cNurseName}</Text>
-          <View style={styles.Body}><FCMedInput medName={props.medName} sendMedSelect={handleSelectMed} clearForm={clearForm} handleSetClearForm={handleSetClearForm} /></View>
-          <View style={styles.Body}><FCQuantityInput reqQty={props.reqQty} sendQty={GetQtyFromInput} /></View>
-          <View style={styles.Body}><FCDepTypeList /></View>
+          <Text style={{ ...styles.body, fontSize: 17 }}><Text style={{ fontSize: 17 }} >יוצר ההזמנה: </Text>{props.cNurseName}</Text>
+          <View style={styles.body}><FCMedInput medName={props.medName} sendMedSelect={handleSelectMed} clearForm={clearForm} handleSetClearForm={handleSetClearForm} /></View>
+          <View style={styles.body}><FCQuantityInput reqQty={props.reqQty} sendQty={GetQtyFromInput} /></View>
+          <View style={styles.body}><FCDepTypeList /></View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59' }]} onPress={() => handleUpdateRequest()}>
               <Text style={styles.buttonText}>עדכון</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933' }]} onPress={() => handleDeleteRequest()}>
+            <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933' }]} onPress={() => handleDeleteRequest(props.id)}>
               <Text style={styles.buttonText} >מחיקת העברה</Text>
             </TouchableOpacity>
           </View>
@@ -153,7 +180,7 @@ export default function FCDetailedRequest(props) {
           }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>בקשה התווספה בהצלחה</Text>
+              <Text style={styles.modalText}>בקשה השתנה בהצלחה</Text>
               <TouchableOpacity
                 style={styles.button}
                 onPress={handleModalClose}>
@@ -168,18 +195,18 @@ export default function FCDetailedRequest(props) {
 };
 
 const styles = StyleSheet.create({
-  Container: {
+  container: {
     padding: 10,
     marginBottom: 10,
   },
-  Title: {
+  title: {
     fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 10,
     color: "#003D9A",
   },
-  Body: {
+  body: {
     marginVertical: 10,
     color: "#003D9A",
   },

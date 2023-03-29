@@ -30,7 +30,7 @@ export default function AddRequestPage(props) {
   const handleModalClose = () => {
     setModalVisible(false);
     setClearForm(true);
-    props.navigation.navigate('צפייה בבקשות שלי');
+    props.navigation.navigate('צפייה בבקשות');
   };
 
   const handleAddRequest = async () => {
@@ -57,18 +57,17 @@ export default function AddRequestPage(props) {
       .then(res => {
         return res;
       })
-      .then(
-        (result) => {
-          if (result) {
-            setModalVisible(true);
-          }
-          else {
-            alert("קיימת בקשה ממתינה עבור תרופה זו")
-          }
-        },
-        (error) => {
-          console.log("err post=", error);
-        });
+      .then((result) => {
+        if (result.ok) {
+          setModalVisible(true);
+        } else if (result.status === 400) {
+          result.text().then(text => {
+            alert(text);
+          });
+        }
+      }, (error) => {
+        console.log("err post=", error);
+      });
   };
 
   return (
@@ -135,7 +134,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     textAlign: 'center',
-    fontSize: 18,
+    fontSize: 16,
   },
   centeredView: {
     flex: 1,
