@@ -8,45 +8,35 @@ import { GlobalContext } from '../GlobalData/GlobalData';
 export default function FCOthersRequest(props) {
 
     const isStockQtyLower = props.stcQty < props.reqQty;
-    const {apiUrlMedRequest} = useContext(GlobalContext);
+    const { apiUrlMedRequest, getUserData } = useContext(GlobalContext);
 
-    const handleApproveRequest = () => {//handle approve request
-        const MedRequest = { //יצירת אובייקט לפי השדות במחלקה
-            "reqId": props.id,
-            "cUser": props.cNurseId,//************************************************************************* */
-            "aUser": props.aNurseId,//************************************************************************* */
-            "cDep": depId, //************************************************************************* */
-            "aDep": props.aDepId,//************************************************************************* */
-            "medId": selectedMedId ? selectedMedId : props.medId,
-            "reqQty": Qty,
-            "reqStatus": props.reqStatus,
-            "reqDate": props.date
-          };
+    const handleApproveRequest = async () => {//handle approve request
+        const user = await getUserData();
+        //'/api/MedRequest/ApprovedReq/4/aUser/3/aDep/3'
 
+        ///api/MedRequest/ApprovedReq/4/aUser/3/aDep/3
         //-------------------------------PUT ApproveRequest------------------------------------
-        fetch(apiUrlMedRequest + "ApprovedReq/" + `${props.id}`, {
+        fetch(apiUrlMedRequest + "ApprovedReq/" + `${props.id}` + "/aUser/" + `${user.userId}` + "/aDep/" + `${user.depId}`, {
             method: 'PUT',
-            body: JSON.stringify(MedRequest),
+            body: JSON.stringify(),
             headers: new Headers({
                 'Content-type': 'application/json; charset=UTF-8',
                 'Accept': 'application/json; charset=UTF-8',
             })
         })
-            .then(response => {
-                return response;//the server returns an iActionResult therefore there is no need in parsing the response to Json
+            .then(result => {
+                return result.json();//the server returns an iActionResult therefore there is no need in parsing the response to Json
             })
             .then(
                 (result) => {
                     if (result) {
                         alert("Success");
-                        navigation.navigate('צפייה בבקשות שלי');
                     }
                     else { alert("error") };
                 },
                 (error) => {
                     console.log("err put=", error);
                 });
-
     };
 
     return (

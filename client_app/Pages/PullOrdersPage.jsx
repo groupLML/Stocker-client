@@ -10,9 +10,8 @@ export default function PullOrdersPage() {
   const navigation = useNavigation();
 
   const { apiUrlPullOrder, depId } = useContext(GlobalContext);
-
   const [pullOrders, setPullOrders] = useState([]);
-/*   const [medsPerPullOrder, setMedsPerPullOrder] = useState();
+  /*   const [medsPerPullOrder, setMedsPerPullOrder] = useState();
   
   useEffect(() => {
     pullOrders.map((pullOrder) => {

@@ -31,7 +31,7 @@ export default function FCPullOrder(props) {
           )}
           {props.reqStatus === 'T' && (
             <>
-              <Text style={{ color: '#FFC300' }}>בתהליך</Text>
+              <Text style={{ color: '#FFC300' }}>מועבר</Text>
             </>
           )}
         </View>
