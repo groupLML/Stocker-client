@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState, useEffect } from 'react';
-
+import { useFocusEffect } from '@react-navigation/native';
 import MyRequestsPage from './MyRequestsPage';
 import OthersRequestsPage from './OthersRequestsPage';
 
@@ -17,6 +17,28 @@ export default function RequestsPage(props) {
       setShowMy(false);
     }
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setSelectedButton(0)
+      setShowMy(true)
+      return () => {
+        // Clean up the effect when the screen goes out of focus
+      };
+    }, [])
+  );
+
+
+
+
+  // useEffect(() => {
+
+  //   setSelectedButton(0)
+  //   return () => {
+  //     second
+  //   }
+  // }, [])
+
 
   return (
     <View style={styles.container}>
@@ -56,8 +78,8 @@ const styles = StyleSheet.create({
     borderBottomColor: 'transparent', // Set the border color to transparent
   },
   selectedButton: {
-    borderBottomWidth:1,
-    borderBottomColor:'#00317D'
+    borderBottomWidth: 1,
+    borderBottomColor: '#00317D'
   },
   buttonText: {
     color: '#00317D',
