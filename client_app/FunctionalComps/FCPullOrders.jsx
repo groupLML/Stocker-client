@@ -6,21 +6,14 @@ import FCDetailedPullOrder from './FCDetailedPullOrder';
 
 export default function FCPullOrders(props) {
   let pullOrdersStr;
-  if (props.isDetailedPullOrder === true) {
-    pullOrdersStr = props.PullOrdersList.map((pullOrder, key) => {
+/*   if (props.isDetailedPullOrder === true) {
+    pullOrdersStr = props.PullOrdersList.map((med, key) => {
       return <FCDetailedPullOrder
-        id={pullOrder.orderId}
-        date={pullOrder.orderDate}
-        //pullMedList={pullOrder.orderDate}//לבדוק
-        nurseId={pullOrder.nurseId}
-        nurseName={pullOrder.nurseName}
-        pharmacistId={pullOrder.pharmacistId}
-        pharmacistName={pullOrder.pharmacistName}
-        depId={pullOrder.depId}
-        depName={pullOrder.depName}
-        orderStatus={pullOrder.orderStatus}
-        pullOrdersList={props.PullOrdersList}
-        key={pullOrder.id}
+        id={med.medId}
+        medName={med.medName}
+        Qty={med.poQty}
+        supQty={med.supQty}
+        key={med.medId}// the mapping key is a unique value
       />;
     })
   }
@@ -29,19 +22,28 @@ export default function FCPullOrders(props) {
       return <FCPullOrder
         id={pullOrder.orderId}
         date={pullOrder.orderDate}
-        //pullMedList={pullOrder.orderDate}//לבדוק
         nurseId={pullOrder.nurseId}
         nurseName={pullOrder.nurseName}
         pharmacistId={pullOrder.pharmacistId}
         pharmacistName={pullOrder.pharmacistName}
-        depId={pullOrder.depId}
-        depName={pullOrder.depName}
         orderStatus={pullOrder.orderStatus}
-        pullOrdersList={props.PullOrdersList}
-        key={pullOrder.id}
+        key={key}// the mapping key is a unique value
       />;
     })
-  }
+  } */
+
+  pullOrdersStr = props.PullOrdersList.map((pullOrder, key) => {
+    return <FCPullOrder
+      id={pullOrder.orderId}
+      date={pullOrder.orderDate}
+      nurseId={pullOrder.nurseId}
+      nurseName={pullOrder.nurseName}
+      pharmacistId={pullOrder.pharmacistId}
+      pharmacistName={pullOrder.pharmacistName}
+      orderStatus={pullOrder.orderStatus}
+      key={key}// the mapping key is a unique value
+    />;
+  })
 
   return (
     <View style={styles.container}>

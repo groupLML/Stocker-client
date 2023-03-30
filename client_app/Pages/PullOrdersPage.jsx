@@ -10,39 +10,24 @@ export default function PullOrdersPage() {
   const navigation = useNavigation();
 
   const { apiUrlPullOrder, depId } = useContext(GlobalContext);
+
   const [pullOrders, setPullOrders] = useState([]);
-  /*   const [medsPerPullOrder, setMedsPerPullOrder] = useState();
-  
-  useEffect(() => {
-    pullOrders.map((pullOrder) => {
-      console.log(pullOrder);
-      const acc = {}; //init the acc object
-      if (!acc[pullOrder.orderId]) { //check if the orderId of already exists in the accumulator object 
-        //if it doesn't exist, we create a new array for that orderId key in the acc object
-        acc[pullOrder.orderId] = [];
-      }
-      acc[pullOrder.orderId].push(pullOrder.medId);//push the current medication data into the meds for order array.
-      setMedsPerPullOrder(acc);//save the new object
-    }, {});
-    console.log(medsPerPullOrder);
-  }, [pullOrders]) */
 
   //----------------------GET PullOrder---------------------
   useEffect(() => {
-    fetch(apiUrlPullOrder + 'GetPullOrders/' + `${depId}`, {
+    fetch(apiUrlPullOrder + 'GetPullOrders/depId/' + `${depId}`, {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json; charset=UTF-8',
       })
     })
-      .then(res => {
-        return res.json()
+      .then(result => {
+        return result.json();
       })
       .then(
         (result) => {
           setPullOrders(result);
-          console.log(result);
         },
         (error) => {
           console.log("err get=", error);
@@ -56,7 +41,7 @@ export default function PullOrdersPage() {
     <View style={styles.container}>
       <View style={styles.scrollViewContainer}>
         <ScrollView scrollEventThrottle={16}>
-          <FCPullOrders PullOrdersList={pullOrders} isDetailedPullOrder={false} />
+          <FCPullOrders PullOrdersList={pullOrders}/>
         </ScrollView>
         <Animated.View
           style={[styles.AddBTN, {

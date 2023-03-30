@@ -6,7 +6,6 @@ import { useNavigation } from '@react-navigation/native';
 import FCDateTime from './FCDateTime';
 import FCQuantityInput from './FCQuantityInput';
 import FCMedInput from './FCMedInput';
-import FCMedsInOrder from './FCMedsInOrder';
 
 export default function FCDetailedPullOrder(props) {
 
@@ -35,8 +34,11 @@ export default function FCDetailedPullOrder(props) {
   
   return (
     <View style={styles.container}>
+      <Text>{props.id}</Text>
+      <Text>{props.medName}</Text>
+
       {/* ----------------------------------שורת סטטוס ותאריך-------------------------- */}
-      <View style={{ ...styles.row, marginBottom: 40 }}>
+{/*       <View style={{ ...styles.row, marginBottom: 40 }}>
         <View ><FCDateTime date={props.date} /></View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {props.orderStatus === 'I' && (
@@ -55,10 +57,10 @@ export default function FCDetailedPullOrder(props) {
             </>
           )}
         </View>
-      </View>
+      </View> */}
 
       {/* --------------------------------------תוכן וכפתורים------------------------------ */}
-      {props.orderStatus === 'I' && (
+      {/* {props.orderStatus === 'I' && (
         <>
           <Text style={styles.body}>שם יוצר ההזמנה: {props.nurseName}</Text>
           <Text style={styles.body}>רוקח אחראי: {props.pharmacistName}</Text>
@@ -98,7 +100,7 @@ export default function FCDetailedPullOrder(props) {
             </View>
           </View>
         </Modal>
-      </View>
+      </View> */}
     </View>
   )
 };

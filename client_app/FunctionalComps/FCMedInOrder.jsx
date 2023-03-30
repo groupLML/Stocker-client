@@ -7,7 +7,7 @@ import { GlobalContext } from '../GlobalData/GlobalData';
 export default function FCMedOrder(props) {
 
   const { meds } = useContext(GlobalContext);
-  let selectedMed = meds.find((med) => med.medId === props.medId);//get the request item to read 
+  let selectedMed = meds.find((med) => med.medId === props.medId);//get the order item to read 
 
   return (
     <View>
