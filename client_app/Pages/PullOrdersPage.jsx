@@ -13,7 +13,7 @@ export default function PullOrdersPage() {
 
   const [pullOrders, setPullOrders] = useState([]);
 
-  //----------------------GET PullOrder---------------------
+  //----------------------GET PullOrders---------------------
   useEffect(() => {
     fetch(apiUrlPullOrder + 'GetPullOrders/depId/' + `${depId}`, {
       method: 'GET',

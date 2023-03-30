@@ -6,13 +6,15 @@ import FCDetailedPullOrders from '../FunctionalComps/FCDetailedPullOrders';
 
 export default function PullOrderPage(props) {
 
-  const { pullOrderId } = props.route.params;
-
+  const { pullOrderId, PullOrdersList } = props.route.params;
+  const [pullOrder, setpullOrder] = useState();
   const [medsInOrderList, setMedsInOrderList] = useState([]);
   const { apiUrlPullOrder, depId } = useContext(GlobalContext);
 
   //----------------------GET Meds in pull Order---------------------
   useEffect(() => {
+    setpullOrder(PullOrdersList.find((order) => order.orderId === pullOrderId));
+
     fetch(apiUrlPullOrder + 'GetOrderDetails/depId/' + `${depId}` + '/orderId/' + `${pullOrderId}`, {
       method: 'GET',
       headers: new Headers({
@@ -31,16 +33,20 @@ export default function PullOrderPage(props) {
         (error) => {
           console.log("err get=", error);
         });
-  }, [])//component did mount
+  }, []);
 
 
-  //let pullOrder = pullOrdersList.filter((item) => item.orderId === pullOrderId);//get the request item to read 
+  useEffect(() => {
+    console.log("pullOrder=", pullOrder);
+    console.log(pullOrder.nurseName);
+  }, [pullOrder]);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>הזמנת משיכה</Text>
+      <Text style={styles.title}>הזמנה מספר<Text>{pullOrderId}</Text></Text>
+      <Text style={styles.title}>תאריך<Text></Text></Text>
       <ScrollView>
-        <FCDetailedPullOrders medsInOrderList={medsInOrderList}/>
+        <FCDetailedPullOrders medsInOrderList={medsInOrderList} />
       </ScrollView>
     </View>
   );

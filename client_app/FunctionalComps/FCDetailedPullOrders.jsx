@@ -8,12 +8,12 @@ export default function FCDetailedPullOrders(props) {
         return <FCDetailedPullOrder
             id={med.medId}
             medName={med.medName}
-            Qty={med.poQty}
+            poQty={med.poQty}
             supQty={med.supQty}
             key={med.medId}// the mapping key is a unique value
         />;
     })
-    
+
     return (
         <View>
             {medsInOrderStr}
