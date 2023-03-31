@@ -35,29 +35,12 @@ export default function PushOrdersPage() {
         });
   }, [])
 
-  //animation for add BTN to stick to screen while scroll
-  const scrollY = useRef(new Animated.Value(0)).current;//set the current state of y axe value
-
   return (
     <View style={styles.container}>
       <View style={styles.scrollViewContainer}>
         <ScrollView scrollEventThrottle={16}>
           <FCPushOrders PushOrdersList={pushOrders} isDetailedPushOrder={false} />
         </ScrollView>
-        <Animated.View
-          style={[styles.AddBTN, {
-            transform: [{
-              translateY: scrollY.interpolate({
-                inputRange: [0, 100],
-                outputRange: [0, 100],
-                extrapolate: 'clamp'
-              })
-            }]
-          }]}>
-          <TouchableOpacity onPress={() => navigation.navigate('יצירת הזמנת דחיפה')}>
-            <Icon name='add' color='white' />
-          </TouchableOpacity>
-        </Animated.View>
       </View>
     </View>
   )

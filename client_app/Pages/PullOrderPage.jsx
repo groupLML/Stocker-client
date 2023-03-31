@@ -3,18 +3,17 @@ import React, { useState, useEffect, useContext } from 'react';
 import { GlobalContext } from '../GlobalData/GlobalData';
 
 import FCDetailedPullOrders from '../FunctionalComps/FCDetailedPullOrders';
+import FCDateTime from '../FunctionalComps/FCDateTime';
 
 export default function PullOrderPage(props) {
 
   const { pullOrderId, PullOrdersList } = props.route.params;
-  const [pullOrder, setpullOrder] = useState();
+  const [pullOrder, setPullOrder] = useState();
   const [medsInOrderList, setMedsInOrderList] = useState([]);
   const { apiUrlPullOrder, depId } = useContext(GlobalContext);
 
   //----------------------GET Meds in pull Order---------------------
   useEffect(() => {
-    setpullOrder(PullOrdersList.find((order) => order.orderId === pullOrderId));
-
     fetch(apiUrlPullOrder + 'GetOrderDetails/depId/' + `${depId}` + '/orderId/' + `${pullOrderId}`, {
       method: 'GET',
       headers: new Headers({
@@ -28,7 +27,10 @@ export default function PullOrderPage(props) {
       .then(
         (result) => {
           setMedsInOrderList(result);
+          const order = PullOrdersList.find((order) => order.orderId === pullOrderId);
+          setPullOrder(order);
           console.log("MedsInOrderList=", result);
+          console.log("pullOrder=", order);
         },
         (error) => {
           console.log("err get=", error);
@@ -36,15 +38,13 @@ export default function PullOrderPage(props) {
   }, []);
 
 
-  useEffect(() => {
-    console.log("pullOrder=", pullOrder);
-    console.log(pullOrder.nurseName);
-  }, [pullOrder]);
-
   return (
     <View style={styles.container}>
+      {pullOrder && <Text>
+        <FCDateTime date={pullOrder.orderDate}></FCDateTime>
+        </Text>
+      }
       <Text style={styles.title}>הזמנה מספר<Text>{pullOrderId}</Text></Text>
-      <Text style={styles.title}>תאריך<Text></Text></Text>
       <ScrollView>
         <FCDetailedPullOrders medsInOrderList={medsInOrderList} />
       </ScrollView>
