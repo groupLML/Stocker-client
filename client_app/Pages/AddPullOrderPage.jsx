@@ -1,7 +1,6 @@
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
-import React, { useState, useEffect } from 'react';
-import { Icon } from 'react-native-elements';
-import { Card } from 'react-native-elements';
+import React, { useState, useContext } from 'react';
+import { Icon, Card } from 'react-native-elements';
 
 import FCMedsInOrder from '../FunctionalComps/FCMedsInOrder';
 import FCMedInput from '../FunctionalComps/FCMedInput';
@@ -9,6 +8,8 @@ import FCQuantityInput from '../FunctionalComps/FCQuantityInput';
 
 
 export default function AddPullOrderPage() {
+
+    const { apiUrlPullOrder, getUserData } = useContext(GlobalContext);
 
     const [selectedMedId, setSelectedMedId] = useState(null);
     const [Qty, setQty] = useState(1);
@@ -40,7 +41,6 @@ export default function AddPullOrderPage() {
                     Qty: Qty,
                 }
                 setMedsOrderList([...medsOrderList, medInOrder]);
-                setSelectedMedId(null);
             }
             else {
                 alert('תרופה זו כבר קיימת בהזמנה')
@@ -50,6 +50,42 @@ export default function AddPullOrderPage() {
         else {
             alert('יש לבחור תרופה להוספה')
         }
+    };
+
+    const handleAddPullOrder = async () => {
+
+        const user = await getUserData();
+
+        const pullOrder = {
+            depId: user.depId,
+            userId: user.userId,
+            medsOrderList: medsOrderList,
+        };
+
+        //-------------------------------Post pullOrder----------------------------------
+        fetch(apiUrlPullOrder, {
+            method: 'POST',
+            body: JSON.stringify(pullOrder),
+            headers: new Headers({
+                'Content-type': 'application/json; charset=UTF-8',
+                'Accept': 'application/json; charset=UTF-8',
+            })
+        })
+            .then(res => {
+                return res;
+            })
+            .then((result) => {
+                console.log(result.status);
+                if (result) {
+                    setModalVisible(true);
+                } else if (result.status >= 400 && result.status < 500) {
+                    result.text().then(text => {
+                        alert(text);
+                    });
+                }
+            }, (error) => {
+                console.log("err post=", error);
+            });
     };
 
     return (
@@ -71,7 +107,7 @@ export default function AddPullOrderPage() {
                         </ScrollView>
                     </View>
                     <View>
-                        <TouchableOpacity style={styles.sendBTN}>
+                        <TouchableOpacity style={styles.sendBTN} onPress={() => handleAddPullOrder()}>
                             <Text style={styles.BTNtext}>שליחה</Text>
                         </TouchableOpacity>
                     </View>
