@@ -10,7 +10,8 @@ export default function FCDetailedPullOrders(props) {
             medName={med.medName}
             poQty={med.poQty}
             supQty={med.supQty}
-            key={med.medId}// the mapping key is a unique value
+            isWaitingOrder={props.isWaitingOrder}
+            key={med.medId}
         />;
     })
 
