@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import React, { useState, useContext } from 'react';
 import { Icon, Card } from 'react-native-elements';
+import { GlobalContext } from '../GlobalData/GlobalData';
 
 import FCMedsInOrder from '../FunctionalComps/FCMedsInOrder';
 import FCMedInput from '../FunctionalComps/FCMedInput';
@@ -35,12 +36,15 @@ export default function AddPullOrderPage() {
     const AddMed2Order = () => {
         if (selectedMedId != null) {
             let existingMed = medsOrderList.find(med => med.medId === selectedMedId);
-            if (!existingMed) {// If the selected medication wasn't added to order already, add med to order list     
+            if (!existingMed) { //If the selected medication wasn't added to order already, add med to order list     
                 const medInOrder = {
                     medId: selectedMedId,
-                    Qty: Qty,
+                    poQty: Qty,
+                    supQty: 0,
+                    mazNum: ""
                 }
                 setMedsOrderList([...medsOrderList, medInOrder]);
+                setQty(1); // לאאאאאאאאאאאאא למחוקקקקקקקקקקקקקקקקקקקקקקקקקקק
             }
             else {
                 alert('תרופה זו כבר קיימת בהזמנה')
@@ -55,11 +59,18 @@ export default function AddPullOrderPage() {
     const handleAddPullOrder = async () => {
 
         const user = await getUserData();
+        const currentDate = new Date();
 
         const pullOrder = {
+            orderId: 0,
             depId: user.depId,
-            userId: user.userId,
-            medsOrderList: medsOrderList,
+            pUser: 0,
+            reportNum: "",
+            status: "W",
+            orderDate: currentDate,
+            lastUpdate: currentDate,
+            medList: medsOrderList,
+            nUser: user.userId
         };
 
         //-------------------------------Post pullOrder----------------------------------
@@ -72,17 +83,12 @@ export default function AddPullOrderPage() {
             })
         })
             .then(res => {
-                return res;
+                return res.json();
             })
             .then((result) => {
-                console.log(result.status);
-                if (result) {
-                    setModalVisible(true);
-                } else if (result.status >= 400 && result.status < 500) {
-                    result.text().then(text => {
-                        alert(text);
-                    });
-                }
+                alert("הזמנה התווספה בהצלחה")
+                console.log("fetch POST= ", result);
+
             }, (error) => {
                 console.log("err post=", error);
             });

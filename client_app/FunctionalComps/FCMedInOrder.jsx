@@ -21,7 +21,7 @@ export default function FCMedOrder(props) {
         </View>
         <View style={styles.row}>
           <Text style={styles.cardBody}>כמות: </Text>
-          <Text style={styles.cardBody}>{props.Qty}</Text>
+          <Text style={styles.cardBody}>{props.poQty}</Text>
         </View>
       </Card>
     </View>
@@ -44,4 +44,5 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#003D9A",
   },
+  
 });
