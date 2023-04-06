@@ -13,17 +13,18 @@ export default function PushOrdersPage() {
   const [pushOrders, setPushOrders] = useState([]);
 
   //----------------------GET PushOrder---------------------
+
   useEffect(() => {
-    fetch(apiUrlPushOrder + 'GetPushOrders/' + `${depId}`, {
+    fetch(apiUrlPushOrder + 'GetPushOrders/depId/' + `${depId}`, {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json; charset=UTF-8',
       })
     })
-      .then(res => {
-        return res.json()
-      })
+    .then(result => {
+      return result.json();
+    })
       .then(
         (result) => {
           setPushOrders(result);

@@ -24,22 +24,16 @@ export default function FCPushOrder(props) {
               <Text style={{ color: '#5D9C59' }}>הונפק</Text>
             </>
           )}
-          {props.orderStatus === 'W' && (
+          {props.orderStatus === 'R' && (
             <>
-              <Text style={{ color: '#DF2E38' }}>בהמתנה</Text>
-            </>
-          )}
-          {props.orderStatus === 'T' && (
-            <>
-              <Text style={{ color: '#FFC300' }}>מועבר</Text>
+              <Text style={{ color: '#DF2E38' }}>שוריין</Text>
             </>
           )}
         </View>
       </View>
 
-      <Text style={styles.cardBody}>שם יוצר ההזמנה: {props.nurseName}</Text>
-
-      {props.pharmacistName != 'user user' && <Text style={styles.cardBody}><Text>רוקח אחראי : </Text>{props.pharmacistName}</Text>}
+      <Text style={styles.cardBody}>מספר הזמנה: {props.id}</Text>
+      <Text style={styles.cardBody}>נוצר ע"י: {props.pharmacistName}</Text>
 
       {props.isDetailedPushOrder && <FCMedsInOrder MedsOrderList={props.pushMedList} />}
 
@@ -50,6 +44,7 @@ export default function FCPushOrder(props) {
     </Card>
   )
 }
+
 
 const styles = StyleSheet.create({
   cardContainer: {

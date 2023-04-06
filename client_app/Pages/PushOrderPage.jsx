@@ -1,19 +1,19 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React from 'react';
 
-import FCPullOrders from '../FunctionalComps/FCPullOrders';
+import FCDetailedPushOrders from '../FunctionalComps/FCDetailedPushOrders';
 
 export default function PushOrderPage(props) {
 
   const { pushOrderId, pushOrdersList } = props.route.params;
 
-  let pushOrder = pushOrdersList.filter((item) => item.orderId === pushOrderId);//get the request item to read 
+  let pushOrders = pushOrdersList.filter((item) => item.orderId === pushOrderId);//get the request item to read 
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>הזמנת דחיפה</Text>
       <ScrollView>
-        <FCPullOrders PushOrdersList={pushOrder} isDetailedPushOrder={true} />
+        <FCDetailedPushOrders PushOrdersList={pushOrders} />
       </ScrollView>
     </View>
   );

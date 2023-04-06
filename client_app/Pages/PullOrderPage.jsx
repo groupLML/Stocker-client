@@ -2,11 +2,14 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated } from '
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { GlobalContext } from '../GlobalData/GlobalData';
 import { Icon } from '@rneui/themed';
+import { useNavigation } from '@react-navigation/native';
 
 import FCDetailedPullOrders from '../FunctionalComps/FCDetailedPullOrders';
 import FCDateTime from '../FunctionalComps/FCDateTime';
 
 export default function PullOrderPage(props) {
+
+  const navigation = useNavigation();
 
   const { pullOrderId, PullOrdersList } = props.route.params;
   const [pullOrder, setPullOrder] = useState(null);
@@ -16,7 +19,7 @@ export default function PullOrderPage(props) {
 
   //----------------------GET Meds in pull Order---------------------
   useEffect(() => {
-    fetch(apiUrlPullOrder + 'GetOrderDetails/depId/' + `${depId}` + '/orderId/' + `${pullOrderId}`+ '/type/' + `${2}`, {
+    fetch(apiUrlPullOrder + 'GetOrderDetails/depId/' + `${depId}` + '/orderId/' + `${pullOrderId}` + '/type/' + `${2}`, {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json; charset=UTF-8',
@@ -31,8 +34,6 @@ export default function PullOrderPage(props) {
           setMedsInOrderList(result);
           const order = PullOrdersList.find((order) => order.orderId === pullOrderId);
           setPullOrder(order);
-          console.log(order);
-          console.log(result);
         },
         (error) => {
           console.log("err get=", error);
@@ -56,7 +57,7 @@ export default function PullOrderPage(props) {
 
     console.log("handle Delete Pull Order is pressed!");
 
-    fetch(apiUrlPullOrder + `${pullOrderId}`, {
+    fetch(apiUrlPullOrder + 'OrderId/' + `${pullOrderId}` + '/type/' + `${2}`, {
       method: 'DELETE',
       headers: new Headers({
         'Content-Type': 'application/json; charset=UTF-8',
@@ -65,10 +66,12 @@ export default function PullOrderPage(props) {
     })
       .then(result => {
         return result.json();
+
       })
       .then(
         (result) => {
           console.log("res=", result);
+            navigation.navigate('צפייה בהזמנת משיכה');
         },
         (error) => {
           console.log("err delete=", error);
@@ -125,7 +128,7 @@ export default function PullOrderPage(props) {
           </Animated.View>
           {/* ---------------------------------------------כפתור מחיקת הזמנה בסטטוס ממתין------------------------------------------- */}
           {pullOrder.orderStatus === 'W' && (
-            <View style={{ flexDirection: 'row',/*  alignSelf: 'center', width: 150  */ }}>
+            <View style={{ flexDirection: 'row' }}>
               <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933' }]} onPress={() => handleDeletePullOrder()}>
                 <Text style={styles.buttonText} >ביטול הזמנה</Text>
               </TouchableOpacity>
@@ -176,9 +179,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   AddBTN: {
-/*     position: 'absolute',
-    bottom: 100,
-    right: 20, */
+    /*     position: 'absolute',
+        bottom: 100,
+        right: 20, */
     backgroundColor: '#003D9A',
     borderRadius: 100,
     width: 50,
