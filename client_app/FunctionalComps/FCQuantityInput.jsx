@@ -29,7 +29,7 @@ export default function FCQuantityInput(props) {
         borderColor='#E1EAF9'
         minValue={1}
         textColor='#003D9A'
-        totalWidth={90}
+        totalWidth={85}
         iconStyle={{ color: '#003D9A' }}
         rightButtonBackgroundColor='#E1EAF9'
         leftButtonBackgroundColor='#E1EAF9'

@@ -23,8 +23,14 @@ export default function FCDetailedPullOrder(props) {
           </TouchableOpacity>
         )}
         <Text style={styles.cardTitle}><Text>{props.medName}</Text></Text>
-        {!props.isWaitingOrder && (
-          <Text style={styles.cardBody}>כמות שסופקה: <Text>{props.supQty}</Text></Text>
+        {props.isWaitingOrder === true && (
+          <FCQuantityInput reqQty={props.poQty} sendQty={GetQtyFromInput} />
+        )}
+        {props.isWaitingOrder === false && (
+          <View>
+            <Text style={styles.cardBody}>כמות שהוזמנה: <Text>{props.poQty}</Text></Text>
+            <Text style={styles.cardBody}>כמות שסופקה: <Text>{props.supQty}</Text></Text>
+          </View>
         )}
 
       </Card>

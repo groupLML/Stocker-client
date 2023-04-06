@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated } from 'react-native';
 import React, { useContext, useState, useEffect, useRef } from 'react';
-import { Icon } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 
 import { GlobalContext } from '../GlobalData/GlobalData';

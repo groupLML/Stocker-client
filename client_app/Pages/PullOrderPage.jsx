@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import React, { useState, useEffect, useContext } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated } from 'react-native';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { GlobalContext } from '../GlobalData/GlobalData';
+import { Icon } from '@rneui/themed';
 
 import FCDetailedPullOrders from '../FunctionalComps/FCDetailedPullOrders';
 import FCDateTime from '../FunctionalComps/FCDateTime';
@@ -8,14 +9,14 @@ import FCDateTime from '../FunctionalComps/FCDateTime';
 export default function PullOrderPage(props) {
 
   const { pullOrderId, PullOrdersList } = props.route.params;
-  const [pullOrder, setPullOrder] = useState();
+  const [pullOrder, setPullOrder] = useState(null);
   const [medsInOrderList, setMedsInOrderList] = useState([]);
   const { apiUrlPullOrder, depId } = useContext(GlobalContext);
   const [isWaitingOrder, setIsWaitingOrder] = useState(false);
 
   //----------------------GET Meds in pull Order---------------------
   useEffect(() => {
-    fetch(apiUrlPullOrder + 'GetOrderDetails/depId/' + `${depId}` + '/orderId/' + `${pullOrderId}`, {
+    fetch(apiUrlPullOrder + 'GetOrderDetails/depId/' + `${depId}` + '/orderId/' + `${pullOrderId}`+ '/type/' + `${2}`, {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json; charset=UTF-8',
@@ -30,9 +31,8 @@ export default function PullOrderPage(props) {
           setMedsInOrderList(result);
           const order = PullOrdersList.find((order) => order.orderId === pullOrderId);
           setPullOrder(order);
-          if (pullOrder.orderStatus === "W") {
-            setIsWaitingOrder(true);
-          }
+          console.log(order);
+          console.log(result);
         },
         (error) => {
           console.log("err get=", error);
@@ -40,6 +40,17 @@ export default function PullOrderPage(props) {
 
 
   }, []);
+
+  useEffect(() => {
+    if (pullOrder !== null) {
+      if (pullOrder.orderStatus === "W") {
+        setIsWaitingOrder(true);
+      }
+      else {
+        setIsWaitingOrder(false);
+      }
+    }
+  }, [pullOrder]);
 
   const handleDeletePullOrder = () => {
 
@@ -64,9 +75,12 @@ export default function PullOrderPage(props) {
         });
   };
 
+  //animation for add BTN to stick to screen while scroll
+  const scrollY = useRef(new Animated.Value(0)).current;//set the current state of y axe value
+
   return (
     <View style={styles.container}>
-      {pullOrder && pullOrder.orderStatus && (
+      {pullOrder !== null && (
         <>
           {/* --------------------------------------------------שורת סטטוס ותאריך------------------------------------------------------- */}
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -95,19 +109,32 @@ export default function PullOrderPage(props) {
           <ScrollView>
             <FCDetailedPullOrders isWaitingOrder={isWaitingOrder} medsInOrderList={medsInOrderList} />
           </ScrollView>
-          <View>
-            {/* ---------------------------------------------כפתור מחיקת הזמנה בסטטוס ממתין------------------------------------------- */}
-            {pullOrder.orderStatus === 'W' && (
-              <View style={{ flexDirection: 'row',/*  alignSelf: 'center', width: 150  */}}>
-                <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933' }]} onPress={() => handleDeletePullOrder()}>
-                  <Text style={styles.buttonText} >ביטול הזמנה</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59' }]} onPress={() => handleUpdateRequest()}>
-                  <Text style={styles.buttonText}>עדכון</Text>
-                </TouchableOpacity>
-              </View>
-            )}
-          </View>
+          <Animated.View
+            style={[styles.AddBTN, {
+              transform: [{
+                translateY: scrollY.interpolate({
+                  inputRange: [0, 100],
+                  outputRange: [0, 100],
+                  extrapolate: 'clamp'
+                })
+              }]
+            }]}>
+            <TouchableOpacity onPress={() => navigation.navigate('יצירת הזמנת משיכה')}>
+              <Icon name='add' color='white' />
+            </TouchableOpacity>
+          </Animated.View>
+          {/* ---------------------------------------------כפתור מחיקת הזמנה בסטטוס ממתין------------------------------------------- */}
+          {pullOrder.orderStatus === 'W' && (
+            <View style={{ flexDirection: 'row',/*  alignSelf: 'center', width: 150  */ }}>
+              <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933' }]} onPress={() => handleDeletePullOrder()}>
+                <Text style={styles.buttonText} >ביטול הזמנה</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59' }]} onPress={() => handleUpdateRequest()}>
+                <Text style={styles.buttonText}>עדכון</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+
         </>
       )}
     </View>
@@ -147,5 +174,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
+  },
+  AddBTN: {
+/*     position: 'absolute',
+    bottom: 100,
+    right: 20, */
+    backgroundColor: '#003D9A',
+    borderRadius: 100,
+    width: 50,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
