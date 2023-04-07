@@ -129,11 +129,11 @@ export default function PullOrderPage(props) {
           {/* ---------------------------------------------כפתור מחיקת הזמנה בסטטוס ממתין------------------------------------------- */}
           {pullOrder.orderStatus === 'W' && (
             <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933' }]} onPress={() => handleDeletePullOrder()}>
-                <Text style={styles.buttonText} >ביטול הזמנה</Text>
-              </TouchableOpacity>
               <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59' }]} onPress={() => handleUpdateRequest()}>
                 <Text style={styles.buttonText}>עדכון</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933' }]} onPress={() => handleDeletePullOrder()}>
+                <Text style={styles.buttonText} >ביטול הזמנה</Text>
               </TouchableOpacity>
             </View>
           )}

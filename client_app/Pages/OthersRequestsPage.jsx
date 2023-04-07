@@ -25,7 +25,7 @@ export default function OthersRequestsPage() {
                     setOthersMedReqs(result); //set the requests from the choosen dep to display
                 },
                 (error) => {
-                    console.log("err post=", error);
+                    console.log("err Get=", error);
                 });
     }, [depId])//component did update
 

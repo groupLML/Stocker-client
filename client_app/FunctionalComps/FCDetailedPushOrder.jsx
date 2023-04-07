@@ -5,7 +5,6 @@ import { useNavigation } from '@react-navigation/native';
 import FCDateTime from './FCDateTime';
 import FCQuantityInput from './FCQuantityInput';
 import FCMedInput from './FCMedInput';
-import FCMedsInOrder from './FCMedsInOrder';
 
 export default function FCDetailedPushOrder(props) {
 

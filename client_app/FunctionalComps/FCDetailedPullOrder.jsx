@@ -18,7 +18,7 @@ export default function FCDetailedPullOrder(props) {
     <View style={styles.container}>
       <Card borderColor='#E1EAF9'>
         {props.isWaitingOrder === true && (
-          <TouchableOpacity onPress={() => props.getId2Delete(props.medId)}>
+          <TouchableOpacity style={styles.CloseBTN} onPress={() => props.getId2Delete(props.medId)}>
             <Ionicons name='close-outline' color='#003D9A' size={22} />
           </TouchableOpacity>
         )}
@@ -32,7 +32,6 @@ export default function FCDetailedPullOrder(props) {
             <Text style={styles.cardBody}>כמות שסופקה: <Text>{props.supQty}</Text></Text>
           </View>
         )}
-
       </Card>
     </View>
   )
@@ -53,5 +52,8 @@ const styles = StyleSheet.create({
     //marginVertical: 10,
     fontSize: 15,
     color: "#003D9A",
+  },
+  CloseBTN: {
+    alignSelf: 'flex-start',
   },
 });

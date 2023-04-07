@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated } from 'react-native';
-import React, { useContext, useRef, useEffect } from 'react';
+import React, { useContext, useRef, useEffect, useState } from 'react';
 import { Icon } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 
@@ -10,6 +10,11 @@ export default function MyRequestsPage() {
   const navigation = useNavigation();
 
   const { apiUrlMedRequest, depId, myMedReqs, setMyMedReqs } = useContext(GlobalContext);
+  const [statusFilter, setStatusFilter] = useState('all');
+
+  const handleStatusFilterChange = (status) => {
+    setStatusFilter(status);
+  };
 
   //----------------------GET Requests details ---------------------
   useEffect(() => {
@@ -21,6 +26,7 @@ export default function MyRequestsPage() {
       })
     })
       .then(res => {
+        console.log("1");
         return res.json()
       })
       .then(
@@ -39,7 +45,8 @@ export default function MyRequestsPage() {
     <View style={styles.container}>
       <View style={styles.scrollViewContainer}>
         <ScrollView scrollEventThrottle={16}>
-          <FCMyRequests RequestsList={myMedReqs} isDetailedRequest={false} />
+          <FCMyRequests RequestsList={myMedReqs} isDetailedRequest={false} statusFilter={statusFilter} onStatusFilterChange={handleStatusFilterChange} />
+          {/* <FCMyRequests RequestsList={myMedReqs} isDetailedRequest={false} /> */}
         </ScrollView>
         <Animated.View
           style={[styles.AddBTN, {

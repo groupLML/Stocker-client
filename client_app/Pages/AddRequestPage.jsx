@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Modal, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+//import { useNavigation } from '@react-navigation/native';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCDepTypeList from '../FunctionalComps/FCDepTypeList';
@@ -7,6 +8,7 @@ import FCMedInput from '../FunctionalComps/FCMedInput';
 import FCQuantityInput from '../FunctionalComps/FCQuantityInput';
 
 export default function AddRequestPage(props) {
+  //const navigation = useNavigation();
 
   const { apiUrlMedRequest, getUserData, DepTypes } = useContext(GlobalContext);
 
@@ -27,7 +29,7 @@ export default function AddRequestPage(props) {
     setQty(Qty);
   }
   
-  const handleModalClose = () => {
+  const handleModalCloseAdd = () => {
     setModalVisible(false);
     setClearForm(true);
     props.navigation.navigate('צפייה בבקשות');
@@ -58,7 +60,6 @@ export default function AddRequestPage(props) {
         return res;
       })
       .then((result) => {
-        console.log(result.status);
         if (result) {
           setModalVisible(true);
         } else if (result.status >= 400 && result.status < 500) {
@@ -93,7 +94,7 @@ export default function AddRequestPage(props) {
               <Text style={styles.modalText}>בקשה התווספה בהצלחה</Text>
               <TouchableOpacity
                 style={styles.button}
-                onPress={handleModalClose}>
+                onPress={handleModalCloseAdd}>
                 <Text style={styles.buttonText}>סגור</Text>
               </TouchableOpacity>
             </View>

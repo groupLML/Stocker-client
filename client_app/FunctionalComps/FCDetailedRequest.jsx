@@ -16,8 +16,9 @@ export default function FCDetailedRequest(props) {
 
   const [Qty, setQty] = useState(props.reqQty);
   const [selectedMedId, setSelectedMedId] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
   const [clearForm, setClearForm] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleSetClearForm = (state) => {
     setClearForm(state);
@@ -37,8 +38,8 @@ export default function FCDetailedRequest(props) {
     setSelectedMedId(medId);
   };
 
+  //עדכון העברה
   const handleUpdateRequest = () => {
-
     const SelectedDepTypes = DepTypes.filter(depType => depType.isChecked).map(depType => depType.name);
 
     const MedRequest = { //יצירת אובייקט לפי השדות במחלקה
@@ -72,6 +73,7 @@ export default function FCDetailedRequest(props) {
       })
       .then((result) => {
         if (result) {
+          setSuccessMessage('הבקשה השתנה בהצלחה');
           setModalVisible(true);
         } else if (result.status >= 400 && result.status < 500) {
           result.text().then(text => {
@@ -83,11 +85,7 @@ export default function FCDetailedRequest(props) {
       });
   };
 
-  const handleCancelRequest = () => { };
-
-  const handleApproveRequest = () => {
-  };
-
+  //מחיקת העברה
   const handleDeleteRequest = (idToDelete) => {
     //-------------------------------Delete medReqs------------------------------------
     fetch(apiUrlMedRequest + `${idToDelete}`, {
@@ -103,8 +101,8 @@ export default function FCDetailedRequest(props) {
       .then(
         (result) => {
           if (result) {
-            alert("הבקשה נמחקה");
-            navigation.navigate('צפייה בבקשות');
+            setSuccessMessage('הבקשה נמחקה בהצלחה');
+            setModalVisible(true);
           }
           else {
             alert("יש בעיה בשרת")
@@ -113,6 +111,56 @@ export default function FCDetailedRequest(props) {
         (error) => {
           console.log("err delete=", error);
         });
+  };
+
+  //אישור העברה
+  const handleApproveRequest = () => {
+    fetch(apiUrlMedRequest + "TransportRe/" + `${props.id}` + "/kind/A", {
+      method: 'PUT',
+      headers: new Headers({
+        'Content-type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json; charset=UTF-8',
+      })
+    })
+      .then(res => {
+        return res;
+      })
+      .then((result) => {
+        if (result) {
+          setSuccessMessage('הבקשה הועברה בהצלחה');
+          setModalVisible(true);
+        }
+        else {
+          alert("יש בעיה בשרת")
+        };
+      }, (error) => {
+        console.log("err put=", error);
+      });
+  };
+
+  //ביטול העברה
+  const handleCancelRequest = () => {
+    fetch(apiUrlMedRequest + "TransportRE/" + `${props.id}` + "kind/C", {
+      method: 'PUT',
+      headers: new Headers({
+        'Content-type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json; charset=UTF-8',
+      })
+    })
+      .then(res => {
+        return res;
+      })
+      .then((result) => {
+        if (result) {
+          setSuccessMessage('הבקשה בוטלה בהצלחה');
+          setModalVisible(true);
+        }
+        else {
+          alert("יש בעיה בשרת")
+        };
+      }, (error) => {
+        console.log("err put=", error);
+      });
   };
 
   return (
@@ -178,7 +226,7 @@ export default function FCDetailedRequest(props) {
           }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>בקשה השתנה בהצלחה</Text>
+              <Text style={styles.modalText}>{successMessage}</Text>
               <TouchableOpacity
                 style={styles.button}
                 onPress={handleModalClose}>

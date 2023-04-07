@@ -2,11 +2,12 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { Card } from '@rneui/base';
 import React, { useContext } from 'react';
 import FCDateTime from './FCDateTime';
+import { useNavigation } from '@react-navigation/native';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 
 export default function FCOthersRequest(props) {
-
+    const navigation = useNavigation();
     const isStockQtyLower = props.stcQty < props.reqQty;
     const { apiUrlMedRequest, getUserData } = useContext(GlobalContext);
 
@@ -18,7 +19,6 @@ export default function FCOthersRequest(props) {
         //-------------------------------PUT ApproveRequest------------------------------------
         fetch(apiUrlMedRequest + "ApprovedReq/" + `${props.id}` + "/aUser/" + `${user.userId}` + "/aDep/" + `${user.depId}`, {
             method: 'PUT',
-            body: JSON.stringify(),
             headers: new Headers({
                 'Content-type': 'application/json; charset=UTF-8',
                 'Accept': 'application/json; charset=UTF-8',
@@ -30,9 +30,10 @@ export default function FCOthersRequest(props) {
             .then(
                 (result) => {
                     if (result) {
-                        alert("Success");
+                        alert("בוצעה בהצלחה");
+                        navigation.navigate('צפייה בבקשות');
                     }
-                    else { alert("error") };
+                    else { alert("יש בעיה בשרת") };
                 },
                 (error) => {
                     console.log("err put=", error);
@@ -48,12 +49,17 @@ export default function FCOthersRequest(props) {
                 <Text style={styles.cardTitle}>{props.medName}</Text>
                 <Text style={styles.cardBody}><Text>כמות מבוקשת: </Text>{props.reqQty}</Text>
                 <Text style={styles.cardBody}><Text>כמות במלאי: </Text><Text style={{ color: isStockQtyLower ? 'red' : '#003D9A' }}>{props.stcQty}</Text></Text>
-                <Text style={styles.cardBody}><Text>מחלקה מבקשת: </Text>{props.depName}</Text>
-                <View style={styles.row}>
-                    <TouchableOpacity style={[styles.button, { backgroundColor: '#129C62' }]} onPress={() => handleApproveRequest()}>
-                        <Text style={styles.buttonText}>אישור העברה</Text>
-                    </TouchableOpacity>
-                </View>
+                <Text style={styles.cardBody}><Text>מחלקה מבקשת: </Text>{props.cdepName}</Text>
+                <Text style={styles.cardBody}><Text>אחות מבקשת: </Text>{props.cNurseName}</Text>
+                {props.reqStatus !== 'A' && (
+                    <>
+                        <View style={styles.row}>
+                            <TouchableOpacity style={[styles.button, { backgroundColor: '#129C62' }]} onPress={() => handleApproveRequest()}>
+                                <Text style={styles.buttonText}>אישור העברה</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </>
+                )}
             </Card>
         </View>
     )

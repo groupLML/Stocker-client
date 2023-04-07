@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useContext } from 'react';
 import { Card } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
+
 import { GlobalContext } from '../GlobalData/GlobalData';
 
 export default function FCMedOrder(props) {
@@ -12,8 +13,8 @@ export default function FCMedOrder(props) {
   return (
     <View>
        <Card borderColor='#E1EAF9' >
-        <TouchableOpacity onPress={() => props.getId2Delete(props.medId)}>
-          <Ionicons name='close-outline' color='#003D9A' size={22}/>
+        <TouchableOpacity style={styles.CloseBTN} onPress={() => props.getId2Delete(props.medId)}>
+          <Ionicons name='close-outline' color='#003D9A' size={22} />
         </TouchableOpacity>
         <View style={styles.row}>
           <Text style={styles.cardBody}>שם תרופה: </Text>
@@ -44,5 +45,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#003D9A",
   },
-  
+  CloseBTN:{
+    alignSelf: 'flex-start',
+  },
 });

@@ -31,7 +31,7 @@ export default function PushOrdersPage() {
           console.log(result);
         },
         (error) => {
-          console.log("err get=", error);
+          console.log("err Get=", error);
         });
   }, [])
 

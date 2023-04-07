@@ -7,12 +7,14 @@ export default function FCOthersRequests(props) {
   const requestsStr = props.RequestsList.map((request, key) => {
     return <FCOthersRequest
       id={request.reqId}
-      depName={request.depName}
+      cdepName={request.depName}
       cNurseName={request.cNurseName}
+      aDepId={request.aDep}
       date={request.reqDate}
       medName={request.medName}
       reqQty={request.reqQty}
       stcQty={request.stcQty}
+      reqStatus={request.reqStatus}
       requestsList={props.RequestsList}
       key={request.reqId}
     />;

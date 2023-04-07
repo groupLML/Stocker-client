@@ -157,7 +157,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     sendBTN: {
-        marginTop: 20,
         backgroundColor: '#00317D',
         padding: 10,
         borderRadius: 5,
