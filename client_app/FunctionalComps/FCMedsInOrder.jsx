@@ -14,7 +14,6 @@ export default function FCMedsInOrder(props) {
     />;
   })
 
-
   return (
     <View style={styles.container}>
       {MedsInOrderStr}

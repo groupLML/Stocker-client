@@ -10,7 +10,6 @@ export default function FCDetailedPushOrders(props) {
             medName={med.medName}
             poQty={med.poQty}
             supQty={med.supQty}
-            isWaitingOrder={props.isWaitingOrder}
             key={med.medId}
         />;
     })

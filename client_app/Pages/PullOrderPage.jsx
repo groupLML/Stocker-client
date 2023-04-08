@@ -38,8 +38,6 @@ export default function PullOrderPage(props) {
         (error) => {
           console.log("err get=", error);
         });
-
-
   }, []);
 
   useEffect(() => {

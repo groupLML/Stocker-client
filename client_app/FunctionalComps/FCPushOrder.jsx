@@ -35,12 +35,9 @@ export default function FCPushOrder(props) {
       <Text style={styles.cardBody}>מספר הזמנה: {props.id}</Text>
       <Text style={styles.cardBody}>נוצר ע"י: {props.pharmacistName}</Text>
 
-      {props.isDetailedPushOrder && <FCMedsInOrder MedsOrderList={props.pushMedList} />}
-
-      {!props.isDetailedPushOrder &&
-        <TouchableOpacity onPress={() => handleCardPress()}>
-          <Text style={styles.readMore}>קרא עוד...</Text>
-        </TouchableOpacity>}
+      <TouchableOpacity onPress={() => handleCardPress()}>
+        <Text style={styles.readMore}>קרא עוד...</Text>
+      </TouchableOpacity>
     </Card>
   )
 }

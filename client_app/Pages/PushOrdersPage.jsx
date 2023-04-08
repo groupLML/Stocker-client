@@ -1,13 +1,10 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated } from 'react-native';
 import React, { useContext, useState, useEffect, useRef } from 'react';
-import { useNavigation } from '@react-navigation/native';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCPushOrders from '../FunctionalComps/FCPushOrders';
 
 export default function PushOrdersPage() {
-
-  const navigation = useNavigation();
 
   const { apiUrlPushOrder, depId } = useContext(GlobalContext);
   const [pushOrders, setPushOrders] = useState([]);
@@ -39,7 +36,7 @@ export default function PushOrdersPage() {
     <View style={styles.container}>
       <View style={styles.scrollViewContainer}>
         <ScrollView scrollEventThrottle={16}>
-          <FCPushOrders PushOrdersList={pushOrders} isDetailedPushOrder={false} />
+          <FCPushOrders PushOrdersList={pushOrders}/>
         </ScrollView>
       </View>
     </View>
