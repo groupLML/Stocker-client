@@ -1,11 +1,13 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated } from 'react-native';
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
 import { GlobalContext } from '../GlobalData/GlobalData';
 import { Icon } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 
 import FCDetailedPullOrders from '../FunctionalComps/FCDetailedPullOrders';
 import FCDateTime from '../FunctionalComps/FCDateTime';
+import FCMedInput from '../FunctionalComps/FCMedInput';
+import FCQuantityInput from '../FunctionalComps/FCQuantityInput';
 
 export default function PullOrderPage(props) {
 
@@ -16,6 +18,9 @@ export default function PullOrderPage(props) {
   const [medsInOrderList, setMedsInOrderList] = useState([]);
   const { apiUrlPullOrder, depId } = useContext(GlobalContext);
   const [isWaitingOrder, setIsWaitingOrder] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedMedId, setSelectedMedId] = useState(null);
+    const [Qty, setQty] = useState(1);
 
   //----------------------GET Meds in pull Order---------------------
   useEffect(() => {
@@ -65,19 +70,39 @@ export default function PullOrderPage(props) {
       .then(result => {
         return result.json();
 
+
       })
       .then(
         (result) => {
           console.log("res=", result);
-            navigation.navigate('צפייה בהזמנת משיכה');
+          navigation.navigate('צפייה בהזמנת משיכה');
         },
         (error) => {
           console.log("err delete=", error);
         });
   };
 
-  //animation for add BTN to stick to screen while scroll
-  const scrollY = useRef(new Animated.Value(0)).current;//set the current state of y axe value
+  const handleOpenModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+  };
+
+  const AddMedToOrder = () => {
+    //do update
+    alert("med added")
+    setIsModalVisible(false);
+  };
+
+  const handleSelectMed = (medId) => {
+    setSelectedMedId(medId);
+  };
+
+  const GetQtyFromInput = (Qty) => {
+    setQty(Qty);
+  }
 
   return (
     <View style={styles.container}>
@@ -110,34 +135,40 @@ export default function PullOrderPage(props) {
           <ScrollView>
             <FCDetailedPullOrders isWaitingOrder={isWaitingOrder} medsInOrderList={medsInOrderList} />
           </ScrollView>
-          <Animated.View
-            style={[styles.AddBTN, {
-              transform: [{
-                translateY: scrollY.interpolate({
-                  inputRange: [0, 100],
-                  outputRange: [0, 100],
-                  extrapolate: 'clamp'
-                })
-              }]
-            }]}>
-            <TouchableOpacity onPress={() => navigation.navigate('יצירת הזמנת משיכה')}>
+          <View style={styles.AddBTN}>
+            <TouchableOpacity onPress={handleOpenModal}>
               <Icon name='add' color='white' />
             </TouchableOpacity>
-          </Animated.View>
+          </View>
+
           {/* ---------------------------------------------כפתור מחיקת הזמנה בסטטוס ממתין------------------------------------------- */}
           {pullOrder.orderStatus === 'W' && (
-            <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59' }]} onPress={() => handleUpdateRequest()}>
-                <Text style={styles.buttonText}>עדכון</Text>
-              </TouchableOpacity>
+            <View style={{ flexDirection: 'row', width: 150, alignSelf: 'center' }}>
               <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933' }]} onPress={() => handleDeletePullOrder()}>
                 <Text style={styles.buttonText} >ביטול הזמנה</Text>
               </TouchableOpacity>
             </View>
           )}
 
+          <Modal visible={isModalVisible}  animationType="slide" transparent={true} onRequestClose={handleCloseModal}>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <FCMedInput sendMedSelect={handleSelectMed} />
+                <FCQuantityInput reqQty={1} sendQty={GetQtyFromInput} />
+                <View style={styles.row}>
+                  <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59' }]} onPress={AddMedToOrder}>
+                    <Text style={styles.buttonText}>הוספה</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933' }]} onPress={handleCloseModal}>
+                    <Text style={styles.buttonText}>ביטול</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </Modal>
         </>
       )}
+
     </View>
   );
 }
@@ -177,14 +208,34 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   AddBTN: {
-    /*     position: 'absolute',
-        bottom: 100,
-        right: 20, */
+    alignSelf: 'center',
+    marginTop: 10,
     backgroundColor: '#003D9A',
     borderRadius: 100,
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
 });

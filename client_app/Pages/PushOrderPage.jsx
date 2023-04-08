@@ -5,44 +5,46 @@ import { GlobalContext } from '../GlobalData/GlobalData';
 import FCDetailedPushOrders from '../FunctionalComps/FCDetailedPushOrders';
 
 export default function PushOrderPage(props) {
-  
+
   const [pushOrder, setPushOrder] = useState(null);
   const [medsInOrderList, setMedsInOrderList] = useState([]);
   const { apiUrlPushOrder, depId } = useContext(GlobalContext);
 
   const { pushOrderId, pushOrdersList } = props.route.params;
 
-    //----------------------GET Meds in push order---------------------
-    ///api/PushOrder/GetOrderDetails/depId/{depId}/orderId/{orderId}/type/{type}
-    useEffect(() => {
-      fetch(apiUrlPushOrder + 'GetOrderDetails/depId/' + `${depId}` + '/orderId/' + `${pushOrderId}` + '/type/' + `${1}`, {
-        method: 'GET',
-        headers: new Headers({
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Accept': 'application/json; charset=UTF-8',
-        })
+  //----------------------GET Meds in push order---------------------
+  useEffect(() => {
+    fetch(apiUrlPushOrder + 'GetOrderDetails/depId/' + `${depId}` + '/orderId/' + `${pushOrderId}` + '/type/' + `${1}`, {
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json; charset=UTF-8',
       })
-        .then(result => {
-          return result.json();
-        })
-        .then(
-          (result) => {
-            setMedsInOrderList(result);
-            const order = pushOrdersList.find((order) => order.orderId === pushOrderId);
-            setPushOrder(order);
-          },
-          (error) => {
-            console.log("err get=", error);
-          });
-    }, []);
-  
+    })
+      .then(result => {
+        return result.json();
+      })
+      .then(
+        (result) => {
+          setMedsInOrderList(result);
+          const order = pushOrdersList.find((order) => order.orderId === pushOrderId);
+          setPushOrder(order);
+        },
+        (error) => {
+          console.log("err get=", error);
+        });
+  }, []);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>הזמנה מספר <Text>{pushOrderId}</Text></Text>
-      <ScrollView>
-        <FCDetailedPushOrders medsInOrderList={medsInOrderList} />
-      </ScrollView>
+    <View>
+      {pushOrder !==null &&
+        <View style={styles.container}>
+          <Text style={styles.title}>הזמנה מספר <Text>{pushOrderId}</Text></Text>
+          <ScrollView>
+            <FCDetailedPushOrders medsInOrderList={medsInOrderList} orderStatus={pushOrder.orderStatus} />
+          </ScrollView>
+        </View>
+      }
     </View>
   );
 }

@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { Modal, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-//import { useNavigation } from '@react-navigation/native';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCDepTypeList from '../FunctionalComps/FCDepTypeList';
@@ -8,7 +7,6 @@ import FCMedInput from '../FunctionalComps/FCMedInput';
 import FCQuantityInput from '../FunctionalComps/FCQuantityInput';
 
 export default function AddRequestPage(props) {
-  //const navigation = useNavigation();
 
   const { apiUrlMedRequest, getUserData, DepTypes } = useContext(GlobalContext);
 
@@ -82,19 +80,11 @@ export default function AddRequestPage(props) {
         <Text style={styles.buttonText}>אישור</Text>
       </TouchableOpacity>
       <View style={styles.centeredView}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            this.setState({ modalVisible: !modalVisible });
-          }}>
+        <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={setModalVisible(!modalVisible)}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <Text style={styles.modalText}>בקשה התווספה בהצלחה</Text>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={handleModalCloseAdd}>
+              <TouchableOpacity style={styles.button} onPress={handleModalCloseAdd}>
                 <Text style={styles.buttonText}>סגור</Text>
               </TouchableOpacity>
             </View>

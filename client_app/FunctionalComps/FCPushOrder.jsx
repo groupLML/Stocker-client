@@ -4,7 +4,6 @@ import { Card } from '@rneui/base';
 
 import { useNavigation } from '@react-navigation/native';
 import FCDateTime from './FCDateTime';
-import FCMedsInOrder from './FCMedsInOrder.jsx';
 
 export default function FCPushOrder(props) {
 
@@ -32,8 +31,8 @@ export default function FCPushOrder(props) {
         </View>
       </View>
 
-      <Text style={styles.cardBody}>מספר הזמנה: {props.id}</Text>
-      <Text style={styles.cardBody}>נוצר ע"י: {props.pharmacistName}</Text>
+      <Text style={styles.cardTitle}>הזמנה מספר {props.id}</Text>
+      <Text style={styles.cardBody}>שם יוצר ההזמנה: {props.pharmacistName}</Text>
 
       <TouchableOpacity onPress={() => handleCardPress()}>
         <Text style={styles.readMore}>קרא עוד...</Text>
@@ -49,6 +48,13 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     borderRadius: 20,
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 10,
+    color: "#003D9A",
   },
   cardBody: {
     marginVertical: 10,

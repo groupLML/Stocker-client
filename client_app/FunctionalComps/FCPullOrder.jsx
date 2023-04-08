@@ -35,7 +35,7 @@ export default function FCPullOrder(props) {//gets the props of the pull order
           )}
         </View>
       </View>
-
+      <Text style={styles.cardTitle}>הזמנה מספר {props.id}</Text>
       <Text style={styles.cardBody}>שם יוצר ההזמנה: {props.nurseName}</Text>
 
       {props.pharmacistName != 'user user' && <Text style={styles.cardBody}><Text>רוקח אחראי : </Text>{props.pharmacistName}</Text>}
@@ -53,6 +53,13 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     borderRadius: 20,
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 10,
+    color: "#003D9A",
   },
   cardBody: {
     marginVertical: 10,
