@@ -1,13 +1,41 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native'
-import React from 'react'
-import FCNotifications from '../FunctionalComps/FCNotifications'
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import React, { useContext, useState, useEffect } from 'react';
+
+import { GlobalContext } from '../GlobalData/GlobalData';
+import FCNotifications from '../FunctionalComps/FCNotifications';
 
 export default function NotificationPage() {
+
+    const { apiUrlNotification } = useContext(GlobalContext);
+    const [notification, setNotification] = useState('');
+    //----------------------GET Notification---------------------
+    useEffect(() => {
+        fetch(apiUrlNotification, {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Accept': 'application/json; charset=UTF-8',
+            })
+        })
+            .then(res => {
+                return res.json()
+            })
+            .then(
+                (result) => {
+                    setNotification(result); //set the requests of choosen dep to display
+                },
+                (error) => {
+                    console.log("err post=", error);
+                });
+    }, []) // did update
+
+
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>הודעות מבית מרקחת</Text>
             <ScrollView>
-            <FCNotifications />
+                <FCNotifications NotificationsList = {notification} />
             </ScrollView>
         </View>
     )
