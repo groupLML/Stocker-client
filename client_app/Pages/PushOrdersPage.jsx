@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated } from 'react-native';
+import { View, Text, StyleSheet, ScrollView} from 'react-native';
 import React, { useContext, useState, useEffect, useRef } from 'react';
 
 import { GlobalContext } from '../GlobalData/GlobalData';

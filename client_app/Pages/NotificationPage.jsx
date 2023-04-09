@@ -29,8 +29,6 @@ export default function NotificationPage() {
                 });
     }, []) // did update
 
-
-
     return (
         <View style={styles.container}>
             <Text style={styles.title}>הודעות מבית מרקחת</Text>
@@ -40,6 +38,7 @@ export default function NotificationPage() {
         </View>
     )
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,

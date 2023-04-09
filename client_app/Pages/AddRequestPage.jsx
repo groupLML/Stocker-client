@@ -80,7 +80,7 @@ export default function AddRequestPage(props) {
         <Text style={styles.buttonText}>אישור</Text>
       </TouchableOpacity>
       <View style={styles.centeredView}>
-        <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={setModalVisible(!modalVisible)}>
+      <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {this.setState({ modalVisible: !modalVisible });}}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <Text style={styles.modalText}>בקשה התווספה בהצלחה</Text>

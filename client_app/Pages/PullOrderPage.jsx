@@ -20,7 +20,7 @@ export default function PullOrderPage(props) {
   const [isWaitingOrder, setIsWaitingOrder] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedMedId, setSelectedMedId] = useState(null);
-    const [Qty, setQty] = useState(1);
+  const [Qty, setQty] = useState(1);
 
   //----------------------GET Meds in pull Order---------------------
   useEffect(() => {
@@ -92,8 +92,13 @@ export default function PullOrderPage(props) {
 
   const AddMedToOrder = () => {
     //do update
-    alert("med added")
-    setIsModalVisible(false);
+    if (selectedMedId === null) {
+      alert('יש לבחור תרופה');
+    }
+    else {
+      alert("med added");
+      setIsModalVisible(false);
+    }
   };
 
   const handleSelectMed = (medId) => {
@@ -150,7 +155,7 @@ export default function PullOrderPage(props) {
             </View>
           )}
 
-          <Modal visible={isModalVisible}  animationType="slide" transparent={true} onRequestClose={handleCloseModal}>
+          <Modal visible={isModalVisible} animationType="slide" transparent={true} onRequestClose={handleCloseModal}>
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
                 <FCMedInput sendMedSelect={handleSelectMed} />
