@@ -25,7 +25,6 @@ export default function PushOrdersPage() {
       .then(
         (result) => {
           setPushOrders(result);
-          console.log(result);
         },
         (error) => {
           console.log("err Get=", error);

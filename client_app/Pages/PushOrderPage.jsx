@@ -28,6 +28,7 @@ export default function PushOrderPage(props) {
         (result) => {
           setMedsInOrderList(result);
           const order = pushOrdersList.find((order) => order.orderId === pushOrderId);
+          console.log(order.orderStatus + 'd');
           setPushOrder(order);
         },
         (error) => {
@@ -39,7 +40,7 @@ export default function PushOrderPage(props) {
     <View>
       {pushOrder !==null &&
         <View style={styles.container}>
-          <Text style={styles.title}>הזמנה מספר <Text>{pushOrderId}</Text></Text>
+          <Text style={styles.title}>הזמנה מספר{pushOrderId}</Text>
           <ScrollView>
             <FCDetailedPushOrders medsInOrderList={medsInOrderList} orderStatus={pushOrder.orderStatus} />
           </ScrollView>

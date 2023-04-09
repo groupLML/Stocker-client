@@ -1,10 +1,10 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View } from 'react-native';
+import React from 'react';
+
 import FCDetailedPullOrder from './FCDetailedPullOrder';
 
 export default function FCDetailedPullOrders(props) {
-    let medsInOrderStr;
-    medsInOrderStr = props.medsInOrderList.map((med, key) => {
+    let medsInOrderPullStr = props.medsInOrderList.map((med, key) => {
         return <FCDetailedPullOrder
             id={med.medId}
             medName={med.medName}
@@ -17,7 +17,7 @@ export default function FCDetailedPullOrders(props) {
 
     return (
         <View>
-            {medsInOrderStr}
+            {medsInOrderPullStr}
         </View>
     )
 }

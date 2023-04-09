@@ -1,9 +1,10 @@
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import React from 'react';
+
 import FCDetailedPushOrder from './FCDetailedPushOrder';
 
 export default function FCDetailedPushOrders(props) {
-    let medsInOrderStr = props.medsInOrderList.map((med, key) => {
+    let medsInOrderPushStr = props.medsInOrderList.map((med, key) => {
         return <FCDetailedPushOrder
             id={med.medId}
             medName={med.medName}
@@ -16,7 +17,7 @@ export default function FCDetailedPushOrders(props) {
 
     return (
         <View>
-            {medsInOrderStr}
+            {medsInOrderPushStr}
         </View>
     )
-}
+};

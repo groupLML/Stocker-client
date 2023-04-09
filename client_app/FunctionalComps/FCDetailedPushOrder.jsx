@@ -1,13 +1,13 @@
 import { Text, StyleSheet, View } from 'react-native';
-import React from 'react';
+import React ,{ useEffect } from 'react';
 //import { Card } from '@rneui/base';
-import { useEffect } from 'react'
 
 export default function FCDetailedPushOrder(props) {
+
     useEffect(() => {
-        console.log(props.medName);
-    }, [])
-    
+        console.log(props.orderStatus);
+    }, []);
+
     return (
         <View>
             <Text>FCDetailedPushOrder</Text>

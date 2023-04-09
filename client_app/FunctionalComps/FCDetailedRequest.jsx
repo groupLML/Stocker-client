@@ -19,6 +19,7 @@ export default function FCDetailedRequest(props) {
   const [clearForm, setClearForm] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const [isUpdateAllowed, setIsUpdateAllowed] = useState(false);
 
   const handleSetClearForm = (state) => {
     setClearForm(state);
@@ -27,19 +28,27 @@ export default function FCDetailedRequest(props) {
   const handleModalClose = () => {
     setModalVisible(false);
     setClearForm(true);
+    setIsUpdateAllowed(false);
     navigation.navigate('צפייה בבקשות');
   };
 
-  const GetQtyFromInput = (Qty) => {
+  const GetQtyFromInput = (qty) => {
     setQty(Qty);
+    setIsUpdateAllowed(true);
   }
 
   const handleSelectMed = (medId) => {
     setSelectedMedId(medId);
+    setIsUpdateAllowed(true);
   };
 
   //עדכון העברה
   const handleUpdateRequest = () => {
+    if (!isUpdateAllowed) {
+      setSuccessMessage('לא בצעו שינוים בהזמנה');
+      setModalVisible(true);
+      return;
+    }
     const SelectedDepTypes = DepTypes.filter(depType => depType.isChecked).map(depType => depType.name);
 
     const MedRequest = { //יצירת אובייקט לפי השדות במחלקה
@@ -140,7 +149,7 @@ export default function FCDetailedRequest(props) {
 
   //ביטול העברה
   const handleCancelRequest = () => {
-    fetch(apiUrlMedRequest + "TransportRE/" + `${props.id}` + "kind/C", {
+    fetch(apiUrlMedRequest + "TransportRe/" + `${props.id}` + "kind/C", {
       method: 'PUT',
       headers: new Headers({
         'Content-type': 'application/json; charset=UTF-8',

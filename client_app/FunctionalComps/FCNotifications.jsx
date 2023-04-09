@@ -7,6 +7,7 @@ export default function FCNotifications(props) {
         return <FCNotification
             id={notification.msgId}
             userId={notification.userId}
+            pharmacistName={notification.pharmacistName}
             msg={notification.msg}
             date={notification.msgDate}
             key={notification.msgId}
