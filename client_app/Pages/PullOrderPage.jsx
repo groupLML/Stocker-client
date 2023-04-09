@@ -75,7 +75,7 @@ export default function PullOrderPage(props) {
       .then(
         (result) => {
           console.log("res=", result);
-          navigation.navigate('צפייה בהזמנת משיכה');
+          navigation.navigate('הזמנות');
         },
         (error) => {
           console.log("err delete=", error);
@@ -113,7 +113,7 @@ export default function PullOrderPage(props) {
     <View style={styles.container}>
       {pullOrder !== null && (
         <>
-          {/* --------------------------------------------------שורת סטטוס ותאריך------------------------------------------------------- */}
+          {/* --------------------------------------------------שורת סטטוס ותאריך-------------------------------------------------- */}
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
             <FCDateTime date={pullOrder.orderDate}></FCDateTime>
             {pullOrder.orderStatus === 'I' && (
@@ -126,16 +126,16 @@ export default function PullOrderPage(props) {
               <Text style={{ color: '#FFC300' }}>מועבר</Text>
             )}
           </View>
-          {/* ----------------------------------------------------------שורת כותרת------------------------------------------------------- */}
+          {/* ----------------------------------------------------------שורת כותרת--------------------------------------------------- */}
           <Text style={styles.title}>הזמנה מספר <Text>{pullOrderId}</Text></Text>
-          {/* -----------------------------------------------שורת יוצר הזמנה ורוקח מנפיק-------------------------------------------------- */}
+          {/* -----------------------------------------------שורת יוצר הזמנה ורוקח מנפיק-------------------------------------------- */}
           <View>
             <Text style={styles.txt}>יוצר ההזמנה: <Text style={styles.txt}>{pullOrder.nurseName}</Text></Text>
             {(pullOrder.orderStatus === 'I' || pullOrder.orderStatus === 'T') && (
               <Text style={styles.txt}>רוקח אחראי: <Text style={styles.txt}>{pullOrder.pharmacistName}</Text></Text>
             )}
           </View>
-          {/* --------------------------------------------------פירוט תרופות בהזמנה------------------------------------------------------- */}
+          {/* ----------------------------------------פירוט תרופות בהזמנה וכפתור הוספת תרופה---------------------------------------- */}
           <Text style={styles.txt}>פירוט הזמנה:</Text>
           <ScrollView>
             <FCDetailedPullOrders isWaitingOrder={isWaitingOrder} medsInOrderList={medsInOrderList} />

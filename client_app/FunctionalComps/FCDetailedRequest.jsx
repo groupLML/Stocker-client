@@ -29,7 +29,7 @@ export default function FCDetailedRequest(props) {
     setModalVisible(false);
     setClearForm(true);
     setIsUpdateAllowed(false);
-    navigation.navigate('צפייה בבקשות');
+    navigation.navigate('ראשי');
   };
 
   const GetQtyFromInput = (qty) => {
@@ -84,6 +84,7 @@ export default function FCDetailedRequest(props) {
         if (result) {
           setSuccessMessage('הבקשה השתנה בהצלחה');
           setModalVisible(true);
+
         } else if (result.status >= 400 && result.status < 500) {
           result.text().then(text => {
             alert(text);
@@ -92,6 +93,7 @@ export default function FCDetailedRequest(props) {
       }, (error) => {
         console.log("err post=", error);
       });
+
   };
 
   //מחיקת העברה

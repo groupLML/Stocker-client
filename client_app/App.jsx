@@ -29,6 +29,7 @@ function MainTabNavigator() {
   return (
     <SafeAreaView style={styles.container}>
       <Tab.Navigator
+      
         screenOptions={({ route }) => ({
           headerShown: false,
           tabBarIcon: ({ focused, color, size }) => {
@@ -54,10 +55,23 @@ function MainTabNavigator() {
           },
         })}
       >
+
+        {/* ************************************************ menu tabs ****************************************************** */}
         <Tab.Screen name="בית" component={HomePage} />
         <Tab.Screen name="הזמנות" component={OrdersPage} />
         <Tab.Screen name="בקשות" component={RequestsPage} />
         <Tab.Screen name="הודעות" component={NotificationPage} />
+
+        {/* ************************************************ hidden tabs ****************************************************** */}
+        <Tab.Screen name="יצירת בקשה" component={AddRequestPage} options={{tabBarButton: () => null, goBack:'history'}}/>
+        <Tab.Screen name="צפייה בפרטי בקשה" component={MyRequestPage} options={{tabBarButton: () => null}}/>
+        <Tab.Screen name="צפייה בבקשות שלי" component={MyRequestsPage} options={{tabBarButton: () => null}}/>
+        <Tab.Screen name="צפייה בבקשות אחרים" component={OthersRequestsPage} options={{tabBarButton: () => null}}/>
+        <Tab.Screen name="יצירת הזמנת משיכה" component={AddPullOrderPage} options={{tabBarButton: () => null}}/>
+        <Tab.Screen name="צפייה בהזמנת משיכה" component={PullOrdersPage} options={{tabBarButton: () => null}}/>
+        <Tab.Screen name="צפייה בפרטי הזמנת משיכה" component={PullOrderPage} options={{tabBarButton: () => null}}/>
+        <Tab.Screen name="צפייה בהזמנת דחיפה" component={PushOrdersPage} options={{tabBarButton: () => null}}/>
+        <Tab.Screen name="צפייה בפרטי הזמנת דחיפה" component={PushOrderPage} options={{tabBarButton: () => null}}/>
       </Tab.Navigator>
     </SafeAreaView>
   );
@@ -71,8 +85,7 @@ export default function App() {
           <Stack.Navigator initialRouteName="התחברות" screenOptions={{ headerShown: false }}>
             <Stack.Screen name="התחברות" component={LoginPage} />
             <Stack.Screen name="ראשי" component={MainTabNavigator} options={{ headerShown: false }} />
-            <Stack.Screen name="יצירת בקשה" component={AddRequestPage}  />
-            <Stack.Screen name="צפייה בפרטי בקשה" component={MyRequestPage} />
+            {/* <Stack.Screen name="צפייה בפרטי בקשה" component={MyRequestPage} options={{ tabBarVisible: true }}/>
             <Stack.Screen name="צפייה בבקשות שלי" component={MyRequestsPage} />
             <Stack.Screen name="צפייה בבקשות אחרים" component={OthersRequestsPage} />
             <Stack.Screen name="צפייה בבקשות" component={RequestsPage} />
@@ -81,7 +94,7 @@ export default function App() {
             <Stack.Screen name="צפייה בפרטי הזמנת משיכה" component={PullOrderPage} />
             <Stack.Screen name="צפייה בהזמנת דחיפה" component={PushOrdersPage} />
             <Stack.Screen name="צפייה בפרטי הזמנת דחיפה" component={PushOrderPage} />
-            <Stack.Screen name="צפייה הזמנות" component={OrdersPage} />
+            <Stack.Screen name="צפייה הזמנות" component={OrdersPage} /> */}
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>

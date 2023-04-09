@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { Card } from '@rneui/base';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import FCDateTime from './FCDateTime';
 import { useNavigation } from '@react-navigation/native';
 
@@ -13,9 +13,7 @@ export default function FCOthersRequest(props) {
 
     const handleApproveRequest = async () => {//handle approve request
         const user = await getUserData();
-        //'/api/MedRequest/ApprovedReq/4/aUser/3/aDep/3'
 
-        ///api/MedRequest/ApprovedReq/4/aUser/3/aDep/3
         //-------------------------------PUT ApproveRequest------------------------------------
         fetch(apiUrlMedRequest + "ApprovedReq/" + `${props.id}` + "/aUser/" + `${user.userId}` + "/aDep/" + `${user.depId}`, {
             method: 'PUT',
@@ -32,6 +30,7 @@ export default function FCOthersRequest(props) {
                     if (result) {
                         alert("בוצעה בהצלחה");
                         navigation.navigate('צפייה בבקשות');
+                        
                     }
                     else { alert("יש בעיה בשרת") };
                 },
@@ -39,6 +38,8 @@ export default function FCOthersRequest(props) {
                     console.log("err put=", error);
                 });
     };
+
+
 
     return (
         <View>

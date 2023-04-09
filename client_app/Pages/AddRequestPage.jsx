@@ -30,7 +30,7 @@ export default function AddRequestPage(props) {
   const handleModalCloseAdd = () => {
     setModalVisible(false);
     setClearForm(true);
-    props.navigation.navigate('צפייה בבקשות');
+    props.navigation.navigate('בקשות');
   };
 
   const handleAddRequest = async () => {
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   button: {
-    width:'30%',
+    width:100,
     alignSelf:'center',
     backgroundColor: '#003D9A',
     borderRadius: 10,
