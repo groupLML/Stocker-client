@@ -6,7 +6,7 @@ import FCPushOrder from './FCPushOrder';
 
 export default function FCPushOrders(props) {
   let pushOrdersStr;
-  pushOrdersStr = props.PushOrdersList.map((pushOrder, key) => {
+  pushOrdersStr = props.pushOrdersList.map((pushOrder, key) => {
     return <FCPushOrder
       id={pushOrder.orderId}
       date={pushOrder.orderDate}
@@ -14,7 +14,7 @@ export default function FCPushOrders(props) {
       pharmacistId={pushOrder.pharmacistId}
       pharmacistName={pushOrder.pharmacistName}
       orderStatus={pushOrder.orderStatus}
-      PushOrdersList={props.PushOrdersList}
+      pushOrdersList={props.pushOrdersList}
       key={pushOrder.orderId}
     />;
   })

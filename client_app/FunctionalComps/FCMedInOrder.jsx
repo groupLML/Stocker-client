@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 
-export default function FCMedOrder(props) {
+export default function FCMedInOrder(props) {
 
   const { meds } = useContext(GlobalContext);
   let selectedMed = meds.find((med) => med.medId === props.medId);//get the order item to read 

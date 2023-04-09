@@ -36,7 +36,7 @@ export default function PushOrdersPage() {
     <View style={styles.container}>
       <View style={styles.scrollViewContainer}>
         <ScrollView scrollEventThrottle={16}>
-          <FCPushOrders PushOrdersList={pushOrders}/>
+          <FCPushOrders pushOrdersList={pushOrders}/>
         </ScrollView>
       </View>
     </View>

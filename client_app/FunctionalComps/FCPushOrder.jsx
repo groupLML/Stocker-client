@@ -10,6 +10,7 @@ export default function FCPushOrder(props) {
   const navigation = useNavigation();
 
   const handleCardPress = () => {
+    console.log(props.pushOrdersList);
     navigation.navigate('צפייה בפרטי הזמנת דחיפה', { pushOrderId: props.id, pushOrdersList: props.pushOrdersList });
   };
 

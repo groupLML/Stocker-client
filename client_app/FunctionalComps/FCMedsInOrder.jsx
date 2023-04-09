@@ -19,7 +19,6 @@ export default function FCMedsInOrder(props) {
       {MedsInOrderStr}
     </View>
   );
-
 }
 
 const styles = StyleSheet.create({
