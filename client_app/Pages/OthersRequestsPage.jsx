@@ -4,7 +4,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCOthersRequests from '../FunctionalComps/FCOthersRequests';
 
-export default function OthersRequestsPage() {
+export default function OthersRequestsPage(props) {
 
     const { apiUrlMedRequest, depId, othersMedReqs, setOthersMedReqs } = useContext(GlobalContext);
 
@@ -23,11 +23,14 @@ export default function OthersRequestsPage() {
             .then(
                 (result) => {
                     setOthersMedReqs(result); //set the requests from the choosen dep to display
+                    if (props.isChanged) {
+                        props.handleIsChanged(false);
+                    }
                 },
                 (error) => {
                     console.log("err Get=", error);
                 });
-    }, [depId])//component did update
+    }, [props.isChanged])//component did update
 
     return (
         <View style={styles.container}>
