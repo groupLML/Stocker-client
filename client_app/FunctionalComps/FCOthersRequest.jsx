@@ -32,7 +32,7 @@ export default function FCOthersRequest(props) {
                         navigation.navigate('צפייה בבקשות');
                         
                     }
-                    else { alert("יש בעיה בשרת") };
+                    else { alert("אין מספיק במלאי") };
                 },
                 (error) => {
                     console.log("err put=", error);
