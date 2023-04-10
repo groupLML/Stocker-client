@@ -5,8 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 export default function HomePage() {
 
   const navigation = useNavigation();
-
-
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Stocker</Text>

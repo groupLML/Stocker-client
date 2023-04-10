@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer,DefaultTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
@@ -29,9 +29,9 @@ function MainTabNavigator() {
   return (
     <SafeAreaView style={styles.container}>
       <Tab.Navigator
-      
         screenOptions={({ route }) => ({
           headerShown: false,
+          tabBarStyle: styles.tabBar,
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
             if (route.name === 'בית') {
@@ -48,11 +48,11 @@ function MainTabNavigator() {
           },
           tabBarActiveTintColor: '#00317D',
           tabBarInactiveTintColor: '#00317D',
-          tabBarActiveBackgroundColor: '#E1EAF9',
-          tabBarInactiveBackgroundColor: '#E1EAF9',
+          
           tabBarLabelStyle: {
             fontSize: 12,
           },
+          
         })}
       >
 
@@ -63,7 +63,7 @@ function MainTabNavigator() {
         <Tab.Screen name="הודעות" component={NotificationPage} />
 
         {/* ************************************************ hidden tabs ****************************************************** */}
-        <Tab.Screen name="יצירת בקשה" component={AddRequestPage} options={{tabBarButton: () => null, goBack:'history'}}/>
+        <Tab.Screen name="יצירת בקשה" component={AddRequestPage} options={{tabBarButton: () => null}}/>
         <Tab.Screen name="צפייה בפרטי בקשה" component={MyRequestPage} options={{tabBarButton: () => null}}/>
         <Tab.Screen name="צפייה בבקשות שלי" component={MyRequestsPage} options={{tabBarButton: () => null}}/>
         <Tab.Screen name="צפייה בבקשות אחרים" component={OthersRequestsPage} options={{tabBarButton: () => null}}/>
@@ -81,7 +81,7 @@ export default function App() {
   return (
     <GlobalData>
       <SafeAreaView style={styles.container}>
-        <NavigationContainer>
+        <NavigationContainer theme={MyTheme}>
           <Stack.Navigator initialRouteName="התחברות" screenOptions={{ headerShown: false }}>
             <Stack.Screen name="התחברות" component={LoginPage} />
             <Stack.Screen name="ראשי" component={MainTabNavigator} options={{ headerShown: false }} />
@@ -106,4 +106,30 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  tabBar: {
+    //marginHorizontal:10,
+    //marginBottom:10,
+    margin:10,
+    elevation: Platform.OS === 'android' ? 4 : 0, // Add elevation for Android only
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 20,
+    elevation: 5,
+  },
 });
+
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: '#fff',
+  },
+};

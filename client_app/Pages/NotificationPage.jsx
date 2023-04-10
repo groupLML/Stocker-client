@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Platform} from 'react-native';
 import React, { useContext, useState, useEffect } from 'react';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
@@ -7,7 +7,7 @@ import FCNotifications from '../FunctionalComps/FCNotifications';
 export default function NotificationPage() {
 
     const { apiUrlNotification } = useContext(GlobalContext);
-    const [notification, setNotification] = useState('');
+    const [notifications, setNotifications] = useState(null);
     //----------------------GET Notification---------------------
     useEffect(() => {
         fetch(apiUrlNotification, {
@@ -22,7 +22,7 @@ export default function NotificationPage() {
             })
             .then(
                 (result) => {
-                    setNotification(result); //set the notifications of choosen dep to display
+                    setNotifications(result); //set the notifications of choosen dep to display
                     console.log(result);
                 },
                 (error) => {
@@ -31,11 +31,15 @@ export default function NotificationPage() {
     }, []) // did mount
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>הודעות מבית מרקחת</Text>
-            <ScrollView>
-                <FCNotifications NotificationsList = {notification} /> 
-            </ScrollView>
+        <View>
+            {notifications !== null && (
+                <View style={styles.container}>
+                    <Text style={styles.title}>הודעות מבית מרקחת</Text>
+                    <ScrollView>
+                        <FCNotifications NotificationsList={notifications} />
+                    </ScrollView>
+                </View>
+            )}
         </View>
     )
 }

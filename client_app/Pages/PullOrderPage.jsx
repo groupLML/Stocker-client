@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal } from 'react-native';
 import React, { useState, useEffect, useContext } from 'react';
 import { GlobalContext } from '../GlobalData/GlobalData';
-import { Icon } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 
 import FCDetailedPullOrders from '../FunctionalComps/FCDetailedPullOrders';
@@ -102,7 +101,7 @@ export default function PullOrderPage(props) {
     }
     else {
       const user = await getUserData();
-      
+
       let updatedMedsList = [...medsInOrderList, selectedMedId];
       console.log(medsInOrderList);
       console.log(selectedMedId);
