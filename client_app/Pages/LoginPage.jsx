@@ -146,9 +146,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 40,
-    fontWeight: 'bold',
-    marginBottom: 30,
+    fontWeight: "bold",
+    textAlign: 'center',
+    marginBottom: 15,
     color: '#003D9A',
+    marginTop: 20,
+    textShadowColor: '#CCCCCC',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 5,
   },
   info: {
     fontSize: 12,
