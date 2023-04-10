@@ -32,7 +32,7 @@ export default function FCDetailedRequest(props) {
     navigation.navigate('ראשי');
   };
 
-  const GetQtyFromInput = (qty) => {
+  const GetQtyFromInput = (qty) => {//??????????????????????????????????????????????????????????????????????
     setQty(Qty);
     setIsUpdateAllowed(true);
   }
@@ -82,7 +82,7 @@ export default function FCDetailedRequest(props) {
       })
       .then((result) => {
         if (result) {
-          setSuccessMessage('הבקשה השתנה בהצלחה');
+          setSuccessMessage('עדכון הבקשה בוצע בהצלחה');
           setModalVisible(true);
 
         } else if (result.status >= 400 && result.status < 500) {
@@ -218,35 +218,28 @@ export default function FCDetailedRequest(props) {
           <View style={styles.body}><FCQuantityInput reqQty={props.reqQty} sendQty={GetQtyFromInput} /></View>
           <View style={styles.body}><FCDepTypeList /></View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59' }]} onPress={() => handleUpdateRequest()}>
+            <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59', flex:1}]} onPress={() => handleUpdateRequest()}>
               <Text style={styles.buttonText}>עדכון</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933' }]} onPress={() => handleDeleteRequest(props.id)}>
+            <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933', flex:1 }]} onPress={() => handleDeleteRequest(props.id)}>
               <Text style={styles.buttonText} >מחיקת העברה</Text>
             </TouchableOpacity>
           </View>
         </>
       )}
       <View style={styles.centeredView}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            this.setState({ modalVisible: !modalVisible });
-          }}>
+        <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { this.setState({ modalVisible: !modalVisible }); }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <Text style={styles.modalText}>{successMessage}</Text>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={handleModalClose}>
+              <TouchableOpacity style={styles.button} onPress={handleModalClose}>
                 <Text style={styles.buttonText}>סגור</Text>
               </TouchableOpacity>
             </View>
           </View>
         </Modal>
       </View>
+
     </View>
   )
 };
@@ -273,8 +266,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 30,
   },
-  button: {
+  centeredView: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
     backgroundColor: '#00317D',
     padding: 10,
     borderRadius: 5,
@@ -288,17 +301,5 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2, },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
   },
 });

@@ -16,7 +16,7 @@ export default function PullOrderPage(props) {
   const { pullOrderId, PullOrdersList } = props.route.params;
   const [pullOrder, setPullOrder] = useState(null);
   const [medsInOrderList, setMedsInOrderList] = useState([]);
-  const { apiUrlPullOrder, depId } = useContext(GlobalContext);
+  const { apiUrlPullOrder, depId, getUserData } = useContext(GlobalContext);
   const [isWaitingOrder, setIsWaitingOrder] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedMedId, setSelectedMedId] = useState(null);
@@ -90,13 +90,42 @@ export default function PullOrderPage(props) {
     setIsModalVisible(false);
   };
 
-  const AddMedToOrder = () => {
+  const AddMedToOrder = async () => {
     //do update
     if (selectedMedId === null) {
       alert('יש לבחור תרופה');
     }
+    else if(medsInOrderList.find((med) => med.medId === selectedMedId)){
+      console.log(selectedMedId);
+      console.log(medsInOrderList);
+      alert('תרופה זו כבר קיימת בהזמנה');
+    }
     else {
-      alert("med added");
+      const user = await getUserData();
+      
+      let updatedMedsList = [...medsInOrderList, selectedMedId];
+      console.log(medsInOrderList);
+      console.log(selectedMedId);
+      console.log(updatedMedsList);
+      fetch(apiUrlPullOrder + 'UpdateNurse/pullId/' + `${pullOrderId}` + '/nUser/' + `${user.userId}`, {
+        method: 'PUT',
+        body: JSON.stringify(updatedMedsList),
+        headers: new Headers({
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json; charset=UTF-8',
+        })
+      })
+        .then(result => {
+          return result.json();
+        })
+        .then(
+          (result) => {
+            alert("התרופה התווספה בהצלחה");
+          },
+          (error) => {
+            console.log("err get=", error);
+          });
+
       setIsModalVisible(false);
     }
   };
@@ -135,20 +164,17 @@ export default function PullOrderPage(props) {
               <Text style={styles.txt}>רוקח אחראי: <Text style={styles.txt}>{pullOrder.pharmacistName}</Text></Text>
             )}
           </View>
-          {/* ----------------------------------------פירוט תרופות בהזמנה וכפתור הוספת תרופה---------------------------------------- */}
+          {/* ----------------------------------------פירוט תרופות בהזמנה---------------------------------------- */}
           <Text style={styles.txt}>פירוט הזמנה:</Text>
           <ScrollView>
             <FCDetailedPullOrders isWaitingOrder={isWaitingOrder} medsInOrderList={medsInOrderList} />
           </ScrollView>
-          <View style={styles.AddBTN}>
-            <TouchableOpacity onPress={handleOpenModal}>
-              <Icon name='add' color='white' />
-            </TouchableOpacity>
-          </View>
-
-          {/* ---------------------------------------------כפתור מחיקת הזמנה בסטטוס ממתין------------------------------------------- */}
+          {/* ---------------------------------------------כפתור מחיקת הזמנה וכפתור הוספת תרופה בסטטוס ממתין------------------------------------------- */}
           {pullOrder.orderStatus === 'W' && (
-            <View style={{ flexDirection: 'row', width: 150, alignSelf: 'center' }}>
+            <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+              <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59' }]} onPress={handleOpenModal}>
+                <Text style={styles.buttonText}>הוספת תרופה</Text>
+              </TouchableOpacity>
               <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933' }]} onPress={() => handleDeletePullOrder()}>
                 <Text style={styles.buttonText} >ביטול הזמנה</Text>
               </TouchableOpacity>

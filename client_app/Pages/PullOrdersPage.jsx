@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCPullOrders from '../FunctionalComps/FCPullOrders';
 
-export default function PullOrdersPage() {
+export default function PullOrdersPage(props) {
   const navigation = useNavigation();
 
   const { apiUrlPullOrder, depId } = useContext(GlobalContext);
@@ -32,7 +32,7 @@ export default function PullOrdersPage() {
         (error) => {
           console.log("err get=", error);
         });
-  }, [])
+  }, [props.didUpdate])
 
   //animation for add BTN to stick to screen while scroll
   const scrollY = useRef(new Animated.Value(0)).current;//set the current state of y axe value

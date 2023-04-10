@@ -28,7 +28,6 @@ export default function PushOrderPage(props) {
         (result) => {
           setMedsInOrderList(result);
           const order = pushOrdersList.find((order) => order.orderId === pushOrderId);
-          console.log(order.orderStatus + 'd');
           setPushOrder(order);
         },
         (error) => {

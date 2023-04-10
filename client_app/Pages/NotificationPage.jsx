@@ -10,6 +10,7 @@ export default function NotificationPage() {
     const [notification, setNotification] = useState('');
     //----------------------GET Notification---------------------
     useEffect(() => {
+        console.log('');
         fetch(apiUrlNotification, {
             method: 'GET',
             headers: new Headers({
@@ -18,22 +19,23 @@ export default function NotificationPage() {
             })
         })
             .then(res => {
-                return res.json()
+                return res.json();
             })
             .then(
                 (result) => {
-                    setNotification(result); //set the requests of choosen dep to display
+                    setNotification(result); //set the notifications of choosen dep to display
+                    console.log(result);
                 },
                 (error) => {
-                    console.log("err post=", error);
+                    console.log("err get=", error);
                 });
-    }, []) // did update
+    }, []) // did mount
 
     return (
         <View style={styles.container}>
             <Text style={styles.title}>הודעות מבית מרקחת</Text>
             <ScrollView>
-                <FCNotifications NotificationsList = {notification} />
+                {/* <FCNotifications NotificationsList = {notification} /> */}
             </ScrollView>
         </View>
     )
