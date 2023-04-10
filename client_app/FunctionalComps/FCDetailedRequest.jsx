@@ -123,7 +123,7 @@ export default function FCDetailedRequest(props) {
           console.log("err delete=", error);
         });
   };
-
+  
   //אישור העברה
   const handleApproveRequest = () => {
     fetch(apiUrlMedRequest + "TransportRe/" + `${props.id}` + "/kind/A", {
@@ -151,7 +151,7 @@ export default function FCDetailedRequest(props) {
 
   //ביטול העברה
   const handleCancelRequest = () => {
-    fetch(apiUrlMedRequest + "TransportRe/" + `${props.id}` + "kind/C", {
+    fetch(apiUrlMedRequest + "TransportRe/" + `${props.id}` + "/kind/C", {
       method: 'PUT',
       headers: new Headers({
         'Content-type': 'application/json; charset=UTF-8',
