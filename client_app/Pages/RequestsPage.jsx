@@ -8,6 +8,7 @@ export default function RequestsPage(props) {
 
   const [showMy, setShowMy] = useState(true);
   const [selectedButton, setSelectedButton] = useState(0);
+  const [isChanged, setIsChanged] = useState(false);
 
   const handleButtonPress = (buttonNumber, buttonType) => {
     setSelectedButton(buttonNumber);
@@ -20,13 +21,17 @@ export default function RequestsPage(props) {
 
   useFocusEffect(
     React.useCallback(() => {
-      setSelectedButton(0)
-      setShowMy(true)
+      setSelectedButton(0);
+      setShowMy(true);
+      setIsChanged(true);
       return () => {
         // Clean up the effect when the screen goes out of focus
       };
-    }, [])
-  );
+    }, []));
+
+  const handleIsChanged = (state) => {
+    setIsChanged(state);
+  };
 
   return (
     <View style={styles.container}>
@@ -38,7 +43,7 @@ export default function RequestsPage(props) {
           <Text style={[styles.buttonText, selectedButton === 1 && styles.selectedButtonText]} >בקשות של אחרים</Text>
         </TouchableOpacity>
       </View>
-      {showMy ? <MyRequestsPage /> : <OthersRequestsPage />}
+      {showMy ? <MyRequestsPage isChanged={isChanged} handleIsChanged={handleIsChanged} /> : <OthersRequestsPage isChanged={isChanged} handleIsChanged={handleIsChanged} />}
     </View>
   );
 };

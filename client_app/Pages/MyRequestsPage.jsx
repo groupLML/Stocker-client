@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCMyRequests from '../FunctionalComps/FCMyRequests';
 
-export default function MyRequestsPage() {
+export default function MyRequestsPage(props) {
   const navigation = useNavigation();
 
   const { apiUrlMedRequest, depId, myMedReqs, setMyMedReqs } = useContext(GlobalContext);
@@ -26,17 +26,19 @@ export default function MyRequestsPage() {
       })
     })
       .then(res => {
-        console.log("1");
         return res.json()
       })
       .then(
         (result) => {
           setMyMedReqs(result); //set the requests of choosen dep to display
+          if (props.isChanged) {
+            props.handleIsChanged(false);
+          }
         },
         (error) => {
           console.log("err post=", error);
         });
-  }, []) // did update
+  }, [props.isChanged]) // did update
 
   //animation for add BTN to stick to screen while scroll
   const scrollY = useRef(new Animated.Value(0)).current;//set the current state of y axe value

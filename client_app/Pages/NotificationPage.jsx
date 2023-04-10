@@ -10,7 +10,6 @@ export default function NotificationPage() {
     const [notification, setNotification] = useState('');
     //----------------------GET Notification---------------------
     useEffect(() => {
-        console.log('');
         fetch(apiUrlNotification, {
             method: 'GET',
             headers: new Headers({
@@ -35,7 +34,7 @@ export default function NotificationPage() {
         <View style={styles.container}>
             <Text style={styles.title}>הודעות מבית מרקחת</Text>
             <ScrollView>
-                {/* <FCNotifications NotificationsList = {notification} /> */}
+                <FCNotifications NotificationsList = {notification} /> 
             </ScrollView>
         </View>
     )

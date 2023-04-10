@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native'
 import { Card } from '@rneui/base';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import FCDateTime from './FCDateTime';
@@ -8,8 +8,18 @@ import { GlobalContext } from '../GlobalData/GlobalData';
 
 export default function FCOthersRequest(props) {
     const navigation = useNavigation();
+
     const isStockQtyLower = props.stcQty < props.reqQty;
+
     const { apiUrlMedRequest, getUserData } = useContext(GlobalContext);
+   
+    const [modalVisible, setModalVisible] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
+    
+    const handleModalClose = () => {
+        setModalVisible(false);
+        navigation.navigate('בקשות');
+    };
 
     const handleApproveRequest = async () => {//handle approve request
         const user = await getUserData();
@@ -28,11 +38,13 @@ export default function FCOthersRequest(props) {
             .then(
                 (result) => {
                     if (result) {
-                        alert("בוצעה בהצלחה");
-                        navigation.navigate('צפייה בבקשות');
-                        
+                        setSuccessMessage("בוצעה בהצלחה");
+                        setModalVisible(true);
                     }
-                    else { alert("אין מספיק במלאי") };
+                    else { 
+                        setSuccessMessage("אין מספיק במלאי");
+                        setModalVisible(true);
+                    };
                 },
                 (error) => {
                     console.log("err put=", error);
@@ -62,6 +74,18 @@ export default function FCOthersRequest(props) {
                     </>
                 )}
             </Card>
+            <View style={styles.centeredView}>
+                <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { this.setState({ modalVisible: !modalVisible }); }}>
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <Text style={styles.modalText}>{successMessage}</Text>
+                            <TouchableOpacity style={styles.buttonModal} onPress={handleModalClose}>
+                                <Text style={styles.buttonText}>סגור</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
+            </View>
         </View>
     )
 }
@@ -108,6 +132,37 @@ const styles = StyleSheet.create({
     buttonText: {
         color: '#fff',
         fontSize: 16,
+        textAlign: 'center',
+    },
+    buttonModal: {
+        backgroundColor: '#00317D',
+        padding: 10,
+        borderRadius: 5,
+        margin: 10,
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22,
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+    modalText: {
+        marginBottom: 15,
         textAlign: 'center',
     },
 });
