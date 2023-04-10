@@ -10,7 +10,6 @@ export default function PushOrdersPage() {
   const [pushOrders, setPushOrders] = useState([]);
 
   //----------------------GET PushOrder---------------------
-
   useEffect(() => {
     fetch(apiUrlPushOrder + 'GetPushOrders/depId/' + `${depId}`, {
       method: 'GET',
@@ -70,5 +69,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-

@@ -7,6 +7,7 @@ import FCDetailedPushOrders from '../FunctionalComps/FCDetailedPushOrders';
 export default function PushOrderPage(props) {
 
   const [pushOrder, setPushOrder] = useState(null);
+  const [status, setStatus] = useState(null);
   const [medsInOrderList, setMedsInOrderList] = useState([]);
   const { apiUrlPushOrder, depId } = useContext(GlobalContext);
 
@@ -29,6 +30,7 @@ export default function PushOrderPage(props) {
           setMedsInOrderList(result);
           const order = pushOrdersList.find((order) => order.orderId === pushOrderId);
           setPushOrder(order);
+          setStatus(order.orderStatus);
         },
         (error) => {
           console.log("err get=", error);
@@ -36,15 +38,15 @@ export default function PushOrderPage(props) {
   }, []);
 
   return (
-    <View>
-      {pushOrder !==null &&
-        <View style={styles.container}>
-          <Text style={styles.title}>הזמנה מספר{pushOrderId}</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>הזמנה מספר {pushOrderId}</Text>
+      {status !== null && (
+        <>
           <ScrollView>
-            <FCDetailedPushOrders medsInOrderList={medsInOrderList} orderStatus={pushOrder.orderStatus} />
+            <FCDetailedPushOrders medsInOrderList={medsInOrderList} orderStatus={status}/>
           </ScrollView>
-        </View>
-      }
+        </>
+      )}
     </View>
   );
 }

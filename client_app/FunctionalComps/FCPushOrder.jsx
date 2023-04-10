@@ -10,8 +10,7 @@ export default function FCPushOrder(props) {
   const navigation = useNavigation();
 
   const handleCardPress = () => {
-    console.log(props.pushOrdersList);
-    navigation.navigate('צפייה בפרטי הזמנת דחיפה', { pushOrderId: props.id, pushOrdersList: props.pushOrdersList });
+    navigation.navigate("צפייה בפרטי הזמנת דחיפה", { pushOrderId: props.id, pushOrdersList: props.pushOrdersList });
   };
 
   return (
@@ -34,7 +33,6 @@ export default function FCPushOrder(props) {
 
       <Text style={styles.cardTitle}>הזמנה מספר {props.id}</Text>
       <Text style={styles.cardBody}>שם יוצר ההזמנה: {props.pharmacistName}</Text>
-
       <TouchableOpacity onPress={() => handleCardPress()}>
         <Text style={styles.readMore}>קרא עוד...</Text>
       </TouchableOpacity>
