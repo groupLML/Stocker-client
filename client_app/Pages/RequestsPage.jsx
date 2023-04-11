@@ -79,13 +79,21 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 0,
     marginTop: 20,
-    backgroundColor: '#E1EAF9',
-    borderBottomWidth: 2, // Add a transparent border to the both buttons
-    borderBottomColor: 'transparent', // Set the border color to transparent
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
+    borderTopLeftRadius:10,
+    borderTopRightRadius:10,
   },
+  
   selectedButton: {
     borderBottomWidth: 1,
-    borderBottomColor: '#00317D'
+    borderBottomColor: 'transparent',
   },
   buttonText: {
     color: '#00317D',

@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 
 import FCLogout from '../FunctionalComps/FCLogout';
 
@@ -19,6 +20,16 @@ export default function HomePage() {
       navigation.navigate('בקשות', { requiredPage: requiredRequestPage });
     }
   }, [requiredOrderPage, requiredRequestPage]);
+
+    useFocusEffect(
+    React.useCallback(() => {
+      setRequiredOrderPage('');
+      setRequiedRequestPage('');
+      return () => {
+        // Clean up the effect when the screen goes out of focus
+      };
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
