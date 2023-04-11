@@ -12,17 +12,19 @@ export default function FCMedInOrder(props) {
 
   return (
     <View>
-       <Card borderColor='#E1EAF9' >
+      <Card borderColor='#E1EAF9' >
         <TouchableOpacity style={styles.CloseBTN} onPress={() => props.getId2Delete(props.medId)}>
           <Ionicons name='close-outline' color='#003D9A' size={22} />
         </TouchableOpacity>
-        <View style={styles.row}>
-          <Text style={styles.cardBody}>שם תרופה: </Text>
-          <Text style={styles.cardBody}>{selectedMed.medName}</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.cardBody}>כמות: </Text>
-          <Text style={styles.cardBody}>{props.poQty}</Text>
+        <View>
+          <View style={styles.row}>
+            <Text style={styles.cardText}>שם תרופה: </Text>
+            <Text style={styles.cardText}>{selectedMed.medName}</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.cardText}>כמות: </Text>
+            <Text style={styles.cardText}>{props.poQty}</Text>
+          </View>
         </View>
       </Card>
     </View>
@@ -34,18 +36,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 10,
   },
-  cardTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 10,
-  },
-  cardBody: {
-    marginVertical: 10,
+  cardText: {
+    marginVertical: 2,
     fontSize: 15,
     color: "#003D9A",
   },
-  CloseBTN:{
+  CloseBTN: {
     alignSelf: 'flex-start',
   },
 });

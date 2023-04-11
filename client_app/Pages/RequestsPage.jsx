@@ -6,9 +6,22 @@ import OthersRequestsPage from './OthersRequestsPage';
 
 export default function RequestsPage(props) {
 
+  const { requiredPage } = props.route.params;
+
   const [showMy, setShowMy] = useState(true);
   const [selectedButton, setSelectedButton] = useState(0);
   const [isChanged, setIsChanged] = useState(false);
+
+  useEffect(() => {
+    if (requiredPage === 'my') {
+      setShowMy(true);
+      setSelectedButton(0);
+    }
+    else {
+      setShowMy(false);
+      setSelectedButton(1);
+    }
+  }, [requiredPage]);
 
   const handleButtonPress = (buttonNumber, buttonType) => {
     setSelectedButton(buttonNumber);
@@ -19,7 +32,7 @@ export default function RequestsPage(props) {
     }
   };
 
-  useFocusEffect(
+/*   useFocusEffect(
     React.useCallback(() => {
       setSelectedButton(0);
       setShowMy(true);
@@ -28,7 +41,7 @@ export default function RequestsPage(props) {
         // Clean up the effect when the screen goes out of focus
       };
     }, []));
-
+ */
   const handleIsChanged = (state) => {
     setIsChanged(state);
   };

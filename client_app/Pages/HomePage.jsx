@@ -1,11 +1,14 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 export default function HomePage() {
 
+  const [requiredOrderPage, setRequiredOrderPage] = useState('');
+  const [requiredRequestPage, setRequiedRequestPage] = useState('');
+
   const navigation = useNavigation();
-  
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Stocker</Text>
@@ -14,31 +17,33 @@ export default function HomePage() {
           <Image source={require("../Images/question.png")} style={styles.buttonImage} />
           <Text style={styles.buttonText}>יצירת בקשה</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('יצירת הזמנת משיכה')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("יצירת הזמנת משיכה")}>
           <Image source={require("../Images/order.png")} style={styles.buttonImage} />
           <Text style={styles.buttonText}>יצירת הזמנה</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('צפייה בבקשות שלי')}>
+        <TouchableOpacity style={styles.button} onPress={() => { setRequiedRequestPage('my'); }}>
           <Image source={require("../Images/take.png")} style={styles.buttonImage} />
           <Text style={styles.buttonText}>בקשות המחלקה שלי</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('צפייה בבקשות אחרים')}>
+        <TouchableOpacity style={styles.button} onPress={() => { setRequiedRequestPage('others'); }}>
           <Image source={require("../Images/give.png")} style={styles.buttonImage} />
           <Text style={styles.buttonText}>בקשות מחלקות אחרות</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('צפייה בהזמנת משיכה')}>
+        <TouchableOpacity style={styles.button} onPress={() => { setRequiredOrderPage('pull'); }}>
           <Image source={require("../Images/pull.png")} style={styles.buttonImage} />
           <Text style={styles.buttonText}>הזמנות משיכה</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('צפייה בבקשות אחרים')}>
-        <Image source={require("../Images/push.png")} style={styles.buttonImage} />
+        <TouchableOpacity style={styles.button} onPress={() => { setRequiredOrderPage('push'); }}>
+          <Image source={require("../Images/push.png")} style={styles.buttonImage} />
           <Text style={styles.buttonText}>הזמנות דחיפה</Text>
         </TouchableOpacity>
       </View>
+      {requiredOrderPage && navigation.navigate('הזמנות', { requiredPage: requiredOrderPage })}
+      {requiredRequestPage && navigation.navigate('בקשות', { requiredPage: requiredRequestPage })}
     </View>
   )
 }

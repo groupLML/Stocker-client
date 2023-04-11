@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import FCMyRequests from '../FunctionalComps/FCMyRequests';
 
@@ -9,10 +9,14 @@ export default function MyRequestPage(props) {
 
   let request = requestsList.filter((item) => item.reqId === requestId);//get the request item to read 
 
+  useEffect(() => {
+    console.log(request);
+  }, [])
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>בקשה ממחלקה</Text>
-      <FCMyRequests RequestsList={request} isDetailedRequest={true}/>      
+      <FCMyRequests RequestsList={request} isDetailedRequest={true} />
     </View>
   );
 }

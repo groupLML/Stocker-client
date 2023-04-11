@@ -4,11 +4,25 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import PushOrdersPage from './PushOrdersPage';
 import PullOrdersPage from './PullOrdersPage';
+import { useEffect } from 'react';
 
-export default function OrdersPage() {
+export default function OrdersPage(props) {
 
-  const [showPull, setShowPull] = useState(true);
-  const [selectedButton, setSelectedButton] = useState(0);
+  const { requiredPage } = props.route.params;
+
+  const [showPull, setShowPull] = useState();
+  const [selectedButton, setSelectedButton] = useState();
+
+  useEffect(() => {
+    if (requiredPage === 'pull') {
+      setShowPull(true);
+      setSelectedButton(0);
+    }
+    else {
+      setShowPull(false);
+      setSelectedButton(1);
+    }
+  }, [requiredPage]);
 
   const handleButtonPress = (buttonNumber, buttonType) => {
     setSelectedButton(buttonNumber);
@@ -19,15 +33,15 @@ export default function OrdersPage() {
     }
   };
 
-  useFocusEffect(
+/*   useFocusEffect(
     React.useCallback(() => {
-      setSelectedButton(0)
-      setShowPull(true)
+      setSelectedButton();
+      setShowPull();
       return () => {
         // Clean up the effect when the screen goes out of focus
       };
     }, [])
-  );
+  ); */
 
   return (
     <View style={styles.container}>
@@ -39,7 +53,7 @@ export default function OrdersPage() {
           <Text style={[styles.buttonText, selectedButton === 1 && styles.selectedButtonText]} >דחיפה</Text>
         </TouchableOpacity>
       </View>
-      {showPull ? <PullOrdersPage/> : <PushOrdersPage />}
+      {showPull ? <PullOrdersPage /> : <PushOrdersPage />}
     </View>
   );
 };

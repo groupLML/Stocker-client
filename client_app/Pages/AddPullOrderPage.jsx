@@ -44,7 +44,7 @@ export default function AddPullOrderPage() {
                     mazNum: ""
                 }
                 setMedsOrderList([...medsOrderList, medInOrder]);
-                setQty(1); // לאאאאאאאאאאאאא למחוקקקקקקקקקקקקקקקקקקקקקקקקקקק
+                setQty(1);
             }
             else {
                 alert('תרופה זו כבר קיימת בהזמנה')
@@ -88,6 +88,7 @@ export default function AddPullOrderPage() {
             .then((result) => {
                 alert("הזמנה התווספה בהצלחה")
                 console.log("fetch POST= ", result);
+                setMedsOrderList([]);
 
             }, (error) => {
                 console.log("err post=", error);
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
     },
     ScrollView: {
-        height: 350,
+        height: 320,
     },
     subTitle: {
         fontSize: 18,
