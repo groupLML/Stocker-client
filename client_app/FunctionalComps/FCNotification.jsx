@@ -10,19 +10,16 @@ export default function FCNotification(props) {
   }, []);
 
   return (
-    <View>
-      <Text>FCNotification</Text>
-    </View>
-    /*<Card style={styles.cardContainer} borderColor="#E1EAF9">
-          <FCDateTime date={props.date} />
-          <Text style={styles.cardTitle}>{props.pharmacistName}</Text>
-          <Text style={styles.cardBody}>{props.msg}</Text>
-        </Card> */
+    <Card style={styles.cardContainer} borderColor="#E1EAF9">
+      <FCDateTime date={props.date} />
+      <Text style={styles.cardTitle}>{props.pharmacistName}</Text>
+      <Text style={styles.cardBody}>{props.msg}</Text>
+    </Card>
   )
 }
 
 const styles = StyleSheet.create({
-  /*   cardContainer: {
+    cardContainer: {
       width: "60%",
       padding: 10,
       marginBottom: 10,
@@ -39,5 +36,5 @@ const styles = StyleSheet.create({
       marginVertical: 10,
       fontSize: 15,
       color: "#003D9A",
-    }, */
+    },
 });

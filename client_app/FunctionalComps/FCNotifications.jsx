@@ -1,13 +1,12 @@
-import { View, StyleSheet } from 'react-native'
-import React, {useEffect} from 'react'
-import FCNotification from './FCNotification'
+import { View, StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
+import FCNotification from './FCNotification';
 
 export default function FCNotifications(props) {
 
     let notificationsStr = props.NotificationsList.map((notification, key) => {
         return <FCNotification
             id={notification.msgId}
-            userId={notification.userId}
             pharmacistName={notification.pharmacistName}
             msg={notification.msg}
             date={notification.msgDate}

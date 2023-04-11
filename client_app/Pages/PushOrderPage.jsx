@@ -6,7 +6,7 @@ import FCDetailedPushOrders from '../FunctionalComps/FCDetailedPushOrders';
 
 export default function PushOrderPage(props) {
 
-  const [pushOrder, setPushOrder] = useState(null);
+  const [pushOrder, setPushOrder] = useState(null);//ליייייייייייייייןןןןןןןןןןןןן למה זה?
   const [status, setStatus] = useState(null);
   const [medsInOrderList, setMedsInOrderList] = useState([]);
   const { apiUrlPushOrder, depId } = useContext(GlobalContext);

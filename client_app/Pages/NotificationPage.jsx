@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, Platform} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Platform } from 'react-native';
 import React, { useContext, useState, useEffect } from 'react';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
@@ -23,7 +23,7 @@ export default function NotificationPage() {
             .then(
                 (result) => {
                     setNotifications(result); //set the notifications of choosen dep to display
-                    console.log(result);
+                    console.log("result");
                 },
                 (error) => {
                     console.log("err get=", error);
@@ -31,17 +31,15 @@ export default function NotificationPage() {
     }, []) // did mount
 
     return (
-        <View>
+        <View style={styles.container}>
+            <Text style={styles.title}>הודעות מבית מרקחת</Text>
             {notifications !== null && (
-                <View style={styles.container}>
-                    <Text style={styles.title}>הודעות מבית מרקחת</Text>
-                    <ScrollView>
-                        <FCNotifications NotificationsList={notifications} />
-                    </ScrollView>
-                </View>
+                <ScrollView>
+                    <FCNotifications NotificationsList={notifications} />
+                </ScrollView>
             )}
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
