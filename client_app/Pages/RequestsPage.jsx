@@ -4,7 +4,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import MyRequestsPage from './MyRequestsPage';
 import OthersRequestsPage from './OthersRequestsPage';
 
-export default function RequestsPage() {
+export default function RequestsPage(props) {
 
   const { requiredPage } = props.route.params;
 

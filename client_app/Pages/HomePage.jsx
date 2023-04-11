@@ -9,6 +9,15 @@ export default function HomePage() {
 
   const navigation = useNavigation();
 
+  useEffect(() => {
+    if (requiredOrderPage) {
+      navigation.navigate('הזמנות', { requiredPage: requiredOrderPage });
+    }
+    if (requiredRequestPage) {
+      navigation.navigate('בקשות', { requiredPage: requiredRequestPage });
+    }
+  }, [requiredOrderPage, requiredRequestPage]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Stocker</Text>
@@ -42,8 +51,8 @@ export default function HomePage() {
           <Text style={styles.buttonText}>הזמנות דחיפה</Text>
         </TouchableOpacity>
       </View>
-      {requiredOrderPage && navigation.navigate('הזמנות', { requiredPage: requiredOrderPage })}
-      {requiredRequestPage && navigation.navigate('בקשות', { requiredPage: requiredRequestPage })}
+{/*       {requiredOrderPage && navigation.navigate('הזמנות', { requiredPage: requiredOrderPage })}
+      {requiredRequestPage && navigation.navigate('בקשות', { requiredPage: requiredRequestPage })} */}
     </View>
   )
 }

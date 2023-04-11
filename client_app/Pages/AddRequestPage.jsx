@@ -30,7 +30,7 @@ export default function AddRequestPage(props) {
   const handleModalCloseAdd = () => {
     setModalVisible(false);
     setClearForm(true);
-    props.navigation.navigate('בקשות');
+    props.navigation.navigate('בקשות', { requiredPage: 'my' });
   };
 
   const handleAddRequest = async () => {

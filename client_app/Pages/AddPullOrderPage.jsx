@@ -8,7 +8,7 @@ import FCMedInput from '../FunctionalComps/FCMedInput';
 import FCQuantityInput from '../FunctionalComps/FCQuantityInput';
 
 
-export default function AddPullOrderPage() {
+export default function AddPullOrderPage(props) {
 
     const { apiUrlPullOrder, getUserData } = useContext(GlobalContext);
 
@@ -88,7 +88,7 @@ export default function AddPullOrderPage() {
             .then((result) => {
                 alert("הזמנה התווספה בהצלחה")
                 console.log("fetch POST= ", result);
-                setMedsOrderList([]);
+                props.navigation.navigate('הזמנות', { requiredPage: 'pull' });
 
             }, (error) => {
                 console.log("err post=", error);
