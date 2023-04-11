@@ -32,16 +32,16 @@ export default function RequestsPage(props) {
     }
   };
 
-/*   useFocusEffect(
-    React.useCallback(() => {
-      setSelectedButton(0);
-      setShowMy(true);
-      setIsChanged(true);
-      return () => {
-        // Clean up the effect when the screen goes out of focus
-      };
-    }, []));
- */
+  /*   useFocusEffect(
+      React.useCallback(() => {
+        setSelectedButton(0);
+        setShowMy(true);
+        setIsChanged(true);
+        return () => {
+          // Clean up the effect when the screen goes out of focus
+        };
+      }, []));
+   */
   const handleIsChanged = (state) => {
     setIsChanged(state);
   };
@@ -87,10 +87,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
     elevation: 6,
-    borderTopLeftRadius:10,
-    borderTopRightRadius:10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
-  
+
   selectedButton: {
     borderBottomWidth: 1,
     borderBottomColor: 'transparent',
@@ -102,5 +102,8 @@ const styles = StyleSheet.create({
   },
   selectedButtonText: {
     fontWeight: "bold",
+    textShadowColor: '#CCCCCC',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 5,
   },
 });

@@ -131,11 +131,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     title: {
-        fontSize: 25,
+        fontSize: 26,
+        fontWeight: "bold",
         textAlign: 'center',
-        marginBottom: 5,
+        marginBottom: 10,
         color: '#003D9A',
-        marginTop: 30,
+        marginTop: 20,
+        textShadowColor: '#CCCCCC',
+        textShadowOffset: { width: 0, height: 2 },
+        textShadowRadius: 5,
     },
     ScrollView: {
         height: 320,

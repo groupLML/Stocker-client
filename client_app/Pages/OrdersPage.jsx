@@ -33,15 +33,15 @@ export default function OrdersPage(props) {
     }
   };
 
-/*   useFocusEffect(
-    React.useCallback(() => {
-      setSelectedButton();
-      setShowPull();
-      return () => {
-        // Clean up the effect when the screen goes out of focus
-      };
-    }, [])
-  ); */
+  /*   useFocusEffect(
+      React.useCallback(() => {
+        setSelectedButton();
+        setShowPull();
+        return () => {
+          // Clean up the effect when the screen goes out of focus
+        };
+      }, [])
+    ); */
 
   return (
     <View style={styles.container}>
@@ -83,8 +83,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
     elevation: 6,
-    borderTopLeftRadius:10,
-    borderTopRightRadius:10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
     borderBottomWidth: 2,
     borderBottomColor: '#F5F5F5',
   },
@@ -99,5 +99,8 @@ const styles = StyleSheet.create({
   },
   selectedButtonText: {
     fontWeight: "bold",
+    textShadowColor: '#CCCCCC',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 5,
   },
 });

@@ -74,13 +74,11 @@ export default function HomePage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //backgroundColor: '#F5F5F5',
   },
   title: {
-    fontSize: 30,
+    fontSize: 40,
     fontWeight: "bold",
     textAlign: 'center',
-    marginBottom: 10,
     color: '#003D9A',
     marginTop: 5,
     textShadowColor: '#CCCCCC',
@@ -115,6 +113,9 @@ const styles = StyleSheet.create({
     color: '#00317D',
     fontSize: 16,
     textAlign: 'center',
+    textShadowColor: '#CCCCCC',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 3,
   },
   buttonImage: {
     width: 40,

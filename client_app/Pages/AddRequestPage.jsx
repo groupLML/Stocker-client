@@ -102,11 +102,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   title: {
-    fontSize: 25,
+    fontSize: 26,
+    fontWeight: "bold",
     textAlign: 'center',
-    marginBottom: 30,
+    marginBottom: 20,
     color: '#003D9A',
     marginTop: 20,
+    textShadowColor: '#CCCCCC',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 5,
   },
   fields: {
     fontSize: 17,

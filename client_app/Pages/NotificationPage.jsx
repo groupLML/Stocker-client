@@ -23,7 +23,6 @@ export default function NotificationPage() {
             .then(
                 (result) => {
                     setNotifications(result); //set the notifications of choosen dep to display
-                    console.log("result");
                 },
                 (error) => {
                     console.log("err get=", error);
@@ -48,10 +47,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     title: {
-        fontSize: 25,
+        fontSize: 26,
+        fontWeight: "bold",
         textAlign: 'center',
-        marginBottom: 15,
+        marginBottom: 10,
         color: '#003D9A',
         marginTop: 20,
-    },
+        textShadowColor: '#CCCCCC',
+        textShadowOffset: { width: 0, height: 2 },
+        textShadowRadius: 5,
+      },
 });

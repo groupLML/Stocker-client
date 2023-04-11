@@ -23,15 +23,14 @@ const styles = StyleSheet.create({
       borderRadius: 20,
     },
     cardTitle: {
-      fontSize: 20,
-      fontWeight: "bold",
+      fontSize: 18,
       textAlign: "center",
       marginBottom: 10,
       color: "#003D9A",
     },
     cardBody: {
       marginVertical: 10,
-      fontSize: 15,
+      fontSize: 14,
       color: "#003D9A",
      },
 });
