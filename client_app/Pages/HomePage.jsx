@@ -2,6 +2,8 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
+import FCLogout from '../FunctionalComps/FCLogout';
+
 export default function HomePage() {
 
   const [requiredOrderPage, setRequiredOrderPage] = useState('');
@@ -20,7 +22,10 @@ export default function HomePage() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Stocker</Text>
+      <View >
+          <FCLogout/>
+          <Text style={styles.title}>Stocker</Text>
+      </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('יצירת בקשה')}>
           <Image source={require("../Images/question.png")} style={styles.buttonImage} />
@@ -51,8 +56,6 @@ export default function HomePage() {
           <Text style={styles.buttonText}>הזמנות דחיפה</Text>
         </TouchableOpacity>
       </View>
-{/*       {requiredOrderPage && navigation.navigate('הזמנות', { requiredPage: requiredOrderPage })}
-      {requiredRequestPage && navigation.navigate('בקשות', { requiredPage: requiredRequestPage })} */}
     </View>
   )
 }
@@ -60,15 +63,15 @@ export default function HomePage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    //backgroundColor: '#F5F5F5',
   },
   title: {
     fontSize: 30,
     fontWeight: "bold",
     textAlign: 'center',
-    marginBottom: 15,
+    marginBottom: 10,
     color: '#003D9A',
-    marginTop: 20,
+    marginTop: 5,
     textShadowColor: '#CCCCCC',
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 5,

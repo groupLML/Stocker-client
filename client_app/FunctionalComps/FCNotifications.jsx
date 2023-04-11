@@ -1,5 +1,5 @@
 import { View, StyleSheet } from 'react-native';
-import React, { useEffect } from 'react';
+import React from 'react';
 import FCNotification from './FCNotification';
 
 export default function FCNotifications(props) {
@@ -13,10 +13,6 @@ export default function FCNotifications(props) {
             key={notification.msgId}
         />;
     })
-
-    useEffect(() => {
-        console.log(notificationsStr);
-    }, []);
 
     return (
         <View style={styles.container}>

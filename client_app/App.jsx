@@ -48,7 +48,7 @@ function MainTabNavigator() {
           },
           tabBarActiveTintColor: '#00317D',
           tabBarInactiveTintColor: '#00317D',
-          
+
           tabBarLabelStyle: {
             fontSize: 12,
           },
@@ -120,6 +120,6 @@ const MyTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    background: '#fff',
+    background: "white",
   },
 };
