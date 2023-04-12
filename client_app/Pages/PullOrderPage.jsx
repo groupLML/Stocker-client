@@ -15,7 +15,7 @@ export default function PullOrderPage(props) {
   const { pullOrderId, PullOrdersList } = props.route.params;
   const [pullOrder, setPullOrder] = useState(null);
   const [medsInOrderList, setMedsInOrderList] = useState([]);
-  const { apiUrlPullOrder, depId, getUserData } = useContext(GlobalContext);
+  const { apiUrlPullOrder, depId, getUserData, meds } = useContext(GlobalContext);
   const [isWaitingOrder, setIsWaitingOrder] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedMedId, setSelectedMedId] = useState(null);
@@ -36,6 +36,7 @@ export default function PullOrderPage(props) {
       .then(
         (result) => {
           setMedsInOrderList(result);
+          console.log(result);
           const order = PullOrdersList.find((order) => order.orderId === pullOrderId);
           setPullOrder(order);
         },
@@ -55,9 +56,17 @@ export default function PullOrderPage(props) {
     }
   }, [pullOrder]);
 
-  const handleDeletePullOrder = () => {
 
-    console.log("handle Delete Pull Order is pressed!");
+  const handleSelectMed = (medId) => {
+    setSelectedMedId(medId);
+  };
+
+  const GetQtyFromInput = (Qty) => {
+    setQty(Qty);
+  }
+
+
+  const handleDeletePullOrder = () => {
 
     fetch(apiUrlPullOrder + 'OrderId/' + `${pullOrderId}` + '/type/' + `${2}`, {
       method: 'DELETE',
@@ -68,8 +77,6 @@ export default function PullOrderPage(props) {
     })
       .then(result => {
         return result.json();
-
-
       })
       .then(
         (result) => {
@@ -81,31 +88,32 @@ export default function PullOrderPage(props) {
         });
   };
 
-  const handleOpenModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalVisible(false);
-  };
 
   const AddMedToOrder = async () => {
-    //do update
+
     if (selectedMedId === null) {
       alert('יש לבחור תרופה');
     }
-    else if(medsInOrderList.find((med) => med.medId === selectedMedId)){
-      console.log(selectedMedId);
-      console.log(medsInOrderList);
+    else if (medsInOrderList.find((med) => med.medId === selectedMedId)) {
       alert('תרופה זו כבר קיימת בהזמנה');
     }
-    else {
+    else {//do update
       const user = await getUserData();
 
-      let updatedMedsList = [...medsInOrderList, selectedMedId];
-      console.log(medsInOrderList);
-      console.log(selectedMedId);
-      console.log(updatedMedsList);
+      const medToAdd = {
+        medId: selectedMedId,
+        poQty: Qty,
+        supQty: 0,
+        mazNum: '',
+      };
+
+      const temp = medsInOrderList.map(item => {
+        const { medName, ...rest } = item; // Remove "medName" property using object destructuring
+        return { ...rest, mazNum: "" }; // Add new "mazNum" property with an empty string as its initial value
+      });
+
+      let updatedMedsList = [...temp, medToAdd];
+
       fetch(apiUrlPullOrder + 'UpdateNurse/pullId/' + `${pullOrderId}` + '/nUser/' + `${user.userId}`, {
         method: 'PUT',
         body: JSON.stringify(updatedMedsList),
@@ -119,6 +127,7 @@ export default function PullOrderPage(props) {
         })
         .then(
           (result) => {
+            console.log(result);
             alert("התרופה התווספה בהצלחה");
           },
           (error) => {
@@ -128,14 +137,14 @@ export default function PullOrderPage(props) {
       setIsModalVisible(false);
     }
   };
-
-  const handleSelectMed = (medId) => {
-    setSelectedMedId(medId);
+  
+  const handleOpenModal = () => {
+    setIsModalVisible(true);
   };
 
-  const GetQtyFromInput = (Qty) => {
-    setQty(Qty);
-  }
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+  };
 
   return (
     <View style={styles.container}>
