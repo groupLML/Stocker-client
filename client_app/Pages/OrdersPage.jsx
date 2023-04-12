@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
+//import { useFocusEffect } from '@react-navigation/native';
 
 import PushOrdersPage from './PushOrdersPage';
 import PullOrdersPage from './PullOrdersPage';

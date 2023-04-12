@@ -63,5 +63,8 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     color: '#003D9A',
     marginTop: 60,
+    textShadowColor: '#CCCCCC',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 5,
   },
 });

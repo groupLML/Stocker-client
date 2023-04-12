@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
+//import { useFocusEffect } from '@react-navigation/native';
 import MyRequestsPage from './MyRequestsPage';
 import OthersRequestsPage from './OthersRequestsPage';
 
@@ -12,25 +12,25 @@ export default function RequestsPage(props) {
   const [selectedButton, setSelectedButton] = useState(0);
   const [isChanged, setIsChanged] = useState(false);
 
-  useEffect(() => {
-    if (requiredPage === 'my') {
-      setShowMy(true);
-      setSelectedButton(0);
-    }
-    else {
-      setShowMy(false);
-      setSelectedButton(1);
-    }
-  }, [requiredPage]);
-
-  const handleButtonPress = (buttonNumber, buttonType) => {
-    setSelectedButton(buttonNumber);
-    if (buttonType === 'MyReq') {
-      setShowMy(true);
-    } else {
-      setShowMy(false);
-    }
-  };
+    useEffect(() => {
+      if (requiredPage === 'others') {
+        setShowMy(false);
+        setSelectedButton(1);
+      }
+      else {
+        setShowMy(true);
+        setSelectedButton(0);
+      }
+    }, [requiredPage]);
+  
+    const handleButtonPress = (buttonNumber, buttonType) => {
+      setSelectedButton(buttonNumber);
+      if (buttonType === 'MyReq') {
+        setShowMy(true);
+      } else {
+        setShowMy(false);
+      }
+    };
 
   /*   useFocusEffect(
       React.useCallback(() => {
@@ -57,6 +57,7 @@ export default function RequestsPage(props) {
         </TouchableOpacity>
       </View>
       {showMy ? <MyRequestsPage isChanged={isChanged} handleIsChanged={handleIsChanged} /> : <OthersRequestsPage isChanged={isChanged} handleIsChanged={handleIsChanged} />}
+
     </View>
   );
 };

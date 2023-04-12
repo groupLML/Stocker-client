@@ -261,6 +261,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: '#003D9A',
     marginTop: 20,
+        textShadowColor: '#CCCCCC',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 5,
   },
   button: {
     flex: 1,

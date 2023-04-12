@@ -15,7 +15,6 @@ export default function MyRequestPage(props) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>בקשה ממחלקה</Text>
       <FCMyRequests RequestsList={request} isDetailedRequest={true} />
     </View>
   );
@@ -26,11 +25,5 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: 25,
-    textAlign: 'center',
-    marginBottom: 15,
-    color: '#003D9A',
   },
 });
