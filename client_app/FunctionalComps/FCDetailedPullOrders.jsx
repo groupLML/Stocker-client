@@ -11,6 +11,7 @@ export default function FCDetailedPullOrders(props) {
             poQty={med.poQty}
             supQty={med.supQty}
             isWaitingOrder={props.isWaitingOrder}
+            getId2Delete={() => props.SendId2Remove(med.medId)}
             key={med.medId}
         />;
     })

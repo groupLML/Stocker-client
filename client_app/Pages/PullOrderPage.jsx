@@ -15,7 +15,7 @@ export default function PullOrderPage(props) {
   const { pullOrderId, PullOrdersList } = props.route.params;
   const [pullOrder, setPullOrder] = useState(null);
   const [medsInOrderList, setMedsInOrderList] = useState([]);
-  const { apiUrlPullOrder, depId, getUserData, meds } = useContext(GlobalContext);
+  const { apiUrlPullOrder, depId, getUserData } = useContext(GlobalContext);
   const [isWaitingOrder, setIsWaitingOrder] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedMedId, setSelectedMedId] = useState(null);
@@ -64,7 +64,6 @@ export default function PullOrderPage(props) {
   const GetQtyFromInput = (Qty) => {
     setQty(Qty);
   }
-
 
   const handleDeletePullOrder = () => {
 
@@ -137,7 +136,41 @@ export default function PullOrderPage(props) {
       setIsModalVisible(false);
     }
   };
-  
+
+  const RemoveMedFromList = async (Id2Remove) => {
+
+    const user = await getUserData();
+
+    const temp = medsInOrderList.filter((med) => med.medId !== Id2Remove);// Remove selected med from order meds list
+
+    let updatedMedsList = temp.map(item => {
+      const { medName, ...rest } = item; // Remove "medName" property using object destructuring
+      return { ...rest, mazNum: "" }; // Add new "mazNum" property with an empty string as its initial value
+    });
+
+    fetch(apiUrlPullOrder + 'UpdateNurse/pullId/' + `${pullOrderId}` + '/nUser/' + `${user.userId}`, {
+      method: 'PUT',
+      body: JSON.stringify(updatedMedsList),
+      headers: new Headers({
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json; charset=UTF-8',
+      })
+    })
+      .then(result => {
+        return result.json();
+      })
+      .then(
+        (result) => {
+          console.log(result);
+          alert("התרופה נמחקה בהצלחה");
+        },
+        (error) => {
+          console.log("err get=", error);
+        });
+
+    setIsModalVisible(false);
+  };
+
   const handleOpenModal = () => {
     setIsModalVisible(true);
   };
@@ -175,7 +208,7 @@ export default function PullOrderPage(props) {
           {/* ----------------------------------------פירוט תרופות בהזמנה---------------------------------------- */}
           <Text style={styles.txt}>פירוט הזמנה:</Text>
           <ScrollView>
-            <FCDetailedPullOrders isWaitingOrder={isWaitingOrder} medsInOrderList={medsInOrderList} />
+            <FCDetailedPullOrders isWaitingOrder={isWaitingOrder} medsInOrderList={medsInOrderList} SendId2Remove={RemoveMedFromList} />
           </ScrollView>
           {/* ---------------------------------------------כפתור מחיקת הזמנה וכפתור הוספת תרופה בסטטוס ממתין------------------------------------------- */}
           {pullOrder.orderStatus === 'W' && (

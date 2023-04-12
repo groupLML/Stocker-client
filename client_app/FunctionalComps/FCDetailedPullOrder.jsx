@@ -10,7 +10,7 @@ export default function FCDetailedPullOrder(props) {
     <View>
       <Card borderColor='#E1EAF9'>
         {props.isWaitingOrder === true && (
-          <TouchableOpacity style={styles.CloseBTN} onPress={() => props.getId2Delete(props.medId)}>
+          <TouchableOpacity style={styles.CloseBTN} onPress={() => props.getId2Delete(props.id)}>
             <Ionicons name='close-outline' color='#003D9A' size={22} />
           </TouchableOpacity>
         )}
