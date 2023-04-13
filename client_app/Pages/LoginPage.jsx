@@ -1,5 +1,5 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Linking } from 'react-native';
+import React, { useState, useContext, useEffect} from 'react';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Linking, Modal } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
@@ -13,6 +13,12 @@ export default function LoginPage(props) {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [testMessage, setTextMessage] = useState('');
+
+  const handleModalClose = () => {
+    setModalVisible(false);
+  };
 
   //-----------------------------Phone Press Linking----------------------
   const handlePhonePress = () => {
@@ -71,26 +77,33 @@ export default function LoginPage(props) {
                   // saving error
                 }
               }
-              else { alert("שגיאה, משתמש הוא אינו אחות") };
+              else {
+                setTextMessage("שגיאה, משתמש הוא אינו אחות");
+                setModalVisible(true);
+              };
             }
-            else { alert("שגיאה, משתמש לא קיים"); };
+            else {
+              setTextMessage("שגיאה, משתמש לא קיים");
+              setModalVisible(true);
+            };
           },
           (error) => {
             console.log("error,", error);
           });
     }
     else {// one or both fields are empty
-      alert("אנא מלא את כל השדות")
+      setTextMessage("אנא מלא את כל השדות");
+      setModalVisible(true);
     }
   }
 
   //להעביר לדף הבית
   //-------------------------------Get Meds-----------------------------
 
-  const { apiUrlMeds, setMeds, meds} = useContext(GlobalContext);
+  const { apiUrlMeds, setMeds, meds } = useContext(GlobalContext);
 
   useEffect(() => {
-    fetch(apiUrlMeds, { 
+    fetch(apiUrlMeds, {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json; charset=UTF-8',
@@ -105,7 +118,7 @@ export default function LoginPage(props) {
           setMeds(result);
         },
         (error) => {
-          console.log("err post=", error);
+          console.log("err get=", error);
         });
   }, [meds]);
 
@@ -133,6 +146,18 @@ export default function LoginPage(props) {
       <TouchableOpacity onPress={handlePhonePress}>
         <Text style={styles.phoneNumber}>{phoneNumber}</Text>
       </TouchableOpacity>
+      <View style={styles.centeredView}>
+        <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { this.setState({ modalVisible: !modalVisible }); }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>{testMessage}</Text>
+              <TouchableOpacity style={styles.button} onPress={handleModalClose}>
+                <Text style={styles.buttonText}>סגור</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+      </View>
     </View>
   );
 }
@@ -184,5 +209,41 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 16,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    backgroundColor: '#00317D',
+    padding: 10,
+    borderRadius: 5,
+    margin: 10,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
   },
 });
