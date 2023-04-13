@@ -151,8 +151,8 @@ export default function LoginPage(props) {
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <Text style={styles.modalText}>{testMessage}</Text>
-              <TouchableOpacity style={styles.button} onPress={handleModalClose}>
-                <Text style={styles.buttonText}>סגור</Text>
+              <TouchableOpacity style={styles.modalButton} onPress={handleModalClose}>
+                <Text style={styles.modalButtonText}>סגור</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -168,6 +168,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
+    marginTop: 150,
   },
   title: {
     fontSize: 40,
@@ -231,13 +232,13 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  button: {
+  modalButton: {
     backgroundColor: '#00317D',
     padding: 10,
     borderRadius: 5,
     margin: 10,
   },
-  buttonText: {
+  modalButtonText: {
     color: '#fff',
     fontSize: 16,
     textAlign: 'center',

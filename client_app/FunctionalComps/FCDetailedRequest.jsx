@@ -83,7 +83,7 @@ export default function FCDetailedRequest(props) {
       })
       .then((result) => {
         if (result) {
-          setSuccessMessage('עדכון הבקשה בוצע בהצלחה');
+          setTextMessage('עדכון הבקשה בוצע בהצלחה');
           setModalVisible(true);
 
         } else if (result.status >= 400 && result.status < 500) {
@@ -113,7 +113,7 @@ export default function FCDetailedRequest(props) {
       .then(
         (result) => {
           if (result) {
-            setSuccessMessage('הבקשה נמחקה בהצלחה');
+            setTextMessage('הבקשה נמחקה בהצלחה');
             setModalVisible(true);
           }
           else {
@@ -139,7 +139,7 @@ export default function FCDetailedRequest(props) {
       })
       .then((result) => {
         if (result) {
-          setSuccessMessage('הבקשה הועברה בהצלחה');
+          setTextMessage('הבקשה הועברה בהצלחה');
           setModalVisible(true);
         }
         else {
@@ -164,7 +164,7 @@ export default function FCDetailedRequest(props) {
       })
       .then((result) => {
         if (result) {
-          setSuccessMessage('הבקשה בוטלה בהצלחה');
+          setTextMessage('הבקשה בוטלה בהצלחה');
           setModalVisible(true);
         }
         else {
