@@ -7,6 +7,11 @@ import FCOthersRequests from '../FunctionalComps/FCOthersRequests';
 export default function OthersRequestsPage(props) {
 
     const { apiUrlMedRequest, depId, othersMedReqs, setOthersMedReqs } = useContext(GlobalContext);
+    const [isStatusChanged, setIsStatusChanged] = useState(false);
+
+    const handleIsStatusChanged = () => {
+        setIsStatusChanged(true);
+    };
 
     //----------------------GET Requests details ---------------------
     useEffect(() => {
@@ -22,20 +27,21 @@ export default function OthersRequestsPage(props) {
             })
             .then(
                 (result) => {
-                    setOthersMedReqs(result); //set the requests from the choosen dep to display
-                    if (props.isChanged) {
-                        props.handleIsChanged(false);
+                    let newArray = result.filter((item) => item.aDep === depId || item.aDep === 0);
+                    setOthersMedReqs(newArray); //set the requests from the choosen dep to display
+                    if (isStatusChanged) {
+                        setIsStatusChanged(false);
                     }
                 },
                 (error) => {
                     console.log("err Get=", error);
                 });
-    }, [props.isChanged])//component did update
+    }, [isStatusChanged])//component did update
 
     return (
         <View style={styles.container}>
             <ScrollView>
-                <FCOthersRequests RequestsList={othersMedReqs} />
+                <FCOthersRequests RequestsList={othersMedReqs} handleIsStatusChanged={handleIsStatusChanged} />
             </ScrollView>
         </View>
     )

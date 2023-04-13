@@ -15,6 +15,7 @@ export default function FCOthersRequests(props) {
       reqQty={request.reqQty}
       stcQty={request.stcQty}
       reqStatus={request.reqStatus}
+      handleIsStatusChanged={props.handleIsStatusChanged}
       requestsList={props.RequestsList}
       key={request.reqId}
     />;

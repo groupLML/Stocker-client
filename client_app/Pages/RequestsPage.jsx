@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState, useEffect } from 'react';
-//import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import MyRequestsPage from './MyRequestsPage';
 import OthersRequestsPage from './OthersRequestsPage';
 
@@ -32,16 +32,16 @@ export default function RequestsPage(props) {
       }
     };
 
-  /*   useFocusEffect(
+    useFocusEffect(
       React.useCallback(() => {
-        setSelectedButton(0);
-        setShowMy(true);
+    /*     setSelectedButton(0);
+        setShowMy(true); */
         setIsChanged(true);
         return () => {
           // Clean up the effect when the screen goes out of focus
         };
       }, []));
-   */
+  
   const handleIsChanged = (state) => {
     setIsChanged(state);
   };
@@ -56,7 +56,7 @@ export default function RequestsPage(props) {
           <Text style={[styles.buttonText, selectedButton === 1 && styles.selectedButtonText]} >בקשות של אחרים</Text>
         </TouchableOpacity>
       </View>
-      {showMy ? <MyRequestsPage isChanged={isChanged} handleIsChanged={handleIsChanged} /> : <OthersRequestsPage isChanged={isChanged} handleIsChanged={handleIsChanged} />}
+      {showMy ? <MyRequestsPage isChanged={isChanged} handleIsChanged={handleIsChanged} /> : <OthersRequestsPage/>}
 
     </View>
   );

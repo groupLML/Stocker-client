@@ -15,10 +15,10 @@ export default function FCOthersRequest(props) {
    
     const [modalVisible, setModalVisible] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
-    
+
     const handleModalClose = () => {
+        props.handleIsStatusChanged();
         setModalVisible(false);
-        navigation.navigate('בקשות');
     };
 
     const handleApproveRequest = async () => {//handle approve request
@@ -38,10 +38,10 @@ export default function FCOthersRequest(props) {
             .then(
                 (result) => {
                     if (result) {
-                        setSuccessMessage("בוצעה בהצלחה");
+                        setSuccessMessage("בוצע בהצלחה");
                         setModalVisible(true);
                     }
-                    else { 
+                    else { //ליטללללללללללללללללללללללללללללללללללל
                         setSuccessMessage("אין מספיק במלאי");
                         setModalVisible(true);
                     };

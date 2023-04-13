@@ -13,6 +13,7 @@ export default function AddRequestPage(props) {
   const [selectedMedId, setSelectedMedId] = useState(null);
   const [Qty, setQty] = useState(1);
   const [modalVisible, setModalVisible] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
   const [clearForm, setClearForm] = useState(false);
 
   const handleSetClearForm = (state) => {
@@ -58,11 +59,14 @@ export default function AddRequestPage(props) {
         return res;
       })
       .then((result) => {
-        if (result) {
+        console.log(result.status);
+        if (result.status >= 200 && result.status < 300) {
+          setSuccessMessage('בקשה התווספה בהצלחה');
           setModalVisible(true);
-        } else if (result.status >= 400 && result.status < 500) {
+        } else if (result.status >= 400 && result.status <= 500) {
           result.text().then(text => {
-            alert(text);
+            setSuccessMessage(text);
+            setModalVisible(true);
           });
         }
       }, (error) => {
@@ -83,7 +87,7 @@ export default function AddRequestPage(props) {
       <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {this.setState({ modalVisible: !modalVisible });}}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>בקשה התווספה בהצלחה</Text>
+              <Text style={styles.modalText}>{successMessage}</Text>
               <TouchableOpacity style={styles.button} onPress={handleModalCloseAdd}>
                 <Text style={styles.buttonText}>סגור</Text>
               </TouchableOpacity>
