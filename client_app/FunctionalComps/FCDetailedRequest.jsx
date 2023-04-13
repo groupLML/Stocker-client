@@ -1,5 +1,5 @@
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
@@ -13,7 +13,7 @@ export default function FCDetailedRequest(props) {
 
   const navigation = useNavigation();
 
-  const { depId, apiUrlMedRequest, DepTypes } = useContext(GlobalContext);
+  const { depId, apiUrlMedRequest, DepTypes, setDepTypes } = useContext(GlobalContext);
 
   const [Qty, setQty] = useState(props.reqQty);
   const [selectedMedId, setSelectedMedId] = useState(null);
@@ -22,6 +22,28 @@ export default function FCDetailedRequest(props) {
   const [textMessage, setTextMessage] = useState('');
   const [isSuccessModal, setIsSuccessModal] = useState(false);
   const [isUpdateAllowed, setIsUpdateAllowed] = useState(false);
+
+/*   //----------------------GET Request deps ---------------------
+  useEffect(() => {
+    fetch(apiUrlMedRequest + 'RequestDepTypes/depId/' + `${depId}` + '/reqId/' + `${props.id}`, {
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json; charset=UTF-8',
+      })
+    })
+      .then(res => {
+        return res.json()
+      })
+      .then(
+        (result) => {
+          const newReqDeps = DepTypes.map((item) => ({ name: item.name, isChecked: result.includes(item.name) }))//set the requests of choosen dep to display
+          setDepTypes(newReqDeps);
+        },
+        (error) => {
+          console.log("err post=", error);
+        });
+  }, []) // did mount */
 
   const handleSetClearForm = (state) => {
     setClearForm(state);
@@ -234,13 +256,17 @@ export default function FCDetailedRequest(props) {
           <Text style={{ ...styles.body, fontSize: 17 }}><Text style={{ fontSize: 17 }} >שם יוצר ההזמנה: </Text>{props.cNurseName}</Text>
           <View style={styles.body}><FCMedInput medName={props.medName} sendMedSelect={handleSelectMed} clearForm={clearForm} handleSetClearForm={handleSetClearForm} /></View>
           <View style={styles.body}><FCQuantityInput reqQty={props.reqQty} sendQty={GetQtyFromInput} /></View>
-          <View style={styles.body}><FCDepTypeList /></View>
+          <View style={styles.body}><FCDepTypeList ReqId={props.id} /></View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59', flex: 1 }]} onPress={() => handleUpdateRequest()}>
               <Text style={styles.buttonText}>עדכון</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933', flex: 1 }]} onPress={() => handleDeleteRequest(props.id)}>
+<<<<<<< Updated upstream
               <Text style={styles.buttonText} >מחיקת בקשה</Text>
+=======
+              <Text style={styles.buttonText} >מחיקת העברה</Text>
+>>>>>>> Stashed changes
             </TouchableOpacity>
           </View>
         </>
