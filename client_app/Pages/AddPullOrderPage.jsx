@@ -88,6 +88,7 @@ export default function AddPullOrderPage(props) {
             .then((result) => {
                 alert("הזמנה התווספה בהצלחה")
                 console.log("fetch POST= ", result);
+                setMedsOrderList([]);
                 props.navigation.navigate('הזמנות', { requiredPage: 'pull' });
 
             }, (error) => {

@@ -10,6 +10,7 @@ import FCDateTime from './FCDateTime';
 import FCDepTypeList from './FCDepTypeList';
 
 export default function FCDetailedRequest(props) {
+
   const navigation = useNavigation();
 
   const { depId, apiUrlMedRequest, DepTypes } = useContext(GlobalContext);
@@ -126,7 +127,7 @@ export default function FCDetailedRequest(props) {
   
   //אישור העברה
   const handleApproveRequest = () => {
-    fetch(apiUrlMedRequest + "TransportRe/" + `${props.id}` + "/kind/A", {
+    fetch(apiUrlMedRequest + "TransportReq/" + `${props.id}` + "/kind/A", {
       method: 'PUT',
       headers: new Headers({
         'Content-type': 'application/json; charset=UTF-8',

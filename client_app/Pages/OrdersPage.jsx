@@ -33,15 +33,17 @@ export default function OrdersPage(props) {
     }
   };
 
-  /*   useFocusEffect(
-      React.useCallback(() => {
-        setSelectedButton();
-        setShowPull();
-        return () => {
-          // Clean up the effect when the screen goes out of focus
-        };
-      }, [])
-    ); */
+  /* useFocusEffect(
+    React.useCallback(() => {
+      setIsChanged(true);
+      return () => {
+        // Clean up the effect when the screen goes out of focus
+      };
+    }, [])); */
+
+    /* const handleIsChanged = (state) => {
+      setIsChanged(state);
+    }; */
 
   return (
     <View style={styles.container}>
@@ -53,7 +55,7 @@ export default function OrdersPage(props) {
           <Text style={[styles.buttonText, selectedButton === 1 && styles.selectedButtonText]} >דחיפה</Text>
         </TouchableOpacity>
       </View>
-      {showPull ? <PullOrdersPage /> : <PushOrdersPage />}
+      {showPull ? <PullOrdersPage/> : <PushOrdersPage />}
     </View>
   );
 };
