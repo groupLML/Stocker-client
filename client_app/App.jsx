@@ -22,7 +22,7 @@ import RequestsPage from './Pages/RequestsPage';
 import OrdersPage from './Pages/OrdersPage';
 
 
-import { GlobalContext } from './GlobalData/GlobalData';
+//import { GlobalContext } from './GlobalData/GlobalData';
 import * as Notifications from 'expo-notifications';
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import RegisterForPushNotifications from './FunctionalComps/RegisterForPushNotifications';
@@ -84,7 +84,7 @@ function MainTabNavigator() {
 
 export default function App() {
 
-  const { setToken } = useContext(GlobalContext);
+  //const { setToken } = useContext(GlobalContext);
   const [ExpoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
@@ -121,9 +121,9 @@ export default function App() {
     }
   }, [ExpoPushToken]); */
 
-  useEffect(() => {
+  /* useEffect(() => {
     setToken(ExpoPushToken);
-  }, [ExpoPushToken]);
+  }, [ExpoPushToken]); */
 
   return (
     <GlobalData>

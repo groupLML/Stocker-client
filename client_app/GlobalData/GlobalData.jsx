@@ -16,7 +16,7 @@ export default function GlobalData(props) {
     const [meds, setMeds] = useState([]);
     const [myMedReqs, setMyMedReqs] = useState([]);
     const [othersMedReqs, setOthersMedReqs] = useState([]);
-    const [Token, setToken] = useState('');
+    //const [Token, setToken] = useState('');
 
     const [DepTypes, setDepTypes] = useState([
         { name: 'אורתופדיה', isChecked: true },
@@ -41,7 +41,8 @@ export default function GlobalData(props) {
                 apiUrlUser, apiUrlMedRequest, apiUrlMeds, apiUrlPullOrder, apiUrlPushOrder, apiUrlNotification,
                 depId, setDepId, meds, setMeds,
                 DepTypes, setDepTypes, myMedReqs, setMyMedReqs, othersMedReqs, setOthersMedReqs,
-                getUserData, setToken, Token,
+                getUserData,
+                //setToken, Token,
                 //getTokenData
             }}>
             {props.children}

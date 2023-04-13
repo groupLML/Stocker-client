@@ -10,15 +10,7 @@ import FCQuantityInput from '../FunctionalComps/FCQuantityInput';
 
 export default function AddPullOrderPage(props) {
 
-    const { apiUrlPullOrder, getUserData, getTokenData } = useContext(GlobalContext);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const token = await getTokenData();
-            console.log(token);
-        };
-        fetchData();
-    }, []);
+    const { apiUrlPullOrder, getUserData } = useContext(GlobalContext);
 
     const [selectedMedId, setSelectedMedId] = useState(null);
     const [Qty, setQty] = useState(1);
