@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Modal } from 'react-native';
 import React, { useState, useContext, useEffect } from 'react';
 import { Icon, Card } from 'react-native-elements';
 import { GlobalContext } from '../GlobalData/GlobalData';
@@ -17,6 +17,17 @@ export default function AddPullOrderPage(props) {
     const [medsOrderList, setMedsOrderList] = useState([]);
     const [clearForm, setClearForm] = useState(false);
 
+    const [modalVisible, setModalVisible] = useState(false);
+    const [textMessage, setTextMessage] = useState('');
+    const [isSuccessModal, setIsSuccessModal] = useState(false);
+
+    const handleModalClose = () => {
+        setModalVisible(false);
+        if (isSuccessModal) {
+            props.navigation.navigate('הזמנות', { requiredPage: 'pull' });
+        }
+    };
+
     const handleSetClearForm = (state) => {
         setClearForm(state);
     };
@@ -34,6 +45,7 @@ export default function AddPullOrderPage(props) {
     }
 
     const AddMed2Order = () => {
+        console.log(selectedMedId + ':(');//ליןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןן
         if (selectedMedId != null) {
             let existingMed = medsOrderList.find(med => med.medId === selectedMedId);
             if (!existingMed) { //If the selected medication wasn't added to order already, add med to order list     
@@ -47,12 +59,17 @@ export default function AddPullOrderPage(props) {
                 setQty(1);
             }
             else {
-                alert('תרופה זו כבר קיימת בהזמנה')
+                setIsSuccessModal(false);
+                setTextMessage('תרופה זו כבר קיימת בהזמנה');
+                setModalVisible(true);
             }
             setClearForm(true);
         }
         else {
-            alert('יש לבחור תרופה להוספה')
+            console.log(2);
+            setIsSuccessModal(false);
+            setTextMessage('יש לבחור תרופה להוספה');
+            setModalVisible(true);
         }
     };
 
@@ -60,7 +77,6 @@ export default function AddPullOrderPage(props) {
 
         const user = await getUserData();
         const currentDate = new Date();
-
         const pullOrder = {
             orderId: 0,
             depId: user.depId,
@@ -86,12 +102,17 @@ export default function AddPullOrderPage(props) {
                 return res.json();
             })
             .then((result) => {
-                alert("הזמנה התווספה בהצלחה")
-                console.log("fetch POST= ", result);
-
-                setMedsOrderList([]);
-                props.navigation.navigate('הזמנות', { requiredPage: 'pull' });
-
+                if (result) {
+                    setMedsOrderList([]);
+                    setIsSuccessModal(true);
+                    setTextMessage("הזמנה התווספה בהצלחה");
+                    setModalVisible(true);
+                }
+                else {
+                    setIsSuccessModal(false);
+                    setTextMessage("שגיאה, יש בעיה בשרת");
+                    setModalVisible(true);
+                }
             }, (error) => {
                 console.log("err post=", error);
             });
@@ -122,6 +143,18 @@ export default function AddPullOrderPage(props) {
                     </View>
                 </View>
             )}
+            <View style={styles.centeredView}>
+                <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { this.setState({ modalVisible: !modalVisible }); }}>
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <Text style={styles.modalText}>{textMessage}</Text>
+                            <TouchableOpacity style={styles.button} onPress={handleModalClose}>
+                                <Text style={styles.buttonText}>סגור</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
+            </View>
         </View>
     )
 }
@@ -173,6 +206,42 @@ const styles = StyleSheet.create({
     BTNtext: {
         color: '#fff',
         fontSize: 16,
+        textAlign: 'center',
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22,
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+    button: {
+        backgroundColor: '#00317D',
+        padding: 10,
+        borderRadius: 5,
+        margin: 10,
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 16,
+        textAlign: 'center',
+    },
+    modalText: {
+        marginBottom: 15,
         textAlign: 'center',
     },
 });

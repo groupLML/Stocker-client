@@ -5,11 +5,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { Card } from '@rneui/base';
 
 export default function FCDetailedPullOrder(props) {
+  
+  const isOneOrder = props.medsInOrderList.length
 
   return (
     <View>
       <Card borderColor='#E1EAF9'>
-        {props.isWaitingOrder === true && (
+        {props.isWaitingOrder === true && isOneOrder !== 1 && (
           <TouchableOpacity style={styles.CloseBTN} onPress={() => props.getId2Delete(props.id)}>
             <Ionicons name='close-outline' color='#003D9A' size={22} />
           </TouchableOpacity>

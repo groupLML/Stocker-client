@@ -38,7 +38,6 @@ export default function RequestsPage(props) {
         setShowMy(true); */
         setIsChanged(true);
         return () => {
-          // Clean up the effect when the screen goes out of focus
         };
       }, []));
   

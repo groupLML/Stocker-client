@@ -14,7 +14,7 @@ export default function FCOthersRequest(props) {
     const { apiUrlMedRequest, getUserData } = useContext(GlobalContext);
    
     const [modalVisible, setModalVisible] = useState(false);
-    const [successMessage, setSuccessMessage] = useState('');
+    const [textMessage, setTextMessage] = useState('');
 
     const handleModalClose = () => {
         props.handleIsStatusChanged();
@@ -38,11 +38,11 @@ export default function FCOthersRequest(props) {
             .then(
                 (result) => {
                     if (result) {
-                        setSuccessMessage("בוצע בהצלחה");
+                        setTextMessage("בוצע בהצלחה");
                         setModalVisible(true);
                     }
-                    else { //ליטללללללללללללללללללללללללללללללללללל
-                        setSuccessMessage("אין מספיק במלאי");
+                    else {
+                        setTextMessage("שגיאה, יש בעיה בשרת");
                         setModalVisible(true);
                     };
                 },
@@ -78,7 +78,7 @@ export default function FCOthersRequest(props) {
                 <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { this.setState({ modalVisible: !modalVisible }); }}>
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                            <Text style={styles.modalText}>{successMessage}</Text>
+                            <Text style={styles.modalText}>{textMessage}</Text>
                             <TouchableOpacity style={styles.buttonModal} onPress={handleModalClose}>
                                 <Text style={styles.buttonText}>סגור</Text>
                             </TouchableOpacity>

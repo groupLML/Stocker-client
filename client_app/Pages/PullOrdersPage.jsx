@@ -28,11 +28,14 @@ export default function PullOrdersPage(props) {
       .then(
         (result) => {
           setPullOrders(result);
+          if (props.isChanged) {
+            props.handleIsChanged(false);
+          }
         },
         (error) => {
           console.log("err get=", error);
         });
-  }, [])
+  }, [props.isChanged])
 
   //animation for add BTN to stick to screen while scroll
   const scrollY = useRef(new Animated.Value(0)).current;//set the current state of y axe value

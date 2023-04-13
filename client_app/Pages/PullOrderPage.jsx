@@ -13,11 +13,12 @@ export default function PullOrderPage(props) {
   const navigation = useNavigation();
 
   const { pullOrderId, PullOrdersList } = props.route.params;
+  const { apiUrlPullOrder, depId, getUserData } = useContext(GlobalContext);
+
   const [pullOrder, setPullOrder] = useState(null);
   const [medsInOrderList, setMedsInOrderList] = useState([]);
-  const { apiUrlPullOrder, depId, getUserData } = useContext(GlobalContext);
   const [isWaitingOrder, setIsWaitingOrder] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalAddVisible, setIsModalAddVisible] = useState(false);
   const [selectedMedId, setSelectedMedId] = useState(null);
   const [Qty, setQty] = useState(1);
 
@@ -36,7 +37,6 @@ export default function PullOrderPage(props) {
       .then(
         (result) => {
           setMedsInOrderList(result);
-          console.log(result);
           const order = PullOrdersList.find((order) => order.orderId === pullOrderId);
           setPullOrder(order);
         },
@@ -65,6 +65,7 @@ export default function PullOrderPage(props) {
     setQty(Qty);
   }
 
+  //ביטול הזמנה
   const handleDeletePullOrder = () => {
 
     fetch(apiUrlPullOrder + 'OrderId/' + `${pullOrderId}` + '/type/' + `${2}`, {
@@ -79,8 +80,10 @@ export default function PullOrderPage(props) {
       })
       .then(
         (result) => {
-          console.log("res=", result);
-          navigation.navigate('הזמנות');
+          if (result) {
+            alert(true)
+            navigation.navigate('הזמנות', { requiredPage: 'pull' });
+          }
         },
         (error) => {
           console.log("err delete=", error);
@@ -132,7 +135,6 @@ export default function PullOrderPage(props) {
           (error) => {
             console.log("err get=", error);
           });
-
       setIsModalVisible(false);
     }
   };
@@ -168,15 +170,15 @@ export default function PullOrderPage(props) {
           console.log("err get=", error);
         });
 
-    setIsModalVisible(false);
+    setIsModalAddVisible(false);
   };
 
-  const handleOpenModal = () => {
-    setIsModalVisible(true);
+  const handleOpenModalAdd = () => {
+    setIsModalAddVisible(true);
   };
 
-  const handleCloseModal = () => {
-    setIsModalVisible(false);
+  const handleCloseModalAdd = () => {
+    setIsModalAddVisible(false);
   };
 
   return (
@@ -213,7 +215,7 @@ export default function PullOrderPage(props) {
           {/* ---------------------------------------------כפתור מחיקת הזמנה וכפתור הוספת תרופה בסטטוס ממתין------------------------------------------- */}
           {pullOrder.orderStatus === 'W' && (
             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-              <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59' }]} onPress={handleOpenModal}>
+              <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59' }]} onPress={handleOpenModalAdd}>
                 <Text style={styles.buttonText}>הוספת תרופה</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933' }]} onPress={() => handleDeletePullOrder()}>
@@ -222,7 +224,7 @@ export default function PullOrderPage(props) {
             </View>
           )}
 
-          <Modal visible={isModalVisible} animationType="slide" transparent={true} onRequestClose={handleCloseModal}>
+          <Modal visible={isModalAddVisible} animationType="slide" transparent={true} onRequestClose={handleCloseModalAdd}>
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
                 <FCMedInput sendMedSelect={handleSelectMed} />
@@ -231,7 +233,7 @@ export default function PullOrderPage(props) {
                   <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59' }]} onPress={AddMedToOrder}>
                     <Text style={styles.buttonText}>הוספה</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933' }]} onPress={handleCloseModal}>
+                  <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933' }]} onPress={handleCloseModalAdd}>
                     <Text style={styles.buttonText}>ביטול</Text>
                   </TouchableOpacity>
                 </View>
@@ -261,7 +263,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: '#003D9A',
     marginTop: 20,
-        textShadowColor: '#CCCCCC',
+    textShadowColor: '#CCCCCC',
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 5,
   },

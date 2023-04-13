@@ -13,13 +13,14 @@ export default function AddRequestPage(props) {
   const [selectedMedId, setSelectedMedId] = useState(null);
   const [Qty, setQty] = useState(1);
   const [modalVisible, setModalVisible] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
+  const [textMessage, setTextMessage] = useState('');
+  const [isSuccessModal, setIsSuccessModal] = useState(false);
   const [clearForm, setClearForm] = useState(false);
 
   const handleSetClearForm = (state) => {
     setClearForm(state);
   };
-  
+
   const handleSelectMed = (medId) => {
     setSelectedMedId(medId);
   };
@@ -27,11 +28,13 @@ export default function AddRequestPage(props) {
   const GetQtyFromInput = (Qty) => {
     setQty(Qty);
   }
-  
+
   const handleModalCloseAdd = () => {
     setModalVisible(false);
     setClearForm(true);
-    props.navigation.navigate('בקשות', { requiredPage: 'my' });
+    if (isSuccessModal) {
+      props.navigation.navigate('בקשות', { requiredPage: 'my' });
+    }
   };
 
   const handleAddRequest = async () => {
@@ -59,13 +62,16 @@ export default function AddRequestPage(props) {
         return res;
       })
       .then((result) => {
-        console.log(result.status);
         if (result.status >= 200 && result.status < 300) {
-          setSuccessMessage('בקשה התווספה בהצלחה');
-          setModalVisible(true);
+          result.text().then(text => {
+            setIsSuccessModal(true);
+            setTextMessage(text);
+            setModalVisible(true);
+          });
         } else if (result.status >= 400 && result.status <= 500) {
           result.text().then(text => {
-            setSuccessMessage(text);
+            setIsSuccessModal(false);
+            setTextMessage(text);
             setModalVisible(true);
           });
         }
@@ -84,10 +90,10 @@ export default function AddRequestPage(props) {
         <Text style={styles.buttonText}>אישור</Text>
       </TouchableOpacity>
       <View style={styles.centeredView}>
-      <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {this.setState({ modalVisible: !modalVisible });}}>
+        <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { this.setState({ modalVisible: !modalVisible }); }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>{successMessage}</Text>
+              <Text style={styles.modalText}>{textMessage}</Text>
               <TouchableOpacity style={styles.button} onPress={handleModalCloseAdd}>
                 <Text style={styles.buttonText}>סגור</Text>
               </TouchableOpacity>
@@ -124,8 +130,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   button: {
-    width:100,
-    alignSelf:'center',
+    width: 100,
+    alignSelf: 'center',
     backgroundColor: '#003D9A',
     borderRadius: 10,
     paddingVertical: 10,

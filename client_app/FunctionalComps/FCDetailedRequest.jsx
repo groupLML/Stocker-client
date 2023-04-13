@@ -19,7 +19,8 @@ export default function FCDetailedRequest(props) {
   const [selectedMedId, setSelectedMedId] = useState(null);
   const [clearForm, setClearForm] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
+  const [textMessage, setTextMessage] = useState('');
+  const [isSuccessModal, setIsSuccessModal] = useState(false);
   const [isUpdateAllowed, setIsUpdateAllowed] = useState(false);
 
   const handleSetClearForm = (state) => {
@@ -28,9 +29,11 @@ export default function FCDetailedRequest(props) {
 
   const handleModalClose = () => {
     setModalVisible(false);
-    setClearForm(true);
-    setIsUpdateAllowed(false);
-    navigation.navigate('בקשות');
+    if (isSuccessModal) {
+      setClearForm(true);
+      setIsUpdateAllowed(false);
+      navigation.navigate('בקשות');
+    }
   };
 
   const GetQtyFromInput = (Qty) => {
@@ -46,7 +49,8 @@ export default function FCDetailedRequest(props) {
   //עדכון העברה
   const handleUpdateRequest = () => {
     if (!isUpdateAllowed) {
-      setSuccessMessage('לא בצעו שינוים בהזמנה');
+      setIsSuccessModal(false);
+      setTextMessage('לא בצעו שינוים בהזמנה');
       setModalVisible(true);
       return;
     }
@@ -82,13 +86,17 @@ export default function FCDetailedRequest(props) {
         return res;
       })
       .then((result) => {
-        if (result) {
-          setTextMessage('עדכון הבקשה בוצע בהצלחה');
-          setModalVisible(true);
-
-        } else if (result.status >= 400 && result.status < 500) {
+        if (result.status >= 200 && result.status < 300) {
           result.text().then(text => {
-            alert(text);
+            setIsSuccessModal(true);
+            setTextMessage(text);
+            setModalVisible(true);
+          });
+        } else if (result.status >= 400 && result.status <= 500) {
+          result.text().then(text => {
+            setIsSuccessModal(false);
+            setTextMessage(text);
+            setModalVisible(true);
           });
         }
       }, (error) => {
@@ -97,7 +105,7 @@ export default function FCDetailedRequest(props) {
 
   };
 
-  //מחיקת העברה
+  //מחיקת בקשה
   const handleDeleteRequest = (idToDelete) => {
     //-------------------------------Delete medReqs------------------------------------
     fetch(apiUrlMedRequest + `${idToDelete}`, {
@@ -113,18 +121,21 @@ export default function FCDetailedRequest(props) {
       .then(
         (result) => {
           if (result) {
+            setIsSuccessModal(true);
             setTextMessage('הבקשה נמחקה בהצלחה');
             setModalVisible(true);
           }
           else {
-            alert("יש בעיה בשרת")
+            setIsSuccessModal(false);
+            setTextMessage("יש בעיה בשרת");
+            setModalVisible(true);
           };
         },
         (error) => {
           console.log("err delete=", error);
         });
   };
-  
+
   //אישור העברה
   const handleApproveRequest = () => {
     fetch(apiUrlMedRequest + "TransportReq/" + `${props.id}` + "/kind/A", {
@@ -139,11 +150,14 @@ export default function FCDetailedRequest(props) {
       })
       .then((result) => {
         if (result) {
+          setIsSuccessModal(true);
           setTextMessage('הבקשה הועברה בהצלחה');
           setModalVisible(true);
         }
         else {
-          alert("יש בעיה בשרת")
+          setIsSuccessModal(false);
+          setTextMessage("יש בעיה בשרת");
+          setModalVisible(true);
         };
       }, (error) => {
         console.log("err put=", error);
@@ -164,11 +178,14 @@ export default function FCDetailedRequest(props) {
       })
       .then((result) => {
         if (result) {
+          setIsSuccessModal(true);
           setTextMessage('הבקשה בוטלה בהצלחה');
           setModalVisible(true);
         }
         else {
-          alert("יש בעיה בשרת")
+          setIsSuccessModal(false);
+          setTextMessage("יש בעיה בשרת");
+          setModalVisible(true);
         };
       }, (error) => {
         console.log("err put=", error);
@@ -207,7 +224,7 @@ export default function FCDetailedRequest(props) {
               <Text style={styles.buttonText}>אישור העברה</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933' }]} onPress={() => handleCancelRequest()}>
-              <Text style={styles.buttonText} >ביטול העברה</Text>
+              <Text style={styles.buttonText}>ביטול העברה</Text>
             </TouchableOpacity>
           </View>
         </>
@@ -219,11 +236,11 @@ export default function FCDetailedRequest(props) {
           <View style={styles.body}><FCQuantityInput reqQty={props.reqQty} sendQty={GetQtyFromInput} /></View>
           <View style={styles.body}><FCDepTypeList /></View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59', flex:1}]} onPress={() => handleUpdateRequest()}>
+            <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59', flex: 1 }]} onPress={() => handleUpdateRequest()}>
               <Text style={styles.buttonText}>עדכון</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933', flex:1 }]} onPress={() => handleDeleteRequest(props.id)}>
-              <Text style={styles.buttonText} >מחיקת העברה</Text>
+            <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933', flex: 1 }]} onPress={() => handleDeleteRequest(props.id)}>
+              <Text style={styles.buttonText} >מחיקת בקשה</Text>
             </TouchableOpacity>
           </View>
         </>
@@ -232,7 +249,7 @@ export default function FCDetailedRequest(props) {
         <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { this.setState({ modalVisible: !modalVisible }); }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>{successMessage}</Text>
+              <Text style={styles.modalText}>{textMessage}</Text>
               <TouchableOpacity style={styles.button} onPress={handleModalClose}>
                 <Text style={styles.buttonText}>סגור</Text>
               </TouchableOpacity>

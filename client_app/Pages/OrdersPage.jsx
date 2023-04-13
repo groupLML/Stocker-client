@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
-//import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 
 import PushOrdersPage from './PushOrdersPage';
 import PullOrdersPage from './PullOrdersPage';
@@ -12,6 +12,11 @@ export default function OrdersPage(props) {
 
   const [showPull, setShowPull] = useState();
   const [selectedButton, setSelectedButton] = useState();
+  const [isChanged, setIsChanged] = useState(false);
+
+  const handleIsChanged = (state) => {
+    setIsChanged(state);
+  };
 
   useEffect(() => {
     if (requiredPage === 'pull') {
@@ -33,17 +38,12 @@ export default function OrdersPage(props) {
     }
   };
 
-  /* useFocusEffect(
+   useFocusEffect(
     React.useCallback(() => {
       setIsChanged(true);
       return () => {
-        // Clean up the effect when the screen goes out of focus
       };
-    }, [])); */
-
-    /* const handleIsChanged = (state) => {
-      setIsChanged(state);
-    }; */
+    }, []));
 
   return (
     <View style={styles.container}>
@@ -55,7 +55,7 @@ export default function OrdersPage(props) {
           <Text style={[styles.buttonText, selectedButton === 1 && styles.selectedButtonText]} >דחיפה</Text>
         </TouchableOpacity>
       </View>
-      {showPull ? <PullOrdersPage/> : <PushOrdersPage />}
+      {showPull ? <PullOrdersPage isChanged={isChanged} handleIsChanged={handleIsChanged} /> : <PushOrdersPage />}
     </View>
   );
 };
