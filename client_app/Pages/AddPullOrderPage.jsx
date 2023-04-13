@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Icon, Card } from 'react-native-elements';
 import { GlobalContext } from '../GlobalData/GlobalData';
 
@@ -10,7 +10,15 @@ import FCQuantityInput from '../FunctionalComps/FCQuantityInput';
 
 export default function AddPullOrderPage(props) {
 
-    const { apiUrlPullOrder, getUserData } = useContext(GlobalContext);
+    const { apiUrlPullOrder, getUserData, getTokenData } = useContext(GlobalContext);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const token = await getTokenData();
+            console.log(token);
+        };
+        fetchData();
+    }, []);
 
     const [selectedMedId, setSelectedMedId] = useState(null);
     const [Qty, setQty] = useState(1);
@@ -88,6 +96,7 @@ export default function AddPullOrderPage(props) {
             .then((result) => {
                 alert("הזמנה התווספה בהצלחה")
                 console.log("fetch POST= ", result);
+
                 setMedsOrderList([]);
                 props.navigation.navigate('הזמנות', { requiredPage: 'pull' });
 

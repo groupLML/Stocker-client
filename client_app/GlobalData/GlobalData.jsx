@@ -10,13 +10,13 @@ export default function GlobalData(props) {
     const apiUrlMeds = "https://proj.ruppin.ac.il/cgroup36/prod/GetActiveMeds/";
     const apiUrlPullOrder = "https://proj.ruppin.ac.il/cgroup36/prod/api/PullOrder/";
     const apiUrlPushOrder = "https://proj.ruppin.ac.il/cgroup36/prod/api/PushOrder/";
-    const apiUrlNotification = "https://proj.ruppin.ac.il/cgroup36/prod/api/Message/";  
-    
+    const apiUrlNotification = "https://proj.ruppin.ac.il/cgroup36/prod/api/Message/";
+
     const [depId, setDepId] = useState('');
     const [meds, setMeds] = useState([]);
     const [myMedReqs, setMyMedReqs] = useState([]);
     const [othersMedReqs, setOthersMedReqs] = useState([]);
-    //const [ExpoPushToken, setExpoPushToken] = useState('');
+    const [Token, setToken] = useState('');
 
     const [DepTypes, setDepTypes] = useState([
         { name: 'אורתופדיה', isChecked: true },
@@ -41,8 +41,8 @@ export default function GlobalData(props) {
                 apiUrlUser, apiUrlMedRequest, apiUrlMeds, apiUrlPullOrder, apiUrlPushOrder, apiUrlNotification,
                 depId, setDepId, meds, setMeds,
                 DepTypes, setDepTypes, myMedReqs, setMyMedReqs, othersMedReqs, setOthersMedReqs,
-                getUserData,
-                //setExpoPushToken, ExpoPushToken,
+                getUserData, setToken, Token,
+                //getTokenData
             }}>
             {props.children}
         </GlobalContext.Provider>

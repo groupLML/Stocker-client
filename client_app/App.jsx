@@ -22,6 +22,7 @@ import RequestsPage from './Pages/RequestsPage';
 import OrdersPage from './Pages/OrdersPage';
 
 
+import { GlobalContext } from './GlobalData/GlobalData';
 import * as Notifications from 'expo-notifications';
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import RegisterForPushNotifications from './FunctionalComps/RegisterForPushNotifications';
@@ -83,14 +84,14 @@ function MainTabNavigator() {
 
 export default function App() {
 
-  //const { setExpoPushToken } = useContext(GlobalContext);
+  const { setToken } = useContext(GlobalContext);
   const [ExpoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
 
   useEffect(() => {
-    RegisterForPushNotifications().then(token => setExpoPushToken(token));
+    RegisterForPushNotifications().then(token => { setExpoPushToken(token) });
 
     // This listener is fired whenever a notification is received while the app is foregrounded
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
@@ -102,12 +103,27 @@ export default function App() {
       console.log(response);
       setNotification(response.notification);
     });
+
     return () => {//on app close stop listen
       Notifications.removeNotificationSubscription(notificationListener.current);
       Notifications.removeNotificationSubscription(responseListener.current);
     };
+
   }, []);
 
+  /* useEffect(() => {
+        try {//Inserting user information into AsyncStorage
+      const token = JSON.stringify(ExpoPushToken)
+      AsyncStorage.setItem('token', token, () => { });
+      console.log("111");
+    } catch (e) {
+      // saving error
+    }
+  }, [ExpoPushToken]); */
+
+  useEffect(() => {
+    setToken(ExpoPushToken);
+  }, [ExpoPushToken]);
 
   return (
     <GlobalData>
