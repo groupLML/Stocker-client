@@ -13,7 +13,7 @@ export default function FCDetailedRequest(props) {
 
   const navigation = useNavigation();
 
-  const { depId, apiUrlMedRequest, DepTypes, setDepTypes } = useContext(GlobalContext);
+  const { depId, apiUrlMedRequest, DepTypes } = useContext(GlobalContext);
 
   const [Qty, setQty] = useState(props.reqQty);
   const [selectedMedId, setSelectedMedId] = useState(null);
@@ -22,28 +22,6 @@ export default function FCDetailedRequest(props) {
   const [textMessage, setTextMessage] = useState('');
   const [isSuccessModal, setIsSuccessModal] = useState(false);
   const [isUpdateAllowed, setIsUpdateAllowed] = useState(false);
-
-/*   //----------------------GET Request deps ---------------------
-  useEffect(() => {
-    fetch(apiUrlMedRequest + 'RequestDepTypes/depId/' + `${depId}` + '/reqId/' + `${props.id}`, {
-      method: 'GET',
-      headers: new Headers({
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json; charset=UTF-8',
-      })
-    })
-      .then(res => {
-        return res.json()
-      })
-      .then(
-        (result) => {
-          const newReqDeps = DepTypes.map((item) => ({ name: item.name, isChecked: result.includes(item.name) }))//set the requests of choosen dep to display
-          setDepTypes(newReqDeps);
-        },
-        (error) => {
-          console.log("err post=", error);
-        });
-  }, []) // did mount */
 
   const handleSetClearForm = (state) => {
     setClearForm(state);
@@ -68,6 +46,23 @@ export default function FCDetailedRequest(props) {
     setIsUpdateAllowed(true);
   };
 
+  const compereArray = [
+    { name: 'אורתופדיה', isChecked: true },
+    { name: 'כירורגיה', isChecked: true },
+    { name: 'פנימית', isChecked: true },
+  ]
+
+  useEffect(() => {
+    console.log(DepTypes);
+    const isCheckedEqual = compereArray.length === DepTypes.length &&
+      compereArray.every((item1, index) => {
+        const item2 = DepTypes[index];
+        return item1.isChecked === item2.isChecked;
+      });
+    setIsUpdateAllowed(isCheckedEqual);
+  }, [DepTypes]);
+
+
   //עדכון העברה
   const handleUpdateRequest = () => {
     if (!isUpdateAllowed) {
@@ -76,6 +71,7 @@ export default function FCDetailedRequest(props) {
       setModalVisible(true);
       return;
     }
+
     const SelectedDepTypes = DepTypes.filter(depType => depType.isChecked).map(depType => depType.name);
 
     const MedRequest = { //יצירת אובייקט לפי השדות במחלקה
@@ -262,11 +258,7 @@ export default function FCDetailedRequest(props) {
               <Text style={styles.buttonText}>עדכון</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933', flex: 1 }]} onPress={() => handleDeleteRequest(props.id)}>
-<<<<<<< Updated upstream
               <Text style={styles.buttonText} >מחיקת בקשה</Text>
-=======
-              <Text style={styles.buttonText} >מחיקת העברה</Text>
->>>>>>> Stashed changes
             </TouchableOpacity>
           </View>
         </>

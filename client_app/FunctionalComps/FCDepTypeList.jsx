@@ -11,60 +11,32 @@ export default function FCDepTypeList(props) {
 
     //----------------------GET Request deps ---------------------------------------
     useEffect(() => {
-        fetch(apiUrlMedRequest + 'RequestDepTypes/depId/' + `${depId}` + '/reqId/' + `${props.ReqId}`, {
-            method: 'GET',
-            headers: new Headers({
-                'Content-Type': 'application/json; charset=UTF-8',
-                'Accept': 'application/json; charset=UTF-8',
+        if (props.ReqId !== null) {
+            fetch(apiUrlMedRequest + 'RequestDepTypes/depId/' + `${depId}` + '/reqId/' + `${props.ReqId}`, {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json; charset=UTF-8',
+                })
             })
-        })
-            .then(res => {
-                return res.json()
-            })
-            .then(
-                (result) => {
-                    const newReqDeps = DepTypes.map((item) => ({ name: item.name, isChecked: result.includes(item.name) }))//set the requests of choosen dep to display
-                    setDepTypes(newReqDeps);
-                },
-                (error) => {
-                    console.log("err post=", error);
-                });
+                .then(res => {
+                    return res.json()
+                })
+                .then(
+                    (result) => {
+                        const newReqDeps = DepTypes.map((item) => ({ name: item.name, isChecked: Array.isArray(result) && result.includes(item.name) }))
+                        setDepTypes(newReqDeps);
+                    },
+                    (error) => {
+                        console.log("err post=", error);
+                    });
+        }
+        else {
+            setChecked(true);
+        }
     }, []) // did mount
-    
-    useEffect(() => {
-        console.log(DepTypes);
-    }, [DepTypes]);
 
-
-        useEffect(() => {//Send to all deps checkBox (isChecked) did Update
-            if (isChecked === true) {
-                let temp = DepTypes.map((DepType) => {
-                    return { ...DepType, isChecked: true };
-                });
-                setDepTypes(temp); //set the depTypes array to temp where all deps are checked
-            }
-            else {
-                let temp = DepTypes.map((DepType) => {
-                    return { ...DepType, isChecked: false };
-                });
-                setDepTypes(temp); //set the depTypes array to temp where none of deps are checked
-            }
-        }, [isChecked]);
-
-
-    const handleChange = (ChosenDepName) => { //A specific dep type checkbox is checked
-        let temp = DepTypes.map((DepType) => { //find the Chosen Dep and add to temp array
-            if (ChosenDepName === DepType.name) {
-                return { ...DepType, isChecked: !DepType.isChecked };
-            }
-            return DepType;
-        });
-        setDepTypes(temp); //set the depTypes array for temp
-    };
-
-
-    /* const handleChangeAll = () => { //A specific dep type checkbox is checked
-        setChecked(!isChecked);
+    useEffect(() => {//Send to all deps checkBox (isChecked) did Update
         if (isChecked === true) {
             let temp = DepTypes.map((DepType) => {
                 return { ...DepType, isChecked: true };
@@ -77,7 +49,25 @@ export default function FCDepTypeList(props) {
             });
             setDepTypes(temp); //set the depTypes array to temp where none of deps are checked
         }
-    }; */
+    }, [isChecked]);
+
+
+    const handleChange = (ChosenDepName) => { //A specific dep type checkbox is checked
+        let temp = DepTypes.map((DepType) => { //find the Chosen Dep and add to temp array
+            if (ChosenDepName === DepType.name) {
+                return { ...DepType, isChecked: !DepType.isChecked };
+            }
+            return DepType;
+        });
+        setDepTypes(temp); //set the depTypes array for temp
+    };
+
+    useEffect(() => {
+        console.log(DepTypes);
+        if (DepTypes.every((item) => item.isChecked === true)) {
+            setChecked(true);
+        }
+    }, [DepTypes]);
 
 
     return (
@@ -86,15 +76,17 @@ export default function FCDepTypeList(props) {
                 <Checkbox style={styles.CB} color={isChecked ? '#003D9A' : undefined} value={isChecked} onValueChange={setChecked} />
                 <Text style={styles.CB_txt}>שלח לכל המחלקות</Text>
             </View >
-            {!isChecked && <FlatList //when Send to all deps checkBox status is false (unchecked) show all checkboxs options
-                data={DepTypes}
-                renderItem={({ item }) => (
-                    <View style={styles.row}>
-                        <Checkbox style={styles.CB} color={item.isChecked ? '#003D9A' : undefined} value={item.isChecked} onValueChange={() => handleChange(item.name)} />
-                        <Text style={styles.CB_txt}>{item.name}</Text>
-                    </View>
-                )}
-            />}
+            <View style={styles.depsCB}>
+                {!isChecked && <FlatList //when Send to all deps checkBox status is false (unchecked) show all checkboxs options
+                    data={DepTypes}
+                    renderItem={({ item }) => (
+                        <View style={styles.row}>
+                            <Checkbox style={styles.CB} color={item.isChecked ? '#003D9A' : undefined} value={item.isChecked} onValueChange={() => handleChange(item.name)} />
+                            <Text style={styles.CB_txt}>{item.name}</Text>
+                        </View>
+                    )}
+                />}
+            </View>
         </View>
     );
 }
@@ -102,13 +94,20 @@ export default function FCDepTypeList(props) {
 const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
-        margin: 5,
     },
     CB: {
-        marginRight: 20,
+        marginRight: 5,
+    },
+    AllRow: {
+        flexDirection: 'row',
     },
     CB_txt: {
         fontSize: 16,
         color: '#003D9A'
     },
+    depsCB: {
+        marginLeft: 25,
+        marginTop: 10,
+    },
+
 });
