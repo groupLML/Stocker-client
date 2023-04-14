@@ -3,8 +3,17 @@ import { Card } from '@rneui/base';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import FCDateTime from './FCDateTime';
 import { useNavigation } from '@react-navigation/native';
+import * as Notifications from "expo-notifications";
 
 import { GlobalContext } from '../GlobalData/GlobalData';
+
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: false,
+    }),
+});
 
 export default function FCOthersRequest(props) {
     const navigation = useNavigation();
@@ -12,7 +21,49 @@ export default function FCOthersRequest(props) {
     const isStockQtyLower = props.stcQty < props.reqQty;
 
     const { apiUrlMedRequest, getUserData } = useContext(GlobalContext);
-   
+
+    //----------------------notification-----------------------------
+    const [notification, setNotification] = useState(false);
+    const notificationListener = useRef();
+    const responseListener = useRef();
+
+    useEffect(() => {
+        notificationListener.current =
+            Notifications.addNotificationReceivedListener((notification) => {
+                setNotification(notification);
+            });
+
+        responseListener.current =
+            Notifications.addNotificationResponseReceivedListener((response) => { });
+
+        return () => {
+            Notifications.removeNotificationSubscription(
+                notificationListener.current
+            );
+            Notifications.removeNotificationSubscription(responseListener.current);
+        };
+    }, []);
+
+    async function sendPushNotification(expoPushToken, notification) {
+        const message = {
+            to: expoPushToken,
+            sound: 'default',
+            title: notification.title,
+            body: notification.body,
+            data: { screen: notification.screen },//איזה מסך להגיע
+        };
+
+        await fetch('https://exp.host/--/api/v2/push/send', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Accept-encoding': 'gzip, deflate',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(message),
+        });
+    }
+
     const [modalVisible, setModalVisible] = useState(false);
     const [textMessage, setTextMessage] = useState('');
 
@@ -40,6 +91,12 @@ export default function FCOthersRequest(props) {
                     if (result) {
                         setTextMessage("בוצע בהצלחה");
                         setModalVisible(true);
+                        const message = {
+                            title: "New Request",
+                            body: `A new request has been received at. We will be happy to assist`,
+                            screen: "Available Requests"//הדףףףףףףףףףףףףףףףףףף
+                        };
+                        sendPushNotification('ExponentPushToken[u7UTGuKJYCXilpiuwgCkvn]', message);
                     }
                     else {
                         setTextMessage("שגיאה, יש בעיה בשרת");

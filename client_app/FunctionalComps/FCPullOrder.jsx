@@ -10,7 +10,7 @@ export default function FCPullOrder(props) {//gets the props of the pull order
   const navigation = useNavigation();
 
   const handleCardPress = () => {
-    navigation.navigate('צפייה בפרטי הזמנת משיכה', { pullOrderId: props.id, PullOrdersList: props.PullOrdersList});
+    navigation.navigate("צפייה בפרטי הזמנת משיכה", { pullOrderId: props.id, PullOrdersList: props.PullOrdersList});
   };
 
   return (

@@ -24,6 +24,7 @@ export default function PullOrderPage(props) {
 
   //----------------------GET Meds in pull Order---------------------
   useEffect(() => {
+    console.log("250");
     fetch(apiUrlPullOrder + 'GetOrderDetails/depId/' + `${depId}` + '/orderId/' + `${pullOrderId}` + '/type/' + `${2}`, {
       method: 'GET',
       headers: new Headers({

@@ -1,7 +1,7 @@
-import React, { useState, useContext, useEffect} from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Linking, Modal } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { RegisterForPushNotifications } from '../FunctionalComps/RegisterForPushNotifications';
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCAnimatedLogo from '../FunctionalComps/FCAnimatedLogo';
 
@@ -71,6 +71,7 @@ export default function LoginPage(props) {
                   const userData = JSON.stringify(result)
                   AsyncStorage.setItem('User', userData, () => {
                     getDepID();
+                    createToken()
                     props.navigation.navigate('ראשי');
                   });
                 } catch (e) {
@@ -96,7 +97,11 @@ export default function LoginPage(props) {
       setModalVisible(true);
     }
   }
-
+  const createToken = () => {
+    RegisterForPushNotifications().then((token) => {
+      console.log(token)
+    })
+  }
   //להעביר לדף הבית
   //-------------------------------Get Meds-----------------------------
 
@@ -120,7 +125,7 @@ export default function LoginPage(props) {
         (error) => {
           console.log("err get=", error);
         });
-  }, [meds]);
+  }, []);
 
   return (
     <View style={styles.container}>
