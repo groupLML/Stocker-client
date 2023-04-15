@@ -7,13 +7,13 @@ import * as Notifications from "expo-notifications";
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 
-Notifications.setNotificationHandler({
+/* Notifications.setNotificationHandler({
     handleNotification: async () => ({
         shouldShowAlert: true,
         shouldPlaySound: true,
         shouldSetBadge: false,
     }),
-});
+}); */
 
 export default function FCOthersRequest(props) {
     const navigation = useNavigation();
@@ -27,11 +27,11 @@ export default function FCOthersRequest(props) {
     const notificationListener = useRef();
     const responseListener = useRef();
 
-/*     function handleNotification(notification) {
+    function handleNotification(notification) {
         const { screen, params } = notification.data;
         navigation.navigate(screen, params);
         setNotification(notification);
-    } */
+    }
 
     useEffect(() => {
         notificationListener.current =
@@ -48,14 +48,14 @@ export default function FCOthersRequest(props) {
         };
     }, []);
 
-/*     useEffect(() => {
+    useEffect(() => {
         Notifications.setNotificationHandler({
             handleNotification: handleNotification,
             shouldShowAlert: true,
             shouldPlaySound: true,
             shouldSetBadge: false,
         });
-    }, []); */
+    }, []);
 
     async function sendPushNotification(expoPushToken, notification) {
         console.log(expoPushToken);
@@ -67,7 +67,7 @@ export default function FCOthersRequest(props) {
             body: notification.body,
             data: {
                 screen: notification.screen,
-                //params: notification.params
+                params: notification.params
             },
         };
 
@@ -113,7 +113,7 @@ export default function FCOthersRequest(props) {
                             title: `${props.medName}`,
                             body: `מחלקה ${user.userId} אישרה בקשה לתרופה`,
                             screen: "צפייה בפרטי בקשה",
-                            //params: { requestId: props.id, requestsList: myMedReqs }
+                            params: { requestId: props.id, requestsList: myMedReqs }
                         };
                         fetch(apiUrlGetToken + "depId/" + `${props.cDepId}`, {
                             method: 'GET',
