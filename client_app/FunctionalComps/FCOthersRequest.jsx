@@ -7,13 +7,13 @@ import * as Notifications from "expo-notifications";
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 
-Notifications.setNotificationHandler({
+/* Notifications.setNotificationHandler({
     handleNotification: async () => ({
         shouldShowAlert: true,
         shouldPlaySound: true,
         shouldSetBadge: false,
     }),
-});
+}); */
 
 export default function FCOthersRequest(props) {
     const navigation = useNavigation();
@@ -27,6 +27,12 @@ export default function FCOthersRequest(props) {
     const notificationListener = useRef();
     const responseListener = useRef();
 
+    function handleNotification(notification) {
+        const { screen, params } = notification.data;
+        navigation.navigate(screen, params);
+        setNotification(notification);
+      }
+
     useEffect(() => {
         notificationListener.current =
             Notifications.addNotificationReceivedListener((notification) => {
@@ -37,12 +43,19 @@ export default function FCOthersRequest(props) {
             Notifications.addNotificationResponseReceivedListener((response) => { });
 
         return () => {
-            Notifications.removeNotificationSubscription(
-                notificationListener.current
-            );
+            Notifications.removeNotificationSubscription(notificationListener.current);
             Notifications.removeNotificationSubscription(responseListener.current);
         };
     }, []);
+
+    useEffect(() => {
+        Notifications.setNotificationHandler({
+          handleNotification: handleNotification,
+          shouldShowAlert: true,
+          shouldPlaySound: true,
+          shouldSetBadge: false,
+        });
+      }, []);
 
     async function sendPushNotification(expoPushToken, notification) {
         const message = {

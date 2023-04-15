@@ -25,7 +25,6 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function MainTabNavigator() {
-
   return (
     <SafeAreaView style={styles.container}>
       <Tab.Navigator
@@ -77,20 +76,6 @@ function MainTabNavigator() {
 }
 
 export default function App() {
-
-  /* useEffect(() => {
-        try {//Inserting user information into AsyncStorage
-      const token = JSON.stringify(ExpoPushToken)
-      AsyncStorage.setItem('token', token, () => { });
-      console.log("111");
-    } catch (e) {
-      // saving error
-    }
-  }, [ExpoPushToken]); */
-
-  /* useEffect(() => {
-    setToken(ExpoPushToken);
-  }, [ExpoPushToken]); */
 
   return (
     <GlobalData>
