@@ -16,6 +16,7 @@ Notifications.setNotificationHandler({
 });
 
 export default function FCOthersRequest(props) {
+
     const navigation = useNavigation();
 
     const isStockQtyLower = props.stcQty < props.reqQty;
@@ -36,7 +37,9 @@ export default function FCOthersRequest(props) {
             });
 
         responseListener.current =
-            Notifications.addNotificationResponseReceivedListener((response) => { });
+            Notifications.addNotificationResponseReceivedListener((response) => {
+                navigator.navigate('הודעות');
+             });
 
         return () => {
             Notifications.removeNotificationSubscription(notificationListener.current);
@@ -50,10 +53,10 @@ export default function FCOthersRequest(props) {
             sound: 'default',
             title: notification.title,
             body: notification.body,
-            data: {
-                screen: notification.screen
-                //params: notification.params
-            },
+            /* data: {
+                screen: notification.screen,
+                params: notification.params
+            }, */
         };
 
         await fetch('https://exp.host/--/api/v2/push/send', {
@@ -97,8 +100,8 @@ export default function FCOthersRequest(props) {
                         const message = {
                             title: `${props.medName}`,
                             body: `מחלקה ${user.userId} אישרה בקשה לתרופה`,
-                            screen: "הודעות"
-                            //params: { requestId: props.id, requestsList: myMedReqs }
+                            /* screen: 'הודעות',
+                            params: { requestId: props.id, requestsList: myMedReqs } */
                         };
                         fetch(apiUrlGetToken + "depId/" + `${props.cDepId}`, {
                             method: 'GET',
