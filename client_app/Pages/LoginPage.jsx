@@ -71,7 +71,7 @@ export default function LoginPage(props) {
                   const userData = JSON.stringify(result)
                   AsyncStorage.setItem('User', userData, () => {
                     getDepID();
-                    createToken()
+                    createToken();
                     props.navigation.navigate('ראשי');
                   });
                 } catch (e) {
@@ -102,7 +102,7 @@ export default function LoginPage(props) {
       console.log(token)
     })
   }
-  //להעביר לדף הבית
+
   //-------------------------------Get Meds-----------------------------
 
   const { apiUrlMeds, setMeds, meds } = useContext(GlobalContext);

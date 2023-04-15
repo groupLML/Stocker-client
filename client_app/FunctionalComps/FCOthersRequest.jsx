@@ -20,7 +20,7 @@ export default function FCOthersRequest(props) {
 
     const isStockQtyLower = props.stcQty < props.reqQty;
 
-    const { apiUrlMedRequest, getUserData } = useContext(GlobalContext);
+    const { apiUrlMedRequest, getUserData, myMedReqs } = useContext(GlobalContext);
 
     //----------------------notification-----------------------------
     const [notification, setNotification] = useState(false);
@@ -50,7 +50,10 @@ export default function FCOthersRequest(props) {
             sound: 'default',
             title: notification.title,
             body: notification.body,
-            data: { screen: notification.screen },//איזה מסך להגיע
+            data: {
+                screen: notification.screen,
+                params: notification.params
+            },
         };
 
         await fetch('https://exp.host/--/api/v2/push/send', {
@@ -92,9 +95,10 @@ export default function FCOthersRequest(props) {
                         setTextMessage("בוצע בהצלחה");
                         setModalVisible(true);
                         const message = {
-                            title: "New Request",
-                            body: `A new request has been received at. We will be happy to assist`,
-                            screen: "Available Requests"//הדףףףףףףףףףףףףףףףףףף
+                            title: `${props.medName}`,
+                            body: `מחלקה ${user.userId} אישרה בקשה לתרופה`,
+                            screen: "צפייה בבקשות שלי",
+                            params: { requestId: props.id, requestsList: myMedReqs }
                         };
                         sendPushNotification('ExponentPushToken[u7UTGuKJYCXilpiuwgCkvn]', message);
                     }
@@ -107,8 +111,6 @@ export default function FCOthersRequest(props) {
                     console.log("err put=", error);
                 });
     };
-
-
 
     return (
         <View>
