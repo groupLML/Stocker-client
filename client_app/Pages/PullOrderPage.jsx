@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal } from 'rea
 import React, { useState, useEffect, useContext } from 'react';
 import { GlobalContext } from '../GlobalData/GlobalData';
 import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 
 import FCDetailedPullOrders from '../FunctionalComps/FCDetailedPullOrders';
 import FCDateTime from '../FunctionalComps/FCDateTime';
@@ -12,19 +13,24 @@ export default function PullOrderPage(props) {
 
   const navigation = useNavigation();
 
-  const { pullOrderId, PullOrdersList } = props.route.params;
   const { apiUrlPullOrder, depId, getUserData } = useContext(GlobalContext);
 
-  const [pullOrder, setPullOrder] = useState(null);
-  const [medsInOrderList, setMedsInOrderList] = useState([]);
+  const [pullOrder, setPullOrder] = useState(null);// בפתיחת הדף מחזיק את ההזמנה הנוכחית
+  const [medsInOrderList, setMedsInOrderList] = useState([]);//מחזיק את כל התרופות בהזמנה
   const [isWaitingOrder, setIsWaitingOrder] = useState(false);
   const [isModalAddVisible, setIsModalAddVisible] = useState(false);
   const [selectedMedId, setSelectedMedId] = useState(null);
   const [Qty, setQty] = useState(1);
+  const [isChanged, setIsChanged] = useState(false);
+
+  const { pullOrderId, PullOrdersList } = props.route.params;
+  //const pullOrder = PullOrdersList.filter((item) => item.id === pullOrderId);//get the request item to read
 
   //----------------------GET Meds in pull Order---------------------
   useEffect(() => {
-    console.log("250");
+
+    setPullOrder(PullOrdersList.find((order) => order.orderId === pullOrderId));
+
     fetch(apiUrlPullOrder + 'GetOrderDetails/depId/' + `${depId}` + '/orderId/' + `${pullOrderId}` + '/type/' + `${2}`, {
       method: 'GET',
       headers: new Headers({
@@ -38,15 +44,27 @@ export default function PullOrderPage(props) {
       .then(
         (result) => {
           setMedsInOrderList(result);
-          const order = PullOrdersList.find((order) => order.orderId === pullOrderId);
-          setPullOrder(order);
         },
         (error) => {
           console.log("err get=", error);
         });
-  }, []);
+    return () => {
+      setIsChanged(false);
+    }
+  }, [isChanged]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log('did focus');
+
+      setIsChanged(true);
+      return () => {
+        // Clean up the effect when the screen goes out of focus
+      };
+    }, []));
 
   useEffect(() => {
+    console.log("pullOrder", pullOrder);
     if (pullOrder !== null) {
       if (pullOrder.orderStatus === "W") {
         setIsWaitingOrder(true);
@@ -136,7 +154,7 @@ export default function PullOrderPage(props) {
           (error) => {
             console.log("err get=", error);
           });
-      setIsModalVisible(false);
+      setIsModalAddVisible(false);
     }
   };
 
@@ -182,6 +200,7 @@ export default function PullOrderPage(props) {
     setIsModalAddVisible(false);
   };
 
+
   return (
     <View style={styles.container}>
       {pullOrder !== null && (
@@ -211,7 +230,7 @@ export default function PullOrderPage(props) {
           {/* ----------------------------------------פירוט תרופות בהזמנה---------------------------------------- */}
           <Text style={styles.txt}>פירוט הזמנה:</Text>
           <ScrollView>
-            <FCDetailedPullOrders isWaitingOrder={isWaitingOrder} medsInOrderList={medsInOrderList} SendId2Remove={RemoveMedFromList} />
+            <FCDetailedPullOrders isWaitingOrder={isWaitingOrder} /* pullOrder={pullOrder} */ medsInOrderList={medsInOrderList} SendId2Remove={RemoveMedFromList} />
           </ScrollView>
           {/* ---------------------------------------------כפתור מחיקת הזמנה וכפתור הוספת תרופה בסטטוס ממתין------------------------------------------- */}
           {pullOrder.orderStatus === 'W' && (

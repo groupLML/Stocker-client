@@ -1,14 +1,16 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React, { useState, useEffect, useContext } from 'react';
 import { GlobalContext } from '../GlobalData/GlobalData';
+import { useFocusEffect } from '@react-navigation/native';
 
 import FCDetailedPushOrders from '../FunctionalComps/FCDetailedPushOrders';
 
 export default function PushOrderPage(props) {
 
-  const [pushOrder, setPushOrder] = useState(null);//ליייייייייייייייןןןןןןןןןןןןן למה זה?
   const [status, setStatus] = useState(null);
   const [medsInOrderList, setMedsInOrderList] = useState([]);
+  const [isChanged, setIsChanged] = useState(false);
+
   const { apiUrlPushOrder, depId } = useContext(GlobalContext);
 
   const { pushOrderId, pushOrdersList } = props.route.params;
@@ -29,13 +31,24 @@ export default function PushOrderPage(props) {
         (result) => {
           setMedsInOrderList(result);
           const order = pushOrdersList.find((order) => order.orderId === pushOrderId);
-          setPushOrder(order);
           setStatus(order.orderStatus);
         },
         (error) => {
           console.log("err get=", error);
         });
-  }, []);
+        return () => {
+          setIsChanged(false);
+        }
+  }, [isChanged]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setIsChanged(true);
+      return () => {
+        // Clean up the effect when the screen goes out of focus
+      };
+    }, []));
+
 
   return (
     <View style={styles.container}>

@@ -36,9 +36,7 @@ export default function FCOthersRequest(props) {
 
         responseListener.current =
             Notifications.addNotificationResponseReceivedListener((response) => {
-                navigation.navigate('הודעות');
-                console.log(response);
-             });
+            });
 
         return () => {
             Notifications.removeNotificationSubscription(notificationListener.current);
