@@ -34,23 +34,7 @@ export default function FCDepTypeList(props) {
         else {
             setChecked(true);
         }
-    }, []) // did mount
-
-    useEffect(() => {//Send to all deps checkBox (isChecked) did Update
-        if (isChecked === true) {
-            let temp = DepTypes.map((DepType) => {
-                return { ...DepType, isChecked: true };
-            });
-            setDepTypes(temp); //set the depTypes array to temp where all deps are checked
-        }
-        else {
-            let temp = DepTypes.map((DepType) => {
-                return { ...DepType, isChecked: false };
-            });
-            setDepTypes(temp); //set the depTypes array to temp where none of deps are checked
-        }
-    }, [isChecked]);
-
+    }, [props.ReqId]) // did mount
 
     const handleChange = (ChosenDepName) => { //A specific dep type checkbox is checked
         let temp = DepTypes.map((DepType) => { //find the Chosen Dep and add to temp array
@@ -63,9 +47,12 @@ export default function FCDepTypeList(props) {
     };
 
     useEffect(() => {
-        console.log(DepTypes);/////////////////////////////////////////////////////////////////
+        console.log(DepTypes);
         if (DepTypes.every((item) => item.isChecked === true)) {
             setChecked(true);
+        }
+        else{
+            setChecked(false);
         }
     }, [DepTypes]);
 
