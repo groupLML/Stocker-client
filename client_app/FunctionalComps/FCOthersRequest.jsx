@@ -97,7 +97,7 @@ export default function FCOthersRequest(props) {
                         const message = {
                             title: `${props.medName}`,
                             body: `מחלקה ${user.userId} אישרה בקשה לתרופה`,
-                            screen: "צפייה בבקשות שלי",
+                            screen: "צפייה בפרטי בקשה",
                             params: { requestId: props.id, requestsList: myMedReqs }
                         };
                         sendPushNotification('ExponentPushToken[u7UTGuKJYCXilpiuwgCkvn]', message);
