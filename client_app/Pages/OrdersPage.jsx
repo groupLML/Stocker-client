@@ -14,10 +14,6 @@ export default function OrdersPage(props) {
   const [selectedButton, setSelectedButton] = useState();
   const [isChanged, setIsChanged] = useState(false);
 
-  const handleIsChanged = (state) => {
-    setIsChanged(state);
-  };
-
   useEffect(() => {
     if (requiredPage === 'pull') {
       setShowPull(true);
@@ -55,7 +51,7 @@ export default function OrdersPage(props) {
           <Text style={[styles.buttonText, selectedButton === 1 && styles.selectedButtonText]} >דחיפה</Text>
         </TouchableOpacity>
       </View>
-      {showPull ? <PullOrdersPage isChanged={isChanged} handleIsChanged={handleIsChanged} /> : <PushOrdersPage />}
+      {showPull ? <PullOrdersPage isChanged={isChanged} handleIsChanged={(state) => setIsChanged(state)} /> : <PushOrdersPage />}
     </View>
   );
 };

@@ -9,10 +9,6 @@ export default function OthersRequestsPage(props) {
     const { apiUrlMedRequest, depId, othersMedReqs, setOthersMedReqs } = useContext(GlobalContext);
     const [isStatusChanged, setIsStatusChanged] = useState(false);
 
-    const handleIsStatusChanged = () => {
-        setIsStatusChanged(true);
-    };
-
     //----------------------GET Requests details ---------------------
     useEffect(() => {
         fetch(apiUrlMedRequest + 'RequestsOthers/' + `${depId}`, {
@@ -41,7 +37,7 @@ export default function OthersRequestsPage(props) {
     return (
         <View style={styles.container}>
             <ScrollView>
-                <FCOthersRequests RequestsList={othersMedReqs} handleIsStatusChanged={handleIsStatusChanged} cDepId={depId} />
+                <FCOthersRequests RequestsList={othersMedReqs} handleIsStatusChanged={() => setIsStatusChanged(true)} cDepId={depId} />
             </ScrollView>
         </View>
     )

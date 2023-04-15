@@ -22,15 +22,25 @@ export default function PullOrderPage(props) {
   const [selectedMedId, setSelectedMedId] = useState(null);
   const [Qty, setQty] = useState(1);
   const [isChanged, setIsChanged] = useState(false);
+  const [clearForm, setClearForm] = useState(false);
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [textMessage, setTextMessage] = useState('');
+  const [isMovePage, setIsMovePage] = useState(false);
 
   const { pullOrderId, PullOrdersList } = props.route.params;
   //const pullOrder = PullOrdersList.filter((item) => item.id === pullOrderId);//get the request item to read
 
+  const handleModalClose = () => {
+    setModalVisible(false);
+    if (isMovePage) {
+      navigation.navigate('הזמנות', { requiredPage: 'pull' });
+    }
+  };
+
   //----------------------GET Meds in pull Order---------------------
   useEffect(() => {
-
     setPullOrder(PullOrdersList.find((order) => order.orderId === pullOrderId));
-
     fetch(apiUrlPullOrder + 'GetOrderDetails/depId/' + `${depId}` + '/orderId/' + `${pullOrderId}` + '/type/' + `${2}`, {
       method: 'GET',
       headers: new Headers({
@@ -55,38 +65,18 @@ export default function PullOrderPage(props) {
 
   useFocusEffect(
     React.useCallback(() => {
-      console.log('did focus');
-
       setIsChanged(true);
-      return () => {
-        // Clean up the effect when the screen goes out of focus
-      };
     }, []));
 
   useEffect(() => {
-    console.log("pullOrder", pullOrder);
     if (pullOrder !== null) {
-      if (pullOrder.orderStatus === "W") {
-        setIsWaitingOrder(true);
-      }
-      else {
-        setIsWaitingOrder(false);
-      }
+      if (pullOrder.orderStatus === "W") setIsWaitingOrder(true);
+      else setIsWaitingOrder(false);
     }
   }, [pullOrder]);
 
-
-  const handleSelectMed = (medId) => {
-    setSelectedMedId(medId);
-  };
-
-  const GetQtyFromInput = (Qty) => {
-    setQty(Qty);
-  }
-
   //ביטול הזמנה
   const handleDeletePullOrder = () => {
-
     fetch(apiUrlPullOrder + 'OrderId/' + `${pullOrderId}` + '/type/' + `${2}`, {
       method: 'DELETE',
       headers: new Headers({
@@ -100,8 +90,9 @@ export default function PullOrderPage(props) {
       .then(
         (result) => {
           if (result) {
-            alert(true)
-            navigation.navigate('הזמנות', { requiredPage: 'pull' });
+            setIsMovePage(true);
+            setTextMessage('ביטול הזמנה בוצע בהצלחה');
+            setModalVisible(true);
           }
         },
         (error) => {
@@ -109,14 +100,18 @@ export default function PullOrderPage(props) {
         });
   };
 
-
+ //הוספת הזמנה
   const AddMedToOrder = async () => {
-
     if (selectedMedId === null) {
-      alert('יש לבחור תרופה');
+      setIsMovePage(false);
+      setTextMessage('יש לבחור תרופה');
+      setModalVisible(true);
     }
     else if (medsInOrderList.find((med) => med.medId === selectedMedId)) {
-      alert('תרופה זו כבר קיימת בהזמנה');
+      setIsMovePage(false);
+      setTextMessage('תרופה זו כבר קיימת בהזמנה');
+      setModalVisible(true);
+      setClearForm(true);
     }
     else {//do update
       const user = await getUserData();
@@ -148,18 +143,22 @@ export default function PullOrderPage(props) {
         })
         .then(
           (result) => {
-            console.log(result);
-            alert("התרופה התווספה בהצלחה");
+            if (result) {
+              setIsChanged(true);
+              setIsMovePage(false);
+              setTextMessage("התרופה התווספה בהצלחה");
+              setModalVisible(true);
+            }
           },
           (error) => {
-            console.log("err get=", error);
+            console.log("err put=", error);
           });
       setIsModalAddVisible(false);
     }
   };
 
+  //מחיקת תרופה מהזמנה
   const RemoveMedFromList = async (Id2Remove) => {
-
     const user = await getUserData();
 
     const temp = medsInOrderList.filter((med) => med.medId !== Id2Remove);// Remove selected med from order meds list
@@ -182,24 +181,18 @@ export default function PullOrderPage(props) {
       })
       .then(
         (result) => {
-          console.log(result);
-          alert("התרופה נמחקה בהצלחה");
+          if (result) {
+            setIsChanged(true);
+            setIsMovePage(false);
+            setTextMessage("התרופה נמחקה בהצלחה");
+            setModalVisible(true);
+          }
         },
         (error) => {
-          console.log("err get=", error);
+          console.log("err put=", error);
         });
-
     setIsModalAddVisible(false);
   };
-
-  const handleOpenModalAdd = () => {
-    setIsModalAddVisible(true);
-  };
-
-  const handleCloseModalAdd = () => {
-    setIsModalAddVisible(false);
-  };
-
 
   return (
     <View style={styles.container}>
@@ -233,9 +226,9 @@ export default function PullOrderPage(props) {
             <FCDetailedPullOrders isWaitingOrder={isWaitingOrder} /* pullOrder={pullOrder} */ medsInOrderList={medsInOrderList} SendId2Remove={RemoveMedFromList} />
           </ScrollView>
           {/* ---------------------------------------------כפתור מחיקת הזמנה וכפתור הוספת תרופה בסטטוס ממתין------------------------------------------- */}
-          {pullOrder.orderStatus === 'W' && (
+          {pullOrder.orderStatus === 'W' && !isModalAddVisible && (
             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-              <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59' }]} onPress={handleOpenModalAdd}>
+              <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59' }]} onPress={() => setIsModalAddVisible(true)}>
                 <Text style={styles.buttonText}>הוספת תרופה</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933' }]} onPress={() => handleDeletePullOrder()}>
@@ -244,25 +237,37 @@ export default function PullOrderPage(props) {
             </View>
           )}
 
-          <Modal visible={isModalAddVisible} animationType="slide" transparent={true} onRequestClose={handleCloseModalAdd}>
+          <Modal visible={isModalAddVisible} animationType="slide" transparent={true} onRequestClose={() => setIsModalAddVisible(false)}>
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
-                <FCMedInput sendMedSelect={handleSelectMed} />
-                <FCQuantityInput reqQty={1} sendQty={GetQtyFromInput} />
+                <FCMedInput sendMedSelect={(medId) => setSelectedMedId(medId)} clearForm={clearForm} handleSetClearForm={(state) => setClearForm(state)} />
+                <FCQuantityInput reqQty={1} sendQty={(Qty) => setQty(Qty)} clearForm={clearForm} handleSetClearForm={(state) => setClearForm(state)} />
                 <View style={styles.row}>
                   <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59' }]} onPress={AddMedToOrder}>
                     <Text style={styles.buttonText}>הוספה</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933' }]} onPress={handleCloseModalAdd}>
+                  <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933' }]} onPress={() => setIsModalAddVisible(false)}>
                     <Text style={styles.buttonText}>ביטול</Text>
                   </TouchableOpacity>
                 </View>
               </View>
             </View>
           </Modal>
+
+          <View style={styles.centeredView}>
+            <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { this.setState({ modalVisible: !modalVisible }); }}>
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  <Text style={styles.modalText}>{textMessage}</Text>
+                  <TouchableOpacity style={styles.modalButton} onPress={handleModalClose}>
+                    <Text style={styles.buttonText}>סגור</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>
+          </View>
         </>
       )}
-
     </View>
   );
 }
@@ -334,5 +339,15 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  modalButton: {
+    backgroundColor: '#00317D',
+    padding: 10,
+    borderRadius: 5,
+    margin: 10,
   },
 });

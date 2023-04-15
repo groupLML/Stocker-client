@@ -53,7 +53,7 @@ export default function FCDetailedRequest(props) {
   ]
 
   useEffect(() => {
-    console.log(DepTypes);
+    console.log(DepTypes);/////////////////////////////////////////////////////////////
     const isCheckedEqual = compereArray.length === DepTypes.length &&
       compereArray.every((item1, index) => {
         const item2 = DepTypes[index];

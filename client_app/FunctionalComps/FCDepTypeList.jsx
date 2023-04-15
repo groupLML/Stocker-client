@@ -63,7 +63,7 @@ export default function FCDepTypeList(props) {
     };
 
     useEffect(() => {
-        console.log(DepTypes);
+        console.log(DepTypes);/////////////////////////////////////////////////////////////////
         if (DepTypes.every((item) => item.isChecked === true)) {
             setChecked(true);
         }

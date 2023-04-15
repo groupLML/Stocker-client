@@ -44,9 +44,6 @@ export default function PushOrderPage(props) {
   useFocusEffect(
     React.useCallback(() => {
       setIsChanged(true);
-      return () => {
-        // Clean up the effect when the screen goes out of focus
-      };
     }, []));
 
 

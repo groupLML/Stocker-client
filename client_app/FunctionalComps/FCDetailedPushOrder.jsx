@@ -3,9 +3,6 @@ import React, { useEffect } from 'react';
 import { Card } from '@rneui/base';
 
 export default function FCDetailedPushOrder(props) {
-    useEffect(() => {
-        console.log(props.orderStatus);
-    }, []);
 
     return (
         <Card style={styles.container} borderColor="#E1EAF9">

@@ -9,10 +9,6 @@ export default function MyRequestPage(props) {
 
   let request = requestsList.filter((item) => item.reqId === requestId);//get the request item to read 
 
-  useEffect(() => {
-    console.log(request);
-  }, [])
-
   return (
     <View style={styles.container}>
       <FCMyRequests RequestsList={request} isDetailedRequest={true} />

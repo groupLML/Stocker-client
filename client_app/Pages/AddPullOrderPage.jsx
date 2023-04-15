@@ -28,24 +28,11 @@ export default function AddPullOrderPage(props) {
         }
     };
 
-    const handleSetClearForm = (state) => {
-        setClearForm(state);
-    };
-
-    const handleSelectMed = (medId) => {
-        setSelectedMedId(medId);
-    };
-
-    const GetQtyFromInput = (Qty) => {
-        setQty(Qty);
-    }
-
     const DeleteMedFromOrder = (medId2Delete) => {
         setMedsOrderList(medsOrderList.filter((med) => med.medId !== medId2Delete));
     }
 
     const AddMed2Order = () => {
-        console.log(selectedMedId + ':(');//ליןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןןן
         if (selectedMedId != null) {
             let existingMed = medsOrderList.find(med => med.medId === selectedMedId);
             if (!existingMed) { //If the selected medication wasn't added to order already, add med to order list     
@@ -66,7 +53,6 @@ export default function AddPullOrderPage(props) {
             setClearForm(true);
         }
         else {
-            console.log(2);
             setIsSuccessModal(false);
             setTextMessage('יש לבחור תרופה להוספה');
             setModalVisible(true);
@@ -122,8 +108,8 @@ export default function AddPullOrderPage(props) {
         <View style={styles.container}>
             <Text style={styles.title}>יצירת הזמנה:</Text>
             <Card borderColor='#E1EAF9'>
-                <FCMedInput sendMedSelect={handleSelectMed} clearForm={clearForm} handleSetClearForm={handleSetClearForm} />
-                <FCQuantityInput reqQty={1} sendQty={GetQtyFromInput} clearForm={clearForm} handleSetClearForm={handleSetClearForm} />
+                <FCMedInput sendMedSelect={(medId) => setSelectedMedId(medId)} clearForm={clearForm} handleSetClearForm={(state) => setClearForm(state)} />
+                <FCQuantityInput reqQty={1} sendQty={(Qty) => setQty(Qty)} clearForm={clearForm} handleSetClearForm={(state) => setClearForm(state)} />
                 <TouchableOpacity style={styles.AddBTN} onPress={() => AddMed2Order()}>
                     <Icon name='add' color='white' />
                 </TouchableOpacity>

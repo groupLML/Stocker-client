@@ -12,10 +12,6 @@ export default function MyRequestsPage(props) {
   const { apiUrlMedRequest, depId, myMedReqs, setMyMedReqs } = useContext(GlobalContext);
   const [statusFilter, setStatusFilter] = useState('all');
 
-  const handleStatusFilterChange = (status) => {
-    setStatusFilter(status);
-  };
-
   //----------------------GET Requests details ---------------------
   useEffect(() => {
     fetch(apiUrlMedRequest + 'RequestsMine/' + `${depId}`, {
@@ -47,7 +43,7 @@ export default function MyRequestsPage(props) {
     <View style={styles.container}>
       <View style={styles.scrollViewContainer}>
         <ScrollView scrollEventThrottle={16}>
-          <FCMyRequests RequestsList={myMedReqs} isDetailedRequest={false} statusFilter={statusFilter} onStatusFilterChange={handleStatusFilterChange} />
+          <FCMyRequests RequestsList={myMedReqs} isDetailedRequest={false} statusFilter={statusFilter} onStatusFilterChange={(status) => setStatusFilter(status)} />
           {/* <FCMyRequests RequestsList={myMedReqs} isDetailedRequest={false} /> */}
         </ScrollView>
         <Animated.View

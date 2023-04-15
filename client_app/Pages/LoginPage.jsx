@@ -16,15 +16,11 @@ export default function LoginPage(props) {
   const [modalVisible, setModalVisible] = useState(false);
   const [testMessage, setTextMessage] = useState('');
 
-  const handleModalClose = () => {
-    setModalVisible(false);
-  };
-
   //----------------------------PUT TOKEN---------------------------------
   const { apiUrlPutToken } = useContext(GlobalContext);
   const createToken = (userId) => {
     RegisterForPushNotifications().then((token) => {
-      console.log(token)
+      console.log(token)///////////////////////////////////////////////////////////////////////
       fetch(apiUrlPutToken + "userId/" + `${userId}`, {
         method: 'PUT',
         body: JSON.stringify(token),
@@ -89,7 +85,7 @@ export default function LoginPage(props) {
         })
         .then(
           (result) => {
-            console.log(result);
+            console.log(result);///////////////////////////////////////////////////////////
             if (result.username != null) {
               if (result.jobType == 'N') {
                 try {//Inserting user information into AsyncStorage
@@ -177,7 +173,7 @@ export default function LoginPage(props) {
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <Text style={styles.modalText}>{testMessage}</Text>
-              <TouchableOpacity style={styles.modalButton} onPress={handleModalClose}>
+              <TouchableOpacity style={styles.modalButton} onPress={() => setModalVisible(false)}>
                 <Text style={styles.modalButtonText}>סגור</Text>
               </TouchableOpacity>
             </View>
