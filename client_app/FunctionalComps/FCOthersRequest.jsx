@@ -28,8 +28,6 @@ export default function FCOthersRequest(props) {
     const notificationListener = useRef();
     const responseListener = useRef();
 
-
-
     useEffect(() => {
         notificationListener.current =
             Notifications.addNotificationReceivedListener((notification) => {
@@ -38,7 +36,8 @@ export default function FCOthersRequest(props) {
 
         responseListener.current =
             Notifications.addNotificationResponseReceivedListener((response) => {
-                navigator.navigate('הודעות');
+                navigation.navigate('הודעות');
+                console.log(response);
              });
 
         return () => {
