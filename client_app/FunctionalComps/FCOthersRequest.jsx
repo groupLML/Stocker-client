@@ -31,7 +31,7 @@ export default function FCOthersRequest(props) {
         const { screen, params } = notification.data;
         navigation.navigate(screen, params);
         setNotification(notification);
-      }
+    }
 
     useEffect(() => {
         notificationListener.current =
@@ -50,12 +50,12 @@ export default function FCOthersRequest(props) {
 
     useEffect(() => {
         Notifications.setNotificationHandler({
-          handleNotification: handleNotification,
-          shouldShowAlert: true,
-          shouldPlaySound: true,
-          shouldSetBadge: false,
+            handleNotification: handleNotification,
+            shouldShowAlert: true,
+            shouldPlaySound: true,
+            shouldSetBadge: false,
         });
-      }, []);
+    }, []);
 
     async function sendPushNotification(expoPushToken, notification) {
         const message = {
@@ -113,7 +113,29 @@ export default function FCOthersRequest(props) {
                             screen: "צפייה בפרטי בקשה",
                             params: { requestId: props.id, requestsList: myMedReqs }
                         };
-                        sendPushNotification('ExponentPushToken[u7UTGuKJYCXilpiuwgCkvn]', message);
+                        useEffect(() => {
+                            fetch(apiUrlToken + "depId/" + `${props.cDepId}`, {
+                                method: 'GET',
+                                headers: new Headers({
+                                    'Content-Type': 'application/json; charset=UTF-8',
+                                    'Accept': 'application/json; charset=UTF-8',
+                                })
+                            })
+                                .then(res => {
+                                    return res.json()
+                                })
+                                .then(
+                                    (result) => {
+                                        if (result !== []) {
+                                            result.forEach((token) => {
+                                                sendPushNotification(token, message);
+                                            })
+                                        }
+                                    },
+                                    (error) => {
+                                        console.log("err get=", error);
+                                    });
+                        }, []);
                     }
                     else {
                         setTextMessage("שגיאה, יש בעיה בשרת");

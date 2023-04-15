@@ -41,7 +41,7 @@ export default function OthersRequestsPage(props) {
     return (
         <View style={styles.container}>
             <ScrollView>
-                <FCOthersRequests RequestsList={othersMedReqs} handleIsStatusChanged={handleIsStatusChanged} />
+                <FCOthersRequests RequestsList={othersMedReqs} handleIsStatusChanged={handleIsStatusChanged} cDepId={depId} />
             </ScrollView>
         </View>
     )

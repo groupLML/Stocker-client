@@ -20,7 +20,7 @@ export default function LoginPage(props) {
     setModalVisible(false);
   };
 
-  //----------------------------GET TOKEN---------------------------------
+  //----------------------------PUT TOKEN---------------------------------
   const { apiUrlToken } = useContext(GlobalContext);
   const createToken = (userId) => {
     RegisterForPushNotifications().then((token) => {

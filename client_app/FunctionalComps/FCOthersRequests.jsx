@@ -8,6 +8,7 @@ export default function FCOthersRequests(props) {
     return <FCOthersRequest
       id={request.reqId}
       cdepName={request.depName}
+      cDepId={props.cDepId}
       cNurseName={request.cNurseName}
       aDepId={request.aDep}
       date={request.reqDate}
