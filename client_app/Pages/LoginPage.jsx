@@ -20,6 +20,32 @@ export default function LoginPage(props) {
     setModalVisible(false);
   };
 
+  //----------------------------GET TOKEN---------------------------------
+  const { apiUrlToken } = useContext(GlobalContext);
+  const createToken = (userId) => {
+    RegisterForPushNotifications().then((token) => {
+      console.log(token)
+      fetch(apiUrlToken + "userId/" + `${userId}`, {
+        method: 'PUT',
+        body: JSON.stringify(token),
+        headers: new Headers({
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json; charset=UTF-8',
+        })
+      })
+        .then(res => {
+          return res.json()
+        })
+        .then(
+          (result) => {
+            console.log("לין עד מתי");
+          },
+          (error) => {
+            console.log("err get=", error);
+          });
+    })
+  }
+
   //-----------------------------Phone Press Linking----------------------
   const handlePhonePress = () => {
     Linking.openURL(`tel:${phoneNumber}`);
@@ -71,7 +97,7 @@ export default function LoginPage(props) {
                   const userData = JSON.stringify(result)
                   AsyncStorage.setItem('User', userData, () => {
                     getDepID();
-                    createToken();
+                    createToken(result.userId);
                     props.navigation.navigate('ראשי');
                   });
                 } catch (e) {
@@ -97,11 +123,7 @@ export default function LoginPage(props) {
       setModalVisible(true);
     }
   }
-  const createToken = () => {
-    RegisterForPushNotifications().then((token) => {
-      console.log(token)
-    })
-  }
+
 
   //-------------------------------Get Meds-----------------------------
 
