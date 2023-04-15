@@ -7,13 +7,13 @@ import * as Notifications from "expo-notifications";
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 
-/* Notifications.setNotificationHandler({
+Notifications.setNotificationHandler({
     handleNotification: async () => ({
         shouldShowAlert: true,
         shouldPlaySound: true,
         shouldSetBadge: false,
     }),
-}); */
+});
 
 export default function FCOthersRequest(props) {
     const navigation = useNavigation();
@@ -27,11 +27,7 @@ export default function FCOthersRequest(props) {
     const notificationListener = useRef();
     const responseListener = useRef();
 
-    function handleNotification(notification) {
-        const { screen, params } = notification.data;
-        navigation.navigate(screen, params);
-        setNotification(notification);
-    }
+
 
     useEffect(() => {
         notificationListener.current =
@@ -48,26 +44,15 @@ export default function FCOthersRequest(props) {
         };
     }, []);
 
-    useEffect(() => {
-        Notifications.setNotificationHandler({
-            handleNotification: handleNotification,
-            shouldShowAlert: true,
-            shouldPlaySound: true,
-            shouldSetBadge: false,
-        });
-    }, []);
-
     async function sendPushNotification(expoPushToken, notification) {
-        console.log(expoPushToken);
-        console.log("1");
         const message = {
             to: expoPushToken,
             sound: 'default',
             title: notification.title,
             body: notification.body,
             data: {
-                screen: notification.screen,
-                params: notification.params
+                screen: notification.screen
+                //params: notification.params
             },
         };
 
@@ -112,8 +97,8 @@ export default function FCOthersRequest(props) {
                         const message = {
                             title: `${props.medName}`,
                             body: `מחלקה ${user.userId} אישרה בקשה לתרופה`,
-                            screen: "צפייה בפרטי בקשה",
-                            params: { requestId: props.id, requestsList: myMedReqs }
+                            screen: "הודעות"
+                            //params: { requestId: props.id, requestsList: myMedReqs }
                         };
                         fetch(apiUrlGetToken + "depId/" + `${props.cDepId}`, {
                             method: 'GET',
@@ -127,11 +112,11 @@ export default function FCOthersRequest(props) {
                             })
                             .then(
                                 (result) => {
-                                   if (result.length !== 0) { 
+                                    if (result.length !== 0) {
                                         result.forEach((token) => {
                                             sendPushNotification(token, message);
                                         })
-                                     } 
+                                    }
                                 },
                                 (error) => {
                                     console.log("err get=", error);
