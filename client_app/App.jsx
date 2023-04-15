@@ -96,8 +96,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   tabBar: {
-    //marginHorizontal:10,
-    //marginBottom:10,
     margin: 10,
     elevation: Platform.OS === 'android' ? 4 : 0, // Add elevation for Android only
     borderTopLeftRadius: 20,

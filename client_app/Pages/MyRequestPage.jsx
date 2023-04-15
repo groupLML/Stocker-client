@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native';
-import React, {useEffect} from 'react';
+import React from 'react';
 
 import FCMyRequests from '../FunctionalComps/FCMyRequests';
 
