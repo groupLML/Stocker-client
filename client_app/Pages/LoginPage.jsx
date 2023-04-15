@@ -21,11 +21,11 @@ export default function LoginPage(props) {
   };
 
   //----------------------------PUT TOKEN---------------------------------
-  const { apiUrlToken } = useContext(GlobalContext);
+  const { apiUrlPutToken } = useContext(GlobalContext);
   const createToken = (userId) => {
     RegisterForPushNotifications().then((token) => {
       console.log(token)
-      fetch(apiUrlToken + "userId/" + `${userId}`, {
+      fetch(apiUrlPutToken + "userId/" + `${userId}`, {
         method: 'PUT',
         body: JSON.stringify(token),
         headers: new Headers({
@@ -38,7 +38,6 @@ export default function LoginPage(props) {
         })
         .then(
           (result) => {
-            console.log("לין עד מתי");
           },
           (error) => {
             console.log("err get=", error);

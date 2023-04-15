@@ -20,7 +20,7 @@ export default function FCOthersRequest(props) {
 
     const isStockQtyLower = props.stcQty < props.reqQty;
 
-    const { apiUrlMedRequest, getUserData, myMedReqs } = useContext(GlobalContext);
+    const { apiUrlMedRequest, getUserData, myMedReqs, apiUrlGetToken } = useContext(GlobalContext);
 
     //----------------------notification-----------------------------
     const [notification, setNotification] = useState(false);
@@ -113,29 +113,28 @@ export default function FCOthersRequest(props) {
                             screen: "צפייה בפרטי בקשה",
                             params: { requestId: props.id, requestsList: myMedReqs }
                         };
-                        useEffect(() => {
-                            fetch(apiUrlToken + "depId/" + `${props.cDepId}`, {
-                                method: 'GET',
-                                headers: new Headers({
-                                    'Content-Type': 'application/json; charset=UTF-8',
-                                    'Accept': 'application/json; charset=UTF-8',
-                                })
+
+                        fetch(apiUrlGetToken + "depId/" + `${props.cDepId}`, {
+                            method: 'GET',
+                            headers: new Headers({
+                                'Content-Type': 'application/json; charset=UTF-8',
+                                'Accept': 'application/json; charset=UTF-8',
                             })
-                                .then(res => {
-                                    return res.json()
-                                })
-                                .then(
-                                    (result) => {
-                                        if (result !== []) {
-                                            result.forEach((token) => {
-                                                sendPushNotification(token, message);
-                                            })
-                                        }
-                                    },
-                                    (error) => {
-                                        console.log("err get=", error);
-                                    });
-                        }, []);
+                        })
+                            .then(res => {
+                                return res.json();
+                            })
+                            .then(
+                                (result) => {
+                                    if (result !== []) {
+                                        result.forEach((token) => {
+                                            sendPushNotification(token, message);
+                                        })
+                                    }
+                                },
+                                (error) => {
+                                    console.log("err get=", error);
+                                });
                     }
                     else {
                         setTextMessage("שגיאה, יש בעיה בשרת");
