@@ -100,7 +100,7 @@ export default function LoginPage(props) {
                 }
               }
               else {
-                setTextMessage("שגיאה, משתמש הוא אינו אחות");
+                setTextMessage("שגיאה, משתמש אינו אחות");
                 setModalVisible(true);
               };
             }
