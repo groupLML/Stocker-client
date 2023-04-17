@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, ScrollView, Platform } from 'react-native';
 import React, { useContext, useState, useEffect } from 'react';
 
+
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCNotifications from '../FunctionalComps/FCNotifications';
 
@@ -8,6 +9,7 @@ export default function NotificationPage() {
 
     const { apiUrlNotification } = useContext(GlobalContext);
     const [notifications, setNotifications] = useState(null);
+   
     //----------------------GET Notification---------------------
     useEffect(() => {
         fetch(apiUrlNotification, {
@@ -56,5 +58,5 @@ const styles = StyleSheet.create({
         textShadowColor: '#CCCCCC',
         textShadowOffset: { width: 0, height: 2 },
         textShadowRadius: 5,
-      },
+    },
 });

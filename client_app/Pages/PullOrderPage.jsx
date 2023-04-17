@@ -100,7 +100,7 @@ export default function PullOrderPage(props) {
         });
   };
 
- //הוספת הזמנה
+ //הוספת תרופה בהזמנה
   const AddMedToOrder = async () => {
     if (selectedMedId === null) {
       setIsMovePage(false);
@@ -162,12 +162,11 @@ export default function PullOrderPage(props) {
     const user = await getUserData();
 
     const temp = medsInOrderList.filter((med) => med.medId !== Id2Remove);// Remove selected med from order meds list
-
+   
     let updatedMedsList = temp.map(item => {
       const { medName, ...rest } = item; // Remove "medName" property using object destructuring
       return { ...rest, mazNum: "" }; // Add new "mazNum" property with an empty string as its initial value
     });
-
     fetch(apiUrlPullOrder + 'UpdateNurse/pullId/' + `${pullOrderId}` + '/nUser/' + `${user.userId}`, {
       method: 'PUT',
       body: JSON.stringify(updatedMedsList),

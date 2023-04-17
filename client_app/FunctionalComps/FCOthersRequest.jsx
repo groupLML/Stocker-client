@@ -50,12 +50,12 @@ export default function FCOthersRequest(props) {
             sound: 'default',
             title: notification.title,
             body: notification.body,
-            /* data: {
+            data: {
                 screen: notification.screen,
-                params: notification.params
-            }, */
+                //params: notification.params
+            },
+           
         };
-
         await fetch('https://exp.host/--/api/v2/push/send', {
             method: 'POST',
             headers: {
@@ -97,8 +97,8 @@ export default function FCOthersRequest(props) {
                         const message = {
                             title: `${props.medName}`,
                             body: `מחלקה ${user.userId} אישרה בקשה לתרופה`,
-                            /* screen: 'הודעות',
-                            params: { requestId: props.id, requestsList: myMedReqs } */
+                            //screen: "צפייה בהזמנת משיכה",
+                            //params: { requestId: props.id, requestsList: myMedReqs } */
                         };
                         fetch(apiUrlGetToken + "depId/" + `${props.cDepId}`, {
                             method: 'GET',

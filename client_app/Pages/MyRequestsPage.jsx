@@ -2,9 +2,18 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated } from '
 import React, { useContext, useRef, useEffect, useState } from 'react';
 import { Icon } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
+/* import * as Notifications from "expo-notifications"; */
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCMyRequests from '../FunctionalComps/FCMyRequests';
+
+/* Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: false,
+    }),
+}); */
 
 export default function MyRequestsPage(props) {
   const navigation = useNavigation();
@@ -38,6 +47,28 @@ export default function MyRequestsPage(props) {
 
   //animation for add BTN to stick to screen while scroll
   const scrollY = useRef(new Animated.Value(0)).current;//set the current state of y axe value
+
+  /* //----------------------GET Notification---------------------
+   const [notification, setNotification] = useState(false);
+   const notificationListener = useRef();
+   const responseListener = useRef();
+   useEffect(() => {
+       notificationListener.current =
+           Notifications.addNotificationReceivedListener((notification) => {
+               setNotification(notification);
+           });
+
+       responseListener.current =
+           Notifications.addNotificationResponseReceivedListener((response) => {
+               const { notification } = response;
+               console.log(notification);
+           });
+
+       return () => {
+           Notifications.removeNotificationSubscription(notificationListener.current);
+           Notifications.removeNotificationSubscription(responseListener.current);
+       };
+   }, []); */
 
   return (
     <View style={styles.container}>

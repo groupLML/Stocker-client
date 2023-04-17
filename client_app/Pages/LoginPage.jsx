@@ -20,7 +20,7 @@ export default function LoginPage(props) {
   const { apiUrlPutToken } = useContext(GlobalContext);
   const createToken = (userId) => {
     RegisterForPushNotifications().then((token) => {
-      console.log(token)///////////////////////////////////////////////////////////////////////
+      console.log(token)
       fetch(apiUrlPutToken + "userId/" + `${userId}`, {
         method: 'PUT',
         body: JSON.stringify(token),
@@ -85,7 +85,7 @@ export default function LoginPage(props) {
         })
         .then(
           (result) => {
-            console.log(result);///////////////////////////////////////////////////////////
+            console.log(result);
             if (result.username != null) {
               if (result.jobType == 'N') {
                 try {//Inserting user information into AsyncStorage
@@ -118,7 +118,6 @@ export default function LoginPage(props) {
       setModalVisible(true);
     }
   }
-
 
   //-------------------------------Get Meds-----------------------------
 
