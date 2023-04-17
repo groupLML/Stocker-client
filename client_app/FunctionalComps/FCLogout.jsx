@@ -16,7 +16,6 @@ export default function FCLogout() {
             AsyncStorage.clear(() => {
               setDepId("");
               navigation.navigate('התחברות');
-
             });
           } catch (e) {
             // error clearing AsyncStorage

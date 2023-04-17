@@ -148,6 +148,7 @@ export default function PullOrderPage(props) {
               setIsMovePage(false);
               setTextMessage("התרופה התווספה בהצלחה");
               setModalVisible(true);
+              setClearForm(true);
             }
           },
           (error) => {
