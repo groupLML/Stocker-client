@@ -1,6 +1,7 @@
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 
@@ -22,6 +23,61 @@ export default function FCDetailedRequest(props) {
   const [textMessage, setTextMessage] = useState('');
   const [isSuccessModal, setIsSuccessModal] = useState(false);
   const [isUpdateAllowed, setIsUpdateAllowed] = useState(false);
+  const [initDepTypes, setInitDepTypes] = useState(null);
+  const [isCheckedEqual, setIsCheckedEqual] = useState(null);
+
+  //----------------------GET Request deps ---------------------------------------
+  useEffect(() => {
+    fetch(apiUrlMedRequest + 'RequestDepTypes/depId/' + `${depId}` + '/reqId/' + `${props.id}`, {
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json; charset=UTF-8',
+      })
+    })
+      .then(res => {
+        return res.json()
+      })
+      .then(
+        (result) => {
+          const ReqDepTypes = DepTypes.map((item) => ({ name: item.name, isChecked: Array.isArray(result) && result.includes(item.name) }))
+          setInitDepTypes(ReqDepTypes);
+        },
+        (error) => {
+          console.log("err post=", error);
+        });
+  }, []) // did mount
+
+  const isEqual = (CurrentDepsArray) => {
+    return initDepTypes.length === CurrentDepsArray.length && //בדיקה אם בוצעו שינויים ברשימת המחלקות
+      initDepTypes.every((item1, index) => {
+        const item2 = CurrentDepsArray[index];
+        return item1.isChecked === item2.isChecked;
+      });
+  };
+
+  useEffect(() => {
+    if (initDepTypes !== null) {
+      setIsCheckedEqual(isEqual(DepTypes));
+
+      console.log("initDepTypes", initDepTypes);
+      console.log("DepTypes", DepTypes);
+      console.log("isEqual", isEqual(DepTypes));
+    }
+  }, [DepTypes]);
+
+  useEffect(() => {
+    if (isCheckedEqual == true) {
+      setIsUpdateAllowed(false);
+    }
+    else {
+      setIsUpdateAllowed(true);
+    }
+  }, [isCheckedEqual]);
+
+  useEffect(() => {
+    console.log("isUpdateAllowed", isUpdateAllowed);
+  }, [isCheckedEqual]);
 
   const handleSetClearForm = (state) => {
     setClearForm(state);
@@ -45,23 +101,6 @@ export default function FCDetailedRequest(props) {
     setSelectedMedId(medId);
     setIsUpdateAllowed(true);
   };
-
-  const compereArray = [
-    { name: 'אורתופדיה', isChecked: true },
-    { name: 'כירורגיה', isChecked: true },
-    { name: 'פנימית', isChecked: true },
-  ]
-
-  useEffect(() => {
-    console.log(DepTypes);/////////////////////////////////////////////////////////////
-    const isCheckedEqual = compereArray.length === DepTypes.length &&
-      compereArray.every((item1, index) => {
-        const item2 = DepTypes[index];
-        return item1.isChecked === item2.isChecked;
-      });
-    setIsUpdateAllowed(isCheckedEqual);
-  }, [DepTypes]);
-
 
   //עדכון העברה
   const handleUpdateRequest = () => {
@@ -115,6 +154,7 @@ export default function FCDetailedRequest(props) {
             setIsSuccessModal(false);
             setTextMessage(text);
             setModalVisible(true);
+
           });
         }
       }, (error) => {

@@ -34,7 +34,7 @@ export default function FCDepTypeList(props) {
         else {
             setChecked(true);
         }
-    }, [props.ReqId]) // did mount
+    }, [props.ReqId]) // did update
 
     const handleChange = (ChosenDepName) => { //A specific dep type checkbox is checked
         let temp = DepTypes.map((DepType) => { //find the Chosen Dep and add to temp array
