@@ -21,7 +21,6 @@ export default function FCDetailedRequest(props) {
   const [modalVisible, setModalVisible] = useState(false);
   const [textMessage, setTextMessage] = useState('');
   const [isSuccessModal, setIsSuccessModal] = useState(false);
-  const [isUpdateAllowed, setIsUpdateAllowed] = useState(false);
 
   const handleSetClearForm = (state) => {
     setClearForm(state);
@@ -31,19 +30,16 @@ export default function FCDetailedRequest(props) {
     setModalVisible(false);
     if (isSuccessModal) {
       setClearForm(true);
-      setIsUpdateAllowed(false);
       navigation.navigate('בקשות');
     }
   };
 
   const GetQtyFromInput = (Qty) => {
     setQty(Qty);
-    setIsUpdateAllowed(true);
   }
 
   const handleSelectMed = (medId) => {
     setSelectedMedId(medId);
-    setIsUpdateAllowed(true);
   };
 
   const compereArray = [
@@ -52,26 +48,20 @@ export default function FCDetailedRequest(props) {
     { name: 'פנימית', isChecked: true },
   ]
 
-  useEffect(() => {
-    console.log(DepTypes);/////////////////////////////////////////////////////////////
+/*   useEffect(() => {
+    console.log(DepTypes);
     const isCheckedEqual = compereArray.length === DepTypes.length &&
       compereArray.every((item1, index) => {
         const item2 = DepTypes[index];
         return item1.isChecked === item2.isChecked;
       });
-    setIsUpdateAllowed(isCheckedEqual);
-  }, [DepTypes]);
+    //setIsUpdateAllowed(isCheckedEqual);
+  }, [DepTypes]); */
 
 
   //עדכון העברה
   const handleUpdateRequest = () => {
-    if (!isUpdateAllowed) {
-      setIsSuccessModal(false);
-      setTextMessage('לא בצעו שינוים בהזמנה');
-      setModalVisible(true);
-      return;
-    }
-
+   
     const SelectedDepTypes = DepTypes.filter(depType => depType.isChecked).map(depType => depType.name);
 
     const MedRequest = { //יצירת אובייקט לפי השדות במחלקה
