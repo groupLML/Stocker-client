@@ -196,7 +196,7 @@ export default function FCDetailedRequest(props) {
 
   //אישור העברה
   const handleApproveRequest = () => {
-    fetch(apiUrlMedRequest + "TransportReq/" + `${props.id}` + "/kind/A", {
+    fetch(apiUrlMedRequest + "TransportRe/" + `${props.id}` + "/kind/A", {
       method: 'PUT',
       headers: new Headers({
         'Content-type': 'application/json; charset=UTF-8',
