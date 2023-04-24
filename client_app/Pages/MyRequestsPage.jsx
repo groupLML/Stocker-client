@@ -26,6 +26,33 @@ export default function MyRequestsPage(props) {
   const [ReqsSearch, setReqsSearch] = useState([]);
   const [ShowStatusFilter, setShowStatusFilter] = useState('false');
 
+
+
+  //----------------------GET Requests details ---------------------
+  useEffect(() => {
+    fetch(apiUrlMedRequest + 'RequestsMine/' + `${depId}`, {
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json; charset=UTF-8',
+      })
+    })
+      .then(res => {
+        return res.json()
+      })
+      .then(
+        (result) => {
+          setMyMedReqs(result); //set the requests of choosen dep to display
+          setReqsSearch(result);
+          if (props.isChanged) {
+            props.handleIsChanged(false);
+          }
+        },
+        (error) => {
+          console.log("err post=", error);
+        });
+  }, [props.isChanged]) // did update
+
   const handleSearch = (search) => {
     if (myMedReqs.length !== 0) {
       const filtered = myMedReqs.filter(item => {
@@ -52,38 +79,14 @@ export default function MyRequestsPage(props) {
   };
 
   const HandleSelectedFilters = (SelectedFiltersArray) => {
-    console.log('myMedReqs: ', myMedReqs);
-    console.log('SelectedFiltersArra: ', SelectedFiltersArray);
     if (SelectedFiltersArray.length !== 0) {
       const filtered = myMedReqs.filter(item => SelectedFiltersArray.includes(item.reqStatus));
       setReqsSearch(filtered);
     }
+    else{
+      setReqsSearch(myMedReqs);
+    }
   };
-
-  //----------------------GET Requests details ---------------------
-  useEffect(() => {
-    fetch(apiUrlMedRequest + 'RequestsMine/' + `${depId}`, {
-      method: 'GET',
-      headers: new Headers({
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json; charset=UTF-8',
-      })
-    })
-      .then(res => {
-        return res.json()
-      })
-      .then(
-        (result) => {
-          setMyMedReqs(result); //set the requests of choosen dep to display
-          setReqsSearch(result);
-          if (props.isChanged) {
-            props.handleIsChanged(false);
-          }
-        },
-        (error) => {
-          console.log("err post=", error);
-        });
-  }, [props.isChanged]) // did update
 
   //animation for add BTN to stick to screen while scroll
   const scrollY = useRef(new Animated.Value(0)).current;//set the current state of y axe value
@@ -118,7 +121,7 @@ export default function MyRequestsPage(props) {
       </View>
       {ShowStatusFilter === 'true' && (
         <View style={[styles.row, { paddingHorizontal: 10 }]}>
-          <FCFilters HandleSelectedFilters={HandleSelectedFilters} />
+          <FCFilters HandleSelectedFilters={HandleSelectedFilters} parent={'MyRequestsPage'} />
         </View>
       )}
       <View style={styles.scrollViewContainer}>

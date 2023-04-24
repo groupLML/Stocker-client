@@ -4,22 +4,15 @@ import React, { useContext, useState, useEffect, useRef } from 'react';
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCPushOrders from '../FunctionalComps/FCPushOrders';
 import FCSearchBar from '../FunctionalComps/FCSearchBar ';
+import FCFilter from '../FunctionalComps/FCFilter';
+import FCFilters from '../FunctionalComps/FCFilters';
 
 export default function PushOrdersPage() {
 
   const { apiUrlPushOrder, depId } = useContext(GlobalContext);
   const [pushOrders, setPushOrders] = useState([]);
   const [PushOrdersSearch, setPushOrdersSearch] = useState([]);
-
-  const handleSearch = (search) => {
-    if (pushOrders.length !== 0) {
-      const filtered = pushOrders.filter(item =>
-        item.pharmacistName.toLowerCase().includes(search.toLowerCase()) ||
-        item.orderId.toString().toLowerCase().includes(search.toString().toLowerCase())
-      );
-      setPushOrdersSearch(filtered);
-    }
-  };
+  const [ShowStatusFilter, setShowStatusFilter] = useState('false');
 
   //----------------------GET PushOrder---------------------
   useEffect(() => {
@@ -43,11 +36,46 @@ export default function PushOrdersPage() {
         });
   }, [])
 
+  const handleSearch = (search) => {
+    if (pushOrders.length !== 0) {
+      const filtered = pushOrders.filter(item =>
+        item.pharmacistName.toLowerCase().includes(search.toLowerCase()) ||
+        item.orderId.toString().toLowerCase().includes(search.toString().toLowerCase())
+      );
+      setPushOrdersSearch(filtered);
+    }
+  };
+  
+  const HandleFilterPress = () => {
+    if (ShowStatusFilter === 'false') {
+      setShowStatusFilter('true');
+    }
+    else {
+      setShowStatusFilter('false');
+    }
+  };
+
+  const HandleSelectedFilters = (SelectedFiltersArray) => {
+    if (SelectedFiltersArray.length !== 0) {
+      const filtered = pushOrders.filter(item => SelectedFiltersArray.includes(item.orderStatus));
+      setPushOrdersSearch(filtered);
+    }
+    else{
+      setPushOrdersSearch(pushOrders);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.searchContainer}>
-        <FCSearchBar handleSearch={handleSearch} />
+      <View style={styles.row}>
+        <View style={{ flex: 7 }}><FCSearchBar handleSearch={handleSearch} /></View>
+        <View style={{ flex: 1 }}><FCFilter HandleFilterPress={HandleFilterPress} /></View>
       </View>
+      {ShowStatusFilter === 'true' && (
+        <View style={[styles.row, { paddingHorizontal: 10 }]}>
+          <FCFilters HandleSelectedFilters={HandleSelectedFilters} parent={'PushOrdersPage'} />
+        </View>
+      )}
       <View style={styles.scrollViewContainer}>
         <ScrollView scrollEventThrottle={16}>
           <FCPushOrders pushOrdersList={PushOrdersSearch} />
@@ -61,6 +89,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 5,
   },
   searchContainer: {
     paddingHorizontal: 5,

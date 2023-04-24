@@ -21,22 +21,69 @@ export default function FCFilters(props) {
         setSelectedButtons(selectedButtons.filter(button => button !== 'A'));
       }
     }
+    if (buttonType === 'T') {
+      if (selectedButtons.includes('T') !== true) {
+        setSelectedButtons([...selectedButtons, 'T']);
+      }
+      else {
+        setSelectedButtons(selectedButtons.filter(button => button !== 'T'));
+      }
+    }
+    if (buttonType === 'R') {
+      if (selectedButtons.includes('R') !== true) {
+        setSelectedButtons([...selectedButtons, 'R']);
+      }
+      else {
+        setSelectedButtons(selectedButtons.filter(button => button !== 'R'));
+      }
+    }
+    if (buttonType === 'I') {
+      if (selectedButtons.includes('I') !== true) {
+        setSelectedButtons([...selectedButtons, 'I']);
+      }
+      else {
+        setSelectedButtons(selectedButtons.filter(button => button !== 'I'));
+      }
+    }
   };
 
   useEffect(() => {
-    console.log('selectedButtons: ', selectedButtons);
     props.HandleSelectedFilters(selectedButtons);
   }, [selectedButtons]) // did update
 
   return (
     <View>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <TouchableOpacity style={[styles.button, selectedButtons.includes('W') && styles.selectedButton]} onPress={() => handleButtonPress('W')}>
-          <Text style={[styles.buttonText, selectedButtons.includes('W') && styles.selectedButtonText]}>בהמתנה</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, selectedButtons.includes('A') && styles.selectedButton]} onPress={() => handleButtonPress('A')}>
-          <Text style={[styles.buttonText, selectedButtons.includes('A') && styles.selectedButtonText]} >מאושר</Text>
-        </TouchableOpacity>
+        {props.parent === 'MyRequestsPage' && (<>
+          <TouchableOpacity style={[styles.button, selectedButtons.includes('W') && styles.selectedButton]} onPress={() => handleButtonPress('W')}>
+            <Text style={[styles.buttonText, selectedButtons.includes('W') && styles.selectedButtonText]}>בהמתנה</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.button, selectedButtons.includes('A') && styles.selectedButton]} onPress={() => handleButtonPress('A')}>
+            <Text style={[styles.buttonText, selectedButtons.includes('A') && styles.selectedButtonText]} >מאושר</Text>
+          </TouchableOpacity>
+        </>
+        )}
+        {props.parent === 'PullOrdersPage' && (<>
+          <TouchableOpacity style={[styles.button, selectedButtons.includes('W') && styles.selectedButton]} onPress={() => handleButtonPress('W')}>
+            <Text style={[styles.buttonText, selectedButtons.includes('W') && styles.selectedButtonText]}>בהמתנה</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.button, selectedButtons.includes('T') && styles.selectedButton]} onPress={() => handleButtonPress('T')}>
+            <Text style={[styles.buttonText, selectedButtons.includes('T') && styles.selectedButtonText]} >בטיפול</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.button, selectedButtons.includes('I') && styles.selectedButton]} onPress={() => handleButtonPress('I')}>
+            <Text style={[styles.buttonText, selectedButtons.includes('I') && styles.selectedButtonText]} >הונפק</Text>
+          </TouchableOpacity>
+        </>
+        )}
+        {props.parent === 'PushOrdersPage' && (<>
+          <TouchableOpacity style={[styles.button, selectedButtons.includes('R') && styles.selectedButton]} onPress={() => handleButtonPress('R')}>
+            <Text style={[styles.buttonText, selectedButtons.includes('R') && styles.selectedButtonText]}>שוריין</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.button, selectedButtons.includes('I') && styles.selectedButton]} onPress={() => handleButtonPress('I')}>
+            <Text style={[styles.buttonText, selectedButtons.includes('I') && styles.selectedButtonText]} >הונפק</Text>
+          </TouchableOpacity>
+        </>
+        )}
       </View>
     </View>
   )
@@ -62,6 +109,6 @@ const styles = StyleSheet.create({
   },
   selectedButtonText: {
     color: '#527FA1',
-    fontWeight:'bold'
+    fontWeight: 'bold'
   },
 });

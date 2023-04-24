@@ -6,6 +6,8 @@ import { useNavigation } from '@react-navigation/native';
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCPullOrders from '../FunctionalComps/FCPullOrders';
 import FCSearchBar from '../FunctionalComps/FCSearchBar ';
+import FCFilter from '../FunctionalComps/FCFilter';
+import FCFilters from '../FunctionalComps/FCFilters';
 
 export default function PullOrdersPage(props) {
   const navigation = useNavigation();
@@ -13,17 +15,7 @@ export default function PullOrdersPage(props) {
   const { apiUrlPullOrder, depId } = useContext(GlobalContext);
   const [pullOrders, setPullOrders] = useState([]);
   const [PullOrdersSearch, setPullOrdersSearch] = useState([]);
-
-  const handleSearch = (search) => {
-    if (pullOrders.length !== 0) {
-      const filtered = pullOrders.filter(item =>
-        item.nurseName.toLowerCase().includes(search.toLowerCase()) ||
-        item.orderId.toString().toLowerCase().includes(search.toString().toLowerCase()) ||
-        item.pharmacistName.toLowerCase().includes(search.toLowerCase())
-      );
-      setPullOrdersSearch(filtered);
-    }
-  };
+  const [ShowStatusFilter, setShowStatusFilter] = useState('false');
 
   //----------------------GET PullOrders---------------------
   useEffect(() => {
@@ -50,14 +42,50 @@ export default function PullOrdersPage(props) {
         });
   }, [props.isChanged])
 
+  const handleSearch = (search) => {
+    if (pullOrders.length !== 0) {
+      const filtered = pullOrders.filter(item =>
+        item.nurseName.toLowerCase().includes(search.toLowerCase()) ||
+        item.orderId.toString().toLowerCase().includes(search.toString().toLowerCase()) ||
+        item.pharmacistName.toLowerCase().includes(search.toLowerCase())
+      );
+      setPullOrdersSearch(filtered);
+    }
+  };
+
+  const HandleFilterPress = () => {
+    if (ShowStatusFilter === 'false') {
+      setShowStatusFilter('true');
+    }
+    else {
+      setShowStatusFilter('false');
+    }
+  };
+
+  const HandleSelectedFilters = (SelectedFiltersArray) => {
+    if (SelectedFiltersArray.length !== 0) {
+      const filtered = pullOrders.filter(item => SelectedFiltersArray.includes(item.orderStatus));
+      setPullOrdersSearch(filtered);
+    }
+    else{
+      setPullOrdersSearch(pullOrders);
+    }
+  };
+
   //animation for add BTN to stick to screen while scroll
   const scrollY = useRef(new Animated.Value(0)).current;//set the current state of y axe value
 
   return (
     <View style={styles.container}>
-      <View style={styles.searchContainer}>
-      <FCSearchBar handleSearch={handleSearch} />
+      <View style={styles.row}>
+        <View style={{ flex: 7 }}><FCSearchBar handleSearch={handleSearch} /></View>
+        <View style={{ flex: 1 }}><FCFilter HandleFilterPress={HandleFilterPress} /></View>
       </View>
+      {ShowStatusFilter === 'true' && (
+        <View style={[styles.row, { paddingHorizontal: 10 }]}>
+          <FCFilters HandleSelectedFilters={HandleSelectedFilters} parent={'PullOrdersPage'} />
+        </View>
+      )}
       <View style={styles.scrollViewContainer}>
         <ScrollView scrollEventThrottle={16}>
           <FCPullOrders PullOrdersList={PullOrdersSearch} />
@@ -85,6 +113,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 5,
   },
   searchContainer: {
     paddingHorizontal: 5,
