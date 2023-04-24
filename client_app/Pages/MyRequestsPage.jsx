@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCMyRequests from '../FunctionalComps/FCMyRequests';
+import FCSearchBar from '../FunctionalComps/FCSearchBar ';
 
 /* Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -20,6 +21,14 @@ export default function MyRequestsPage(props) {
 
   const { apiUrlMedRequest, depId, myMedReqs, setMyMedReqs } = useContext(GlobalContext);
   const [statusFilter, setStatusFilter] = useState('all');
+  const [ReqsSearch, setReqsSearch] = useState([]);
+
+  const handleSearch = (search) => {
+    if (myMedReqs.length != 0) {
+      const filtered = myMedReqs.filter(item => item.medName.toLowerCase().includes(search.toLowerCase()));
+      setReqsSearch(filtered);
+    }
+  };
 
   //----------------------GET Requests details ---------------------
   useEffect(() => {
@@ -36,6 +45,7 @@ export default function MyRequestsPage(props) {
       .then(
         (result) => {
           setMyMedReqs(result); //set the requests of choosen dep to display
+          setReqsSearch(result);
           if (props.isChanged) {
             props.handleIsChanged(false);
           }
@@ -72,10 +82,10 @@ export default function MyRequestsPage(props) {
 
   return (
     <View style={styles.container}>
+      <FCSearchBar handleSearch={handleSearch} />
       <View style={styles.scrollViewContainer}>
         <ScrollView scrollEventThrottle={16}>
-          <FCMyRequests RequestsList={myMedReqs} isDetailedRequest={false} statusFilter={statusFilter} onStatusFilterChange={(status) => setStatusFilter(status)} />
-          {/* <FCMyRequests RequestsList={myMedReqs} isDetailedRequest={false} /> */}
+          <FCMyRequests RequestsList={ReqsSearch} isDetailedRequest={false} statusFilter={statusFilter} onStatusFilterChange={(status) => setStatusFilter(status)} />
         </ScrollView>
         <Animated.View
           style={[styles.AddBTN, {

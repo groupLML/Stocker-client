@@ -1,13 +1,25 @@
-import { View, Text, StyleSheet, ScrollView} from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React, { useContext, useState, useEffect, useRef } from 'react';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCPushOrders from '../FunctionalComps/FCPushOrders';
+import FCSearchBar from '../FunctionalComps/FCSearchBar ';
 
 export default function PushOrdersPage() {
 
   const { apiUrlPushOrder, depId } = useContext(GlobalContext);
   const [pushOrders, setPushOrders] = useState([]);
+  const [PushOrdersSearch, setPushOrdersSearch] = useState([]);
+
+  const handleSearch = (search) => {
+    if (pushOrders.length != 0) {
+      const filtered = pushOrders.filter(item =>
+        item.pharmacistName.toLowerCase().includes(search.toLowerCase()) ||
+        item.orderId.toString().toLowerCase().includes(search.toString().toLowerCase())
+      );
+      setPushOrdersSearch(filtered);
+    }
+  };
 
   //----------------------GET PushOrder---------------------
   useEffect(() => {
@@ -18,12 +30,13 @@ export default function PushOrdersPage() {
         'Accept': 'application/json; charset=UTF-8',
       })
     })
-    .then(result => {
-      return result.json();
-    })
+      .then(result => {
+        return result.json();
+      })
       .then(
         (result) => {
           setPushOrders(result);
+          setPushOrdersSearch(result);
         },
         (error) => {
           console.log("err get=", error);
@@ -32,9 +45,10 @@ export default function PushOrdersPage() {
 
   return (
     <View style={styles.container}>
+      <FCSearchBar handleSearch={handleSearch} />
       <View style={styles.scrollViewContainer}>
         <ScrollView scrollEventThrottle={16}>
-          <FCPushOrders pushOrdersList={pushOrders}/>
+          <FCPushOrders pushOrdersList={PushOrdersSearch} />
         </ScrollView>
       </View>
     </View>

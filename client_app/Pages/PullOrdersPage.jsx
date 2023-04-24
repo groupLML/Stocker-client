@@ -5,13 +5,25 @@ import { useNavigation } from '@react-navigation/native';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCPullOrders from '../FunctionalComps/FCPullOrders';
+import FCSearchBar from '../FunctionalComps/FCSearchBar ';
 
 export default function PullOrdersPage(props) {
   const navigation = useNavigation();
 
   const { apiUrlPullOrder, depId } = useContext(GlobalContext);
-
   const [pullOrders, setPullOrders] = useState([]);
+  const [PullOrdersSearch, setPullOrdersSearch] = useState([]);
+
+  const handleSearch = (search) => {
+    if (pullOrders.length != 0) {
+      const filtered = pullOrders.filter(item =>
+        item.nurseName.toLowerCase().includes(search.toLowerCase()) ||
+        item.orderId.toString().toLowerCase().includes(search.toString().toLowerCase()) ||
+        item.pharmacistName.toLowerCase().includes(search.toLowerCase())
+      );
+      setPullOrdersSearch(filtered);
+    }
+  };
 
   //----------------------GET PullOrders---------------------
   useEffect(() => {
@@ -28,6 +40,7 @@ export default function PullOrdersPage(props) {
       .then(
         (result) => {
           setPullOrders(result);
+          setPullOrdersSearch(result);
           if (props.isChanged) {
             props.handleIsChanged(false);
           }
@@ -42,9 +55,10 @@ export default function PullOrdersPage(props) {
 
   return (
     <View style={styles.container}>
+      <FCSearchBar handleSearch={handleSearch} />
       <View style={styles.scrollViewContainer}>
         <ScrollView scrollEventThrottle={16}>
-          <FCPullOrders PullOrdersList={pullOrders}/>
+          <FCPullOrders PullOrdersList={PullOrdersSearch} />
         </ScrollView>
         <Animated.View
           style={[styles.AddBTN, {
