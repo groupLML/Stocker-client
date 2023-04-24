@@ -15,7 +15,7 @@ export default function PullOrdersPage(props) {
   const [PullOrdersSearch, setPullOrdersSearch] = useState([]);
 
   const handleSearch = (search) => {
-    if (pullOrders.length != 0) {
+    if (pullOrders.length !== 0) {
       const filtered = pullOrders.filter(item =>
         item.nurseName.toLowerCase().includes(search.toLowerCase()) ||
         item.orderId.toString().toLowerCase().includes(search.toString().toLowerCase()) ||

@@ -12,9 +12,13 @@ export default function OthersRequestsPage(props) {
     const [ReqsSearch, setReqsSearch] = useState([]);
 
     const handleSearch = (search) => {
-        if (othersMedReqs.length != 0) {
+        if (othersMedReqs.length !== 0) {
             console.log(othersMedReqs);
-            const filtered = othersMedReqs.filter(item => item.medName.toLowerCase().includes(search.toLowerCase()));
+            const filtered = othersMedReqs.filter(item =>
+                item.medName.toLowerCase().includes(search.toLowerCase()) ||
+                item.cNurseName.toLowerCase().includes(search.toLowerCase()) ||
+                item.depName.toLowerCase().includes(search.toLowerCase())
+            );
             setReqsSearch(filtered);
         }
     };

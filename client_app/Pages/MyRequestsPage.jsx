@@ -24,8 +24,17 @@ export default function MyRequestsPage(props) {
   const [ReqsSearch, setReqsSearch] = useState([]);
 
   const handleSearch = (search) => {
-    if (myMedReqs.length != 0) {
-      const filtered = myMedReqs.filter(item => item.medName.toLowerCase().includes(search.toLowerCase()));
+    if (myMedReqs.length !== 0) {
+      const filtered = myMedReqs.filter(item => {
+        if (item.aNurseName.toLowerCase() === "user user") {
+          return item.medName.toLowerCase().includes(search.toLowerCase()) ||
+            item.cNurseName.toLowerCase().includes(search.toLowerCase());
+        } else {
+          return item.medName.toLowerCase().includes(search.toLowerCase()) ||
+            item.cNurseName.toLowerCase().includes(search.toLowerCase()) ||
+            item.aNurseName.toLowerCase().includes(search.toLowerCase());
+        }
+      });
       setReqsSearch(filtered);
     }
   };

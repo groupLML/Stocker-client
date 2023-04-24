@@ -12,7 +12,7 @@ export default function PushOrdersPage() {
   const [PushOrdersSearch, setPushOrdersSearch] = useState([]);
 
   const handleSearch = (search) => {
-    if (pushOrders.length != 0) {
+    if (pushOrders.length !== 0) {
       const filtered = pushOrders.filter(item =>
         item.pharmacistName.toLowerCase().includes(search.toLowerCase()) ||
         item.orderId.toString().toLowerCase().includes(search.toString().toLowerCase())
