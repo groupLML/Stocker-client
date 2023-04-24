@@ -1,15 +1,22 @@
-import { View } from 'react-native'
+import { View, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { Icon } from '@rneui/themed';
+import { Icon } from 'react-native-elements';
 
-export default function FCFilter() {
+export default function FCFilter(props) {
+
+    const HandleFilterPress = () => {
+        props.HandleFilterPress();
+    };
+
     return (
         <View>
-            <Icon
-                name='filter-outline'
-                type='Ionicons'
-                color='#517fa4'
-            />
+            <TouchableOpacity onPress={HandleFilterPress}>
+                <Icon
+                    name="filter"
+                    type="font-awesome"
+                    color="#517fa4"
+                />
+            </TouchableOpacity>
         </View>
     )
 }

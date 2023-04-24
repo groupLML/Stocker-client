@@ -51,7 +51,9 @@ export default function OthersRequestsPage(props) {
 
     return (
         <View style={styles.container}>
-            <FCSearchBar handleSearch={handleSearch} />
+            <View style={styles.searchContainer}>
+                <FCSearchBar handleSearch={handleSearch} />
+            </View>
             <View style={styles.scrollViewContainer}>
                 <ScrollView>
                     <FCOthersRequests RequestsList={ReqsSearch} handleIsStatusChanged={() => setIsStatusChanged(true)} cDepId={depId} />
@@ -65,6 +67,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+    },
+    searchContainer: {
+        paddingHorizontal: 5,
     },
     scrollViewContainer: {
         flex: 1,

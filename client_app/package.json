@@ -11,6 +11,8 @@
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
     "@react-native-async-storage/async-storage": "^1.17.11",
+    "@react-native-material/core": "^1.3.7",
+    "@react-native-picker/picker": "2.4.8",
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/material-bottom-tabs": "^6.2.14",
     "@react-navigation/native": "^6.1.6",
@@ -26,6 +28,7 @@
     "moment": "^2.29.4",
     "react": "18.1.0",
     "react-native": "0.70.8",
+    "react-native-dropdown-picker": "^5.4.6",
     "react-native-elements": "^3.4.3",
     "react-native-numeric-input": "^1.9.1",
     "react-native-paper": "^5.2.0",

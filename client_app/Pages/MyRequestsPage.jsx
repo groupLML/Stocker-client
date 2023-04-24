@@ -1,12 +1,15 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated } from 'react-native';
+import { View, StyleSheet, ScrollView, TouchableOpacity, Animated } from 'react-native';
 import React, { useContext, useRef, useEffect, useState } from 'react';
 import { Icon } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
+
 /* import * as Notifications from "expo-notifications"; */
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCMyRequests from '../FunctionalComps/FCMyRequests';
 import FCSearchBar from '../FunctionalComps/FCSearchBar ';
+import FCFilter from '../FunctionalComps/FCFilter';
+import FCFilters from '../FunctionalComps/FCFilters';
 
 /* Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -20,8 +23,8 @@ export default function MyRequestsPage(props) {
   const navigation = useNavigation();
 
   const { apiUrlMedRequest, depId, myMedReqs, setMyMedReqs } = useContext(GlobalContext);
-  const [statusFilter, setStatusFilter] = useState('all');
   const [ReqsSearch, setReqsSearch] = useState([]);
+  const [ShowStatusFilter, setShowStatusFilter] = useState('false');
 
   const handleSearch = (search) => {
     if (myMedReqs.length !== 0) {
@@ -35,6 +38,24 @@ export default function MyRequestsPage(props) {
             item.aNurseName.toLowerCase().includes(search.toLowerCase());
         }
       });
+      setReqsSearch(filtered);
+    }
+  };
+
+  const HandleFilterPress = () => {
+    if (ShowStatusFilter === 'false') {
+      setShowStatusFilter('true');
+    }
+    else {
+      setShowStatusFilter('false');
+    }
+  };
+
+  const HandleSelectedFilters = (SelectedFiltersArray) => {
+    console.log('myMedReqs: ', myMedReqs);
+    console.log('SelectedFiltersArra: ', SelectedFiltersArray);
+    if (SelectedFiltersArray.length !== 0) {
+      const filtered = myMedReqs.filter(item => SelectedFiltersArray.includes(item.reqStatus));
       setReqsSearch(filtered);
     }
   };
@@ -76,13 +97,13 @@ export default function MyRequestsPage(props) {
            Notifications.addNotificationReceivedListener((notification) => {
                setNotification(notification);
            });
-
+ 
        responseListener.current =
            Notifications.addNotificationResponseReceivedListener((response) => {
                const { notification } = response;
                console.log(notification);
            });
-
+ 
        return () => {
            Notifications.removeNotificationSubscription(notificationListener.current);
            Notifications.removeNotificationSubscription(responseListener.current);
@@ -91,10 +112,18 @@ export default function MyRequestsPage(props) {
 
   return (
     <View style={styles.container}>
-      <FCSearchBar handleSearch={handleSearch} />
+      <View style={styles.row}>
+        <View style={{ flex: 7 }}><FCSearchBar handleSearch={handleSearch} /></View>
+        <View style={{ flex: 1 }}><FCFilter HandleFilterPress={HandleFilterPress} /></View>
+      </View>
+      {ShowStatusFilter === 'true' && (
+        <View style={[styles.row, { paddingHorizontal: 10 }]}>
+          <FCFilters HandleSelectedFilters={HandleSelectedFilters} />
+        </View>
+      )}
       <View style={styles.scrollViewContainer}>
         <ScrollView scrollEventThrottle={16}>
-          <FCMyRequests RequestsList={ReqsSearch} isDetailedRequest={false} statusFilter={statusFilter} onStatusFilterChange={(status) => setStatusFilter(status)} />
+          <FCMyRequests RequestsList={ReqsSearch} isDetailedRequest={false} />
         </ScrollView>
         <Animated.View
           style={[styles.AddBTN, {
@@ -119,6 +148,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 5,
   },
   scrollViewContainer: {
     flex: 1,

@@ -55,7 +55,9 @@ export default function PullOrdersPage(props) {
 
   return (
     <View style={styles.container}>
+      <View style={styles.searchContainer}>
       <FCSearchBar handleSearch={handleSearch} />
+      </View>
       <View style={styles.scrollViewContainer}>
         <ScrollView scrollEventThrottle={16}>
           <FCPullOrders PullOrdersList={PullOrdersSearch} />
@@ -84,6 +86,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  searchContainer: {
+    paddingHorizontal: 5,
+},
   scrollViewContainer: {
     flex: 1,
     position: 'relative',

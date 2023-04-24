@@ -45,7 +45,9 @@ export default function PushOrdersPage() {
 
   return (
     <View style={styles.container}>
-      <FCSearchBar handleSearch={handleSearch} />
+      <View style={styles.searchContainer}>
+        <FCSearchBar handleSearch={handleSearch} />
+      </View>
       <View style={styles.scrollViewContainer}>
         <ScrollView scrollEventThrottle={16}>
           <FCPushOrders pushOrdersList={PushOrdersSearch} />
@@ -60,6 +62,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  searchContainer: {
+    paddingHorizontal: 5,
+},
   scrollViewContainer: {
     flex: 1,
     position: 'relative',
