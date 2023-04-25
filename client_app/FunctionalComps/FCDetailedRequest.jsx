@@ -21,6 +21,7 @@ export default function FCDetailedRequest(props) {
   const [modalVisible, setModalVisible] = useState(false);
   const [textMessage, setTextMessage] = useState('');
   const [isSuccessModal, setIsSuccessModal] = useState(false);
+  const [isUpdateAllowed, setIsUpdateAllowed] = useState(false);
 
   const handleSetClearForm = (state) => {
     setClearForm(state);
@@ -30,38 +31,38 @@ export default function FCDetailedRequest(props) {
     setModalVisible(false);
     if (isSuccessModal) {
       setClearForm(true);
+      setIsUpdateAllowed(false);
       navigation.navigate('בקשות');
     }
   };
 
   const GetQtyFromInput = (Qty) => {
     setQty(Qty);
+    setIsUpdateAllowed(true);
   }
 
   const handleSelectMed = (medId) => {
     setSelectedMedId(medId);
+    setIsUpdateAllowed(true);
   };
 
-  const compereArray = [
-    { name: 'אורתופדיה', isChecked: true },
-    { name: 'כירורגיה', isChecked: true },
-    { name: 'פנימית', isChecked: true },
-  ]
+  const initReqDeps = props.ReqDeps
 
-/*   useEffect(() => {
-    console.log(DepTypes);
-    const isCheckedEqual = compereArray.length === DepTypes.length &&
-      compereArray.every((item1, index) => {
+  useEffect(() => {
+    console.log('DepTypes: ', DepTypes);
+    console.log('initReqDeps: ', initReqDeps);
+    const isCheckedEqual = initReqDeps.length === DepTypes.length &&
+      initReqDeps.every((item1, index) => {
         const item2 = DepTypes[index];
         return item1.isChecked === item2.isChecked;
       });
-    //setIsUpdateAllowed(isCheckedEqual);
-  }, [DepTypes]); */
-
+    console.log('isCheckedEqual: ', isCheckedEqual);
+    setIsUpdateAllowed(!isCheckedEqual);
+  }, [DepTypes]);
 
   //עדכון העברה
   const handleUpdateRequest = () => {
-   
+
     const SelectedDepTypes = DepTypes.filter(depType => depType.isChecked).map(depType => depType.name);
 
     const MedRequest = { //יצירת אובייקט לפי השדות במחלקה
@@ -82,35 +83,36 @@ export default function FCDetailedRequest(props) {
     };
 
     //-------------------------------PUT medReqs------------------------------------
-    fetch(apiUrlMedRequest + "WaitingReq/" + `${props.id}`, {
-      method: 'PUT',
-      body: JSON.stringify(dataToSend),
-      headers: new Headers({
-        'Content-type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json; charset=UTF-8',
+    if (isUpdateAllowed === true) {
+      fetch(apiUrlMedRequest + "WaitingReq/" + `${props.id}`, {
+        method: 'PUT',
+        body: JSON.stringify(dataToSend),
+        headers: new Headers({
+          'Content-type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json; charset=UTF-8',
+        })
       })
-    })
-      .then(res => {
-        return res;
-      })
-      .then((result) => {
-        if (result.status >= 200 && result.status < 300) {
-          result.text().then(text => {
-            setIsSuccessModal(true);
-            setTextMessage(text);
-            setModalVisible(true);
-          });
-        } else if (result.status >= 400 && result.status <= 500) {
-          result.text().then(text => {
-            setIsSuccessModal(false);
-            setTextMessage(text);
-            setModalVisible(true);
-          });
-        }
-      }, (error) => {
-        console.log("err post=", error);
-      });
-
+        .then(res => {
+          return res;
+        })
+        .then((result) => {
+          if (result.status >= 200 && result.status < 300) {
+            result.text().then(text => {
+              setIsSuccessModal(true);
+              setTextMessage(text);
+              setModalVisible(true);
+            });
+          } else if (result.status >= 400 && result.status <= 500) {
+            result.text().then(text => {
+              setIsSuccessModal(false);
+              setTextMessage(text);
+              setModalVisible(true);
+            });
+          }
+        }, (error) => {
+          console.log("err post=", error);
+        });
+    }
   };
 
   //מחיקת בקשה
@@ -242,7 +244,7 @@ export default function FCDetailedRequest(props) {
           <Text style={{ ...styles.body, fontSize: 17 }}><Text style={{ fontSize: 17 }} >שם יוצר ההזמנה: </Text>{props.cNurseName}</Text>
           <View style={styles.body}><FCMedInput medName={props.medName} sendMedSelect={handleSelectMed} clearForm={clearForm} handleSetClearForm={handleSetClearForm} /></View>
           <View style={styles.body}><FCQuantityInput reqQty={props.reqQty} sendQty={GetQtyFromInput} /></View>
-          <View style={styles.body}><FCDepTypeList ReqId={props.id} /></View>
+          <View style={styles.body}><FCDepTypeList /></View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59', flex: 1 }]} onPress={() => handleUpdateRequest()}>
               <Text style={styles.buttonText}>עדכון</Text>

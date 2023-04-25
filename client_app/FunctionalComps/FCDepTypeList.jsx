@@ -7,34 +7,7 @@ export default function FCDepTypeList(props) {
 
     //-----------------------------Dep Type List------------------------------------
     const [isChecked, setChecked] = useState(null); //Send to all deps checkBox status (init value is checked)
-    const { depId, apiUrlMedRequest, DepTypes, setDepTypes } = useContext(GlobalContext);
-
-    //----------------------GET Request deps ---------------------------------------
-    useEffect(() => {
-        if (props.ReqId !== null) {
-            fetch(apiUrlMedRequest + 'RequestDepTypes/depId/' + `${depId}` + '/reqId/' + `${props.ReqId}`, {
-                method: 'GET',
-                headers: new Headers({
-                    'Content-Type': 'application/json; charset=UTF-8',
-                    'Accept': 'application/json; charset=UTF-8',
-                })
-            })
-                .then(res => {
-                    return res.json()
-                })
-                .then(
-                    (result) => {
-                        const newReqDeps = DepTypes.map((item) => ({ name: item.name, isChecked: Array.isArray(result) && result.includes(item.name) }))
-                        setDepTypes(newReqDeps);
-                    },
-                    (error) => {
-                        console.log("err post=", error);
-                    });
-        }
-        else {
-            setChecked(true);
-        }
-    }, [props.ReqId]) // did mount
+    const { DepTypes, setDepTypes } = useContext(GlobalContext);
 
     const handleChange = (ChosenDepName) => { //A specific dep type checkbox is checked
         let temp = DepTypes.map((DepType) => { //find the Chosen Dep and add to temp array

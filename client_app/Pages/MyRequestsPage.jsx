@@ -26,8 +26,6 @@ export default function MyRequestsPage(props) {
   const [ReqsSearch, setReqsSearch] = useState([]);
   const [ShowStatusFilter, setShowStatusFilter] = useState('false');
 
-
-
   //----------------------GET Requests details ---------------------
   useEffect(() => {
     fetch(apiUrlMedRequest + 'RequestsMine/' + `${depId}`, {

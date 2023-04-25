@@ -5,13 +5,13 @@ import FCMyRequests from '../FunctionalComps/FCMyRequests';
 
 export default function MyRequestPage(props) {
 
-  const { requestId, requestsList } = props.route.params;
+  const { requestId, requestsList, ReqDeps } = props.route.params;
 
   let request = requestsList.filter((item) => item.reqId === requestId);//get the request item to read 
 
   return (
     <View style={styles.container}>
-      <FCMyRequests RequestsList={request} isDetailedRequest={true} />
+      <FCMyRequests RequestsList={request} isDetailedRequest={true} ReqDeps={ReqDeps}/>
     </View>
   );
 }

@@ -3,13 +3,34 @@ import React, { useContext, useEffect } from 'react';
 import { Card } from '@rneui/base';
 import { useNavigation } from '@react-navigation/native';
 import FCDateTime from './FCDateTime';
+import { GlobalContext } from '../GlobalData/GlobalData';
 
 export default function FCMyRequest(props) {
-  
+
   const navigation = useNavigation();
+  const { depId, apiUrlMedRequest, DepTypes, setDepTypes } = useContext(GlobalContext);
 
   const handleCardPress = () => {
-    navigation.navigate('צפייה בפרטי בקשה', { requestId: props.id, requestsList: props.requestsList });
+    //----------------------GET Request deps ---------------------------------------
+    fetch(apiUrlMedRequest + 'RequestDepTypes/depId/' + `${depId}` + '/reqId/' + `${props.id}`, {
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json; charset=UTF-8',
+      })
+    })
+      .then(res => {
+        return res.json()
+      })
+      .then(
+        (result) => {
+          const newReqDeps = DepTypes.map((item) => ({ name: item.name, isChecked: Array.isArray(result) && result.includes(item.name) }))
+          setDepTypes(newReqDeps);
+          navigation.navigate('צפייה בפרטי בקשה', { requestId: props.id, requestsList: props.requestsList, ReqDeps: newReqDeps });
+        },
+        (error) => {
+          console.log("err post=", error);
+        });
   };
 
   return (
@@ -24,7 +45,7 @@ export default function FCMyRequest(props) {
           )}
           {props.reqStatus === 'W' && (
             <>
-              <Text style={{ color: '#DF2E38'}}>בהמתנה</Text>
+              <Text style={{ color: '#DF2E38' }}>בהמתנה</Text>
             </>
           )}
           {props.reqStatus === 'D' && <Text>נדחה</Text>}

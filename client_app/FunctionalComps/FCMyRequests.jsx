@@ -22,6 +22,7 @@ export default function FCMyRequests(props) {
                 reqQty={request.reqQty}
                 reqStatus={request.reqStatus}
                 requestsList={props.RequestsList}
+                ReqDeps={props.ReqDeps}
                 key={request.reqId}
             />;
         })
