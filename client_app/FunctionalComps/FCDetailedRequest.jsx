@@ -113,6 +113,9 @@ export default function FCDetailedRequest(props) {
           console.log("err post=", error);
         });
     }
+    else {
+      alert('יש לבצע שינויים בבקשה על מנת לעדכן')
+    }
   };
 
   //מחיקת בקשה
