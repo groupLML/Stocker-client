@@ -17,7 +17,7 @@ export default function PushOrderPage(props) {
 
   //----------------------GET Meds in push order---------------------
   useEffect(() => {
-    fetch(apiUrlPushOrder + 'GetOrderDetails/depId/' + `${depId}` + '/orderId/' + `${pushOrderId}` + '/type/' + `${1}`, {
+    fetch(apiUrlPushOrder + 'GetOrderDetails/orderId/' + `${pushOrderId}`, {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json; charset=UTF-8',
