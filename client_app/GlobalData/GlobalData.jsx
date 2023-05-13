@@ -12,8 +12,9 @@ export default function GlobalData(props) {
     const apiUrlPushOrder = "https://proj.ruppin.ac.il/cgroup36/prod/api/PushOrder/";
     const apiUrlNotification = "https://proj.ruppin.ac.il/cgroup36/prod/api/Message/";
     const apiUrlPutToken = "https://proj.ruppin.ac.il/cgroup36/prod/PutToken/";
-    const apiUrlGetToken = "https://proj.ruppin.ac.il/cgroup36/prod/GetToken/";    
-
+    const apiUrlGetToken = "https://proj.ruppin.ac.il/cgroup36/prod/GetToken/";
+    const apiUrlGetNorm = "https://proj.ruppin.ac.il/cgroup36/prod/api/Norm/MedsNorm/";
+  
     const [depId, setDepId] = useState('');
     const [meds, setMeds] = useState([]);
     const [myMedReqs, setMyMedReqs] = useState([]);
@@ -39,7 +40,7 @@ export default function GlobalData(props) {
     return (
         <GlobalContext.Provider
             value={{
-                apiUrlUser, apiUrlMedRequest, apiUrlMeds, apiUrlPullOrder, apiUrlPushOrder, apiUrlNotification, apiUrlPutToken, apiUrlGetToken,
+                apiUrlUser, apiUrlMedRequest, apiUrlMeds, apiUrlPullOrder, apiUrlPushOrder, apiUrlNotification, apiUrlPutToken, apiUrlGetToken, apiUrlGetNorm,
                 depId, setDepId, meds, setMeds,
                 DepTypes, setDepTypes, myMedReqs, setMyMedReqs, othersMedReqs, setOthersMedReqs,
                 getUserData

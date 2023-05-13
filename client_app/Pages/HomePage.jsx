@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useFocusEffect } from '@react-navigation/native';
@@ -21,7 +21,7 @@ export default function HomePage() {
     }
   }, [requiredOrderPage, requiredRequestPage]);
 
-    useFocusEffect(
+  useFocusEffect(
     React.useCallback(() => {
       setRequiredOrderPage('');
       setRequiedRequestPage('');
@@ -34,9 +34,10 @@ export default function HomePage() {
   return (
     <View style={styles.container}>
       <View >
-          <FCLogout/>
-          <Text style={styles.title}>Stocker</Text>
+        <FCLogout />
+        <Text style={styles.title}>Stocker</Text>
       </View>
+       <ScrollView>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('יצירת בקשה')}>
           <Image source={require("../Images/question.png")} style={styles.buttonImage} />
@@ -67,6 +68,17 @@ export default function HomePage() {
           <Text style={styles.buttonText}>הזמנות דחיפה</Text>
         </TouchableOpacity>
       </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('צפייה בתקן'); }}>
+          <Image source={require("../Images/push.png")} style={styles.buttonImage} />
+          <Text style={styles.buttonText}>תקן המחלקה</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('יצירת בקשה לשינוי תקן'); }}>
+          <Image source={require("../Images/push.png")} style={styles.buttonImage} />
+          <Text style={styles.buttonText}>בקשה לשינוי תקן</Text>
+        </TouchableOpacity>
+      </View>
+      </ScrollView>
     </View>
   )
 }

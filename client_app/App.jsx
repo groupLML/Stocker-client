@@ -20,6 +20,8 @@ import OthersRequestsPage from './Pages/OthersRequestsPage';
 import NotificationPage from './Pages/NotificationPage';
 import RequestsPage from './Pages/RequestsPage';
 import OrdersPage from './Pages/OrdersPage';
+import NormPage from './Pages/NormPage';
+import AddNormPage from './Pages/AddNormPage';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -70,6 +72,8 @@ function MainTabNavigator() {
         <Tab.Screen name="צפייה בפרטי הזמנת משיכה" component={PullOrderPage} options={{ tabBarButton: () => null }} />
         <Tab.Screen name="צפייה בהזמנת דחיפה" component={PushOrdersPage} options={{ tabBarButton: () => null }} />
         <Tab.Screen name="צפייה בפרטי הזמנת דחיפה" component={PushOrderPage} options={{ tabBarButton: () => null }} />
+        <Tab.Screen name="צפייה בתקן" component={NormPage} options={{ tabBarButton: () => null }} />
+        <Tab.Screen name="יצירת בקשה לשינוי תקן" component={AddNormPage} options={{ tabBarButton: () => null }} />
       </Tab.Navigator>
     </SafeAreaView>
   );

@@ -1,5 +1,5 @@
 import { View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { SearchBar } from 'react-native-elements';
 
 export default function FCSearchBar(props) {
@@ -9,6 +9,14 @@ export default function FCSearchBar(props) {
         setSearch(search);
         props.handleSearch(search);
     };
+
+    useEffect(() => {
+        if (props.clearSearch) {
+            setSearch('');
+            updateSearch('');
+            props.handleSetClearSearch(false);
+        }
+    }, [props.clearSearch]);
 
     return (
         <View>
