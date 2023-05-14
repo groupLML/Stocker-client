@@ -13,7 +13,7 @@ export default function GlobalData(props) {
     const apiUrlNotification = "https://proj.ruppin.ac.il/cgroup36/prod/api/Message/";
     const apiUrlPutToken = "https://proj.ruppin.ac.il/cgroup36/prod/PutToken/";
     const apiUrlGetToken = "https://proj.ruppin.ac.il/cgroup36/prod/GetToken/";
-    const apiUrlGetNorm = "https://proj.ruppin.ac.il/cgroup36/prod/api/Norm/MedsNorm/";
+    const apiUrlGetNorm = "https://proj.ruppin.ac.il/cgroup36/prod/api/Norm/";
   
     const [depId, setDepId] = useState('');
     const [meds, setMeds] = useState([]);

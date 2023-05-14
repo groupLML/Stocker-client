@@ -272,6 +272,82 @@ export default function PullOrderPage(props) {
   );
 }
 
-
-
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#fff',
+  },
+  txt: {
+    color: '#003D9A',
+    marginTop: 5,
+  },
+  title: {
+    fontSize: 24,
+    textAlign: 'center',
+    marginBottom: 10,
+    color: '#003D9A',
+    marginTop: 20,
+    textShadowColor: '#CCCCCC',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 5,
+  },
+  button: {
+    flex: 1,
+    backgroundColor: '#00317D',
+    padding: 10,
+    borderRadius: 5,
+    margin: 10,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  AddBTN: {
+    alignSelf: 'center',
+    marginTop: 10,
+    backgroundColor: '#003D9A',
+    borderRadius: 100,
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  modalButton: {
+    backgroundColor: '#00317D',
+    padding: 10,
+    borderRadius: 5,
+    margin: 10,
+  },
+});
