@@ -1,5 +1,5 @@
-import { Text, View, StyleSheet, ScrollView, TouchableOpacity, Animated } from 'react-native';
-import React, { useContext, useRef, useEffect, useState } from 'react';
+import { Text, View, StyleSheet, ScrollView} from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
@@ -16,7 +16,7 @@ export default function NormPage(props) {
   const [clearSearch, setClearSearch] = useState(false);
   const [medsNormSearch, setMedsNormSearch] = useState([]);
  
-  //----------------------GET Meds in pull Order---------------------
+  //----------------------GET Norm---------------------
   useEffect(() => {
     fetch(apiUrlGetNorm + 'depId/' + `${depId}`, {
       method: 'GET',
@@ -68,7 +68,7 @@ export default function NormPage(props) {
       </View>
       <View style={styles.scrollViewContainer}>
         <ScrollView scrollEventThrottle={16}>
-          <FCMedsInNorm ListMeds={medsNormSearch} />
+          <FCMedsInNorm ListMeds={medsNormSearch} isRequest={false} />
         </ScrollView>
       </View>
       {/* <FCDateTime date={UpdateTime} /> */}

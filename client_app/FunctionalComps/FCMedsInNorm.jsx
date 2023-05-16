@@ -12,9 +12,9 @@ export default function FCMedsInNorm(props) {
             mazNum={medNorm.mazNum}
             medName={medNorm.medName}
             key={medNorm.medId}
+            isRequest={props.isRequest}
         />;
     })
-
 
     return (
         <View>
