@@ -11,7 +11,7 @@ import FCQuantityInput from '../FunctionalComps/FCQuantityInput';
 
 export default function NormRequestsPage(props) {
 
-  const { depId, apiUrlGetNorm } = useContext(GlobalContext);
+  const { depId, apiUrlGetNorm, meds } = useContext(GlobalContext);
   const [medsInNorm, setMedsInNorm] = useState([]);
   const [medsInNormReq, setMedsInNormReq] = useState([]);//מערך שאותו נשנה לבקשה לשינוי התקן
   const [isChanged, setIsChanged] = useState(false);
@@ -43,12 +43,11 @@ export default function NormRequestsPage(props) {
       .then(
         (result) => {
           setMedsInNorm(result[0].medList);
-          /*         result.map((norm, key) => {
-                    updateTimes = norm.lastUpdate;
-                  }); */
-          setUpdateTime(result[0].lastUpdate);
           setMedsNormSearch(result[0].medList);
           setMedsInNormReq(result[0].medList);
+          /*result.map((norm, key) => {
+            updateTimes = norm.lastUpdate;}); */
+          setUpdateTime(result[0].lastUpdate);
         },
         (error) => {
           console.log("err get=", error);
@@ -73,7 +72,7 @@ export default function NormRequestsPage(props) {
     }
   };
 
-//הוספת תרופה לבקשה לשינוי תקן
+  //הוספת תרופה לבקשה לשינוי תקן
   const AddMedToNormReq = () => {
     if (selectedMedId === null) {
       setIsMovePage(false);
@@ -87,23 +86,19 @@ export default function NormRequestsPage(props) {
       setClearForm(true);
     }
     else {//do update
-      //const user = await getUserData();
+
+      const med = meds.find((med) => med.medId === selectedMedId)
 
       const medToAdd = {
         medId: selectedMedId,
-        poQty: Qty,
-        mazNum: '',
-        medName: '',
+        normQty: Qty,
+        mazNum: med.mazNum,
+        medName: med.medName,
       };
 
+      setMedsNormSearch(medsInNorm => [...medsInNorm, medToAdd]);//כדי לרנדר למסך
       setMedsInNormReq(medsInNorm => [...medsInNorm, medToAdd]);
-
-  /*     const temp = medsInOrderList.map(item => {
-        const { medName, ...rest } = item; // Remove "medName" property using object destructuring
-        return { ...rest, mazNum: "" }; // Add new "mazNum" property with an empty string as its initial value
-      }); */
       setIsModalAddVisible(false);
-      //let updatedMedsList = [...temp, medToAdd];
     }
   };
 
@@ -114,6 +109,27 @@ export default function NormRequestsPage(props) {
     }
   };
 
+  //מחיקה תרופה לבקשה לשינוי תקן
+  const RemoveMedFromList = (Id2Remove) => {
+
+    const MedRemoveForRender = medsNormSearch.filter((med) => med.medId !== Id2Remove);
+    setMedsNormSearch(MedRemoveForRender);
+
+    const med = meds.find((med) => med.medId === Id2Remove)
+    const index = medsInNormReq.findIndex(item => item.medId === Id2Remove);
+
+    const medToChange = {
+      medId: Id2Remove,
+      normQty: 0,
+      mazNum: med.mazNum,
+      medName: med.medName,
+    };
+
+    medsInNormReq[index] = medToChange;
+    setMedsInNormReq(medsInNormReq);
+    console.log(medsInNormReq);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>תקן מחלקתי</Text>
@@ -122,7 +138,7 @@ export default function NormRequestsPage(props) {
       </View>
       <View style={styles.scrollViewContainer}>
         <ScrollView scrollEventThrottle={16}>
-          <FCMedsInNorm ListMeds={medsNormSearch} isRequest={true} />
+          <FCMedsInNorm ListMeds={medsNormSearch} isRequest={true} SendId2Remove={RemoveMedFromList} />
         </ScrollView>
       </View>
       <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
@@ -135,7 +151,7 @@ export default function NormRequestsPage(props) {
       </View>
       {/* <FCDateTime date={UpdateTime} /> */}
 
-     {/*  ----------MODAL Add Med-------- */}
+      {/*  ----------MODAL Add Med-------- */}
       <Modal visible={isModalAddVisible} animationType="slide" transparent={true} onRequestClose={() => setIsModalAddVisible(false)}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -211,7 +227,7 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'relative',
   },
-   centeredView: {
+  centeredView: {
     //flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -241,5 +257,5 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     margin: 10,
-  }, 
+  },
 });

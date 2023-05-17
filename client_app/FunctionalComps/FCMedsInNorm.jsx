@@ -13,6 +13,7 @@ export default function FCMedsInNorm(props) {
             medName={medNorm.medName}
             key={medNorm.medId}
             isRequest={props.isRequest}
+            getId2Delete={() => props.SendId2Remove(medNorm.medId)}
         />;
     })
 
