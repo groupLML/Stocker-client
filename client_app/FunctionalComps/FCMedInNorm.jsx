@@ -24,7 +24,7 @@ export default function FCMedInNorm(props) {
 				)}
 				<Text style={styles.cardTitle}>{props.medName}</Text>
 				{!props.isRequest && (<Text style={styles.cardBody}>כמות התקן: {props.normQty}</Text>)}
-				{props.isRequest && (<View style={styles.cardBody}><FCQuantityInput reqQty={props.normQty} sendQty={GetQtyFromInput} /></View>)}
+				{props.isRequest && (<View style={styles.cardBody}><FCQuantityInput reqQty={props.reqQty} sendQty={GetQtyFromInput} /></View>)}
 			</Card>
 		</View>
 	)

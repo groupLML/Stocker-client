@@ -1,6 +1,7 @@
 import { Text, View, StyleSheet, ScrollView, TouchableOpacity, Animated, Modal } from 'react-native';
 import React, { useContext, useRef, useEffect, useState } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { Icon } from '@rneui/themed';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCDateTime from '../FunctionalComps/FCDateTime';
@@ -10,14 +11,18 @@ import FCMedInput from '../FunctionalComps/FCMedInput';
 import FCQuantityInput from '../FunctionalComps/FCQuantityInput';
 
 export default function NormRequestsPage(props) {
+  const navigation = useNavigation();
 
-  const { depId, apiUrlGetNorm, meds } = useContext(GlobalContext);
+  const { depId, apiUrlGetNorm, apiUrlGetNormReq, meds, getUserData } = useContext(GlobalContext);
+
   const [medsInNorm, setMedsInNorm] = useState([]);
   const [medsInNormReq, setMedsInNormReq] = useState([]);//מערך שאותו נשנה לבקשה לשינוי התקן
+  const [medsNormSearch, setMedsNormSearch] = useState([]);//מערך לרנדור 
   const [isChanged, setIsChanged] = useState(false);
   const [UpdateTime, setUpdateTime] = useState('');
   const [clearSearch, setClearSearch] = useState(false);
-  const [medsNormSearch, setMedsNormSearch] = useState([]);
+  const [normId, setNormId] = useState([]);
+
 
   const [isModalAddVisible, setIsModalAddVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -27,6 +32,9 @@ export default function NormRequestsPage(props) {
 
   const [selectedMedId, setSelectedMedId] = useState(null);
   const [Qty, setQty] = useState(1);
+
+  //animation for add BTN to stick to screen while scroll
+  const scrollY = useRef(new Animated.Value(0)).current;//set the current state of y axe value
 
   //----------------------GET Norm---------------------
   useEffect(() => {
@@ -43,8 +51,16 @@ export default function NormRequestsPage(props) {
       .then(
         (result) => {
           setMedsInNorm(result[0].medList);
+          const MedInNormReq = result[0].medList.map(item => {
+            return {
+              medId: item.medId,
+              reqQty: item.normQty,
+              medName: item.medName
+            };
+          });
+          setMedsInNormReq(MedInNormReq);
           setMedsNormSearch(result[0].medList);
-          setMedsInNormReq(result[0].medList);
+          setNormId(result[0].normId);
           /*result.map((norm, key) => {
             updateTimes = norm.lastUpdate;}); */
           setUpdateTime(result[0].lastUpdate);
@@ -88,16 +104,20 @@ export default function NormRequestsPage(props) {
     else {//do update
 
       const med = meds.find((med) => med.medId === selectedMedId)
-
       const medToAdd = {
         medId: selectedMedId,
-        normQty: Qty,
-        mazNum: med.mazNum,
-        medName: med.medName,
+        reqQty: Qty,
+        medName: med.medName
       };
 
-      setMedsNormSearch(medsInNorm => [...medsInNorm, medToAdd]);//כדי לרנדר למסך
-      setMedsInNormReq(medsInNorm => [...medsInNorm, medToAdd]);
+      const medToAddRender = {
+        medId: selectedMedId,
+        normQty: Qty,
+        medName: med.medName
+      };
+
+      setMedsNormSearch(medsInNorm => [...medsInNorm, medToAddRender]);//כדי לרנדר למסך
+      setMedsInNormReq(medsInNormReq => [...medsInNormReq, medToAdd]);
       setIsModalAddVisible(false);
     }
   };
@@ -105,29 +125,85 @@ export default function NormRequestsPage(props) {
   const handleModalClose = () => {
     setModalVisible(false);
     if (isMovePage) {
-      navigation.navigate('הזמנות', { requiredPage: 'pull' });
+      navigation.navigate("צפייה בתקן");
     }
   };
 
   //מחיקה תרופה לבקשה לשינוי תקן
   const RemoveMedFromList = (Id2Remove) => {
-
+    //הורדת התרופה מהרנדור
     const MedRemoveForRender = medsNormSearch.filter((med) => med.medId !== Id2Remove);
     setMedsNormSearch(MedRemoveForRender);
 
+    //שינוי הכמות של התרופה ל0 בשביל לשלוח לשרת
     const med = meds.find((med) => med.medId === Id2Remove)
     const index = medsInNormReq.findIndex(item => item.medId === Id2Remove);
 
     const medToChange = {
       medId: Id2Remove,
-      normQty: 0,
-      mazNum: med.mazNum,
-      medName: med.medName,
+      reqQty: 0,
+      medName: med.medName
     };
-
     medsInNormReq[index] = medToChange;
     setMedsInNormReq(medsInNormReq);
-    console.log(medsInNormReq);
+  };
+
+  //ביטול בקשה לשינוי תקן
+  const handleDeleteNormReq = () => {
+    setMedsNormSearch(medsInNorm);////////////////////////////////
+    const MedInNormReq = medsInNorm.map(item => {
+      return {
+        medId: item.medId,
+        reqQty: item.normQty,
+        medName: item.medName
+      };
+    });
+    setMedsInNormReq(MedInNormReq);
+    navigation.navigate("צפייה בתקן");
+  };
+
+  //שליחת בקשה לשינוי תקן
+  //הוספת תרופה בהזמנה
+  const handleSendNormReq = async () => {
+
+    const user = await getUserData();
+
+    const normReq = {
+      reqId: 0,
+      normId: normId,
+      reqDate: "2023-05-18T21:44:48.658Z",
+      userId: user.userId,
+      reqStatus: "string",
+      depId: 0,
+      depName: "string",
+      fullName: "string",
+      position: "string",
+      medReqList: medsInNormReq
+    };
+
+    fetch(apiUrlGetNormReq, {
+      method: 'POST',
+      body: JSON.stringify(normReq),
+      headers: new Headers({
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json; charset=UTF-8',
+      })
+    })
+      .then(result => {
+        return result.json();
+      })
+      .then(
+        (result) => {
+          if (result) {
+            setIsMovePage(true);
+            setTextMessage("נשלח הבקשה בהצלחה");
+            setModalVisible(true);
+          }
+        },
+        (error) => {
+          console.log("err put=", error);
+        });
+    setIsModalAddVisible(false);
   };
 
   return (
@@ -140,13 +216,27 @@ export default function NormRequestsPage(props) {
         <ScrollView scrollEventThrottle={16}>
           <FCMedsInNorm ListMeds={medsNormSearch} isRequest={true} SendId2Remove={RemoveMedFromList} />
         </ScrollView>
+        <Animated.View
+          style={[styles.AddBTN, {
+            transform: [{
+              translateY: scrollY.interpolate({
+                inputRange: [0, 100],
+                outputRange: [0, 100],
+                extrapolate: 'clamp'
+              })
+            }]
+          }]}>
+          <TouchableOpacity onPress={() => setIsModalAddVisible(true)}>
+            <Icon name='add' color='white' />
+          </TouchableOpacity>
+        </Animated.View>
       </View>
       <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-        <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59' }]} onPress={() => setIsModalAddVisible(true)}>
-          <Text style={styles.buttonText}>הוספת תרופה לתקן</Text>
+        <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59' }]} onPress={() => handleSendNormReq()}>
+          <Text style={styles.buttonText}>שליחת בקשה</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, { backgroundColor: '#003D9A' }]} onPress={() => handleDeletePullOrder()}>
-          <Text style={styles.buttonText} >שליחת הבקשה</Text>
+        <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933' }]} onPress={() => handleDeleteNormReq()}>
+          <Text style={styles.buttonText} >ביטול בקשה</Text>
         </TouchableOpacity>
       </View>
       {/* <FCDateTime date={UpdateTime} /> */}
@@ -257,5 +347,16 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     margin: 10,
+  },
+  AddBTN: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: '#003D9A',
+    borderRadius: 100,
+    width: 50,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

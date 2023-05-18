@@ -8,6 +8,7 @@ export default function FCMedsInNorm(props) {
         return <FCMedInNorm
             id={medNorm.medId}
             medId={medNorm.medId}
+            reqQty={medNorm.normQty}
             normQty={medNorm.normQty}
             mazNum={medNorm.mazNum}
             medName={medNorm.medName}

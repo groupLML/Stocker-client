@@ -1,8 +1,7 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal } from 'react-native';
 import React, { useState, useEffect, useContext } from 'react';
 import { GlobalContext } from '../GlobalData/GlobalData';
-import { useNavigation } from '@react-navigation/native';
-import { useFocusEffect } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 import FCDetailedPullOrders from '../FunctionalComps/FCDetailedPullOrders';
 import FCDateTime from '../FunctionalComps/FCDateTime';
