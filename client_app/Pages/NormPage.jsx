@@ -31,9 +31,8 @@ export default function NormPage(props) {
       .then(
         (result) => {
           setMedsInNorm(result[0].medList);
-          /*         result.map((norm, key) => {
-                    updateTimes = norm.lastUpdate;
-                  }); */
+          /*result.map((norm, key) => {
+            updateTimes = norm.lastUpdate;}); */
           setUpdateTime(result[0].lastUpdate);
           setMedsNormSearch(result[0].medList);
         },

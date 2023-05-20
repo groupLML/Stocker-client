@@ -13,10 +13,9 @@ import FCQuantityInput from '../FunctionalComps/FCQuantityInput';
 export default function NormRequestsPage(props) {
   const navigation = useNavigation();
 
-  const { depId, apiUrlGetNorm, apiUrlGetNormReq, meds, getUserData } = useContext(GlobalContext);
+  const { depId, apiUrlGetNorm, apiUrlGetNormReq, meds, getUserData, setMedsInNormReq, medsInNormReq, handleSetMedNormReq } = useContext(GlobalContext);
 
   const [medsInNorm, setMedsInNorm] = useState([]);
-  const [medsInNormReq, setMedsInNormReq] = useState([]);//מערך שאותו נשנה לבקשה לשינוי התקן
   const [medsNormSearch, setMedsNormSearch] = useState([]);//מערך לרנדור 
   const [isChanged, setIsChanged] = useState(false);
   const [UpdateTime, setUpdateTime] = useState('');
@@ -51,6 +50,7 @@ export default function NormRequestsPage(props) {
       .then(
         (result) => {
           setMedsInNorm(result[0].medList);
+          //handleSetMedNormReq(result[0].medList)//////////////////////////////////////
           const MedInNormReq = result[0].medList.map(item => {
             return {
               medId: item.medId,
@@ -62,7 +62,7 @@ export default function NormRequestsPage(props) {
           setMedsNormSearch(result[0].medList);
           setNormId(result[0].normId);
           /*result.map((norm, key) => {
-            updateTimes = norm.lastUpdate;}); */
+            updateTimes = norm.lastUpdate;}); */////////////////////////////////////////
           setUpdateTime(result[0].lastUpdate);
         },
         (error) => {
@@ -77,9 +77,19 @@ export default function NormRequestsPage(props) {
     React.useCallback(() => {
       setIsChanged(true);
       setClearSearch(true);
+      setMedsNormSearch(medsInNorm);
     }, []));
 
   const handleSearch = (search) => {
+
+/*     const isDelect = medsInNormReq.map(med => {/////////////////////////////////////////
+      if (med.reqQty === 0) {
+        return {
+          medId: med.medId,
+        };
+      }
+    }); */
+
     if (medsInNorm.length !== 0) {
       const filtered = medsInNorm.filter(item =>
         item.medName.toLowerCase().includes(search.toLowerCase())
@@ -94,6 +104,26 @@ export default function NormRequestsPage(props) {
       setIsMovePage(false);
       setTextMessage('יש לבחור תרופה');
       setModalVisible(true);
+    }
+    else if (medsInNormReq.find((med) => med.medId === selectedMedId && med.reqQty === 0)) {
+      const med = meds.find((med) => med.medId === selectedMedId)
+      const index = medsInNormReq.findIndex(item => item.medId === selectedMedId);
+
+      const medToChange = {
+        medId: selectedMedId,
+        reqQty: Qty,
+        medName: med.medName
+      };
+      medsInNormReq[index] = medToChange;
+      setMedsInNormReq(medsInNormReq);
+
+      const medToAddRender = {
+        medId: selectedMedId,
+        normQty: Qty,
+        medName: med.medName
+      };
+      setMedsNormSearch(medsInNorm => [...medsInNorm, medToAddRender]);//כדי לרנדר למסך
+      setIsModalAddVisible(false);
     }
     else if (medsInNormReq.find((med) => med.medId === selectedMedId)) {
       setIsMovePage(false);
@@ -131,8 +161,8 @@ export default function NormRequestsPage(props) {
 
   //מחיקה תרופה לבקשה לשינוי תקן
   const RemoveMedFromList = (Id2Remove) => {
-    //הורדת התרופה מהרנדור
-    const MedRemoveForRender = medsNormSearch.filter((med) => med.medId !== Id2Remove);
+
+    const MedRemoveForRender = medsNormSearch.filter((med) => med.medId !== Id2Remove);//הורדת התרופה מהרנדור
     setMedsNormSearch(MedRemoveForRender);
 
     //שינוי הכמות של התרופה ל0 בשביל לשלוח לשרת
@@ -150,7 +180,8 @@ export default function NormRequestsPage(props) {
 
   //ביטול בקשה לשינוי תקן
   const handleDeleteNormReq = () => {
-    setMedsNormSearch(medsInNorm);////////////////////////////////
+    setMedsNormSearch(medsInNorm);
+    // handleSetMedNormReq(medsInNorm);
     const MedInNormReq = medsInNorm.map(item => {
       return {
         medId: item.medId,
@@ -163,9 +194,7 @@ export default function NormRequestsPage(props) {
   };
 
   //שליחת בקשה לשינוי תקן
-  //הוספת תרופה בהזמנה
   const handleSendNormReq = async () => {
-
     const user = await getUserData();
 
     const normReq = {
@@ -196,7 +225,7 @@ export default function NormRequestsPage(props) {
         (result) => {
           if (result) {
             setIsMovePage(true);
-            setTextMessage("נשלח הבקשה בהצלחה");
+            setTextMessage("הבקשה נשלחה בהצלחה");
             setModalVisible(true);
           }
         },
