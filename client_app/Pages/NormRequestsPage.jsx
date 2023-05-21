@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, ScrollView, TouchableOpacity, Animated, Modal } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, TouchableOpacity, Animated, Modal, Date } from 'react-native';
 import React, { useContext, useRef, useEffect, useState } from 'react';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
@@ -18,7 +18,7 @@ export default function NormRequestsPage(props) {
   const [medsInNorm, setMedsInNorm] = useState([]);
   const [medsNormSearch, setMedsNormSearch] = useState([]);//מערך לרנדור 
   const [isChanged, setIsChanged] = useState(false);
-  const [UpdateTime, setUpdateTime] = useState('');
+  const [updateTime, setUpdateTime] = useState('');
   const [clearSearch, setClearSearch] = useState(false);
   const [normId, setNormId] = useState([]);
 
@@ -50,7 +50,6 @@ export default function NormRequestsPage(props) {
       .then(
         (result) => {
           setMedsInNorm(result[0].medList);
-          //handleSetMedNormReq(result[0].medList)//////////////////////////////////////
           const MedInNormReq = result[0].medList.map(item => {
             return {
               medId: item.medId,
@@ -61,9 +60,10 @@ export default function NormRequestsPage(props) {
           setMedsInNormReq(MedInNormReq);
           setMedsNormSearch(result[0].medList);
           setNormId(result[0].normId);
-          /*result.map((norm, key) => {
-            updateTimes = norm.lastUpdate;}); */////////////////////////////////////////
-          setUpdateTime(result[0].lastUpdate);
+          /*    result.map((norm, key) => {
+             updateTimes = norm.lastUpdate;});  */
+        /*   const lastUpdateString = new Date(result[0].lastUpdate);
+          setUpdateTime(lastUpdateString); */
         },
         (error) => {
           console.log("err get=", error);
@@ -81,17 +81,14 @@ export default function NormRequestsPage(props) {
     }, []));
 
   const handleSearch = (search) => {
+    const filteredMedIds = medsInNormReq.filter((item) => item.reqQty !== 0);
 
-/*     const isDelect = medsInNormReq.map(med => {/////////////////////////////////////////
-      if (med.reqQty === 0) {
-        return {
-          medId: med.medId,
-        };
-      }
-    }); */
+    const filtermedsInNorm = medsInNorm.filter((item1) =>
+      filteredMedIds.some((item2) => item1.medId === item2.medId)
+    );
 
-    if (medsInNorm.length !== 0) {
-      const filtered = medsInNorm.filter(item =>
+    if (filtermedsInNorm.length !== 0) {
+      const filtered = filtermedsInNorm.filter(item =>
         item.medName.toLowerCase().includes(search.toLowerCase())
       );
       setMedsNormSearch(filtered);
@@ -181,7 +178,6 @@ export default function NormRequestsPage(props) {
   //ביטול בקשה לשינוי תקן
   const handleDeleteNormReq = () => {
     setMedsNormSearch(medsInNorm);
-    // handleSetMedNormReq(medsInNorm);
     const MedInNormReq = medsInNorm.map(item => {
       return {
         medId: item.medId,
@@ -238,6 +234,7 @@ export default function NormRequestsPage(props) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>תקן מחלקתי</Text>
+      {/* <FCDateTime date={updateTime} /> */}
       <View style={styles.row}>
         <View style={{ flex: 7 }}><FCSearchBar handleSearch={handleSearch} clearSearch={clearSearch} handleSetClearSearch={(state) => setClearSearch(state)} /></View>
       </View>
@@ -268,7 +265,7 @@ export default function NormRequestsPage(props) {
           <Text style={styles.buttonText} >ביטול בקשה</Text>
         </TouchableOpacity>
       </View>
-      {/* <FCDateTime date={UpdateTime} /> */}
+
 
       {/*  ----------MODAL Add Med-------- */}
       <Modal visible={isModalAddVisible} animationType="slide" transparent={true} onRequestClose={() => setIsModalAddVisible(false)}>

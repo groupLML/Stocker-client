@@ -39,25 +39,14 @@ export default function GlobalData(props) {
         }
     }
 
-    const handleSetMedNormReq = (medList) => {
-        const MedInNormReq = medList.map(item => {
-            return {
-                medId: item.medId,
-                reqQty: item.normQty,
-                medName: item.medName
-            };
-        });
-        setMedsInNormReq(MedInNormReq);
-    };
-
     return (
         <GlobalContext.Provider
             value={{
                 apiUrlUser, apiUrlMedRequest, apiUrlMeds, apiUrlPullOrder, apiUrlPushOrder, apiUrlNotification,
                 apiUrlPutToken, apiUrlGetToken, apiUrlGetNorm, apiUrlGetNormReq,
-                depId, setDepId, meds, setMeds,
+                depId, setDepId, meds, setMeds, medsInNormReq,
                 DepTypes, setDepTypes, myMedReqs, setMyMedReqs, othersMedReqs, setOthersMedReqs,
-                getUserData, setMedsInNormReq, medsInNormReq, handleSetMedNormReq
+                getUserData, setMedsInNormReq
             }}>
             {props.children}
         </GlobalContext.Provider>
