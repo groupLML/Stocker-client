@@ -7,7 +7,6 @@ export default function FCMedsInNorm(props) {
     const MedsNormStr = props.ListMeds.map((medNorm, key) => {
         return <FCMedInNorm
             id={medNorm.medId}
-            medId={medNorm.medId}
             reqQty={medNorm.normQty}
             normQty={medNorm.normQty}
             mazNum={medNorm.mazNum}
