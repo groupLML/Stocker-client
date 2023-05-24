@@ -22,6 +22,8 @@ export default function GlobalData(props) {
     const [myMedReqs, setMyMedReqs] = useState([]);
     const [othersMedReqs, setOthersMedReqs] = useState([]);
     const [medsInNormReq, setMedsInNormReq] = useState([]);//מערך שאותו נשנה לבקשה לשינוי התקן
+    const [medsInStockUpdate, setMedsInStockUpdate] = useState([]);//מערך שאותו נשנה לבקשה לשינוי התקן
+
 
     const [DepTypes, setDepTypes] = useState([
         { name: 'אורתופדיה', isChecked: true },
@@ -45,9 +47,9 @@ export default function GlobalData(props) {
             value={{
                 apiUrlUser, apiUrlMedRequest, apiUrlMeds, apiUrlPullOrder, apiUrlPushOrder, apiUrlNotification,
                 apiUrlPutToken, apiUrlGetToken, apiUrlGetNorm, apiUrlGetNormReq, apiUrlGetStock,
-                depId, setDepId, meds, setMeds, medsInNormReq,
+                depId, setDepId, meds, setMeds, medsInNormReq, medsInStockUpdate,
                 DepTypes, setDepTypes, myMedReqs, setMyMedReqs, othersMedReqs, setOthersMedReqs,
-                getUserData, setMedsInNormReq
+                getUserData, setMedsInNormReq, setMedsInStockUpdate
             }}>
             {props.children}
         </GlobalContext.Provider>

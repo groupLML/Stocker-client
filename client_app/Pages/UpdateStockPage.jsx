@@ -4,24 +4,21 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
-import FCDateTime from '../FunctionalComps/FCDateTime';
 import FCMedsInNorm from '../FunctionalComps/FCMedsInNorm';
 import FCSearchBar from '../FunctionalComps/FCSearchBar ';
 import FCMedInput from '../FunctionalComps/FCMedInput';
 import FCQuantityInput from '../FunctionalComps/FCQuantityInput';
 
-export default function NormRequestsPage(props) {
+export default function UpdateStockPage(props) {
   const navigation = useNavigation();
 
-  const { depId, apiUrlGetNorm, apiUrlGetNormReq, meds, getUserData, setMedsInNormReq, medsInNormReq } = useContext(GlobalContext);
+  const { depId, apiUrlGetStock, meds, setMedsInStockUpdate, medsInStockUpdate } = useContext(GlobalContext);
 
-  const [medsInNorm, setMedsInNorm] = useState([]);
-  const [medsNormSearch, setMedsNormSearch] = useState([]);//מערך לרנדור 
+  const [medsInStock, setMedsInStock] = useState([]);
+  const [medsStockSearch, setMedsStockSearch] = useState([]);//מערך לרנדור 
+
   const [isChanged, setIsChanged] = useState(false);
-  const [updateTime, setUpdateTime] = useState('');
   const [clearSearch, setClearSearch] = useState(false);
-  const [normId, setNormId] = useState([]);
-
 
   const [isModalAddVisible, setIsModalAddVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -37,7 +34,7 @@ export default function NormRequestsPage(props) {
 
   //----------------------GET Norm---------------------
   useEffect(() => {
-    fetch(apiUrlGetNorm + 'depId/' + `${depId}`, {
+    fetch(apiUrlGetStock + `${depId}`, {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json; charset=UTF-8',
@@ -49,21 +46,9 @@ export default function NormRequestsPage(props) {
       })
       .then(
         (result) => {
-          setMedsInNorm(result[0].medList);
-          const MedInNormReq = result[0].medList.map(item => {
-            return {
-              medId: item.medId,
-              reqQty: item.normQty,
-              medName: item.medName
-            };
-          });
-          setMedsInNormReq(MedInNormReq);
-          setMedsNormSearch(result[0].medList);
-          setNormId(result[0].normId);
-          /*    result.map((norm, key) => {
-             updateTimes = norm.lastUpdate;});  */
-        /*   const lastUpdateString = new Date(result[0].lastUpdate);
-          setUpdateTime(lastUpdateString); */
+          setMedsInStock(result[0]);
+          setMedsInStockUpdate(result[0]);
+          setMedsStockSearch(result[0]);
         },
         (error) => {
           console.log("err get=", error);
@@ -77,34 +62,34 @@ export default function NormRequestsPage(props) {
     React.useCallback(() => {
       setIsChanged(true);
       setClearSearch(true);
-      setMedsNormSearch(medsInNorm);
+      setMedsStockSearch(medsInStock);
     }, []));
 
   const handleSearch = (search) => {
-    const filteredMedIds = medsInNormReq.filter((item) => item.reqQty !== 0);
+    const filteredMedIds = medsInStockUpdate.filter((item) => item.stcQty !== 0);
 
-    const filtermedsInNorm = medsInNorm.filter((item1) =>
+    const filtermedsInStock = medsInStock.filter((item1) =>
       filteredMedIds.some((item2) => item1.medId === item2.medId)
     );
 
-    if (filtermedsInNorm.length !== 0) {
-      const filtered = filtermedsInNorm.filter(item =>
+    if (filtermedsInStock.length !== 0) {
+      const filtered = filtermedsInStock.filter(item =>
         item.medName.toLowerCase().includes(search.toLowerCase())
       );
-      setMedsNormSearch(filtered);
+      setMedsStockSearch(filtered);
     }
   };
 
-  //הוספת תרופה לבקשה לשינוי תקן
-  const AddMedToNormReq = () => {
+  //הוספת תרופה למחסן
+  const AddMedToStock = () => {
     if (selectedMedId === null) {
       setIsMovePage(false);
       setTextMessage('יש לבחור תרופה');
       setModalVisible(true);
     }
-    else if (medsInNormReq.find((med) => med.medId === selectedMedId && med.reqQty === 0)) {
+    else if (medsInStockUpdate.find((med) => med.medId === selectedMedId && med.stcQty === 0)) {
       const med = meds.find((med) => med.medId === selectedMedId)
-      const index = medsInNormReq.findIndex(item => item.medId === selectedMedId);
+      const index = medsInStockUpdate.findIndex(item => item.medId === selectedMedId);
 
       const medToChange = {
         medId: selectedMedId,

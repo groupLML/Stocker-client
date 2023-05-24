@@ -23,6 +23,7 @@ import OrdersPage from './Pages/OrdersPage';
 import NormPage from './Pages/NormPage';
 import NormRequestsPage from './Pages/NormRequestsPage';
 import StocksPage from './Pages/StocksPage';
+import UpdateStockPage from './Pages/UpdateStockPage';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -76,6 +77,7 @@ function MainTabNavigator() {
         <Tab.Screen name="צפייה בתקן" component={NormPage} options={{ tabBarButton: () => null }} />
         <Tab.Screen name="יצירת בקשה לשינוי תקן" component={NormRequestsPage} options={{ tabBarButton: () => null }} />
         <Tab.Screen name="צפייה במחסן" component={StocksPage} options={{ tabBarButton: () => null }} />
+        <Tab.Screen name="עדכון המחסן" component={UpdateStockPage} options={{ tabBarButton: () => null }} />
       </Tab.Navigator>
     </SafeAreaView>
   );
