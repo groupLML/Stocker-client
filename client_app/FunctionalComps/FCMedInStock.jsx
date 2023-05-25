@@ -41,7 +41,7 @@ export default function FCMedInNorm(props) {
                 )}
                 <Text style={styles.cardTitle}>{props.medName}</Text>
                 {!props.isRequest && (<Text style={styles.cardBody}>כמות המלאי: {props.stcQty}</Text>)}
-                {props.isRequest && (<View style={styles.cardBody}><FCQuantityInput stcQty={props.stcQty} sendQty={GetQtyFromInput} /></View>)}
+                {props.isRequest && (<View style={styles.cardBody}><FCQuantityInput reqQty={props.stcQty} sendQty={GetQtyFromInput} /></View>)}
             </Card>
         </View>
     )

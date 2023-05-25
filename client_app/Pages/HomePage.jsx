@@ -95,7 +95,7 @@ return (
           <Image source={require("../Images/push.png")} style={styles.buttonImage} />
           <Text style={styles.buttonText}>מחסן המחלקה</Text>
         </TouchableOpacity>
-        {isHeadNurse && (
+        {!isHeadNurse && (
           <>
             <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('הודעות'); }}>
               <Image source={require("../Images/push.png")} style={styles.buttonImage} />
@@ -103,7 +103,7 @@ return (
             </TouchableOpacity>
           </>
         )}
-        {!isHeadNurse && (
+        {isHeadNurse && (
           <>
             <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('עדכון המחסן'); }}>
               <Image source={require("../Images/push.png")} style={styles.buttonImage} />

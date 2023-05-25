@@ -8,7 +8,7 @@ import { GlobalContext } from '../GlobalData/GlobalData';
 
 export default function FCMedInNorm(props) {
 
-  const {meds, setMedsInNormReq, medsInNormReq } = useContext(GlobalContext);
+	const { meds, setMedsInNormReq, medsInNormReq } = useContext(GlobalContext);
 
 	const [Qty, setQty] = useState(props.normQty);
 
@@ -16,23 +16,23 @@ export default function FCMedInNorm(props) {
 		setQty(Qty);
 	}
 
-  useEffect(() => {
-    const med = meds.find((med) => med.medId === props.id)
-    const index = medsInNormReq.findIndex(item => item.medId === props.id);
+	useEffect(() => {
+		const med = meds.find((med) => med.medId === props.id)
+		const index = medsInNormReq.findIndex(item => item.medId === props.id);
 
-    const medToChange = {
-      medId: props.id,
-      reqQty: Qty,
-      medName: med.medName
-    };
-    medsInNormReq[index] = medToChange;
-    setMedsInNormReq(medsInNormReq);
-  }, [Qty]);
+		const medToChange = {
+			medId: props.id,
+			reqQty: Qty,
+			medName: med.medName
+		};
+		medsInNormReq[index] = medToChange;
+		setMedsInNormReq(medsInNormReq);
+	}, [Qty]);
 
 	return (
 		<View>
 			<Card borderColor='#E1EAF9'>
-			{props.isRequest && (
+				{props.isRequest && (
 					<>
 						<TouchableOpacity style={styles.CloseBTN} onPress={() => props.getId2Delete(props.id)}>
 							<Ionicons name='close-outline' color='#003D9A' size={22} />
@@ -41,7 +41,7 @@ export default function FCMedInNorm(props) {
 				)}
 				<Text style={styles.cardTitle}>{props.medName}</Text>
 				{!props.isRequest && (<Text style={styles.cardBody}>כמות התקן: {props.normQty}</Text>)}
-        {props.isRequest && (<View style={styles.cardBody}><FCQuantityInput reqQty={props.reqQty} sendQty={GetQtyFromInput} /></View>)}
+				{props.isRequest && (<View style={styles.cardBody}><FCQuantityInput reqQty={props.reqQty} sendQty={GetQtyFromInput} /></View>)}
 			</Card>
 		</View>
 	)

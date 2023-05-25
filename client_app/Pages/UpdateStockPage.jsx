@@ -4,7 +4,7 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
-import FCMedsInNorm from '../FunctionalComps/FCMedsInNorm';
+import FCMedsInStock from '../FunctionalComps/FCMedsInStock';
 import FCSearchBar from '../FunctionalComps/FCSearchBar ';
 import FCMedInput from '../FunctionalComps/FCMedInput';
 import FCQuantityInput from '../FunctionalComps/FCQuantityInput';
@@ -46,9 +46,9 @@ export default function UpdateStockPage(props) {
       })
       .then(
         (result) => {
-          setMedsInStock(result[0]);
-          setMedsInStockUpdate(result[0]);
-          setMedsStockSearch(result[0]);
+          setMedsInStock(result);
+          setMedsInStockUpdate(result);
+          setMedsStockSearch(result);
         },
         (error) => {
           console.log("err get=", error);
@@ -93,43 +93,33 @@ export default function UpdateStockPage(props) {
 
       const medToChange = {
         medId: selectedMedId,
-        reqQty: Qty,
+        stcQty: Qty,
         medName: med.medName
       };
-      medsInNormReq[index] = medToChange;
-      setMedsInNormReq(medsInNormReq);
+      medsInStockUpdate[index] = medToChange;
+      setMedsInStockUpdate(medsInStockUpdate);
 
-      const medToAddRender = {
-        medId: selectedMedId,
-        normQty: Qty,
-        medName: med.medName
-      };
-      setMedsNormSearch(medsInNorm => [...medsInNorm, medToAddRender]);//כדי לרנדר למסך
+      setMedsStockSearch(medsInStock => [...medsInStock, medToChange]);//כדי לרנדר למסך
       setIsModalAddVisible(false);
     }
-    else if (medsInNormReq.find((med) => med.medId === selectedMedId)) {
+    else if (medsInStockUpdate.find((med) => med.medId === selectedMedId)) {
       setIsMovePage(false);
-      setTextMessage('תרופה זו כבר קיימת בהזמנה');
+      setTextMessage('תרופה זו כבר קיימת במחסן');
       setModalVisible(true);
       setClearForm(true);
     }
     else {//do update
 
       const med = meds.find((med) => med.medId === selectedMedId)
+
       const medToAdd = {
         medId: selectedMedId,
-        reqQty: Qty,
+        stcQty: Qty,
         medName: med.medName
       };
 
-      const medToAddRender = {
-        medId: selectedMedId,
-        normQty: Qty,
-        medName: med.medName
-      };
-
-      setMedsNormSearch(medsInNorm => [...medsInNorm, medToAddRender]);//כדי לרנדר למסך
-      setMedsInNormReq(medsInNormReq => [...medsInNormReq, medToAdd]);
+      setMedsStockSearch(medsInStock => [...medsInStock, medToAdd]);//כדי לרנדר למסך
+      setMedsInStockUpdate(medsInStockUpdate => [...medsInStockUpdate, medToAdd]);
       setIsModalAddVisible(false);
     }
   };
@@ -137,63 +127,50 @@ export default function UpdateStockPage(props) {
   const handleModalClose = () => {
     setModalVisible(false);
     if (isMovePage) {
-      navigation.navigate("צפייה בתקן");
+      navigation.navigate("צפייה במחסן");
     }
   };
 
-  //מחיקה תרופה לבקשה לשינוי תקן
+  //מחיקה תרופה במחסן
   const RemoveMedFromList = (Id2Remove) => {
 
-    const MedRemoveForRender = medsNormSearch.filter((med) => med.medId !== Id2Remove);//הורדת התרופה מהרנדור
-    setMedsNormSearch(MedRemoveForRender);
+    const MedRemoveForRender = medsStockSearch.filter((med) => med.medId !== Id2Remove);//הורדת התרופה מהרנדור
+    setMedsStockSearch(MedRemoveForRender);
 
     //שינוי הכמות של התרופה ל0 בשביל לשלוח לשרת
     const med = meds.find((med) => med.medId === Id2Remove)
-    const index = medsInNormReq.findIndex(item => item.medId === Id2Remove);
+    const index = medsInStockUpdate.findIndex(item => item.medId === Id2Remove);
 
     const medToChange = {
       medId: Id2Remove,
-      reqQty: 0,
+      stcQty: 0,
       medName: med.medName
     };
-    medsInNormReq[index] = medToChange;
-    setMedsInNormReq(medsInNormReq);
+
+    medsInStockUpdate[index] = medToChange;
+    setMedsInStockUpdate(medsInStockUpdate);
   };
 
-  //ביטול בקשה לשינוי תקן
-  const handleDeleteNormReq = () => {
-    setMedsNormSearch(medsInNorm);
-    const MedInNormReq = medsInNorm.map(item => {
+  //ביטול בקשה שינוי מחסן
+  const handleDeleteStockUpdate = () => {
+    setMedsStockSearch(medsInStock);
+    const MedInStockUpdate = medsInStock.map(item => {
       return {
         medId: item.medId,
-        reqQty: item.normQty,
+        stcQty: item.stcQty,
         medName: item.medName
       };
     });
-    setMedsInNormReq(MedInNormReq);
-    navigation.navigate("צפייה בתקן");
+    setMedsInStockUpdate(MedInStockUpdate);
+    navigation.navigate("צפייה במחסן");
   };
 
-  //שליחת בקשה לשינוי תקן
-  const handleSendNormReq = async () => {
-    const user = await getUserData();
+  //שמירת השינוים במחסן 
+  const handleSendStockUpdate = () => {
 
-    const normReq = {
-      reqId: 0,
-      normId: normId,
-      reqDate: "2023-05-18T21:44:48.658Z",
-      userId: user.userId,
-      reqStatus: "string",
-      depId: 0,
-      depName: "string",
-      fullName: "string",
-      position: "string",
-      medReqList: medsInNormReq
-    };
-
-    fetch(apiUrlGetNormReq, {
+    fetch(apiUrlGetStock + 'depId/' + `${depId}`, {
       method: 'POST',
-      body: JSON.stringify(normReq),
+      body: JSON.stringify(medsInStockUpdate),
       headers: new Headers({
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json; charset=UTF-8',
@@ -206,11 +183,12 @@ export default function UpdateStockPage(props) {
         (result) => {
           if (result) {
             setIsMovePage(true);
-            setTextMessage("הבקשה נשלחה בהצלחה");
+            setTextMessage("המחסן עודכן בהצלחה");
             setModalVisible(true);
           }
         },
         (error) => {
+          console.log(2);
           console.log("err put=", error);
         });
     setIsModalAddVisible(false);
@@ -218,14 +196,13 @@ export default function UpdateStockPage(props) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>תקן מחלקתי</Text>
-      {/* <FCDateTime date={updateTime} /> */}
+      <Text style={styles.title}>עדכון מחסן מחלקתי</Text>
       <View style={styles.row}>
         <View style={{ flex: 7 }}><FCSearchBar handleSearch={handleSearch} clearSearch={clearSearch} handleSetClearSearch={(state) => setClearSearch(state)} /></View>
       </View>
       <View style={styles.scrollViewContainer}>
         <ScrollView scrollEventThrottle={16}>
-          <FCMedsInNorm ListMeds={medsNormSearch} isRequest={true} SendId2Remove={RemoveMedFromList} />
+          <FCMedsInStock ListMeds={medsStockSearch} isRequest={true} SendId2Remove={RemoveMedFromList} />
         </ScrollView>
         <Animated.View
           style={[styles.AddBTN, {
@@ -243,11 +220,11 @@ export default function UpdateStockPage(props) {
         </Animated.View>
       </View>
       <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-        <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59' }]} onPress={() => handleSendNormReq()}>
-          <Text style={styles.buttonText}>שליחת בקשה</Text>
+        <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59' }]} onPress={() => handleSendStockUpdate()}>
+          <Text style={styles.buttonText}>עדכון המחסן</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933' }]} onPress={() => handleDeleteNormReq()}>
-          <Text style={styles.buttonText} >ביטול בקשה</Text>
+        <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933' }]} onPress={() => handleDeleteStockUpdate()}>
+          <Text style={styles.buttonText} >ביטול העדכון</Text>
         </TouchableOpacity>
       </View>
 
@@ -259,7 +236,7 @@ export default function UpdateStockPage(props) {
             <FCMedInput sendMedSelect={(medId) => setSelectedMedId(medId)} clearForm={clearForm} handleSetClearForm={(state) => setClearForm(state)} />
             <FCQuantityInput reqQty={1} sendQty={(Qty) => setQty(Qty)} clearForm={clearForm} handleSetClearForm={(state) => setClearForm(state)} />
             <View style={styles.row}>
-              <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59' }]} onPress={AddMedToNormReq}>
+              <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59' }]} onPress={AddMedToStock}>
                 <Text style={styles.buttonText}>הוספה</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.button, { backgroundColor: '#CF2933' }]} onPress={() => setIsModalAddVisible(false)}>

@@ -10,9 +10,8 @@ export default function FCMedsInStock(props) {
             stcQty={medStock.stcQty}
             medName={medStock.medName}
             key={medStock.medId}
-            isRequest={false}
-        //isRequest={props.isRequest}
-        //getId2Delete={() => props.SendId2Remove(medStock.medId)}
+            isRequest={props.isRequest}
+            getId2Delete={() => props.SendId2Remove(medStock.medId)}
         />;
     })
 
