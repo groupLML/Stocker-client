@@ -168,9 +168,15 @@ export default function UpdateStockPage(props) {
   //שמירת השינוים במחסן 
   const handleSendStockUpdate = () => {
 
-    fetch(apiUrlGetStock + 'depId/' + `${depId}`, {
-      method: 'POST',
-      body: JSON.stringify(medsInStockUpdate),
+    const StockUpdate = {
+      medsInStockUpdate: medsInStockUpdate
+    };
+
+    console.log(StockUpdate,1);
+
+    fetch(apiUrlGetStock + 'UpdateNurse/depId/' + `${depId}`, {
+      method: 'PUT',
+      body: JSON.stringify(StockUpdate),
       headers: new Headers({
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json; charset=UTF-8',
@@ -188,7 +194,6 @@ export default function UpdateStockPage(props) {
           }
         },
         (error) => {
-          console.log(2);
           console.log("err put=", error);
         });
     setIsModalAddVisible(false);

@@ -30,7 +30,6 @@ export default function StocksPage(props) {
                 (result) => {
                     setMedsInStock(result);
                     setMedsStockSearch(result);
-                    console.log(result);
                 },
                 (error) => {
                     console.log("err get=", error);

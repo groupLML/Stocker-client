@@ -8,27 +8,27 @@ import { GlobalContext } from '../GlobalData/GlobalData';
 
 export default function FCMedInNorm(props) {
 
-/*     const { meds, setMedsInNormReq, medsInNormReq } = useContext(GlobalContext);
- */
+    const { meds, setMedsInStockUpdate, medsInStockUpdate } = useContext(GlobalContext);
+
     const [Qty, setQty] = useState(props.stcQty);
 
     const GetQtyFromInput = (Qty) => {
         setQty(Qty);
     }
-/* 
+
     useEffect(() => {
         const med = meds.find((med) => med.medId === props.id)
-        const index = medsInNormReq.findIndex(item => item.medId === props.id);
+        const index = medsInStockUpdate.findIndex(item => item.medId === props.id);
 
         const medToChange = {
             medId: props.id,
             stcQty: Qty,
             medName: med.medName
         };
-        medsInNormReq[index] = medToChange;
-        setMedsInNormReq(medsInNormReq);
+        medsInStockUpdate[index] = medToChange;
+        setMedsInStockUpdate(medsInStockUpdate);
     }, [Qty]);
- */
+
     return (
         <View>
             <Card borderColor='#E1EAF9'>
