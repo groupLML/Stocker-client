@@ -82,23 +82,23 @@ return (
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('צפייה בתקן'); }}>
-          <Image source={require("../Images/push.png")} style={styles.buttonImage} />
+          <Image source={require("../Images/validity.png")} style={styles.buttonImage} />
           <Text style={styles.buttonText}>תקן המחלקה</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('יצירת בקשה לשינוי תקן'); }}>
-          <Image source={require("../Images/push.png")} style={styles.buttonImage} />
+          <Image source={require("../Images/chat.png")} style={styles.buttonImage} />
           <Text style={styles.buttonText}>בקשה לשינוי תקן</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('צפייה במחסן'); }}>
-          <Image source={require("../Images/push.png")} style={styles.buttonImage} />
+          <Image source={require("../Images/factory.png")} style={styles.buttonImage} />
           <Text style={styles.buttonText}>מחסן המחלקה</Text>
         </TouchableOpacity>
         {!isHeadNurse && (
           <>
             <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('הודעות'); }}>
-              <Image source={require("../Images/push.png")} style={styles.buttonImage} />
+              <Image source={require("../Images/email.png")} style={styles.buttonImage} />
               <Text style={styles.buttonText}>הודעות</Text>
             </TouchableOpacity>
           </>
@@ -106,7 +106,7 @@ return (
         {isHeadNurse && (
           <>
             <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('עדכון המחסן'); }}>
-              <Image source={require("../Images/push.png")} style={styles.buttonImage} />
+              <Image source={require("../Images/production.png")} style={styles.buttonImage} />
               <Text style={styles.buttonText}>עדכון המחסן</Text>
             </TouchableOpacity>
           </>
