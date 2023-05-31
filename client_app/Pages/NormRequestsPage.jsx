@@ -266,7 +266,6 @@ export default function NormRequestsPage(props) {
         </TouchableOpacity>
       </View>
 
-
       {/*  ----------MODAL Add Med-------- */}
       <Modal visible={isModalAddVisible} animationType="slide" transparent={true} onRequestClose={() => setIsModalAddVisible(false)}>
         <View style={styles.centeredView}>
@@ -286,7 +285,6 @@ export default function NormRequestsPage(props) {
       </Modal>
 
       {/*  ----------MODAL Note-------- */}
-      <View style={styles.centeredView}>
         <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { this.setState({ modalVisible: !modalVisible }); }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
@@ -297,7 +295,6 @@ export default function NormRequestsPage(props) {
             </View>
           </View>
         </Modal>
-      </View>
     </View>
   )
 }
@@ -344,10 +341,10 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   centeredView: {
-    //flex: 1,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    //marginTop: 22,
+    marginTop: 22,
   },
   modalView: {
     margin: 20,

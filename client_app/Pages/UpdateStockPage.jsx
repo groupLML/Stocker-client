@@ -236,7 +236,6 @@ export default function UpdateStockPage(props) {
 
       {/*  ----------MODAL Add Med-------- */}
       <Modal visible={isModalAddVisible} animationType="slide" transparent={true} onRequestClose={() => setIsModalAddVisible(false)}>
-        <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <FCMedInput sendMedSelect={(medId) => setSelectedMedId(medId)} clearForm={clearForm} handleSetClearForm={(state) => setClearForm(state)} />
             <FCQuantityInput reqQty={1} sendQty={(Qty) => setQty(Qty)} clearForm={clearForm} handleSetClearForm={(state) => setClearForm(state)} />
@@ -249,11 +248,9 @@ export default function UpdateStockPage(props) {
               </TouchableOpacity>
             </View>
           </View>
-        </View>
       </Modal>
 
       {/*  ----------MODAL Note-------- */}
-      <View style={styles.centeredView}>
         <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { this.setState({ modalVisible: !modalVisible }); }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
@@ -264,7 +261,6 @@ export default function UpdateStockPage(props) {
             </View>
           </View>
         </Modal>
-      </View>
     </View>
   )
 }
@@ -311,10 +307,14 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   centeredView: {
-    //flex: 1,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    //marginTop: 22,
+    marginTop: 22,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
   },
   modalView: {
     margin: 20,
@@ -323,17 +323,10 @@ const styles = StyleSheet.create({
     padding: 35,
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    shadowOffset: { width: 0, height: 2, },
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
   },
   modalButton: {
     backgroundColor: '#00317D',
