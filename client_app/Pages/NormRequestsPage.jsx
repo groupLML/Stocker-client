@@ -60,10 +60,7 @@ export default function NormRequestsPage(props) {
           setMedsInNormReq(MedInNormReq);
           setMedsNormSearch(result[0].medList);
           setNormId(result[0].normId);
-          /*    result.map((norm, key) => {
-             updateTimes = norm.lastUpdate;});  */
-        /*   const lastUpdateString = new Date(result[0].lastUpdate);
-          setUpdateTime(lastUpdateString); */
+          setUpdateTime(result[0].lastUpdate);
         },
         (error) => {
           console.log("err get=", error);
@@ -234,7 +231,7 @@ export default function NormRequestsPage(props) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>תקן מחלקתי</Text>
-      {/* <FCDateTime date={updateTime} /> */}
+      {updateTime !== '' && <FCDateTime date={updateTime}/>}
       <View style={styles.row}>
         <View style={{ flex: 7 }}><FCSearchBar handleSearch={handleSearch} clearSearch={clearSearch} handleSetClearSearch={(state) => setClearSearch(state)} /></View>
       </View>
@@ -285,16 +282,16 @@ export default function NormRequestsPage(props) {
       </Modal>
 
       {/*  ----------MODAL Note-------- */}
-        <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { this.setState({ modalVisible: !modalVisible }); }}>
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>{textMessage}</Text>
-              <TouchableOpacity style={styles.modalButton} onPress={handleModalClose}>
-                <Text style={styles.buttonText}>סגור</Text>
-              </TouchableOpacity>
-            </View>
+      <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { this.setState({ modalVisible: !modalVisible }); }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>{textMessage}</Text>
+            <TouchableOpacity style={styles.modalButton} onPress={handleModalClose}>
+              <Text style={styles.buttonText}>סגור</Text>
+            </TouchableOpacity>
           </View>
-        </Modal>
+        </View>
+      </Modal>
     </View>
   )
 }
