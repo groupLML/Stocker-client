@@ -231,7 +231,7 @@ export default function NormRequestsPage(props) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>תקן מחלקתי</Text>
-      {updateTime !== '' && <FCDateTime date={updateTime}/>}
+      {updateTime !== '' && <View style={styles.updateTime}><FCDateTime date={updateTime} isNorm={true} /></View>}
       <View style={styles.row}>
         <View style={{ flex: 7 }}><FCSearchBar handleSearch={handleSearch} clearSearch={clearSearch} handleSetClearSearch={(state) => setClearSearch(state)} /></View>
       </View>
@@ -301,6 +301,10 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 5,
     backgroundColor: '#fff',
+  },
+  updateTime:{
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   title: {
     fontSize: 26,

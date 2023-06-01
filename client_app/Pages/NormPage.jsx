@@ -12,7 +12,7 @@ export default function NormPage(props) {
   const { depId, apiUrlGetNorm } = useContext(GlobalContext);
   const [medsInNorm, setMedsInNorm] = useState([]);
   const [isChanged, setIsChanged] = useState(false);
-  const [UpdateTime, setUpdateTime] = useState('');
+  const [updateTime, setUpdateTime] = useState('');
   const [clearSearch, setClearSearch] = useState(false);
   const [medsNormSearch, setMedsNormSearch] = useState([]);
  
@@ -31,8 +31,6 @@ export default function NormPage(props) {
       .then(
         (result) => {
           setMedsInNorm(result[0].medList);
-          /*result.map((norm, key) => {
-            updateTimes = norm.lastUpdate;}); */
           setUpdateTime(result[0].lastUpdate);
           setMedsNormSearch(result[0].medList);
         },
@@ -62,6 +60,7 @@ export default function NormPage(props) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>תקן מחלקתי</Text>
+      {updateTime !== '' && <View style={styles.updateTime}><FCDateTime date={updateTime} isNorm={true} /></View>}
       <View style={styles.row}>
         <View style={{ flex: 7 }}><FCSearchBar handleSearch={handleSearch} clearSearch={clearSearch} handleSetClearSearch={(state) => setClearSearch(state)} /></View>
       </View>
@@ -70,7 +69,6 @@ export default function NormPage(props) {
           <FCMedsInNorm ListMeds={medsNormSearch} isRequest={false} />
         </ScrollView>
       </View>
-      {/* <FCDateTime date={UpdateTime} /> */}
     </View>
   )
 }
@@ -80,6 +78,10 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 5,
     backgroundColor: '#fff',
+  },
+  updateTime: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   title: {
     fontSize: 26,
