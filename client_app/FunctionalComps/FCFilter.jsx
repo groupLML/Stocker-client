@@ -1,5 +1,5 @@
-import { View, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { View, TouchableOpacity } from 'react-native';
+import React from 'react';
 import { Icon } from 'react-native-elements';
 
 export default function FCFilter(props) {

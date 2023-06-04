@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated } from 'react-native';
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { Icon } from '@rneui/themed';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCPullOrders from '../FunctionalComps/FCPullOrders';
@@ -16,6 +16,7 @@ export default function PullOrdersPage(props) {
   const [pullOrders, setPullOrders] = useState([]);
   const [PullOrdersSearch, setPullOrdersSearch] = useState([]);
   const [ShowStatusFilter, setShowStatusFilter] = useState('false');
+  const [clearSearch, setClearSearch] = useState(false);
 
   //----------------------GET PullOrders---------------------
   useEffect(() => {
@@ -42,6 +43,11 @@ export default function PullOrdersPage(props) {
         });
   }, [props.isChanged])
 
+  useFocusEffect(
+    React.useCallback(() => {
+      setClearSearch(true);
+    }, []));
+
   const handleSearch = (search) => {
     if (pullOrders.length !== 0) {
       const filtered = pullOrders.filter(item =>
@@ -67,7 +73,7 @@ export default function PullOrdersPage(props) {
       const filtered = pullOrders.filter(item => SelectedFiltersArray.includes(item.orderStatus));
       setPullOrdersSearch(filtered);
     }
-    else{
+    else {
       setPullOrdersSearch(pullOrders);
     }
   };
@@ -78,7 +84,7 @@ export default function PullOrdersPage(props) {
   return (
     <View style={styles.container}>
       <View style={styles.row}>
-        <View style={{ flex: 7 }}><FCSearchBar handleSearch={handleSearch} /></View>
+        <View style={{ flex: 7 }}><FCSearchBar handleSearch={handleSearch} clearSearch={clearSearch} handleSetClearSearch={(state) => setClearSearch(state)} /></View>
         <View style={{ flex: 1 }}><FCFilter HandleFilterPress={HandleFilterPress} /></View>
       </View>
       {ShowStatusFilter === 'true' && (
@@ -121,7 +127,7 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     paddingHorizontal: 5,
-},
+  },
   scrollViewContainer: {
     flex: 1,
     position: 'relative',

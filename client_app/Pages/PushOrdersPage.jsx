@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React, { useContext, useState, useEffect, useRef } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCPushOrders from '../FunctionalComps/FCPushOrders';
@@ -13,6 +14,7 @@ export default function PushOrdersPage() {
   const [pushOrders, setPushOrders] = useState([]);
   const [PushOrdersSearch, setPushOrdersSearch] = useState([]);
   const [ShowStatusFilter, setShowStatusFilter] = useState('false');
+  const [clearSearch, setClearSearch] = useState(false);
 
   //----------------------GET PushOrder---------------------
   useEffect(() => {
@@ -35,6 +37,11 @@ export default function PushOrdersPage() {
           console.log("err get=", error);
         });
   }, [])
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setClearSearch(true);
+    }, []));
 
   const handleSearch = (search) => {
     if (pushOrders.length !== 0) {
@@ -68,7 +75,7 @@ export default function PushOrdersPage() {
   return (
     <View style={styles.container}>
       <View style={styles.row}>
-        <View style={{ flex: 7 }}><FCSearchBar handleSearch={handleSearch} /></View>
+        <View style={{ flex: 7 }}><FCSearchBar handleSearch={handleSearch} clearSearch={clearSearch} handleSetClearSearch={(state) => setClearSearch(state)} /></View>
         <View style={{ flex: 1 }}><FCFilter HandleFilterPress={HandleFilterPress} /></View>
       </View>
       {ShowStatusFilter === 'true' && (
