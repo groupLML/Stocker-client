@@ -25,6 +25,7 @@ export default function MyRequestsPage(props) {
   const { apiUrlMedRequest, depId, myMedReqs, setMyMedReqs } = useContext(GlobalContext);
   const [ReqsSearch, setReqsSearch] = useState([]);
   const [ShowStatusFilter, setShowStatusFilter] = useState('false');
+  const [clearSearch, setClearSearch] = useState(false);
 
   //----------------------GET Requests details ---------------------
   useEffect(() => {
@@ -50,6 +51,11 @@ export default function MyRequestsPage(props) {
           console.log("err post=", error);
         });
   }, [props.isChanged]) // did update
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setClearSearch(true);
+    }, []));
 
   const handleSearch = (search) => {
     if (myMedReqs.length !== 0) {
@@ -124,7 +130,7 @@ export default function MyRequestsPage(props) {
   return (
     <View style={styles.container}>
       <View style={styles.row}>
-        <View style={{ flex: 7 }}><FCSearchBar handleSearch={handleSearch} /></View>
+        <View style={{ flex: 7 }}><FCSearchBar handleSearch={handleSearch} clearSearch={clearSearch} handleSetClearSearch={(state) => setClearSearch(state)} /></View>
         <View style={{ flex: 1 }}><FCFilter HandleFilterPress={HandleFilterPress} /></View>
       </View>
       {ShowStatusFilter === 'true' && (

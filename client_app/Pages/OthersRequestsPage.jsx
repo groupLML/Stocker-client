@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React, { useContext, useState, useEffect } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCOthersRequests from '../FunctionalComps/FCOthersRequests';
@@ -10,6 +11,7 @@ export default function OthersRequestsPage(props) {
     const { apiUrlMedRequest, depId, othersMedReqs, setOthersMedReqs } = useContext(GlobalContext);
     const [isStatusChanged, setIsStatusChanged] = useState(false);
     const [ReqsSearch, setReqsSearch] = useState([]);
+    const [clearSearch, setClearSearch] = useState(false);
 
     const handleSearch = (search) => {
         if (othersMedReqs.length !== 0) {
@@ -49,10 +51,15 @@ export default function OthersRequestsPage(props) {
                 });
     }, [isStatusChanged])//component did update
 
+    useFocusEffect(
+        React.useCallback(() => {
+            setClearSearch(true);
+        }, []));
+
     return (
         <View style={styles.container}>
             <View style={styles.searchContainer}>
-                <FCSearchBar handleSearch={handleSearch} />
+                <FCSearchBar handleSearch={handleSearch} clearSearch={clearSearch} handleSetClearSearch={(state) => setClearSearch(state)} />
             </View>
             <View style={styles.scrollViewContainer}>
                 <ScrollView>

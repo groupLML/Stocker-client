@@ -16,6 +16,7 @@ export default function PullOrdersPage(props) {
   const [pullOrders, setPullOrders] = useState([]);
   const [PullOrdersSearch, setPullOrdersSearch] = useState([]);
   const [ShowStatusFilter, setShowStatusFilter] = useState('false');
+  const [clearSearch, setClearSearch] = useState(false);
 
   //----------------------GET PullOrders---------------------
   useEffect(() => {
@@ -41,6 +42,11 @@ export default function PullOrdersPage(props) {
           console.log("err get=", error);
         });
   }, [props.isChanged])
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setClearSearch(true);
+    }, []));
 
   const handleSearch = (search) => {
     if (pullOrders.length !== 0) {
@@ -89,7 +95,7 @@ export default function PullOrdersPage(props) {
   return (
     <View style={styles.container}>
       <View style={styles.row}>
-        <View style={{ flex: 7 }}><FCSearchBar handleSearch={handleSearch} /></View>
+        <View style={{ flex: 7 }}><FCSearchBar handleSearch={handleSearch} clearSearch={clearSearch} handleSetClearSearch={(state) => setClearSearch(state)} /></View>
         <View style={{ flex: 1 }}><FCFilter HandleFilterPress={HandleFilterPress} /></View>
       </View>
       {ShowStatusFilter === 'true' && (
