@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated } from 'react-native';
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { Icon } from '@rneui/themed';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCPullOrders from '../FunctionalComps/FCPullOrders';
@@ -66,11 +66,22 @@ export default function PullOrdersPage(props) {
     if (SelectedFiltersArray.length !== 0) {
       const filtered = pullOrders.filter(item => SelectedFiltersArray.includes(item.orderStatus));
       setPullOrdersSearch(filtered);
+      console.log(PullOrdersSearch);
     }
-    else{
+    else {
       setPullOrdersSearch(pullOrders);
+      console.log(PullOrdersSearch);
     }
   };
+
+  //useEffect hook to clear filters on unmount
+  useFocusEffect(
+    React.useCallback(() => {
+      setShowStatusFilter('false');
+      setPullOrdersSearch([]);
+      return () => {
+      };
+    }, []));
 
   //animation for add BTN to stick to screen while scroll
   const scrollY = useRef(new Animated.Value(0)).current;//set the current state of y axe value
@@ -121,7 +132,7 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     paddingHorizontal: 5,
-},
+  },
   scrollViewContainer: {
     flex: 1,
     position: 'relative',

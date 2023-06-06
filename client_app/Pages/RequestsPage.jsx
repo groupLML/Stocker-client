@@ -34,8 +34,6 @@ export default function RequestsPage(props) {
 
     useFocusEffect(
       React.useCallback(() => {
-    /*     setSelectedButton(0);
-        setShowMy(true); */
         setIsChanged(true);
         return () => {
         };

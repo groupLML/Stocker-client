@@ -1,7 +1,7 @@
 import { View, StyleSheet, ScrollView, TouchableOpacity, Animated } from 'react-native';
 import React, { useContext, useRef, useEffect, useState } from 'react';
 import { Icon } from '@rneui/themed';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation , useFocusEffect } from '@react-navigation/native';
 
 /* import * as Notifications from "expo-notifications"; */
 
@@ -85,6 +85,16 @@ export default function MyRequestsPage(props) {
       setReqsSearch(myMedReqs);
     }
   };
+
+  //useEffect hook to clear filters on unmount
+  useFocusEffect(
+    React.useCallback(() => {
+      setShowStatusFilter('false');
+      setReqsSearch([]);
+      return () => {
+      };
+    }, []));
+
 
   //animation for add BTN to stick to screen while scroll
   const scrollY = useRef(new Animated.Value(0)).current;//set the current state of y axe value

@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import React, { useContext, useState, useEffect, useRef } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCPushOrders from '../FunctionalComps/FCPushOrders';
@@ -64,6 +65,15 @@ export default function PushOrdersPage() {
       setPushOrdersSearch(pushOrders);
     }
   };
+
+  //useEffect hook to clear filters on unmount
+  useFocusEffect(
+    React.useCallback(() => {
+      setShowStatusFilter('false');
+      setPushOrdersSearch([]);
+      return () => {
+      };
+    }, []));
 
   return (
     <View style={styles.container}>
