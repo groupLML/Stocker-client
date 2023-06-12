@@ -17,14 +17,13 @@ export default function FCMedInNorm(props) {
     }
 
     useEffect(() => {
-        const med = meds.find((med) => med.medId === props.id)
         const index = medsInStockUpdate.findIndex(item => item.medId === props.id);
-
         const medToChange = {
             medId: props.id,
             stcQty: Qty,
-            medName: med.medName
+            medName: props.medName
         };
+
         medsInStockUpdate[index] = medToChange;
         setMedsInStockUpdate(medsInStockUpdate);
     }, [Qty]);
