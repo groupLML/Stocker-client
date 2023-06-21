@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Linking, Modal } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RegisterForPushNotifications } from '../FunctionalComps/RegisterForPushNotifications';
 import { GlobalContext } from '../GlobalData/GlobalData';
@@ -142,6 +143,13 @@ export default function LoginPage(props) {
           console.log("err get=", error);
         });
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setUsername('');
+      setPassword('');
+    }, [])
+  );//did unmount
 
   return (
     <View style={styles.container}>
