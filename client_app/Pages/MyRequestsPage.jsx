@@ -120,10 +120,10 @@ export default function MyRequestsPage(props) {
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
         console.log("Notification Response Received")
-        //const { notification } = response;
-        const requestId = response.requestId;
-        const requestsList = response.requestsList;
-        const ReqDeps = response.ReqDeps;
+        const { data } = response.notification;
+        const requestId = data.requestId;
+        const requestsList = data.requestsList;
+        const ReqDeps = data.ReqDeps;
         console.log(requestId);
         navigation.navigate('צפייה בבקשות שלי', { requestId: requestId, requestsList:requestsList, ReqDeps:ReqDeps })
         console.log(response);
