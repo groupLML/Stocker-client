@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Modal, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
+import { useFocusEffect } from '@react-navigation/native';
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCDepTypeList from '../FunctionalComps/FCDepTypeList';
 import FCMedInput from '../FunctionalComps/FCMedInput';
@@ -24,6 +25,11 @@ export default function AddRequestPage(props) {
       props.navigation.navigate('בקשות', { requiredPage: 'my' });
     }
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setClearForm(true);
+    }, []));
 
   const handleAddRequest = async () => {
     if (selectedMedId != null) {
