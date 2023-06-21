@@ -118,13 +118,13 @@ useEffect(() => {
 
   responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
     console.log("Notification Response Received");
-    console.log(response.notification)
-    const { data } = response.notification;
+    console.log(response.notification.data)
+    const { data } = response.notification.request.content;
     const requestId = data.requestId;
-    const requestsList = data.requestsList;
-    const ReqDeps = data.ReqDeps;
+    //const requestsList = data.requestsList;
+    const ReqDeps = [];
     console.log(requestId);
-    navigation.navigate('צפייה בבקשות שלי', { requestId, requestsList, ReqDeps });
+    navigation.navigate('צפייה בפרטי בקשה', { requestId, myMedReqs, ReqDeps});
     console.log(response);
   });
 

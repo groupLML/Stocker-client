@@ -21,7 +21,7 @@ export default function FCOthersRequest(props) {
 
     const isStockQtyLower = props.stcQty < props.reqQty;
 
-    const { apiUrlMedRequest, getUserData, myMedReqs, apiUrlGetToken } = useContext(GlobalContext);
+    const { apiUrlMedRequest, getUserData, apiUrlGetToken } = useContext(GlobalContext);
 
     //----------------------notification-----------------------------
     const [notification, setNotification] = useState(false);
@@ -52,9 +52,9 @@ export default function FCOthersRequest(props) {
             body: notification.body,
             data: {
                 //screen: notification.screen,
-                requestId: 'yourRequestIdValue',
-                requestsList: 'yourRequestsList',
-                ReqDeps: 'yourReqDeps',
+                requestId: props.id,
+                //requestsList: 'yourRequestsList',
+                //ReqDeps: [],
             },
            
         };
