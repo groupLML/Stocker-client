@@ -105,35 +105,34 @@ export default function MyRequestsPage(props) {
   //animation for add BTN to stick to screen while scroll
   const scrollY = useRef(new Animated.Value(0)).current;//set the current state of y axe value
 
-  //----------------------GET Notification---------------------
-  const [notification, setNotification] = useState(false);
-  const notificationListener = useRef();
-  const responseListener = useRef();
-  useEffect(() => {
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        console.log("Notification Received")
-        setNotification(notification);
-        console.log(notification)
-      });
+ //----------------------GET Notification---------------------
+const [notification, setNotification] = useState(false);
+const notificationListener = useRef();
+const responseListener = useRef();
+useEffect(() => {
+  notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+    console.log("Notification Received");
+    setNotification(notification);
+    console.log(notification);
+  });
 
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log("Notification Response Received")
-        const { data } = response.notification;
-        const requestId = data.requestId;
-        const requestsList = data.requestsList;
-        const ReqDeps = data.ReqDeps;
-        console.log(requestId);
-        navigation.navigate('צפייה בבקשות שלי', { requestId: requestId, requestsList:requestsList, ReqDeps:ReqDeps })
-        console.log(response);
-      });
+  responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
+    console.log("Notification Response Received");
+    console.log(response.notification)
+    const { data } = response.notification;
+    const requestId = data.requestId;
+    const requestsList = data.requestsList;
+    const ReqDeps = data.ReqDeps;
+    console.log(requestId);
+    navigation.navigate('צפייה בבקשות שלי', { requestId, requestsList, ReqDeps });
+    console.log(response);
+  });
 
-    return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current);
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
-  }, []);
+  return () => {
+    Notifications.removeNotificationSubscription(notificationListener.current);
+    Notifications.removeNotificationSubscription(responseListener.current);
+  };
+}, []);
 
   return (
     <View style={styles.container}>
