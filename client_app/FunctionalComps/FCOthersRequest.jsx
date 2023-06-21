@@ -52,7 +52,9 @@ export default function FCOthersRequest(props) {
             body: notification.body,
             data: {
                 screen: notification.screen,
-                //params: notification.params
+                requestId: 'yourRequestIdValue',
+                requestsList: 'yourRequestsList',
+                ReqDeps: 'yourReqDeps',
             },
            
         };

@@ -1,9 +1,9 @@
 import { View, StyleSheet, ScrollView, TouchableOpacity, Animated } from 'react-native';
 import React, { useContext, useRef, useEffect, useState } from 'react';
 import { Icon } from '@rneui/themed';
-import { useNavigation , useFocusEffect } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
-/* import * as Notifications from "expo-notifications"; */
+import * as Notifications from "expo-notifications";
 
 import { GlobalContext } from '../GlobalData/GlobalData';
 import FCMyRequests from '../FunctionalComps/FCMyRequests';
@@ -11,13 +11,13 @@ import FCSearchBar from '../FunctionalComps/FCSearchBar ';
 import FCFilter from '../FunctionalComps/FCFilter';
 import FCFilters from '../FunctionalComps/FCFilters';
 
-/* Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-        shouldShowAlert: true,
-        shouldPlaySound: true,
-        shouldSetBadge: false,
-    }),
-}); */
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
 
 export default function MyRequestsPage(props) {
   const navigation = useNavigation();
@@ -87,7 +87,7 @@ export default function MyRequestsPage(props) {
       const filtered = myMedReqs.filter(item => SelectedFiltersArray.includes(item.reqStatus));
       setReqsSearch(filtered);
     }
-    else{
+    else {
       setReqsSearch(myMedReqs);
     }
   };
@@ -105,27 +105,35 @@ export default function MyRequestsPage(props) {
   //animation for add BTN to stick to screen while scroll
   const scrollY = useRef(new Animated.Value(0)).current;//set the current state of y axe value
 
-  /* //----------------------GET Notification---------------------
-   const [notification, setNotification] = useState(false);
-   const notificationListener = useRef();
-   const responseListener = useRef();
-   useEffect(() => {
-       notificationListener.current =
-           Notifications.addNotificationReceivedListener((notification) => {
-               setNotification(notification);
-           });
- 
-       responseListener.current =
-           Notifications.addNotificationResponseReceivedListener((response) => {
-               const { notification } = response;
-               console.log(notification);
-           });
- 
-       return () => {
-           Notifications.removeNotificationSubscription(notificationListener.current);
-           Notifications.removeNotificationSubscription(responseListener.current);
-       };
-   }, []); */
+  //----------------------GET Notification---------------------
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+  useEffect(() => {
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        console.log("Notification Received")
+        setNotification(notification);
+        console.log(notification)
+      });
+
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log("Notification Response Received")
+        //const { notification } = response;
+        const requestId = response.requestId;
+        const requestsList = response.requestsList;
+        const ReqDeps = response.ReqDeps;
+        console.log(requestId);
+        navigation.navigate('צפייה בבקשות שלי', { requestId: requestId, requestsList:requestsList, ReqDeps:ReqDeps })
+        console.log(response);
+      });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
 
   return (
     <View style={styles.container}>
