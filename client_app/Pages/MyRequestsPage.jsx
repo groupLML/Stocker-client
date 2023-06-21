@@ -27,6 +27,28 @@ export default function MyRequestsPage(props) {
   const [ShowStatusFilter, setShowStatusFilter] = useState('false');
   const [clearSearch, setClearSearch] = useState(false);
 
+  const fetchData = async () => {
+    try {
+      const res = await fetch(apiUrlMedRequest + 'RequestsMine/' + `${depId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json; charset=UTF-8',
+        }
+      });
+      const result = await res.json();
+      setMyMedReqs(result); // set the requests of chosen dep to display
+      setReqsSearch(result);
+      /* 
+      if (props.isChanged) {
+        props.handleIsChanged(false);
+      }
+      */
+    } catch (error) {
+      console.log("err post=", error);
+    }
+  };
+
   //----------------------GET Requests details ---------------------
   useEffect(() => {
     fetch(apiUrlMedRequest + 'RequestsMine/' + `${depId}`, {
@@ -105,34 +127,34 @@ export default function MyRequestsPage(props) {
   //animation for add BTN to stick to screen while scroll
   const scrollY = useRef(new Animated.Value(0)).current;//set the current state of y axe value
 
- //----------------------GET Notification---------------------
-const [notification, setNotification] = useState(false);
-const notificationListener = useRef();
-const responseListener = useRef();
-useEffect(() => {
-  notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
-    console.log("Notification Received");
-    setNotification(notification);
-    console.log(notification);
-  });
+  //----------------------GET Notification---------------------
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+  useEffect(() => {
+    notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+      console.log("Notification Received");
+      setNotification(notification);
+      console.log(notification);
+    });
 
-  responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
-    console.log("Notification Response Received");
-    console.log(response.notification.data)
-    const { data } = response.notification.request.content;
-    const requestId = data.requestId;
-    //const requestsList = data.requestsList;
-    const ReqDeps = [];
-    console.log(requestId);
-    navigation.navigate('צפייה בפרטי בקשה', { requestId, myMedReqs, ReqDeps});
-    console.log(response);
-  });
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(async (response) => {
+      console.log("Notification Response Received");
+      const { data } = response.notification.request.content;
+      const requestId = data.requestId;
+      await fetchData(); // Call fetchData and wait for it to complete
+      const ReqDeps = [];
+      console.log(requestId);
+      console.log(myMedReqs);
+      navigation.navigate('צפייה בפרטי בקשה', { requestId, myMedReqs, ReqDeps });
+      console.log(response);
+    });
 
-  return () => {
-    Notifications.removeNotificationSubscription(notificationListener.current);
-    Notifications.removeNotificationSubscription(responseListener.current);
-  };
-}, []);
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
 
   return (
     <View style={styles.container}>
