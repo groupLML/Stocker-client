@@ -1,5 +1,6 @@
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Modal } from 'react-native';
 import React, { useState, useContext, useEffect } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { Icon, Card } from 'react-native-elements';
 import { GlobalContext } from '../GlobalData/GlobalData';
 
@@ -103,6 +104,12 @@ export default function AddPullOrderPage(props) {
                 console.log("err post=", error);
             });
     };
+
+    useFocusEffect(
+        React.useCallback(() => {
+          setMedsOrderList([]); // Update medsOrderList to an empty array
+        }, [])
+      );//did unmount
 
     return (
         <View style={styles.container}>

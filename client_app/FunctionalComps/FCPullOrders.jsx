@@ -9,7 +9,7 @@ export default function FCPullOrders(props) {
     return <FCPullOrder
       PullOrdersList={props.PullOrdersList}
       id={pullOrder.orderId}
-      date={pullOrder.orderDate}
+      date={pullOrder.lastUpdate}
       nurseId={pullOrder.nurseId}
       nurseName={pullOrder.nurseName}
       pharmacistId={pullOrder.pharmacistId}
