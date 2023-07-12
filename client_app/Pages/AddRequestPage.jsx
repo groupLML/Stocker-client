@@ -86,7 +86,7 @@ export default function AddRequestPage(props) {
       <Text style={styles.title}>יצירת בקשה</Text>
       <FCMedInput sendMedSelect={(medId) => setSelectedMedId(medId)} clearForm={clearForm} handleSetClearForm={(state) => setClearForm(state)} />
       <FCQuantityInput reqQty={1} sendQty={(Qty) => setQty(Qty)} clearForm={clearForm} handleSetClearForm={(state) => setClearForm(state)} />
-      <FCDepTypeList ReqId={null} />
+      <FCDepTypeList/>
       <TouchableOpacity style={styles.button} onPress={() => handleAddRequest()}>
         <Text style={styles.buttonText}>אישור</Text>
       </TouchableOpacity>

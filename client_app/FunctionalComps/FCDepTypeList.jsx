@@ -4,7 +4,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { GlobalContext } from '../GlobalData/GlobalData';
 import { useFocusEffect } from '@react-navigation/native';
 
-export default function FCDepTypeList(props) {
+export default function FCDepTypeList() {
 
     //-----------------------------Dep Type List------------------------------------
     const [isChecked, setChecked] = useState(null); //Send to all deps checkBox status (init value is checked)
@@ -17,39 +17,32 @@ export default function FCDepTypeList(props) {
             }
             return DepType;
         });
-        setDepTypes(temp); //set the depTypes array for temp
+        setDepTypes(temp);//set the depTypes array for temp
     };
 
     useEffect(() => {
-        console.log(DepTypes);
+        console.log("DepTypes", DepTypes);
         if (DepTypes.every((item) => item.isChecked === true)) {
             setChecked(true);
         }
-        else{
+        else {
             setChecked(false);
         }
     }, [DepTypes]);
 
-/*     useEffect(() => {// Cleanup function to be executed when the component is unmounted
-        return () => {
-          setChecked(true); // Reset the isChecked state to its initial value
-          setDepTypes([]); // Reset the DepTypes state to an empty array
-        };
-      }, []); */
-
-      useFocusEffect(
+    useFocusEffect(
         React.useCallback(() => {
             setChecked(true); // Reset the isChecked state to its initial value
             const initDepTypes = DepTypes.map((depType) => ({// Reset the isChecked state of DepTypes to their initial value -> true
                 ...depType,
                 isChecked: true,
-              }));
-              setDepTypes(initDepTypes);
-          return () => {
-            // Clean up the effect when the screen goes out of focus
-          };
+            }));
+            setDepTypes(initDepTypes);
+            return () => {
+                // Clean up the effect when the screen goes out of focus
+            };
         }, [])
-      );
+    );
 
     return (
         <View>
