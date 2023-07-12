@@ -108,6 +108,7 @@ export default function AddPullOrderPage(props) {
     useFocusEffect(
         React.useCallback(() => {
           setMedsOrderList([]); // Update medsOrderList to an empty array
+          setClearForm(true);
         }, [])
       );//did unmount
 
