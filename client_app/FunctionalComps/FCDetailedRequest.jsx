@@ -46,20 +46,6 @@ export default function FCDetailedRequest(props) {
     setIsUpdateAllowed(true);
   };
 
-  const initReqDeps = props.ReqDeps
-
-  useEffect(() => {
-    console.log('DepTypes: ', DepTypes);
-    console.log('initReqDeps: ', initReqDeps);
-    const isCheckedEqual = initReqDeps.length === DepTypes.length &&
-      initReqDeps.every((item1, index) => {
-        const item2 = DepTypes[index];
-        return item1.isChecked === item2.isChecked;
-      });
-    console.log('isCheckedEqual: ', isCheckedEqual);
-    setIsUpdateAllowed(!isCheckedEqual);
-  }, [DepTypes]);
-
   //עדכון העברה
   const handleUpdateRequest = () => {
 
