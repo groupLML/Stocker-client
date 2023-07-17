@@ -7,7 +7,6 @@ import { GlobalContext } from '../GlobalData/GlobalData';
 import FCQuantityInput from './FCQuantityInput';
 import FCMedInput from './FCMedInput';
 import FCDateTime from './FCDateTime';
-import FCstaticDepTypeList from './FCstaticDepTypeList';
 
 export default function FCDetailedRequest(props) {
 
@@ -22,7 +21,7 @@ export default function FCDetailedRequest(props) {
   const [textMessage, setTextMessage] = useState('');
   const [isSuccessModal, setIsSuccessModal] = useState(false);
   const [isUpdateAllowed, setIsUpdateAllowed] = useState(false);
-  const [didupdateDepTypes, setDidupdateDepTypes] = useState(false);
+
   const handleSetClearForm = (state) => {
     setClearForm(state);
   };
@@ -234,7 +233,7 @@ export default function FCDetailedRequest(props) {
           <Text style={{ ...styles.body, fontSize: 17 }}><Text style={{ fontSize: 17 }} >שם יוצר ההזמנה: </Text>{props.cNurseName}</Text>
           <View style={styles.body}><FCMedInput medName={props.medName} sendMedSelect={handleSelectMed} clearForm={clearForm} handleSetClearForm={handleSetClearForm} /></View>
           <View style={styles.body}><FCQuantityInput reqQty={props.reqQty} sendQty={GetQtyFromInput} /></View>
-          <View style={styles.body}><FCstaticDepTypeList ReqDeps={props.ReqDeps} /></View>
+{/*           <View style={styles.body}><FCstaticDepTypeList ReqDeps={props.ReqDeps} /></View> */}
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <TouchableOpacity style={[styles.button, { backgroundColor: '#5D9C59', flex: 1 }]} onPress={() => handleUpdateRequest()}>
               <Text style={styles.buttonText}>עדכון</Text>
